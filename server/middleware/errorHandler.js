@@ -1,5 +1,5 @@
 module.exports = (err, req, res, next) => {
-  // console.log(err, '<<<<<<<< error console')
+  // console.log(err, '<<<<<<<< error console error handler ????')
   if (err.name === 'SequelizeValidationError') {
     let errors = []
     err.errors.forEach(el => {

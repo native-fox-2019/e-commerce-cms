@@ -1,38 +1,68 @@
-const request = require('supertest')
+const response = require('supertest')
 const app = require('../app')
-const { sequelize, User } = require('../models')
-const { queryInterface } = sequelize
+const { generatingJWT } = require('../helpers/jwt')
+const { sequelize, Product } = require('../models')
+
 
 
 let token = null
-beforeAll(done => {
-  User.create({
-    username: 'user',
-    email: 'user@gmail.com',
-    role: 'user',
-    password: '1234567',
 
-  })
-    .then(data => {
-      // console.log(data, '<<<< ini apa')
-      token = data.body
-      done()
-    })
-
-})
+// beforeAll(done => {
+//   let fakeLogin = {
+//     id: 1,
+//     email: 'user@gmail.com'
+//   }
+//   token = generatingJWT(fakeLogin)
+//   Product
+//     .create({
+//       id: 1,
+//       name: 'Tshirt',
+//       image_url: 'okok.jpg',
+//       price: 1000,
+//       stock: 10
+//     })
+//     .then(() => {
+//       done()
+//     })
+//     .catch(err => [
+//       done(err)
+//     ])
+// })
 
 // delete all User after all test
 afterAll(done => {
-  queryInterface
-    .bulkDelete("Users", {})
-    .then(() => done())
+  Product.destroy({ where: {} })
+    .then(() => {
+      done()
+    })
     .catch(err => {
       done(err)
     })
+
 })
 
-describe('coba token', function () {
-  it('token', function () {
-    // console.log(token, '<<<<<<< cek token ga nih????')
+describe('CRUD product admin', function () {
+  describe('Add product', function () {
+    it.only('response status code 201 created Add product', function (done) {
+      let item = {
+        name: 'Tshirt',
+        image_url: 'okok2222.jpg',
+        price: 1000,
+        stock: 10
+      }
+      response(app)
+        .post('/products')
+        // .set("token", token)
+        .send(item)
+        .then(({ body, status }) => {
+          console.log(status, '<<<<<<<<< res add product')
+          expect(status).toBe(201)
+          done()
+        })
+        .catch(err => {
+          console.log(err, "<<<<<<< error ????????")
+          done(err)
+        })
+    })
   })
 })
