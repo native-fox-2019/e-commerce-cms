@@ -39,4 +39,34 @@ describe('Create a product item', function(){
             })
         })
     })
+    describe('Unsuccessfully create product due to validation error', function(){
+        it('Should return 400 and object (status, error)', (done) => {
+            // console.log('masuk')
+            request(app)
+            .post('/products')
+            .send({
+                name: '',
+                image_url: './image/shoes.jpg',
+                price: -2,
+                stock: -1
+            })
+            .then(response => {
+                let {body, status} = response
+                expect(status).toBe(400);
+                expect(body).toHaveProperty('status', 400);
+                expect(body).toHaveProperty('error');
+                expect(body.error[0]).toHaveProperty('type');
+                expect(body.error[0]).toHaveProperty('path');
+                expect(body.error[0]).toHaveProperty('msg');
+                // expect(body.product).toHaveProperty('image_url', './image/shoes.jpg');
+                // expect(body.product).toHaveProperty('price', 150000);
+                // expect(body.product).toHaveProperty('stock', 10);
+                done()
+            })
+            .catch(err => {
+                
+                done(err)
+            })
+        })
+    })
 })
