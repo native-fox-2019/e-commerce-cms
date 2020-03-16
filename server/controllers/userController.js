@@ -9,18 +9,21 @@ class Controller {
 
     static register(req, res, next) {
         let obj = {
-            username: req.body.username || '',
-            email: req.body.email || '',
-            password: req.body.password || '',
+            username: req.body.username,
+            email: req.body.email,
+            password: req.body.password,
+            role: 'admin',
         }
         User.create(obj)
         .then(data => {
-            res.status(201).json({ data })
+            console.log(data)
+            res.status(201).json({ data, message: 'Successfully registered new user' })
         })
         .catch(next)
     }
 
     static login(req, res, next) {
+        console.log('register')
         let obj = {
             email: req.body.email,
             password: req.body.password,
