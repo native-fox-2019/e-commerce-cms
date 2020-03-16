@@ -38,7 +38,7 @@ class ProductController {
     static async deleteData(req, res, next) {
         try {
             let id = Number(req.params.id);
-            let deletedData = await Product.destroy({ where: { id } });
+            await Product.destroy({ where: { id } });
             res.status(200).json({
                 msg: 'Your data has been deleted'
             });

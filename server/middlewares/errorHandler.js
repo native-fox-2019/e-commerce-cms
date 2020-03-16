@@ -13,6 +13,16 @@ function errorHandler (err, req, res, next) {
             status: 400,
             msg: err.message
         })
+    } else if (err.name === 'NotFoundError') {
+        res.status(404).json({
+            status: 404,
+            msg: err.message
+        })
+    } else if (err.name === 'JsonWebTokenError') {
+        res.status(403).json({
+            status: 403,
+            msg: 'You are forbidden to do that'
+        })
     }
     else {
         console.log(err);
