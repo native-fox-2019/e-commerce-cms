@@ -30,14 +30,14 @@ class ControllerUser {
     User
       .findOne({ where: { email } })
       .then(user => {
-        // if (!user) {
-        //   throw createError(400, 'Your email or password is incorrect')
-        // } else {
-        if (verifyingPassword(password, user.password)) {
-          let payload = { id: user.id, email }
-          let token = generatingJWT(payload)
-          res.status(200).json(token)
-          // }
+        if (!user) {
+          throw createError(400, 'Your email or password is incorrect')
+        } else {
+          if (verifyingPassword(password, user.password)) {
+            let payload = { id: user.id, email }
+            let token = generatingJWT(payload)
+            res.status(200).json(token)
+          }
         }
       })
       .catch(err => {

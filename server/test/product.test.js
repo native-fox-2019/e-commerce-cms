@@ -4,9 +4,6 @@ const { sequelize, User } = require('../models')
 const { queryInterface } = sequelize
 
 
-
-
-
 let token = null
 beforeAll(done => {
   User.create({

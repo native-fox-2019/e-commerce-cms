@@ -138,6 +138,7 @@ describe('Create User register', function () {
 
 describe('Login user test', function () {
   describe('POST users/login', function () {
+
     it('response 200 log', function (done) {
       let login = {
         email: 'user@gmail.com',
@@ -161,5 +162,44 @@ describe('Login user test', function () {
 })
 
 describe('login error test', function () {
+  describe('login error 400 wrong username', function () {
 
+    it('error 400 no username', function (done) {
+      let login = {
+        email: '',
+        password: '1234567'
+      }
+      request(app)
+        .post('/users/login')
+        .send(login)
+        .expect(400)
+        .then(({ body, status }) => {
+          expect(status).toBe(400)
+          expect(body).toBe('Your email or password is incorrect')
+          done()
+        })
+        .catch(err => {
+          done(err)
+        })
+    })
+
+    it('error 400 no password', function (done) {
+      let login = {
+        email: 'user',
+        password: ''
+      }
+      request(app)
+        .post('/users/login')
+        .send(login)
+        .expect(400)
+        .then(({ body, status }) => {
+          expect(status).toBe(400)
+          expect(body).toBe('Your email or password is incorrect')
+          done()
+        })
+        .catch(err => {
+          done(err)
+        })
+    })
+  })
 })
