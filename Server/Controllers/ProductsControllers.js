@@ -7,7 +7,6 @@ class ProductController {
             res.status(200).json({products})
         })
         .catch(err => {
-            console.log(err, '<<< ini dari get products')
             next({status: 500, msg: 'Server Error'})
         })
     }
@@ -20,7 +19,6 @@ class ProductController {
             res.status(201).json({message: 'Successfully add the product', product: product})
         })
         .catch(err => {
-            console.log(err, '<<<< error dari add product')
             if(err.errors){
                 let error = []
                 err.errors.forEach(item => {
@@ -41,37 +39,33 @@ class ProductController {
         Product.findByPk(id)
         .then(product => {
             if(product){
-                console.log(product)
                 res.status(200).json({product})
             }else{
                 next({status: 404, msg:'Product not found'})
             }
         })
         .catch(err => {
-            console.log(err, '<<< ini dari get one product')
             next({status: 500, msg: 'Server Error'})
         })
     }
     static editProduct(req, res, next){
         let id = Number(req.params.id)
         let {name, image_url, price, stock} = req.body;
-        let productFound = null;
-        Product.findByPk(id)
-        .then(product => {
-            if(product){
-                productFound = product
-                return Product.update({
-                    name, image_url, price, stock
-                }, {where: {id}})
+        let product = {name, image_url, price, stock}
+        Product.findOne({where: {id}})
+        .then(productFound => {
+            if(productFound){
+                return Product.update(product, {where: {id}})
             }else{
                 next({status: 404, msg: 'Product not found'})
-            }
+            }     
         }) 
         .then(result => {
-            res.status(200).json({message: 'Successfully add the product', product: productFound})
+            if(result){
+                res.status(200).json({message: 'Successfully edit the product', product})
+            }
         })
         .catch(err => {
-            console.log(err, '<<<< error dari edit product')
             if(err.errors){
                 let error = []
                 err.errors.forEach(item => {

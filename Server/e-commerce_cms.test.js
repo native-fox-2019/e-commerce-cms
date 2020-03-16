@@ -14,7 +14,7 @@ let id = null;
 
 describe('Create a product item', function(){
     describe('Successfully create product', function(){
-        it('Should return 201 and object (message, todo)', (done) => {
+        it('Should return 201 and object (message, product)', (done) => {
             // console.log('masuk')
             request(app)
             .post('/products')
@@ -112,6 +112,87 @@ describe('get a product by id', function(){
         it('Should return 404 and object(status, msg)', (done) => {
             request(app)
             .get(`/products/1`)
+            .then(response => {
+                let {status, body} = response;
+                expect(status).toBe(404)
+                expect(body).toHaveProperty('status', 404)
+                expect(body).toHaveProperty('msg', 'Product not found')
+                done()
+            })
+            .catch(err => {
+                done(err)
+            })
+        })
+    })
+})
+
+describe('Edit a product item', function(){
+    describe('Successfully edit product', function(){
+        console.log('masuk edit bener')
+        it('Should return 200 and object (message, product)', (done) => {
+            // console.log('masuk')
+            request(app)
+            .put(`/products/${id}`)
+            .send({
+                name: 'Shoes',
+                image_url: './image/shoes.jpg',
+                price: 200000,
+                stock: 6
+            })
+            .then(response => {
+                let {body, status} = response
+                expect(status).toBe(200);
+                expect(body).toHaveProperty('message', 'Successfully edit the product');
+                expect(body).toHaveProperty('product');
+                expect(body.product).toHaveProperty('name', 'Shoes');
+                expect(body.product).toHaveProperty('image_url', './image/shoes.jpg');
+                expect(body.product).toHaveProperty('price', 200000);
+                expect(body.product).toHaveProperty('stock', 6);
+                done()
+            })
+            .catch(err => {      
+                done(err)
+            })
+        })
+    })
+    describe('Unsuccessfully edit product due to validation error', function(){
+        console.log('masuk edit validasi')
+        it('Should return 400 and object (status, error)', (done) => {
+            // console.log('masuk')
+            request(app)
+            .put(`/products/${id}`)
+            .send({
+                name: '',
+                image_url: './image/shoes.jpg',
+                price: -2,
+                stock: -1
+            })
+            .then(response => {
+                let {body, status} = response
+                expect(status).toBe(400);
+                expect(body).toHaveProperty('status', 400);
+                expect(body).toHaveProperty('error');
+                expect(body.error[0]).toHaveProperty('type');
+                expect(body.error[0]).toHaveProperty('path');
+                expect(body.error[0]).toHaveProperty('msg');
+                done()
+            })
+            .catch(err => {           
+                done(err)
+            })
+        })
+    })
+    describe('Unsucsessfully edit product due to product not found', function(){
+        console.log('masuk edit not found')
+        it('Should return 404 and object (status, msg)', (done) => {
+            request(app)
+            .put('/products/1')
+            .send({
+                name: '',
+                image_url: './image/shoes.jpg',
+                price: -2,
+                stock: -1
+            })
             .then(response => {
                 let {status, body} = response;
                 expect(status).toBe(404)
