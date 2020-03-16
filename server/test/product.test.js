@@ -2,6 +2,7 @@ const app = require('../app')
 const request = require('supertest')
 const { sequelize } = require('../models')
 const { queryInterface } = sequelize
+const { Product } = require('../models')
 
 
 const NAME = 'Black Box'
@@ -10,6 +11,17 @@ const PRICE = 100000
 const STOCK = 100
 const ID = 1
 
+beforeAll (done => {
+    Product.create({
+        name: 'Random',
+        image_url: 'www.bing.com',
+        price: 1000,
+        stock: 5
+    })
+    .then(data => {
+        done()
+    })
+})
 
 afterAll (done => {
     queryInterface
@@ -140,6 +152,89 @@ describe('updating product', () => {
                 .then(response => {
                     const { body, status } = response
                     expect(status).toBe(201)
+                    expect(body).toHaveProperty('msg','Product updated')
+                    done()
+                })
+        })
+    })
+    describe('fail updating', () => {
+        it('name is empty', (done) => {
+            request(app)
+                .put(`/products/edit/${ID}`)
+                .send({
+                    name:'',
+                    image_url:'www.yahoo.com',
+                    price: 50000,
+                    stock: 30
+                })
+                .then(response => {
+                    const { body, status } = response
+                    expect(status).toBe(400)
+                    expect(body).toContain('Name cannot be empty')
+                    done()
+                })
+        })
+        it('Image url is empty', (done) => {
+            request(app)
+                .put(`/products/edit/${ID}`)
+                .send({
+                    name:'Blue Box',
+                    image_url:'',
+                    price: 50000,
+                    stock: 30
+                })
+                .then(response => {
+                    const { body, status } = response
+                    expect(status).toBe(400)
+                    expect(body).toContain('Image url cannot be empty')
+                    done()
+                })
+        })
+        it('Price is empty', (done) => {
+            request(app)
+                .put(`/products/edit/${ID}`)
+                .send({
+                    name:'Blue Box',
+                    image_url:'www.yahoo.com',
+                    price: '',
+                    stock: 30
+                })
+                .then(response => {
+                    const { body, status } = response
+                    expect(status).toBe(400)
+                    expect(body).toContain('Price cannot be empty')
+                    done()
+                })
+        })
+        it('Stock is empty', (done) => {
+            request(app)
+                .put(`/products/edit/${ID}`)
+                .send({
+                    name:'Blue Box',
+                    image_url:'www.yahoo.com',
+                    price: 50000,
+                    stock: ''
+                })
+                .then(response => {
+                    const { body, status } = response
+                    expect(status).toBe(400)
+                    expect(body).toContain('Stock cannot be empty')
+                    done()
+                })
+        })
+        it('Non exist ID', (done) => {
+            request(app)
+                .put(`/products/edit/100`)
+                .send({
+                    name:'Blue Box',
+                    image_url:'www.yahoo.com',
+                    price: 50000,
+                    stock: 100
+                })
+                .then(response => {
+                    const { body, status } = response
+                    expect(status).toBe(404)
+                    expect(body).toHaveProperty('msg', 'Cannot be found')
                     done()
                 })
         })

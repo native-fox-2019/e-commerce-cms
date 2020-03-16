@@ -29,7 +29,14 @@ class ProductController {
         try {
             const { name, image_url, price, stock } = req.body
             const updated = await Product.update({name, image_url, price, stock}, {where:{id:req.params.id}})
-            res.status(201).json('Product updated')
+            if (updated[0] != 0) {
+                res.status(201).json({msg : 'Product updated'})
+            } else {
+                next({
+                    status:404,
+                    msg:'Cannot be found'
+                })
+            }
         } catch (error) {
             next(error)
         }

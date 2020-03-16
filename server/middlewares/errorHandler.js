@@ -10,7 +10,7 @@ module.exports = (err, req, res, next) => {
     if (err.name === 'SequelizeConnectionRefusedError') {
         res.status(500).json('Server Error')
     }
-    
-    res.status(err.status).json(err.msg)
+
+    res.status(err.status).json({msg:err.msg})
 
 }
