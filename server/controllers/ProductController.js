@@ -10,8 +10,18 @@ class ProductController{
         }catch(err){
             res.status(500).json(err);
         }
+    }
 
+    static async update(req,res){
+        let id=req.params.id;
+        let body=req.body;
 
+        try{
+            let result=await Product.update(body,{where:{id}});
+            res.status(200).json({status:'updated',result})
+        }catch(err){
+            res.status(500).json(err);
+        }
     }
 }
 
