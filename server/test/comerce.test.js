@@ -60,3 +60,48 @@ describe('register error',function(){
         })
     })
 })
+
+let obj3={
+    email : "admin2@email.com",
+    password : "1234"
+}
+
+describe('login success',function(){
+    it('should return status 200 and access token',function(done){
+        request(app)
+        .post('/user/login')
+        .send(obj3)
+        .then(response=>{
+            const { body,status } = response;
+            expect(status).toBe(200)
+            
+            done()
+        })
+        .catch(err=>{
+            done(err)
+        })
+    })
+})
+
+let obj4={
+    email : "admin2@email.com",
+    password : "1233"
+}
+
+describe.only('login fail',function(){
+    it('should return status 400 and error message',function(done){
+        request(app)
+        .post('/user/login')
+        .send(obj4)
+        .then(response=>{
+            const { body,status } = response;
+            console.log(body)
+            expect(status).toBe(400)
+            expect(body).toHaveProperty('msg');
+            done()
+        })
+        .catch(err=>{
+            done(err)
+        })
+    })
+})
