@@ -1,4 +1,6 @@
 'use strict';
+const { hashingPassword } = require('../helpers/bycrpt')
+const createErrors = require('http-errors')
 module.exports = (sequelize, DataTypes) => {
   const { Model } = sequelize.Sequelize
   class User extends Model { }
@@ -38,6 +40,13 @@ module.exports = (sequelize, DataTypes) => {
         len: { args: [5], msg: 'Password must be at least 5 characters' }
       }
     }
+  }, {
+    hooks: {
+      beforeCreate: (user, options) => {
+        user.password = hashingPassword(user.password)
+      }
+    },
+    sequelize
   })
   // const User = sequelize.define('User', {
   //   username: DataTypes.STRING,

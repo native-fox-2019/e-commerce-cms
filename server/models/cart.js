@@ -1,6 +1,6 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const { Model } = sequelize.sequelize
+  const { Model } = sequelize.Sequelize
   class Cart extends Model { }
   Cart.init({
     ProductId: DataTypes.INTEGER,
