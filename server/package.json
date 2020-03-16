@@ -1,12 +1,13 @@
 {
-  "name": "server",
+  "name": "ecommerce-server",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "clear && jest --detectOpenHandles --runInBand --forceExit",
     "test-register": "clear && jest user-register --detectOpenHandles --runInBand --forceExit",
-    "test-login": "clear && jest user-register --detectOpenHandles --runInBand --forceExit"
+    "test-login": "clear && jest user-login --detectOpenHandles --runInBand --forceExit",
+    "test-create": "clear && jest product-create --detectOpenHandles --runInBand --forceExit"
   },
   "keywords": [],
   "author": "",

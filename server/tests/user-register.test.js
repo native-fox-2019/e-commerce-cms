@@ -2,7 +2,6 @@ const request = require('supertest')
 const app = require('../app')
 const { sequelize } = require('../models')
 const { queryInterface } = sequelize
-const { comparePass } = require('../helpers/bcrypt')
 
 beforeAll(done => {
     queryInterface.bulkDelete('Users', {})
@@ -10,13 +9,12 @@ beforeAll(done => {
     .catch(err => done(err))
 })
 
-// afterAll(done => {
-//     queryInterface.bulkDelete('Users', {})
-//     .then(() => done())
-//     .catch(err => done(err))
-// })
+afterAll(done => {
+    queryInterface.bulkDelete('Users', {})
+    .then(() => done())
+    .catch(err => done(err))
+})
 
-// REGISTER
 describe('Register New User:', () => {
     describe('Register Success:', () => {
         it('should return 201:', async (done) => {
@@ -29,12 +27,12 @@ describe('Register New User:', () => {
                 role: 'admin'
             })
             .then(response => {
-                const { body, status } = response
+                const { status, body } = response
                 console.log({ status, body })
                 expect(status).toBe(201)
                 expect(body.username).toBe('admin')
                 expect(body.email).toBe('admin@mail.com')
-                expect(comparePass('admin', body.password)).toBe(true)
+                expect(body.password).not.toBe('admin')
                 expect(body.role).toBe('admin')
                 done()
             })
@@ -42,7 +40,7 @@ describe('Register New User:', () => {
                 done(err)
             })
         })
-    }),
+    })
     describe('Register Fail:', () => {
         it('should return 400 (Duplicate Account):', async (done) => {
             await request(app)
@@ -54,11 +52,11 @@ describe('Register New User:', () => {
                 role: 'admin'
             })
             .then(response => {
-                const { body, status } = response
+                const { status, body } = response
+                console.log({ status, body })
                 expect(status).toBe(400)
                 expect(body.status).toBe(400)
-                expect(body.message).toBe('Username / Email already registered!')
-                console.log(body)
+                expect(body.message).toBe('Already registered!')
                 done()
             })
             .catch(err => {
@@ -75,11 +73,11 @@ describe('Register New User:', () => {
                 role: 'admin'
             })
             .then(response => {
-                const { body, status } = response
+                const { status, body } = response
+                console.log({ status, body })
                 expect(status).toBe(400)
                 expect(body.status).toBe(400)
                 expect(body.message[0]).toBe('Username cannot be NULL!')
-                console.log(body)
                 done()
             })
             .catch(err => {
@@ -96,11 +94,11 @@ describe('Register New User:', () => {
                 role: 'admin'
             })
             .then(response => {
-                const { body, status } = response
+                const { status, body } = response
+                console.log({ status, body })
                 expect(status).toBe(400)
                 expect(body.status).toBe(400)
                 expect(body.message[0]).toBe('Password cannot be empty!')
-                console.log(body)
                 done()
             })
             .catch(err => {
@@ -117,11 +115,11 @@ describe('Register New User:', () => {
                 role: 'CEO'
             })
             .then(response => {
-                const { body, status } = response
+                const { status, body } = response
+                console.log({ status, body })
                 expect(status).toBe(400)
                 expect(body.status).toBe(400)
                 expect(body.message[0]).toBe('Role must be either admin or user!')
-                console.log(body)
                 done()
             })
             .catch(err => {
