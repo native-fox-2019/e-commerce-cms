@@ -24,6 +24,16 @@ class ProductController {
             next(error)
         }
     }
+
+    static async update (req, res, next) {
+        try {
+            const { name, image_url, price, stock } = req.body
+            const updated = await Product.update({name, image_url, price, stock}, {where:{id:req.params.id}})
+            res.status(201).json('Product updated')
+        } catch (error) {
+            next(error)
+        }
+    }
 }
 
 

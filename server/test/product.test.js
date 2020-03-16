@@ -4,6 +4,13 @@ const { sequelize } = require('../models')
 const { queryInterface } = sequelize
 
 
+const NAME = 'Black Box'
+const IMG_URL = 'www.google.com'
+const PRICE = 100000
+const STOCK = 100
+const ID = 1
+
+
 afterAll (done => {
     queryInterface
         .bulkDelete('Products', {})
@@ -11,26 +18,26 @@ afterAll (done => {
         .catch((err) => done(err))
 })
 
-//CREATE
+// CREATE
 describe('adding new product', () => {
     describe('Success', () => {
         it('success adding new product',  (done) => {
             request(app)
                 .post('/products/add')
                 .send({
-                    name: 'Black box',
-                    image_url: 'www.google.com',
-                    price: 10000,
-                    stock: 100
+                    name: NAME,
+                    image_url: IMG_URL,
+                    price: PRICE,
+                    stock: STOCK
                 })
                 .then(response => {
                     const { body, status } = response
                     expect(status).toBe(201)
                     expect(body).toHaveProperty('id')
-                    expect(body).toHaveProperty('name', 'Black box')
-                    expect(body).toHaveProperty('image_url', 'www.google.com')
-                    expect(body).toHaveProperty('price', 10000)
-                    expect(body).toHaveProperty('stock', 100)
+                    expect(body).toHaveProperty('name', NAME)
+                    expect(body).toHaveProperty('image_url', IMG_URL)
+                    expect(body).toHaveProperty('price', PRICE)
+                    expect(body).toHaveProperty('stock', STOCK)
                     done()
                 })
         })
@@ -103,7 +110,7 @@ describe('adding new product', () => {
     })
 })
 
-//READ
+// READ
 describe('showing all products', () => {
     describe('success showing', () => {
         it('get all product list', (done) => {
@@ -121,8 +128,21 @@ describe('showing all products', () => {
 //UPDATE
 describe('updating product', () => {
     describe('success updating', () => {
-        it('updating product', () => {
-            request
+        it('updating product', (done) => {
+            request(app)
+                .put(`/products/edit/${ID}`)
+                .send({
+                    name:'Blue Box',
+                    image_url:'www.yahoo.com',
+                    price: 50000,
+                    stock: 30
+                })
+                .then(response => {
+                    const { body, status } = response
+                    console.log(body)
+                    expect(status).toBe(201)
+                    done()
+                })
         })
     })
 })

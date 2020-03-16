@@ -4,5 +4,6 @@ const productController = require('../controllers/productController')
 
 router.post(`/add`, productController.addProduct)
 router.get(`/`, productController.show)
+router.put(`/edit/:id`, productController.update)
 
 module.exports = router
