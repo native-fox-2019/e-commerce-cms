@@ -11,9 +11,9 @@ class Controller {
           email: req.body.email
         }
       };
-      let { id, name, email, password } = await User.findOne(condition);
+      let { id, email, password, role } = await User.findOne(condition);
       if (compare(req.body.password, password)) {
-        let access_token = sign({ id, email });
+        let access_token = sign({ id, email, role });
         res.status(200).send({ access_token });
       } else {
         throw createError(400, "Invalid User Password");
@@ -24,8 +24,8 @@ class Controller {
   }
   static async register(req, res, next) {
     try {
-      let { id, email } = await User.create(req.body);
-      let access_token = sign({ id, email });
+      let { id, email, role } = await User.create(req.body);
+      let access_token = sign({ id, email, role });
       res
         .status(201)
         .send({ Message: "Successfully create user", access_token });

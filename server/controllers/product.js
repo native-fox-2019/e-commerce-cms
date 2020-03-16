@@ -43,6 +43,39 @@ class Controller {
       next(error);
     }
   }
+  static async delete(req, res, next) {
+    try {
+      let condition = {
+        where: {
+          id: req.params.id
+        }
+      };
+      let deleted = await Product.destroy(condition);
+      res.status(200).json({ Message: "Successfully deleted product." });
+    } catch (error) {
+      next(error);
+    }
+  }
+  static async put(req, res, next) {
+    try {
+      let condition = {
+        where: {
+          id: req.params.id
+        }
+      };
+      let findOne = await Product.findOne(condition);
+      if (findOne) {
+        let updated = await Product.update(req.body, condition);
+        res
+          .status(200)
+          .json({ Message: "Successfully updated product", Data: req.body });
+      } else {
+        throw createError(404);
+      }
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 module.exports = Controller;
