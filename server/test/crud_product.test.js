@@ -31,6 +31,10 @@ describe('Create a new product ',function(){
                 id=body.id
                 done()
             })  
+            .catch(err=>{
+                console.log(err)
+                done()
+            })
         })
     })
 
@@ -51,6 +55,10 @@ describe('Create a new product ',function(){
                 expect(body.msg)
                 done()
             })
+            .catch(err=>{
+                console.log(err)
+                done()
+            })
         })
     })
 
@@ -69,6 +77,10 @@ describe('Find all data',function(){
             const {body,status}=result
             expect(status).toBe(200)
             done()
+            })
+            .catch(err=>{
+                console.log(err)
+                done()
             })
         })
     })
@@ -93,6 +105,10 @@ describe('update Data', ()=>{
                 expect(body).toHaveProperty('data')
                 done()
             })
+            .catch(err=>{
+                console.log(err)
+                done()
+            })
         })
     })
 
@@ -112,6 +128,10 @@ describe('update Data', ()=>{
                 expect(body).toHaveProperty('msg')
                 done()
             })
+            .catch(err=>{
+                console.log(err)
+                done()
+            })
         })
     })
 
@@ -129,6 +149,10 @@ describe('update Data', ()=>{
                 const {body,status}= data
                 expect(status).toBe(400)
                 expect(body).toHaveProperty('msg')
+                done()
+            })
+            .catch(err=>{
+                console.log(err)
                 done()
             })
         })
@@ -153,6 +177,10 @@ describe('delete data',()=>{
             expect(body).toHaveProperty("stock")
             done()
         })
+        .catch(err=>{
+            console.log(err)
+            done()
+        })
     })
 })
 
@@ -164,6 +192,10 @@ describe('delete data',()=>{
             const {body,status} = result
             expect(status).toBe(404)
             expect(body).toHaveProperty("msg")
+            done()
+        })
+        .catch(err=>{
+            console.log(err)
             done()
         })
     })

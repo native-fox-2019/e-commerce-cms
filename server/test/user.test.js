@@ -11,7 +11,7 @@ afterAll(done =>{
 });
 
 describe('User register',()=>{
-    describe('Succes register user',()=>{
+    describe('Success register user',()=>{
         it('should return 200 and object (token)',(done)=>{
             request(app)
             .post('/user/register')
@@ -25,6 +25,10 @@ describe('User register',()=>{
                 const {status,body}=result
                 expect(status).toBe(200)
                 expect(body).toHaveProperty("token")
+                done()
+            })
+            .catch(err=>{
+                console.log(err)
                 done()
             })
         })
@@ -46,6 +50,10 @@ describe('User register',()=>{
                 expect(body).toHaveProperty("msg")
                 done()
             })
+            .catch(err=>{
+                console.log(err)
+                done()
+            })
         })
     })
 
@@ -65,6 +73,10 @@ describe('User register',()=>{
                 const {status,body}=result
                 expect(status).toBe(400)
                 expect(body).toHaveProperty("msg")
+                done()
+            })
+            .catch(err=>{
+                console.log(err)
                 done()
             })
         })
@@ -111,6 +123,10 @@ describe('User login',()=>{
                 const {status,body}=result
                 expect(status).toBe(400)
                 expect(body).toHaveProperty("msg")
+                done()
+            })
+            .catch(err=>{
+                console.log(err)
                 done()
             })
         })
