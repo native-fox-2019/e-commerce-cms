@@ -13,7 +13,8 @@ class UserController {
                     const token = create({
                         id: userLogin.id,
                         name: userLogin.name,
-                        email: userLogin.email
+                        email: userLogin.email,
+                        role: userLogin.role
                     })
                     res.status(200).json({access_token:token})
                 } else {
@@ -37,7 +38,6 @@ class UserController {
         try {
             const find = await User.findOne({where:{email: req.body.email}})
             if (!find) {
-                // const hashed = await encode(req.body.password)
                 const newUser = await User.create({
                     name: req.body.name,
                     email: req.body.email,
@@ -46,7 +46,8 @@ class UserController {
                 const token = create({
                     id: newUser.id,
                     name: newUser.name,
-                    email: newUser.email
+                    email: newUser.email,
+                    role: newUser.role
                 })
                 res.status(200).json({access_token:token})
             } else {

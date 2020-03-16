@@ -3,26 +3,34 @@ const request = require('supertest')
 const { sequelize } = require('../models')
 const { queryInterface } = sequelize
 const { User, Product } = require('../models')
+const { create } = require('../helpers/token')
 
 
 const NAME = 'Robert'
 const EMAIL = 'robert@gmail.com'
 const PASS = 'robert'
-let TOKEN = ``
+let TOKEN
 
 const PRODUCT_NAME = 'Black Box'
 const IMG_URL = 'www.google.com'
 const PRICE = 100000
 const STOCK = 100
-let ID = ``
+let ID
 
 beforeAll (done => {
     User.create({
         name: 'Random',
         email: 'www.bing.com',
-        password: 'fuckoff'
+        password: 'fuckoff',
+        role:'admin'
     })
     .then(data => {
+        TOKEN = create({
+            id: data.id,
+            name: data.name,
+            email: data.email,
+            role: data.role
+        })
         done()
     })
 })
@@ -116,7 +124,6 @@ describe('Login user', () => {
                     const { body, status } = response
                     expect(status).toBe(200)
                     expect(body).toHaveProperty('access_token', response.body.access_token)
-                    TOKEN = response.body.access_token
                     done()
                 })
         })
@@ -166,7 +173,6 @@ beforeAll (done => {
         stock: 5
     })
     .then(data => {
-        ID = data.id
         done()
     })
 })
@@ -193,6 +199,7 @@ describe('adding new product', () => {
                 })
                 .then(response => {
                     const { body, status } = response
+                    ID = body.id
                     expect(status).toBe(201)
                     expect(body).toHaveProperty('id')
                     expect(body).toHaveProperty('name', PRODUCT_NAME)

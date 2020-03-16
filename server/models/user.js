@@ -22,6 +22,9 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
+    role: {
+      type: DataTypes.STRING
+    },
     password: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -37,6 +40,9 @@ module.exports = (sequelize, DataTypes) => {
         try {
           const hashed = await encode(ins.password)
           ins.password = hashed
+          if (!ins.role) {
+            ins.role = `user`
+          }
         } catch (error) {
           
         }
