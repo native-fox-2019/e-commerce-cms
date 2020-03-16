@@ -1,6 +1,6 @@
 const request = require('supertest')
 const app = require('../app')
-const { User, sequelize } = require('../models');
+const { sequelize } = require('../models');
 const { queryInterface } = sequelize;
 
 afterAll(done => {
@@ -11,7 +11,7 @@ afterAll(done => {
 })
 
 describe('Test for users', function() {
-    describe('Success register user as admin, post to /users/register', function() {
+    describe('Success register user as admin', function() {
         it('Should return 201', function(done) {
           request(app)
             .post('/users/register')
@@ -32,8 +32,29 @@ describe('Test for users', function() {
             })
         });
       });
+      
+      describe('Failed register as admin', function() {
+        it('Should return 400 because email has been registered', function(done) {
+            request(app)
+              .post('/users/register')
+              .send({
+                  name: 'john',
+                  email: 'test@email.com',
+                  password : '1234',
+                  role: 'Admin'
+              })
+              .then(res => {
+                  const { body, status } = res
+                  expect(status).toEqual(400)
+                  expect(body).toHaveProperty('message')
+                  expect(body.message).toContain(`Your email has been registered`)
+                  done()
+              })
+              .catch(err=>{
+                  done(err)
+              })
+          });
 
-      describe('Failed register user as admin, because not all form is filled', function() {
         it('Should return 400 because not have name', function(done) {
           request(app)
             .post('/users/register')
@@ -90,6 +111,64 @@ describe('Test for users', function() {
                   expect(status).toEqual(400)
                   expect(body).toHaveProperty('message')
                   expect(body.message).toContain('Password cannot be empty')
+                  done()
+              })
+              .catch(err=>{
+                  done(err)
+              })
+          });
+      });
+
+      describe('Success login as admin', function() {
+        it('Should return 200', function(done) {
+          request(app)
+            .post('/users/login')
+            .send({
+                email: 'test@email.com',
+                password : '1234'
+            })
+            .then(res => {
+                const { body, status } = res
+                expect(status).toEqual(200)
+                expect(body).toHaveProperty('access_token')
+                done()
+            })
+            .catch(err=>{
+                done(err)
+            })
+        });
+      });
+
+      describe('Failed login as admin', function() {
+        it('Should return 400 because wrong password', function(done) {
+          request(app)
+            .post('/users/login')
+            .send({
+                email: 'test@email.com',
+                password : '12345'
+            })
+            .then(res => {
+                const { body, status } = res
+                expect(status).toEqual(400)
+                expect(body.message).toContain('Wrong email or password')
+                done()
+            })
+            .catch(err=>{
+                done(err)
+            })
+        });
+
+        it('Should return 400 because email not found', function(done) {
+            request(app)
+              .post('/users/login')
+              .send({
+                  email: 'test2@email.com',
+                  password : '1234'
+              })
+              .then(res => {
+                  const { body, status } = res
+                  expect(status).toEqual(400)
+                  expect(body.message).toContain('Wrong email or password')
                   done()
               })
               .catch(err=>{
