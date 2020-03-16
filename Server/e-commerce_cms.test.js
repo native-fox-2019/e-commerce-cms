@@ -128,7 +128,6 @@ describe('get a product by id', function(){
 
 describe('Edit a product item', function(){
     describe('Successfully edit product', function(){
-        console.log('masuk edit bener')
         it('Should return 200 and object (message, product)', (done) => {
             // console.log('masuk')
             request(app)
@@ -156,7 +155,6 @@ describe('Edit a product item', function(){
         })
     })
     describe('Unsuccessfully edit product due to validation error', function(){
-        console.log('masuk edit validasi')
         it('Should return 400 and object (status, error)', (done) => {
             // console.log('masuk')
             request(app)
@@ -183,7 +181,6 @@ describe('Edit a product item', function(){
         })
     })
     describe('Unsucsessfully edit product due to product not found', function(){
-        console.log('masuk edit not found')
         it('Should return 404 and object (status, msg)', (done) => {
             request(app)
             .put('/products/1')
@@ -195,6 +192,40 @@ describe('Edit a product item', function(){
             })
             .then(response => {
                 let {status, body} = response;
+                expect(status).toBe(404)
+                expect(body).toHaveProperty('status', 404)
+                expect(body).toHaveProperty('msg', 'Product not found')
+                done()
+            })
+            .catch(err => {
+                done(err)
+            })
+        })
+    })
+})
+
+describe('Delete Product', function(){
+    describe('Successfully delete product', function(){
+        it('Should return 200 and object (message)', (done) => {
+            request(app)
+            .delete(`/products/${id}`)
+            .then(response => {
+                let {status, body} = response
+                expect(status).toBe(200)
+                expect(body).toHaveProperty('message', 'Successfully delete product')
+                done()
+            })
+            .catch(err => {
+                done(err)
+            })
+        })
+    })
+    describe('Unsuccessfully delete product due to not found', function(){
+        it('Should return 404 and object (status, msg', (done) => {
+            request(app)
+            .delete(`/products/1`)
+            .then(response => {
+                let {status, body} = response
                 expect(status).toBe(404)
                 expect(body).toHaveProperty('status', 404)
                 expect(body).toHaveProperty('msg', 'Product not found')

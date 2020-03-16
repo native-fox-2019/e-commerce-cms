@@ -81,6 +81,20 @@ class ProductController {
             }
         })
     }
+    static deleteProduct(req, res, next){
+        let id = req.params.id
+        Product.destroy({where: {id}})
+        .then(result => {
+            if(result){
+                res.status(200).json({message: 'Successfully delete product'})
+            }else{
+                next({status: 404, msg: 'Product not found'})
+            }
+        })
+        .catch(err => {
+            next({status: 500, msg: 'Server Error'})
+        })
+    }
 }
 
 module.exports = ProductController
