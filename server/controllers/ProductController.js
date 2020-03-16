@@ -72,9 +72,19 @@ class ProductController {
     static async deleteProduct (req, res, next) {
         try {
             let id = req.params.id
-            let deleted = Product.destroy({ where: { id } })
-            if (deleted) {
-                res.status(200).json({ message: "Product Deleted" })
+            let user = await Product.findOne({ where: { id } })
+            if (!user) {
+                next(
+                    {
+                        status: 404,
+                        message: "Product not found"
+                    }
+                )
+            } else {
+                let deleted = await Product.destroy({ where: { id } })
+                if (deleted) {
+                    res.status(200).json({ deleted: user, message: "Product deleted" })
+                }
             }
         } catch (err) {
             next(error)

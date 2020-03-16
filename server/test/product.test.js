@@ -329,3 +329,49 @@ describe('Edit a product', () => {
     })
 })
 
+describe('Delete a product', () => {
+    describe('Success', () => {
+        it('Should return 200 and object (deleted, message)', async done => {
+            try {
+                const { body, status } = await request(app)
+                .delete(`/products/${test_productId}`)
+                .set('access_token', test_adminAccessToken)
+                expect(status).toBe(200)
+                expect(body).toHaveProperty('deleted')
+                expect(body).toHaveProperty('message', 'Product deleted')
+                done()
+            } catch (err) {
+                done(err)
+            }
+        })
+    })
+
+    describe('Fail', () => {
+        it('Should return 403 and object (status, message)', async done => {
+            try {
+                const { body, status } = await request(app)
+                .delete(`/products/${test_productId}`)
+                .set('access_token', test_userAccessToken)
+                expect(status).toBe(403)
+                expect(body).toHaveProperty('message', 'You are not authorized')
+                done()
+            } catch (err) {
+                done(err)
+            }
+        })
+
+        it ('Should return 404 and object (status, message)', async done => {
+            try {
+                const { body, status } = await request(app)
+                .delete(`/products/${test_productId+7272}`)
+                .set('access_token', test_adminAccessToken)
+                expect(status).toBe(404)
+                expect(body).toHaveProperty('message', 'Product not found')
+                done()
+            } catch (err) {
+                done(err)
+            }
+        })
+    })
+})
+
