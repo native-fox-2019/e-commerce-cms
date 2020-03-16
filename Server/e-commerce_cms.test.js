@@ -58,13 +58,27 @@ describe('Create a product item', function(){
                 expect(body.error[0]).toHaveProperty('type');
                 expect(body.error[0]).toHaveProperty('path');
                 expect(body.error[0]).toHaveProperty('msg');
-                // expect(body.product).toHaveProperty('image_url', './image/shoes.jpg');
-                // expect(body.product).toHaveProperty('price', 150000);
-                // expect(body.product).toHaveProperty('stock', 10);
+                done()
+            })
+            .catch(err => {           
+                done(err)
+            })
+        })
+    })
+})
+
+describe('get list of products', function(){
+    describe('successfully get products', function(){
+        it('Should return 200 and object(products', (done) => {
+            request(app)
+            .get('/products')
+            .then(response => {
+                let {body, status} = response
+                expect(status).toBe(200)
+                expect(body).toHaveProperty('products')
                 done()
             })
             .catch(err => {
-                
                 done(err)
             })
         })

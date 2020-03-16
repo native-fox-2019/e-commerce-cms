@@ -1,6 +1,16 @@
 const {Product} = require('../models')
 
 class ProductController {
+    static getAllProducts(req, res, next){
+        Product.findAll()
+        .then(products => {
+            res.status(200).json({products})
+        })
+        .catch(err => {
+            console.log(err, '<<< ini dari get products')
+            next({status: 500, msg: 'Server Error'})
+        })
+    }
     static addProduct(req, res, next){
         let {name, image_url, price, stock} = req.body;
         Product.create({
