@@ -1,15 +1,6 @@
 const app = require('../app');
 const response = require('supertest');
 const { generateToken } = require('../helpers/jwt');
-let token = null;
-
-beforeAll(() => {
-    let obj = {
-        id: 1,
-        role: 'Admin'
-    }
-    token = generateToken(obj);
-});
 
 describe('Login test for User', () => {
     describe('Success to login and received token', () => {
@@ -25,7 +16,6 @@ describe('Login test for User', () => {
                     let { body, status } = response;
                     expect(status).toBe(200);
                     expect(body).toHaveProperty('token');
-                    expect(body.token).toBe(token);
                     done();
                 }).catch(err => {
                     done(err);

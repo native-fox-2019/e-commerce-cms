@@ -4,6 +4,6 @@ module.exports = {
         return jwt.sign(payload, process.env.SECRET);
     },
     verifyToken: (token) => {
-        return jwt.compare(token, process.env.SECRET);
+        return jwt.verify(token, process.env.SECRET);
     }
 }
