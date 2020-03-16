@@ -1,6 +1,6 @@
 const request= require('supertest');
 const app = require('../app');
-const {sequelize, Todo} = require('../models/index');
+const {sequelize, Products} = require('../models/index');
 const {queryInterface} = sequelize;
 
 afterAll(done =>{
