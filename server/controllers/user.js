@@ -11,6 +11,7 @@ class userController {
         try {
             let reg = await User.create(newUser)
             res.status(201).json(reg)
+            next()
         } catch (error) {
             next(err)
         }
