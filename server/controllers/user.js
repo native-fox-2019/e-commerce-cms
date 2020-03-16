@@ -1,4 +1,4 @@
-const { User, Product } = require("../models");
+const { User } = require("../models");
 const { sign } = require("../helpers/jwt");
 const { compare } = require("../helpers/bcrypt");
 const createError = require("http-errors");
