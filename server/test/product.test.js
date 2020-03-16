@@ -139,8 +139,22 @@ describe('updating product', () => {
                 })
                 .then(response => {
                     const { body, status } = response
-                    console.log(body)
                     expect(status).toBe(201)
+                    done()
+                })
+        })
+    })
+})
+
+//DELETE
+describe('deleting product', () => {
+    describe('success deleting product', () => {
+        it('delete product', (done) => {
+            request(app)
+                .delete(`/products/delete/${ID}`)
+                .then(response => {
+                    const { body, status } = response
+                    expect(status).toBe(200)
                     done()
                 })
         })
