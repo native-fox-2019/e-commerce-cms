@@ -1,6 +1,14 @@
 const request = require('supertest');
 const app = require('../app.js');
-const jwt = require('jsonwebtoken');
+const{User, sequelize} = require('../models');
+const {queryInterface} = sequelize;
+
+afterAll(done=>{
+    queryInterface
+        .bulkDelete('Users', {})
+        .then(()=> done())
+        .catch(err=> done(err));
+})
 
 describe('User routes', function(){
     describe('POST /users/register', function() {
@@ -59,4 +67,34 @@ describe('User routes', function(){
             })
         });
     });
+
+    describe('POST /users/login', function(){
+        it('should login', function(done){
+            request(app)
+                .post('/users/login')
+                .send({email: 'test@mail.com', password: '123'})
+                .then(data => {
+                    expect(data.status).toEqual(200);
+                    done()
+                })
+                .catch(err=>{
+                    done(err)
+                })
+            });
+        
+        it('should give an error: wrong email/password', function(done){
+            request(app)
+                .post('/users/login')
+                .send({email: 'test@mail.com', password: '1235'})
+                .then(data => {
+                    expect(data.status).toEqual(400);
+                    expect(data.body.message).toContain('Wrong email/password')
+                    done()
+                })
+                .catch(err=>{
+                    done(err)
+                })
+            });
+        
+    })
 })

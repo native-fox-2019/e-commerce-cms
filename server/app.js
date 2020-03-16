@@ -5,6 +5,8 @@ const router = require('./routes');
 const cors = require('cors');
 const errorHandler = require('./middlewares/errorHandler.js');
 
+require('dotenv').config();
+
 
 app.use(express.urlencoded({extended:true}));
 app.use(cors());

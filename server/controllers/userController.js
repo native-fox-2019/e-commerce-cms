@@ -1,4 +1,9 @@
 const {User} = require('../models');
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
+
+
 class Controller{
     static register(req, res, next){
         let dataRegister = {
@@ -10,7 +15,13 @@ class Controller{
         
         User.create(dataRegister)
         .then(data=>{
-            res.status(201).json(data);
+            let token = jwt.sign({ 
+                id: data.id,
+                email: data.email,
+                username: data.username
+            }, process.env.SECRET);
+
+            res.status(201).json({access_token: token});
         })
         .catch(err=>{
             let errors = [];
@@ -24,6 +35,44 @@ class Controller{
                 msg: 'register error'
             });
         })
+    }
+
+    static login(req, res, next){
+        let idLogin;
+        let emailLogin;
+        let usernameLogin;
+        
+        User.findOne({
+            where: {
+                email: req.body.email
+            }
+        })
+            .then(data=>{
+                idLogin = data.id;
+                emailLogin = data.email;
+                usernameLogin= data.username;
+
+                return bcrypt.compare(req.body.password, data.password)
+            })
+            .then(function(result) {
+                if(result){
+                    let token = jwt.sign({ 
+                        id: idLogin,
+                        email: emailLogin,
+                        username: usernameLogin
+                    }, process.env.SECRET);
+
+                    res.status(200).json({access_token: token})
+                }else{
+                    throw {
+                        msg: 'Wrong email/password',
+                        status: 400
+                    }
+                }
+            })
+            .catch(err=>{
+                next(err)
+            })
     }
 }
 

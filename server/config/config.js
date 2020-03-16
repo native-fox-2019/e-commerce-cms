@@ -11,8 +11,7 @@ module.exports = {
     "password": process.env.DB_PASSWORD,
     "database": "e-commerce_test",
     "host": "127.0.0.1",
-    "dialect": "postgres",
-    "operatorsAliases": false
+    "dialect": "postgres"
   },
   "production": {
     "username": "root",
