@@ -1,8 +1,8 @@
 const bcrypt = require('bcrypt')
 const salt = 10
 
-function hashPass(obj){
-    return bcrypt.hashSync(obj.password, salt)
+function hashPass(password){
+    return bcrypt.hashSync(password, salt)
 }
 
 function checkPass(password,data){

@@ -4,10 +4,13 @@ module.exports= function authorization(req,res,next){
     const {role, id} = req.user
     User.findOne({where:{id}})
     .then(data=>{
+        console.log('author')
         if(role === data.role){
-            next()
+        console.log('lolos author')
+        next()
         } else{
-            throw {
+        console.log('author error')
+        throw {
                 status:401,
                 msg:'Invalid Token'
             }

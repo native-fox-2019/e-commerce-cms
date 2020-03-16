@@ -15,20 +15,20 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false,
       validate: {
+        min: 0,
         notEmpty: {
           msg: 'price of products cant be empty',
         },
-        min: 0,
       }
     },
     stocks: {
       type: DataTypes.INTEGER,
       allowNull: false,
       validate: {
+        min: 0,
         notEmpty: {
           msg: 'stocks of products cant be empty'
         },
-        min: 0,
       }
     },
     imageURL: {

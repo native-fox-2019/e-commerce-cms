@@ -49,7 +49,7 @@ module.exports = (sequelize, DataTypes) => {
     },
   }, { hooks: {
     beforeSave: (instance,option) => {
-    instance.password = hashPass(instance)
+    instance.password = hashPass(instance.password)
   }}, sequelize });
   User.associate = function (models) {
     // associations can be defined here

@@ -2,7 +2,6 @@ const request = require('supertest')
 const app = require('../app')
 const { sequelize } = require('../models');
 const { queryInterface } = sequelize;
-let token
 
 afterAll(done => {
     queryInterface
@@ -139,21 +138,7 @@ describe('user login', () => {
         })
     })
 })
-describe('Admin Only',()=>{
-    describe('add product',()=>[
-        it('respond with details of product',(done)=>{
-            request(app)
-            .post('/admin/product')
-            .send({
-                name:'kembang desa',
-                price:300000,
-                stocks:3,
-                imageURL:'http://xhamster.com'
-            })
-            .set('access_token',)
-        })
-    ])
-})
+
 
 // describe('user login', () => {
 
