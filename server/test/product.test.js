@@ -15,6 +15,9 @@ describe('POST /product',()=>{
         .post('/product')
         .send({name:'Sepatu nike',image_url:'img.png',price:30000,stock:10})
         .set('Accept', 'application/json')
+        .expect(function(res){
+            res.body.status='Product has created'
+        })
         .expect(201)
         .end(onDone(done))
     }) 
@@ -22,12 +25,18 @@ describe('POST /product',()=>{
 
 describe('PUT /product/id',()=>{
     it('response with json',(done)=>{
-        request(app)
-        .put('/product/1')
+         request(app)
+        .put('/product/3')
         .send({name:'Sepatu adidas'})
         .set('Accept', 'application/json')
         .expect(200)
-        .end(onDone(done))
+        .end(function(err,res){
+            if(err) return done(err);
+
+            expect(res.body.status).toBe('updated');
+            done();
+        })
+    
     })
 })
 
