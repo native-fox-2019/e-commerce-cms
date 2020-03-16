@@ -13,7 +13,16 @@ class Controller{
             res.status(201).json(data);
         })
         .catch(err=>{
-            next(err);
+            let errors = [];
+            err.errors.forEach(error => {
+                errors.push(error.message)
+            });
+
+            next({
+                errors: errors,
+                status: 400,
+                msg: 'register error'
+            });
         })
     }
 }
