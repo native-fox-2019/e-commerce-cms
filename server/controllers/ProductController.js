@@ -23,6 +23,17 @@ class ProductController{
             res.status(500).json(err);
         }
     }
+
+    static async delete(req,res){
+        let id=req.params.id;
+
+        try{
+            let result=await Product.destroy({where:{id}});
+            res.status(200).json({status:'deleted',result});
+        }catch(err){
+            res.status(500).json(err);
+        }
+    }
 }
 
 module.exports=ProductController;

@@ -20,11 +20,22 @@ describe('POST /product',()=>{
     }) 
 });
 
-describe.only('PUT /product/id',()=>{
+describe('PUT /product/id',()=>{
     it('response with json',(done)=>{
         request(app)
         .put('/product/1')
         .send({name:'Sepatu adidas'})
+        .set('Accept', 'application/json')
+        .expect(200)
+        .end(onDone(done))
+    })
+})
+
+describe('DELETE /product/id',()=>{
+    it('should delete product based on id',(done)=>{
+        request(app)
+        .delete('/product/1')
+        .send()
         .set('Accept', 'application/json')
         .expect(200)
         .end(onDone(done))
