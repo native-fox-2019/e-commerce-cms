@@ -24,8 +24,9 @@ describe('Register for users', () => {
                 .then(result => {
                     const { body, status } = result;
                     expect(status).toBe(201);
-                    expect(body).toHaveProperty('email', 'test@test.com');
-                    expect(body).toHaveProperty('password', 'test');
+                    expect(body).toHaveProperty('email', input.email);
+                    expect(body).toHaveProperty('password');
+                    expect(body.password).not.toBe(input.password);
                     expect(body).toHaveProperty('role', 'Admin');
                     done();
                 }).catch(err => {

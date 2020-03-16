@@ -17,7 +17,7 @@
     "supertest": "^4.0.2"
   },
   "scripts": {
-    "test": "jest --detectOpenHandles",
+    "test": "NODE_ENV=test jest --detectOpenHandles --forceExit",
     "dev": "NODE_ENV=development nodemon app.js"
   },
   "repository": {

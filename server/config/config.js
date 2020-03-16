@@ -10,7 +10,7 @@ module.exports = {
   "test": {
     "username": process.env.DB_USERNAME,
     "password": process.env.DB_PASSWORD,
-    "database": "e-commerce-cms",
+    "database": "e-commerce-cms-test",
     "host": "localhost",
     "dialect": "postgres"
   },
