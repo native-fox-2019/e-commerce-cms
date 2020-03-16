@@ -17,8 +17,8 @@ afterAll(done => {
 
 describe('Register New User:', () => {
     describe('Register Success:', () => {
-        it('should return 201:', async (done) => {
-            await request(app)
+        it('should return 201:', (done) => {
+            request(app)
             .post('/user/register')
             .send({
                 username: 'admin',
@@ -42,8 +42,8 @@ describe('Register New User:', () => {
         })
     })
     describe('Register Fail:', () => {
-        it('should return 400 (Duplicate Account):', async (done) => {
-            await request(app)
+        it('should return 400 (Duplicate Account):', (done) => {
+            request(app)
             .post('/user/register')
             .send({
                 username: 'admin',
@@ -53,18 +53,17 @@ describe('Register New User:', () => {
             })
             .then(response => {
                 const { status, body } = response
-                console.log({ status, body })
+                console.log({ status, message: body.message })
                 expect(status).toBe(400)
-                expect(body.status).toBe(400)
-                expect(body.message).toBe('Already registered!')
+                expect(body.message).toBe('Already exists!')
                 done()
             })
             .catch(err => {
                 done(err)
             })
         })
-        it('should return 400 (Null Field):', async (done) => {
-            await request(app)
+        it('should return 400 (Null Field):', (done) => {
+            request(app)
             .post('/user/register')
             .send({
                 username: null,
@@ -74,9 +73,8 @@ describe('Register New User:', () => {
             })
             .then(response => {
                 const { status, body } = response
-                console.log({ status, body })
+                console.log({ status, message: body.message })
                 expect(status).toBe(400)
-                expect(body.status).toBe(400)
                 expect(body.message[0]).toBe('Username cannot be NULL!')
                 done()
             })
@@ -84,8 +82,8 @@ describe('Register New User:', () => {
                 done(err)
             })
         })
-        it('should return 400 (Empty Field):', async (done) => {
-            await request(app)
+        it('should return 400 (Empty Field):', (done) => {
+            request(app)
             .post('/user/register')
             .send({
                 username: 'admin2',
@@ -95,9 +93,8 @@ describe('Register New User:', () => {
             })
             .then(response => {
                 const { status, body } = response
-                console.log({ status, body })
+                console.log({ status, message: body.message })
                 expect(status).toBe(400)
-                expect(body.status).toBe(400)
                 expect(body.message[0]).toBe('Password cannot be empty!')
                 done()
             })
@@ -105,8 +102,8 @@ describe('Register New User:', () => {
                 done(err)
             })
         })
-        it('should return 400 (Invalid Role):', async (done) => {
-            await request(app)
+        it('should return 400 (Invalid Role):', (done) => {
+            request(app)
             .post('/user/register')
             .send({
                 username: 'admin2',
@@ -116,9 +113,8 @@ describe('Register New User:', () => {
             })
             .then(response => {
                 const { status, body } = response
-                console.log({ status, body })
+                console.log({ status, message: body.message })
                 expect(status).toBe(400)
-                expect(body.status).toBe(400)
                 expect(body.message[0]).toBe('Role must be either admin or user!')
                 done()
             })

@@ -33,8 +33,8 @@ beforeAll(done => {
 
 describe('User Login:', () => {
     describe('Login Success:', () => {
-        it('should return 200:', async (done) => {
-            await request(app)
+        it('should return 200:', (done) => {
+            request(app)
             .post('/user/login')
             .send({
                 username: 'admin',
@@ -44,7 +44,7 @@ describe('User Login:', () => {
                 const { status, body } = response
                 console.log({ status, body })
                 expect(status).toBe(200)
-                expect(body).toHaveProperty('token')
+                expect(body).toHaveProperty('access_token')
                 done()
             })
             .catch(err => {
@@ -53,8 +53,8 @@ describe('User Login:', () => {
         })
     })
     describe('Login Fail:', () => {
-        it('should return 400 (Invalid User / Pass):', async (done) => {
-            await request(app)
+        it('should return 400 (Invalid User / Pass):', (done) => {
+            request(app)
             .post('/user/login')
             .send({
                 username: 'h4XX0r',
@@ -62,7 +62,7 @@ describe('User Login:', () => {
             })
             .then(response => {
                 const { status, body } = response
-                console.log({ status, body })
+                console.log({ status, message: body.message })
                 expect(status).toBe(400)
                 done()
             })

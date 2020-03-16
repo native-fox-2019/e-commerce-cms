@@ -29,7 +29,7 @@ function errorHandler(err, req, res, next) {
         errMsg.message = err.message
     } else {
         errMsg.status = 500
-        errMsg.message = 'Oops! Something went wrong!'
+        errMsg.message = 'Oops! Something went wrong! Please try again or contact us for help.'
     }
     res.status(errMsg.status).json(errMsg)
 }

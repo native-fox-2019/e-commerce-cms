@@ -28,11 +28,11 @@ module.exports = {
         validate: {
           notNull: {
             args: true,
-            msg: 'Product Image URL cannot be NULL!'
+            msg: 'Product image URL cannot be NULL!'
           },
           notEmpty: {
             args: true,
-            msg: 'Product Image URL cannot be empty!'
+            msg: 'Product image URL cannot be empty!'
           }
         }
       },

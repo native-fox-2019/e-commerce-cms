@@ -24,13 +24,14 @@ class userController {
         try {
             let testUser = await User.findOne({ where: { username: req.body.username } })
             if (!testUser) throw customError(400, 'Wrong username / password!')
+
             let testPass = await comparePass(req.body.password, testUser.password)
             if (!testPass) throw customError(400, 'Wrong username / password!')
 
-            let token = await jwt.sign({ id: testUser.id }, process.env.JWT_SECRET)
-            if (!token) throw customError(500, 'Failed to generate token!')
+            let access_token = await jwt.sign({ id: testUser.id }, process.env.JWT_SECRET)
+            if (!access_token) throw customError(500, 'Failed to generate access token!')
 
-            res.status(200).json({ token })
+            res.status(200).json({ access_token })
             next()
         } catch (err) {
             next(err)
