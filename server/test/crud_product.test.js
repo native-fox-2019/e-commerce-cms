@@ -33,7 +33,7 @@ describe('Create a new product ',function(){
         })
     })
 
-    describe('Fail to create object because stock is 0',function(){
+    describe('Fail to create product',function(){
         it('Should return 400 and object (Error)', (done)=>{
             request(app)
             .post('/product')
@@ -45,81 +45,31 @@ describe('Create a new product ',function(){
             })
             .then(res=>{
                 const {body,status} = res;
-                const expected = ["Product's Stock cannot be empty"]
                 expect(status).toBe(400);
                 expect(body).toHaveProperty('msg')
-                expect(body.msg).toEqual(expect.arrayContaining(expected))
                 expect(body.msg)
                 done()
             })
         })
     })
 
-    describe('Fail to create object because price is negative value',function(){
-        it('Should return 400 and object (Error)', (done)=>{
+
+
+
+
+})
+
+describe('Find all data',function(){
+    describe('succes find data',function(){
+        it('Succesfully find all data', (done)=>{
             request(app)
-            .post('/product')
-            .send({
-                name:'testName',
-                image_url:'Test imageUrl',
-                price:-1,
-                stock:0
-            })
-            .then(res=>{
-                const {body,status} = res;
-                const expected = ["Price cannot be negative value"]
-                expect(status).toBe(400);
-                expect(body).toHaveProperty('msg')
-                expect(body.msg).toEqual(expect.arrayContaining(expected))
-                expect(body.msg)
-                done()
-            })
+            .get('/product')
+        })
+        .then(result=>{
+            const {body,status}=result
+            expect(status).toBe(200)
+            expect(body.msg).toHaveProperty('msg')
+            done()
         })
     })
-
-    describe('Fail to create object because price is negative value',function(){
-        it('Should return 400 and object (Error)', (done)=>{
-            request(app)
-            .post('/product')
-            .send({
-                name:'testName',
-                image_url:'Test imageUrl',
-                price:-1,
-                stock:0
-            })
-            .then(res=>{
-                const {body,status} = res;
-                const expected = ["Price cannot be negative value"]
-                expect(status).toBe(400);
-                expect(body).toHaveProperty('msg')
-                expect(body.msg).toEqual(expect.arrayContaining(expected))
-                expect(body.msg)
-                done()
-            })
-        })
-    })
-
-    describe('Fail to create object because price is negative value',function(){
-        it('Should return 400 and object (Error)', (done)=>{
-            request(app)
-            .post('/product')
-            .send({
-                name:'testName',
-                image_url:'Test imageUrl',
-                price:-1,
-                stock:0
-            })
-            .then(res=>{
-                const {body,status} = res;
-                const expected = ["Price cannot be negative value"]
-                expect(status).toBe(400);
-                expect(body).toHaveProperty('msg')
-                expect(body.msg).toEqual(expect.arrayContaining(expected))
-                expect(body.msg)
-                done()
-            })
-        })
-    })
-
-
 })

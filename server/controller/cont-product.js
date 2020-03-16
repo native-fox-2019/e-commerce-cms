@@ -2,25 +2,6 @@ const { Product } = require('../models')
 
 class Controller {
     static create (request,response,next){
-        let err={
-            status:400,
-            msg:[]
-        }
-        if (!request.body.name||request.body.name===''){
-            err.msg.push('Product Name cannot be empty')
-        }
-        if(!request.body.image_url||request.body.image_url===''){
-            err.msg.push('Image Url cannot be empty')
-        }
-        if (request.body.price<0){
-            err.msg.push('Price cannot be negative value')
-        }
-        if(request.body.stock<=0){
-            err.msg.push("Product's Stock cannot be empty")
-        }
-        if (err.msg.length>0){
-            response.status(400).json({msg:err.msg})
-        }else{
             Product.create({
                 name:request.body.name,
                 image_url:request.body.image_url,
@@ -31,11 +12,55 @@ class Controller {
                 response.json(data)
             })
             .catch(err=>{
-                console.log(err)
-                response.json(err)
+            
+                if(err.errors){
+                    let errorObj={
+                        status:400,
+                        msg:[],
+                        type:err.errors[0].type
+                    }
+                    
+                    for (let i = 0 ; i < err.errors.length ; i++){
+                        errorObj.msg.push(err.errors[i].message)
+                    }
+                    next(errorObj)
+                }else{
+                    next({status:500,msg:'internal server error'})
+                }
+                // response.json(err)
             })
-        }
+        
 
+    }
+    static readProduct(request,response,next){
+        Product.findAll()
+        .then(result=>{
+            response.send(result)
+        })
+        .catch(err=>{
+            next({status:500,msg:'internal server error'})
+        })
+    }
+
+    static update(request,response,next){
+        
+        Product.findByPk(Number(request.params.id))
+        .then(data=>{
+            if(data){
+                Product.update({
+                    name:request.body.name,
+                    image_url:request.body.image_url,
+                    price:request.body.price,
+                    stock:request.body.stock
+                },{where:{id:request.params.id}})
+            }else{
+                //data ga ada
+                
+            }
+        })
+        .catch(err=>{
+            next(err)
+        })
     }
 }
 
