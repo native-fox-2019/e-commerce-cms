@@ -25,8 +25,8 @@ module.exports = (sequelize, DataTypes) => {
     stock: {
       type: DataTypes.INTEGER,
       validate: {
-        notMinus: (price) => {
-          if (price < 0) {
+        notMinus: (stock) => {
+          if (stock < 0) {
             throw new Error('Stock cannot negative')
           }
         }

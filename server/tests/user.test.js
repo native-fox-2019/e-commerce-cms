@@ -5,11 +5,17 @@ const {
 } = require('../models')
 const {
     queryInterface
-} = require('sequelize')
+} = sequelize
 
 // Setelah selesai semua
-afterAll(() => {
-
+afterAll((done) => {
+    queryInterface.bulkDelete('Users', {})
+        .then(() => {
+            done()
+        })
+        .catch(err => {
+            done(err)
+        })
 })
 
 // Test Register
@@ -69,7 +75,30 @@ describe('Test Register', () => {
                 } = result
                 expect(status).toBe(400)
                 expect(body).toHaveProperty('status_code', 400)
-                expect(body).toHaveProperty('message', ['Email Column Cannot Empty', 'Password Length Minimum 6 Characters'])
+                expect(body).toHaveProperty('message')
+                expect(body.message).toContain('Email Column Cannot Empty')
+                expect(body.message).toContain('Password Length Minimum 6 Characters')
+                done()
+            })
+            .catch(err => {
+                done(err)
+            })
+    })
+
+    it('Try to Register with Registered Email', (done) => {
+        request(app).post('/user/registration').send({
+                name: 'User 2',
+                email: 'user1@mail.com',
+                password: 'qwerty'
+            })
+            .then(result => {
+                const {
+                    body,
+                    status
+                } = result
+                expect(status).toBe(400)
+                expect(body).toHaveProperty('status_code', 400)
+                expect(body).toHaveProperty('message', 'Email Already Registered')
                 done()
             })
             .catch(err => {

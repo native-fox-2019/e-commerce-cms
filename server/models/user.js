@@ -25,6 +25,18 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     }
+  }, {
+    hooks: {
+      beforeCreate: (instance, option) => {
+        return bcrypt.hash(instance.password, 10).then(result => {
+            instance.password = result
+          })
+          .catch(err => {
+            console.log('Error Hashing Password')
+          })
+      }
+    },
+    sequelize
   })
 
   User.associate = function (models) {
