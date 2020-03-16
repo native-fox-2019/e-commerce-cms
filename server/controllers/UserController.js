@@ -41,7 +41,7 @@ class UserController {
                 password
             }
             let newUser = await User.create(obj)
-            let token = generateToken({ id: newUser.id, email: newUser.email })
+            let token = generateToken({ id: newUser.id, email: newUser.email, role: newUser.role })
             res.status(200).json({ access_token: token })
         } catch (err) {
             let msg = []

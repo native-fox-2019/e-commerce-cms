@@ -8,7 +8,6 @@ class ProductController {
 
     static async addProduct (req, res, next) {
         try {
-            console.log('masoooooook')
             let { name, image_url, price, stock } = req.body
             let obj = {
                 name,
@@ -42,9 +41,19 @@ class ProductController {
                 price,
                 stock
             }
-            let edited = await Product.update({ where: { id } })
-            if (edited) {
-                res.status(200).json({ obj, message: "Product edited" })
+            let product = await Product.findOne({ where: { id } })
+            if (!product) {
+                next(
+                    {
+                        status: 404,
+                        message: "Product not found"
+                    }
+                )
+            } else {
+                let edited = await Product.update(obj, { where: { id } })
+                if (edited) {
+                    res.status(200).json({ edited: obj, message: "Product edited" })
+                }
             }
         } catch (err) {
             let msg = []
