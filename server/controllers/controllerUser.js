@@ -1,7 +1,9 @@
 'use strict'
 
+// require('dotenv').config()
 const { User } = require('../models')
 const { sign } = require('../helpers/jwt')
+const {checkPass} = require('../helpers/bcrypt')
 
 
 class ControllerUser {
@@ -10,12 +12,11 @@ class ControllerUser {
         console.log({name, email, password})
         User.create({name, email, password, role:'user'})
         .then(data =>{
-            const {id,name} = data
-            let access_token = sign({id, name}, process.env.JWT_SECRET)
+            const {id,role, name} = data
+            let access_token = sign({id, role, name}, process.env.JWT_SECRET)
             res.status(201).json({access_token})
         })
         .catch(err =>{
-            console.log(err)
             next(err)
         })
     }
@@ -24,11 +25,20 @@ class ControllerUser {
         const {email, password} = req.body
         User.findOne({where:{email}})
         .then(data =>{
-            if(password === data.password){
-                res.status(200).json(data)
+            if(data){
+                if(checkPass(password, data)){
+                    const {id, name} = data
+                    let access_token = sign({id, name}, process.env.JWT_SECRET)
+                    res.status(200).json({access_token})
+                } else {
+                    throw {
+                        status:404,
+                        msg:'incorrect USERNAME/PASSWORD'
+                    }
+                }
             } else {
                 throw {
-                    status:400,
+                    status:404,
                     msg:'incorrect USERNAME/PASSWORD'
                 }
             }

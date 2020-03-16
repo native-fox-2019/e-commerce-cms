@@ -5,8 +5,8 @@ function hashPass(obj){
     return bcrypt.hashSync(obj.password, salt)
 }
 
-function checkPass(obj,data){
-    return bcrypt.compareSync(obj.password, data.password)
+function checkPass(password,data){
+    return bcrypt.compareSync(password, data.password)
 }
 
 module.exports = { hashPass, checkPass }
