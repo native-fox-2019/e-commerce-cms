@@ -2,11 +2,29 @@ const request = require("supertest");
 
 const app = require('../app')
 
+describe("POST /user/register check password is hashed?", () => {
+  test("password can't be store if not hashed", done => {
+		request(app)
+			.post('/user/register')
+			.send({name:'Malik', email:'test@mail.com', password:'test'})
+			.set('Accept', 'application/json')
+			.expect(res.password !== 'test').toBe(401)
+			.expect('Content-Type', /json/)
+			.end((err, res) => {
+					if(err){
+						return done()
+					}else{
+						return done(res)
+					}
+			})
+  })  
+})
+
 describe("POST /user/register", () => {
   test("can register as a new user", done => {
 		request(app)
 			.post('/user/register')
-			.send({name:'Malik', email:'test@mail.com', password:test})
+			.send({name:'Malik', email:'test@mail.com', password:'test'})
 			.set('Accept', 'application/json')
 			.expect(res.statusCode).toBe(201)
 			.expect('Content-Type', /json/)
@@ -15,6 +33,24 @@ describe("POST /user/register", () => {
 						return done(err)
 					}else{
 						return done()
+					}
+			})
+  })  
+})
+
+describe("POST /user/register", () => {
+  test("can't register, email already registered", done => {
+		request(app)
+			.post('/user/register')
+			.send({name:'Malik', email:'test@mail.com', password:'test'})
+			.set('Accept', 'application/json')
+			.expect(res.statusCode).toBe(401)
+			.expect('Content-Type', /json/)
+			.end((err, res) => {
+					if(err){
+						return done()
+					}else{
+						return done(res)
 					}
 			})
   })  
