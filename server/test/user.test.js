@@ -10,6 +10,8 @@ afterAll(done =>{
     .catch(err=>done(err))
 });
 
+
+
 describe('User register',()=>{
     describe('Success register user',()=>{
         it('should return 200 and object (token)',(done)=>{
@@ -25,12 +27,10 @@ describe('User register',()=>{
                 const {status,body}=result
                 expect(status).toBe(200)
                 expect(body).toHaveProperty("token")
+                // token = body.token
                 done()
             })
-            .catch(err=>{
-                console.log(err)
-                done()
-            })
+            
         })
     })
 
@@ -50,10 +50,7 @@ describe('User register',()=>{
                 expect(body).toHaveProperty("msg")
                 done()
             })
-            .catch(err=>{
-                console.log(err)
-                done()
-            })
+            
         })
     })
 
@@ -75,10 +72,7 @@ describe('User register',()=>{
                 expect(body).toHaveProperty("msg")
                 done()
             })
-            .catch(err=>{
-                console.log(err)
-                done()
-            })
+           
         })
     })
 
@@ -89,30 +83,26 @@ describe('User login',()=>{
     describe('succesful user login',()=>{
         it('should return 200 and object(token)',(done)=>{
             request(app)
-            .post('/user/register')
+            .post('/user/login')
             .send({
-            
                 email:"geovrisco3@gmail.com",
                 password:"testsa",
-            
             })
             .then(result=>{
                 const {status,body}=result
                 expect(status).toBe(200)
                 expect(body).toHaveProperty("token")
+                
                 done()
             })
-            .catch(err=>{
-                console.log(err)
-                done()
-            })
+           
         })
     })
 
     describe('failed user login',()=>{
         it('should return 401 and object(err)',(done)=>{
             request(app)
-            .post('/user/register')
+            .post('/user/login')
             .send({
           
                 email:"geovrisco3@gmail.com",
@@ -121,14 +111,11 @@ describe('User login',()=>{
             })
             .then(result=>{
                 const {status,body}=result
-                expect(status).toBe(400)
+                expect(status).toBe(401)
                 expect(body).toHaveProperty("msg")
                 done()
             })
-            .catch(err=>{
-                console.log(err)
-                done()
-            })
+            
         })
     })
 

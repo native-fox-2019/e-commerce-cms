@@ -3,6 +3,9 @@ const app = require('../app');
 const {sequelize, Products} = require('../models/index');
 const {queryInterface} = sequelize;
 
+let tokenAdmin = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiZ2FicmllbCIsImVtYWlsIjoiYWRtaW5AbWFpbC5jb20iLCJsZXZlbCI6ImFkbWluIiwiaWF0IjoxNTg0MzYzMjUzfQ.B87QFgxvI7jXZlFPx1FAMRU0mWZycOckq05GH_tWoTk'
+let tokenUser = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiZ2FicmllbDIiLCJlbWFpbCI6InVzZXJAbWFpbC5jb20iLCJsZXZlbCI6InVzZXIiLCJpYXQiOjE1ODQzNjMzNDB9.IFdaKJJItUpzfuBlfszcQgNPQr_ixVqvwVHN_kcScMM'
+
 afterAll(done =>{
     queryInterface
     .bulkDelete('Products', {})
@@ -15,6 +18,7 @@ describe('Create a new product ',function(){
         it('should return 200 and object (message,product)', (done)=>{
             request(app)
             .post('/product')
+            .set('token', tokenAdmin)
             .send({
                 name:'testName',
                 image_url:'Test imageUrl',
@@ -33,7 +37,7 @@ describe('Create a new product ',function(){
             })  
             .catch(err=>{
                 console.log(err)
-                done()
+                
             })
         })
     })
@@ -42,6 +46,7 @@ describe('Create a new product ',function(){
         it('Should return 400 and object (Error)', (done)=>{
             request(app)
             .post('/product')
+            .set('token', tokenAdmin)
             .send({
                 name:'testName',
                 image_url:'Test imageUrl',
@@ -57,10 +62,37 @@ describe('Create a new product ',function(){
             })
             .catch(err=>{
                 console.log(err)
-                done()
+                
             })
         })
     })
+
+
+    describe('fail to create product because of invalid credential', ()=>{
+        it('should return 403 and  object(error)',(done)=>{
+            request(app)
+            .post('/product')
+            .set('token',tokenAdmin)
+            .send({
+                name:'testName',
+                image_url:'Test imageUrl',
+                price:10000,
+                stock:0
+            })
+            .then(res=>{
+                const {body,status} = res;
+                expect(status).toBe(400);
+                expect(body).toHaveProperty('msg')
+                done()
+            })
+            .catch(err=>{
+                console.log(err)
+                
+            })
+        })
+    })
+
+    
 
 
 
@@ -69,10 +101,11 @@ describe('Create a new product ',function(){
 })
 
 describe('Find all data',function(){
-    describe('succes find data',function(){
+    describe('succes find data with admin credential',function(){
         it('should return 200', (done)=>{
             request(app)
             .get('/product')
+            .set('token', tokenAdmin)
         .then(result=>{
             const {body,status}=result
             expect(status).toBe(200)
@@ -80,7 +113,40 @@ describe('Find all data',function(){
             })
             .catch(err=>{
                 console.log(err)
-                done()
+                
+            })
+        })
+    })
+    describe('succes find data with user credential',function(){
+        it('should return 200', (done)=>{
+            request(app)
+            .get('/product')
+            .set('token', tokenUser)
+        .then(result=>{
+            const {body,status}=result
+            expect(status).toBe(200)
+            done()
+            })
+            .catch(err=>{
+                console.log(err)
+               
+            })
+        })
+    })
+
+    describe('failed to get data because of authentication failure',function(){
+        it('should return 200', (done)=>{
+            request(app)
+            .get('/product')
+       
+        .then(result=>{
+            const {body,status}=result
+            expect(status).toBe(403)
+            done()
+            })
+            .catch(err=>{
+                console.log(err)
+              
             })
         })
     })
@@ -92,6 +158,7 @@ describe('update Data', ()=>{
         it('should return 200 and object (message,product)', (done)=>{
             request(app)
             .put(`/product/${id}`)
+            .set('token', tokenAdmin)
             .send({
                 name:'testName 20 999',
                 image_url:'Test imageUrlz',
@@ -107,7 +174,7 @@ describe('update Data', ()=>{
             })
             .catch(err=>{
                 console.log(err)
-                done()
+                
             })
         })
     })
@@ -116,6 +183,7 @@ describe('update Data', ()=>{
         it('should return 404 and object (error)', (done)=>{
             request(app)
             .put('/product/666')
+            .set('token', tokenAdmin)
             .send({
                 name:'testName 20 999',
                 image_url:'Test imageUrl',
@@ -130,7 +198,7 @@ describe('update Data', ()=>{
             })
             .catch(err=>{
                 console.log(err)
-                done()
+            
             })
         })
     })
@@ -139,6 +207,7 @@ describe('update Data', ()=>{
         it('should return 400 and object (error)', (done)=>{
             request(app)
             .put(`/product/${id}`)
+            .set('token', tokenAdmin)
             .send({
                 name:'',
                 image_url:'',
@@ -153,7 +222,7 @@ describe('update Data', ()=>{
             })
             .catch(err=>{
                 console.log(err)
-                done()
+                
             })
         })
     })
@@ -167,6 +236,7 @@ describe('delete data',()=>{
         it("should return 200 and object(product)", (done)=>{
             request(app)
             .delete(`/product/${id}`)
+            .set('token', tokenAdmin)
         .then(result=>{
             const {body,status}=result
             expect(status).toBe(200)
@@ -179,7 +249,7 @@ describe('delete data',()=>{
         })
         .catch(err=>{
             console.log(err)
-            done()
+            
         })
     })
 })
@@ -188,6 +258,7 @@ describe('delete data',()=>{
         it('should return 404 and object(error)', (done)=>{
             request(app)
             .delete(`/product/9202`)
+            .set('token', tokenAdmin)
         .then(result=>{
             const {body,status} = result
             expect(status).toBe(404)
@@ -196,7 +267,7 @@ describe('delete data',()=>{
         })
         .catch(err=>{
             console.log(err)
-            done()
+            
         })
     })
 })

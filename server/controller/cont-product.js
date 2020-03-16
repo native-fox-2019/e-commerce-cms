@@ -110,7 +110,7 @@ class Controller {
     }
 
     static delete(request,response,next){
-        console.log(request.params.id)
+        // console.log(request.params.id)
         let datum = null
         Product.findOne({where:{id:request.params.id}})
         .then(data=>{
@@ -126,7 +126,7 @@ class Controller {
             }
         })
         .then(data=>{
-            console.log('ada data=======================')
+            // console.log('ada data=======================')
             response.send({
                 msg:'succesfully delete data',
                 name:datum.name,

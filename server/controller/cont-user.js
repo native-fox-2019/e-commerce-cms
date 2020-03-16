@@ -11,14 +11,14 @@ class Controller {
         User.findOne({where:{email:request.body.email}})
         .then(data=>{
             if(data){
-                console.log("masuk sini")
+                // console.log("masuk sini")
                 let errorObj={
                     status:400,
                     msg:"Email Has Been Used"
                 }
                 throw(errorObj)
             }else{
-                console.log("ga masuk sini")
+                // console.log("ga masuk sini")
                 return  User.create({
                     name:request.body.name,
                     email:request.body.email,
@@ -62,7 +62,7 @@ class Controller {
         .then(data=>{
             userDatum=data
             if(data){
-                console.log(data.password)
+                // console.log(data.password)
                 return comparePw(request.body.password,data.password)
             }else{
                 let errorObj={
@@ -73,7 +73,7 @@ class Controller {
             }
         })
         .then(data=>{
-            console.log(data,"masuk sini")
+            // console.log(data,"masuk sini")
             if (data){
                 let token = jwt.sign({
                     name:userDatum.name,
