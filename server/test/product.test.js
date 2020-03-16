@@ -250,6 +250,19 @@ describe('deleting product', () => {
                 .then(response => {
                     const { body, status } = response
                     expect(status).toBe(200)
+                    expect(body).toHaveProperty('msg', 'Product deleted')
+                    done()
+                })
+        })
+    })
+    describe('fail deleting product', () => {
+        it('delete unexisting product', (done) => {
+            request(app)
+                .delete(`/products/delete/100`)
+                .then(response => {
+                    const { body, status } = response
+                    expect(status).toBe(404)
+                    expect(body).toHaveProperty('msg', 'Cannot be found')
                     done()
                 })
         })

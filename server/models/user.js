@@ -31,7 +31,18 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     }
-  }, {});
+  }, {
+    hooks:{
+      beforeCreate: async (ins, opt) => {
+        try {
+          const hashed = await encode(ins.password)
+          ins.password = hashed
+        } catch (error) {
+          
+        }
+      }
+    }
+  });
   
   User.associate = function(models) {
     // associations can be defined here

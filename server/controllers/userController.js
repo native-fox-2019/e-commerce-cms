@@ -37,11 +37,11 @@ class UserController {
         try {
             const find = await User.findOne({where:{email: req.body.email}})
             if (!find) {
-                const hashed = await encode(req.body.password)
+                // const hashed = await encode(req.body.password)
                 const newUser = await User.create({
                     name: req.body.name,
                     email: req.body.email,
-                    password: hashed
+                    password: req.body.password
                 })
                 const token = create({
                     id: newUser.id,
