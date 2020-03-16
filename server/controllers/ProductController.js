@@ -1,4 +1,5 @@
 const { Product } = require('../models');
+const createError = require('../helpers/createError');
 
 class ProductController {
     static async create(req, res, next) {
@@ -15,6 +16,32 @@ class ProductController {
         try {
             let products = await Product.findAll();
             res.status(200).json(products);
+        } catch (err) {
+            next(err);
+        }
+    }
+    static async editData(req, res, next) {
+        try {
+            let id = Number(req.params.id);
+            let { name, image_url, price, stock } = req.body;
+            let obj = { name, image_url, price, stock };
+            let updatedData = await Product.update(obj, { where: { id } });
+            if (!updatedData) {
+                throw createError(404, 'Error Not Found');
+            } else {
+                res.status(200).json(obj);
+            }
+        } catch (err) {
+            next(err);
+        }
+    }
+    static async deleteData(req, res, next) {
+        try {
+            let id = Number(req.params.id);
+            let deletedData = await Product.destroy({ where: { id } });
+            res.status(200).json({
+                msg: 'Your data has been deleted'
+            });
         } catch (err) {
             next(err);
         }

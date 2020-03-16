@@ -30,7 +30,7 @@ class UserController {
                 if (!checkPassword) {
                     throw createError(400, 'Wrong email/password')
                 } else {
-                    let payload = { id: userHasRegistered.id, role: userHasRegistered.role };
+                    let payload = { id: userHasRegistered.id };
                     let token = generateToken(payload);
                     res.status(200).json({ token });
                 }
