@@ -19,6 +19,7 @@ afterAll((done) => {
             done(err)
         })
 })
+
 let token
 request(app).post('/user/registration').send({
         name: 'User 1',
