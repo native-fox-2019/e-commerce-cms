@@ -8,6 +8,7 @@ const client = new OAuth2Client(clientID);
 class Controller {
 
     static register(req, res, next) {
+        console.log('register')
         let obj = {
             username: req.body.username,
             email: req.body.email,
@@ -16,14 +17,12 @@ class Controller {
         }
         User.create(obj)
         .then(data => {
-            console.log(data)
             res.status(201).json({ data, message: 'Successfully registered new user' })
         })
         .catch(next)
     }
 
     static login(req, res, next) {
-        console.log('register')
         let obj = {
             email: req.body.email,
             password: req.body.password,
@@ -45,7 +44,7 @@ class Controller {
             let payload = {id: user.id, username: user.username, email: user.email}
             let token = generateToken(payload)
 
-            console.log(token)
+            console.log('Token', token)
 
             res.status(200).json({ token })
         })

@@ -1,7 +1,7 @@
 function errorHandler(err, req, res, next) {
+    console.log('Error', err)
 
     let status, message, error = []
-     console.log(err)
 
     if (err.name === 'ValidationError') {
         status = 400
