@@ -11,6 +11,7 @@ module.exports = {
       email: {
         type: Sequelize.STRING,
         allowNull: false,
+        unique: true,
         validate: {
           notEmpty: {
             args: true,
@@ -19,10 +20,24 @@ module.exports = {
         }
       },
       password: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false,
+        validate: {
+          notEmpty: {
+            args: true,
+            msg: 'Password cannot be empty'
+          }
+        }
       },
       role: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false,
+        validate: {
+          isIn: {
+            args: [['User', 'Admin']],
+            msg: 'Role must be User or Admin'
+          }
+        }
       },
       createdAt: {
         allowNull: false,
