@@ -47,7 +47,7 @@ class UserController {
         next(err)
       })
   }
-  static login(req, res, next) {
+  static loginUser(req, res, next) {
     const { email, password } = req.body
     User
       .findOne({
@@ -66,7 +66,7 @@ class UserController {
             const payload = {
               id: data.id,
               email: data.email,
-              username: data.username
+              username: data.username,
             }
             const token = jwt.sign(payload, process.env.SECRET)
             res.status(200).json(token)
@@ -75,6 +75,41 @@ class UserController {
               status: 400,
               msg: 'Wrong Password!!!'
             }
+          }
+        }
+      })
+      .catch(err => {
+        next(err)
+      })
+  }
+  static loginAdmin(req, res, next) {
+    const { email, password } = req.body
+    User
+      .findOne({
+        where: {
+          email,
+        }
+      })
+      .then(data => {
+        if (!data) {
+          throw {
+            status: 400,
+            msg: "Wrong username / password."
+          }
+        } else if (data && bcrypt.compare(password, data.password)) {
+          if (data.admin == false) {
+            throw {
+              status: 401,
+              msg: "You don't have access to get in."
+            }
+          } else if (data.admin == true) {
+            const payload = {
+              id: data.id,
+              username: data.username,
+              email: data.email
+            }
+            const token = jwt.sign(payload, process.env.SECRET)
+            res.status(200).json(token)
           }
         }
       })

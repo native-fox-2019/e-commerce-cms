@@ -1,7 +1,7 @@
-'use strict'
+"use strict"
 const { Product } = require('../models')
 
-function authorization(req, res, next) {
+function authorizationNonAdmin(req, res, next) {
   Product
     .findOne({
       where: {
@@ -15,12 +15,9 @@ function authorization(req, res, next) {
           msg: "Data not found!"
         }
       } else {
-        if (data.UserId !== req.user.id) {
-          throw {
-            status: 401,
-            msg: "Don't have access!"
-          }
-        } else if (data.UserId == req.user.id) {
+        if (data && data.UserId == req.user.id) {
+          next()
+        } else if (data && data.admin == true) {
           next()
         }
       }
@@ -30,4 +27,4 @@ function authorization(req, res, next) {
     })
 }
 
-module.exports = authorization
+module.exports = authorizationNonAdmin
