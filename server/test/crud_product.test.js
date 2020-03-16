@@ -9,7 +9,7 @@ afterAll(done =>{
     .then(()=>done())
     .catch(err=>done(err))
 });
-
+let id = null
 describe('Create a new product ',function(){
     describe('Succesfully create product',function(){
         it('should return 200 and object (message,product)', (done)=>{
@@ -28,6 +28,7 @@ describe('Create a new product ',function(){
                 expect(body).toHaveProperty('image_url','Test imageUrl');
                 expect(body).toHaveProperty('price',10000);
                 expect(body).toHaveProperty('stock',50);
+                id=body.id
                 done()
             })  
         })
@@ -64,12 +65,57 @@ describe('Find all data',function(){
         it('Succesfully find all data', (done)=>{
             request(app)
             .get('/product')
-        })
         .then(result=>{
             const {body,status}=result
             expect(status).toBe(200)
-            expect(body.msg).toHaveProperty('msg')
             done()
+            })
         })
     })
+
 })
+
+describe('update Data', ()=>{
+    describe('success update data', ()=>{
+        it('Successfully update data', (done)=>{
+            request(app)
+            .put(`/product/${id}`)
+            .send({
+                name:'testName 20 999',
+                image_url:'Test imageUrlz',
+                price:10000,
+                stock:1
+            })
+            .then(data=>{
+                const {body,status}= data
+                expect(status).toBe(200)
+                expect(body).toHaveProperty('msg')
+                expect(body).toHaveProperty('data')
+                done()
+            })
+        })
+    })
+
+    describe('failed update data', ()=>{
+        it('data not found', (done)=>{
+            request(app)
+            .put('/product/666')
+            .send({
+                name:'testName 20 999',
+                image_url:'Test imageUrl',
+                price:10000,
+                stock:1
+            })
+            .then(data=>{
+                const {body,status}= data
+                expect(status).toBe(404)
+                expect(body).toHaveProperty('msg')
+                done()
+            })
+        })
+    })
+
+})
+
+
+

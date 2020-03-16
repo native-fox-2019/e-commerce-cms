@@ -43,25 +43,60 @@ class Controller {
     }
 
     static update(request,response,next){
+        console.log(request.params.id)
         
-        Product.findByPk(Number(request.params.id))
+        Product.findOne({where:{id:request.params.id}})
         .then(data=>{
+            console.log(data)
             if(data){
-                Product.update({
+                return Product.update({
                     name:request.body.name,
                     image_url:request.body.image_url,
                     price:request.body.price,
                     stock:request.body.stock
-                },{where:{id:request.params.id}})
+                    },{where:{id:request.params.id}})
             }else{
+                console.log('masuk ga ada')
                 //data ga ada
-                
+                let error={
+                    status:404,msg:"data not found"
+                }
+                throw (error)
+            }
+        })
+        .then(res=>{
+            if(res){
+                let obj={
+                    msg:'Succes update data',
+                    data:{
+                        id:request.params.id,
+                        name:request.body.name,
+                        image_url:request.body.image_url,
+                        price:request.body.price,
+                        stock:request.body.stock
+                    }
+                }
+                response.json(obj)
             }
         })
         .catch(err=>{
-            next(err)
+            console.log(err)
+            if(err){
+                console.log('masuk sini')
+                let errobj={
+                    status:404,
+                    msg:err.msg
+                }
+                next(errobj)
+            }
+            else{
+                console.log('masuk ga ada error')
+                next({status:500,msg:'internal server error'})
+            }
         })
     }
+
+
 }
 
 module.exports = Controller
