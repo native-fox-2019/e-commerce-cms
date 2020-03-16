@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
           }
         }
     },
-    image_url: DataTypes.STRING,
+    image_url: DataTypes.INTEGER,
     price: {
       type: DataTypes.STRING,
         allowNull: false,

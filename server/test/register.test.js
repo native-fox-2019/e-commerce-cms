@@ -4,21 +4,20 @@ const { User, sequelize } = require('../models');
 const { queryInterface } = sequelize;
 
 afterAll(done => {
-    queryInterface
-        .bulkDelete('Users', {})
+    User.destroy({ where: { email: 'test@test.com' } })
         .then(() => done())
         .catch(err => done(err));
 })
 
 describe('Register for users', () => {
     describe('Success create user', () => {
-        it('Should return 201 and obj (user)', async(done) => {
+        it('Should return 201 and obj (user)', (done) => {
             let input = {
                 email: 'test@test.com',
                 password: 'test',
                 role: 'Admin'
             }
-            await request(app)
+            request(app)
                 .post('/users/register')
                 .send(input)
                 .then(result => {
@@ -35,7 +34,7 @@ describe('Register for users', () => {
         });
     })
     describe('Failed to create User', () => {
-        it('Should return 400 and obj (status, msg)', async(done) => {
+        it('Should return 400 and obj (status, msg)', (done) => {
             let input = {
                 email: '',
                 password: '',
@@ -44,7 +43,7 @@ describe('Register for users', () => {
             let output = ['Email cannot be empty',
                 'Password cannot be empty', 'Role must be User or Admin'
             ];
-            await request(app)
+            request(app)
                 .post('/users/register')
                 .send(input)
                 .then(result => {
@@ -61,13 +60,13 @@ describe('Register for users', () => {
         });
     })
     describe('Fail to register', () => {
-        it('Should return 400 and obj (status, obj)', async(done) => {
+        it('Should return 400 and obj (status, obj)', (done) => {
             let input = {
                 email: 'test@test.com',
                 password: 'test',
                 role: 'Admin'
             }
-            await request(app)
+            request(app)
                 .post('/users/register')
                 .send(input)
                 .then(result => {
