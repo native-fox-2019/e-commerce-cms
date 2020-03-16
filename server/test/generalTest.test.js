@@ -2,14 +2,161 @@ const app = require('../app')
 const request = require('supertest')
 const { sequelize } = require('../models')
 const { queryInterface } = sequelize
-const { Product } = require('../models')
+const { User, Product } = require('../models')
 
 
-const NAME = 'Black Box'
+const NAME = 'Robert'
+const EMAIL = 'robert@gmail.com'
+const PASS = 'robert'
+let TOKEN = ``
+
+const PRODUCT_NAME = 'Black Box'
 const IMG_URL = 'www.google.com'
 const PRICE = 100000
 const STOCK = 100
 const ID = 1
+
+beforeAll (done => {
+    User.create({
+        name: 'Random',
+        email: 'www.bing.com',
+        password: 'fuckoff'
+    })
+    .then(data => {
+        done()
+    })
+})
+
+afterAll(done => {
+    queryInterface
+        .bulkDelete('Users', {})
+        .then(() => done())
+        .catch((err) => done(err))
+})
+
+// CREATE (Register)
+describe('register new user', () => {
+    describe('success registering', () => {
+        it('success registering new user', (done) => {
+            request(app)
+                .post(`/users/register`)
+                .send({
+                    name: NAME,
+                    email: EMAIL,
+                    password: PASS
+                })
+                .then(response => {
+                    const { body, status } = response
+                    expect(status).toBe(200)
+                    expect(body).toHaveProperty('access_token',response.body.access_token)
+                    done()
+                })
+        })
+    })
+    describe('fail registering', () => {
+        it('name is null / empty', (done) => {
+            request(app)
+                .post(`/users/register`)
+                .send({
+                    name: '',
+                    email: 'empty@gmail.com',
+                    password: PASS
+                })
+                .then(response => {
+                    const { body, status } = response
+                    expect(status).toBe(400)
+                    expect(body).toContain('Name cannot be empty')
+                    done()
+                })
+        })
+        it('email is null / empty', (done) => {
+            request(app)
+                .post(`/users/register`)
+                .send({
+                    name: 'Hodor',
+                    email: '',
+                    password: PASS
+                })
+                .then(response => {
+                    const { body, status } = response
+                    expect(status).toBe(400)
+                    expect(body).toContain('Email cannot be empty')
+                    done()
+                })
+        })
+        it('password is null / empty', (done) => {
+            request(app)
+                .post(`/users/register`)
+                .send({
+                    name: 'Hodor',
+                    email: 'hodor@gmail.com',
+                    password: ''
+                })
+                .then(response => {
+                    const { body, status } = response
+                    expect(status).toBe(400)
+                    expect(body).toContain('Password cannot be empty')
+                    done()
+                })
+        })
+    })
+})
+
+// LOGIN USER
+describe('Login user', () => {
+    describe('success login', () => {
+        it('do login', (done) => {
+            request(app)
+                .post(`/users/login`)
+                .send({
+                    email: 'www.bing.com',
+                    password: 'fuckoff'
+                })
+                .then(response => {
+                    const { body, status } = response
+                    expect(status).toBe(200)
+                    expect(body).toHaveProperty('access_token', response.body.access_token)
+                    TOKEN = response.body.access_token
+                    done()
+                })
+        })
+    })
+    describe('failed login', () => {
+        it('wrong email', (done) => {
+            request(app)
+                .post(`/users/login`)
+                .send({
+                    email: 'www.bang.com',
+                    password: 'fuckoff'
+                })
+                .then(response => {
+                    const { body, status } = response
+                    expect(status).toBe(400)
+                    expect(body).toHaveProperty('msg', 'Invalid Email / Password')
+                    done()
+                })
+        })
+        it('wrong password', (done) => {
+            request(app)
+                .post(`/users/login`)
+                .send({
+                    email: 'www.bing.com',
+                    password: 'fuckoffsdsd'
+                })
+                .then(response => {
+                    const { body, status } = response
+                    expect(status).toBe(400)
+                    expect(body).toHaveProperty('msg', 'Invalid Email / Password')
+                    done()
+                })
+        })
+    })
+})
+
+
+
+
+
 
 beforeAll (done => {
     Product.create({
@@ -36,8 +183,9 @@ describe('adding new product', () => {
         it('success adding new product',  (done) => {
             request(app)
                 .post('/products/add')
+                .set({access_token:TOKEN})
                 .send({
-                    name: NAME,
+                    name: PRODUCT_NAME,
                     image_url: IMG_URL,
                     price: PRICE,
                     stock: STOCK
@@ -46,7 +194,7 @@ describe('adding new product', () => {
                     const { body, status } = response
                     expect(status).toBe(201)
                     expect(body).toHaveProperty('id')
-                    expect(body).toHaveProperty('name', NAME)
+                    expect(body).toHaveProperty('name', PRODUCT_NAME)
                     expect(body).toHaveProperty('image_url', IMG_URL)
                     expect(body).toHaveProperty('price', PRICE)
                     expect(body).toHaveProperty('stock', STOCK)
@@ -58,6 +206,7 @@ describe('adding new product', () => {
         it('Name empty / null', (done) => {
             request(app)
                 .post('/products/add')
+                .set({access_token:TOKEN})
                 .send({
                     name: '',
                     image_url: 'www.google.com',
@@ -74,6 +223,7 @@ describe('adding new product', () => {
         it('Image url empty / null', (done) => {
             request(app)
                 .post('/products/add')
+                .set({access_token:TOKEN})
                 .send({
                     name: 'Black Box',
                     image_url: '',
@@ -90,6 +240,7 @@ describe('adding new product', () => {
         it('Price empty / null', (done) => {
             request(app)
                 .post('/products/add')
+                .set({access_token:TOKEN})
                 .send({
                     name: 'Black Box',
                     image_url: 'www.google.com',
@@ -106,6 +257,7 @@ describe('adding new product', () => {
         it('Stock empty / null', (done) => {
             request(app)
                 .post('/products/add')
+                .set({access_token:TOKEN})
                 .send({
                     name: 'Black Box',
                     image_url: 'www.google.com',
@@ -143,6 +295,7 @@ describe('updating product', () => {
         it('updating product', (done) => {
             request(app)
                 .put(`/products/edit/${ID}`)
+                .set({access_token:TOKEN})
                 .send({
                     name:'Blue Box',
                     image_url:'www.yahoo.com',
@@ -161,6 +314,7 @@ describe('updating product', () => {
         it('name is empty', (done) => {
             request(app)
                 .put(`/products/edit/${ID}`)
+                .set({access_token:TOKEN})
                 .send({
                     name:'',
                     image_url:'www.yahoo.com',
@@ -177,6 +331,7 @@ describe('updating product', () => {
         it('Image url is empty', (done) => {
             request(app)
                 .put(`/products/edit/${ID}`)
+                .set({access_token:TOKEN})
                 .send({
                     name:'Blue Box',
                     image_url:'',
@@ -193,6 +348,7 @@ describe('updating product', () => {
         it('Price is empty', (done) => {
             request(app)
                 .put(`/products/edit/${ID}`)
+                .set({access_token:TOKEN})
                 .send({
                     name:'Blue Box',
                     image_url:'www.yahoo.com',
@@ -209,6 +365,7 @@ describe('updating product', () => {
         it('Stock is empty', (done) => {
             request(app)
                 .put(`/products/edit/${ID}`)
+                .set({access_token:TOKEN})
                 .send({
                     name:'Blue Box',
                     image_url:'www.yahoo.com',
@@ -225,6 +382,7 @@ describe('updating product', () => {
         it('Non exist ID', (done) => {
             request(app)
                 .put(`/products/edit/100`)
+                .set({access_token:TOKEN})
                 .send({
                     name:'Blue Box',
                     image_url:'www.yahoo.com',
@@ -247,6 +405,7 @@ describe('deleting product', () => {
         it('delete product', (done) => {
             request(app)
                 .delete(`/products/delete/${ID}`)
+                .set({access_token:TOKEN})
                 .then(response => {
                     const { body, status } = response
                     expect(status).toBe(200)
@@ -259,6 +418,7 @@ describe('deleting product', () => {
         it('delete unexisting product', (done) => {
             request(app)
                 .delete(`/products/delete/100`)
+                .set({access_token:TOKEN})
                 .then(response => {
                     const { body, status } = response
                     expect(status).toBe(404)
