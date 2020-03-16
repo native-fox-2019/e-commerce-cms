@@ -10,6 +10,8 @@ afterAll(done => {
     .catch(err => done(err));
 });
 
+let id = null;
+
 describe('Create a product item', function(){
     describe('Successfully create product', function(){
         it('Should return 201 and object (message, todo)', (done) => {
@@ -24,6 +26,7 @@ describe('Create a product item', function(){
             })
             .then(response => {
                 let {body, status} = response
+                id = body.product.id
                 expect(status).toBe(201);
                 expect(body).toHaveProperty('message', 'Successfully add the product');
                 expect(body).toHaveProperty('product');
@@ -69,13 +72,51 @@ describe('Create a product item', function(){
 
 describe('get list of products', function(){
     describe('successfully get products', function(){
-        it('Should return 200 and object(products', (done) => {
+        it('Should return 200 and object(products)', (done) => {
             request(app)
             .get('/products')
             .then(response => {
                 let {body, status} = response
                 expect(status).toBe(200)
                 expect(body).toHaveProperty('products')
+                done()
+            })
+            .catch(err => {
+                done(err)
+            })
+        })
+    })
+})
+
+describe('get a product by id', function(){
+    describe('sucessfully get product', function(){
+        it('Should return 200 and object(product)', (done) => {
+            request(app)
+            .get(`/products/${id}`)
+            .then(response => {
+                let {status, body} = response;
+                expect(status).toBe(200)
+                expect(body).toHaveProperty('product')
+                expect(body.product).toHaveProperty('name');
+                expect(body.product).toHaveProperty('image_url');
+                expect(body.product).toHaveProperty('price');
+                expect(body.product).toHaveProperty('stock');
+                done()
+            })
+            .catch(err => {
+                done(err)
+            })
+        })
+    })
+    describe('unsucessfully get product', function(){
+        it('Should return 404 and object(status, msg)', (done) => {
+            request(app)
+            .get(`/products/1`)
+            .then(response => {
+                let {status, body} = response;
+                expect(status).toBe(404)
+                expect(body).toHaveProperty('status', 404)
+                expect(body).toHaveProperty('msg', 'Product not found')
                 done()
             })
             .catch(err => {
