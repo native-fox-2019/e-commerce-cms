@@ -12,55 +12,63 @@ module.exports = {
         type: Sequelize.STRING,
         unique: true,
         allowNull: false,
-        notNull: {
-          args: true,
-          msg: 'Username cannot be NULL!'
-        },
-        notEmpty: {
-          args: true,
-          msg: 'Username cannot be empty!'
-        },
+        validate: {
+          notNull: {
+            args: true,
+            msg: 'Username cannot be NULL!'
+          },
+          notEmpty: {
+            args: true,
+            msg: 'Username cannot be empty!'
+          }
+        }
       },
       email:{
         type: Sequelize.STRING,
         unique: true,
         allowNull: false,
-        notNull: {
-          args: true,
-          msg: 'Email cannot be NULL!'
-        },
-        notEmpty: {
-          args: true,
-          msg: 'Email cannot be empty!'
-        },
+        validate: {
+          notNull: {
+            args: true,
+            msg: 'Email cannot be NULL!'
+          },
+          notEmpty: {
+            args: true,
+            msg: 'Email cannot be empty!'
+          }
+        }
       },
       password:{
         type: Sequelize.STRING,
         allowNull: false,
-        notNull: {
-          args: true,
-          msg: 'Password cannot be NULL!'
-        },
-        notEmpty: {
-          args: true,
-          msg: 'Password cannot be empty!'
-        },
+        validate: {
+          notNull: {
+            args: true,
+            msg: 'Password cannot be NULL!'
+          },
+          notEmpty: {
+            args: true,
+            msg: 'Password cannot be empty!'
+          }
+        }
       },
       role:{
         type: Sequelize.STRING,
         allowNull: false,
-        notNull: {
-          args: true,
-          msg: 'Role cannot be NULL!'
-        },
-        notEmpty: {
-          args: true,
-          msg: 'Role cannot be empty!'
-        },
-        isIn: {
-          args: ['admin','user'],
-          msg: 'Role must be either admin or user!'
-        },
+        validate: {
+          notNull: {
+            args: true,
+            msg: 'Role cannot be NULL!'
+          },
+          notEmpty: {
+            args: true,
+            msg: 'Role cannot be empty!'
+          },
+          isIn: {
+            args: ['admin','user'],
+            msg: 'Role must be either admin or user!'
+          }
+        }
       },
       createdAt: {
         allowNull: false,

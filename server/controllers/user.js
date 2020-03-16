@@ -12,7 +12,7 @@ class userController {
             let reg = await User.create(newUser)
             res.status(201).json(reg)
             next()
-        } catch (error) {
+        } catch (err) {
             next(err)
         }
     }

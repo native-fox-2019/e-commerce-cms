@@ -2,7 +2,7 @@ function errorHandler(err, req, res, next) {
     let errMsg = {}
     if (err.name === 'SequelizeUniqueConstraintError') {
         errMsg.status = 400
-        errMsg.message = 'Email already registered!'
+        errMsg.message = 'Username / Email already registered!'
     } else if (err.name === 'SequelizeValidationError') {
         errMsg.status = 400
         errMsg.message = []

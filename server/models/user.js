@@ -5,55 +5,63 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       unique: true,
       allowNull: false,
-      notNull: {
-        args: true,
-        msg: 'Username cannot be NULL!'
-      },
-      notEmpty: {
-        args: true,
-        msg: 'Username cannot be empty!'
-      },
+      validate: {
+        notNull: {
+          args: true,
+          msg: 'Username cannot be NULL!'
+        },
+        notEmpty: {
+          args: true,
+          msg: 'Username cannot be empty!'
+        }
+      }
     },
     email:{
       type: DataTypes.STRING,
       unique: true,
       allowNull: false,
-      notNull: {
-        args: true,
-        msg: 'Email cannot be NULL!'
-      },
-      notEmpty: {
-        args: true,
-        msg: 'Email cannot be empty!'
-      },
+      validate: {
+        notNull: {
+          args: true,
+          msg: 'Email cannot be NULL!'
+        },
+        notEmpty: {
+          args: true,
+          msg: 'Email cannot be empty!'
+        }
+      }
     },
     password:{
       type: DataTypes.STRING,
       allowNull: false,
-      notNull: {
-        args: true,
-        msg: 'Password cannot be NULL!'
-      },
-      notEmpty: {
-        args: true,
-        msg: 'Password cannot be empty!'
-      },
+      validate: {
+        notNull: {
+          args: true,
+          msg: 'Password cannot be NULL!'
+        },
+        notEmpty: {
+          args: true,
+          msg: 'Password cannot be empty!'
+        }
+      }
     },
     role:{
       type: DataTypes.STRING,
       allowNull: false,
-      notNull: {
-        args: true,
-        msg: 'Role cannot be NULL!'
-      },
-      notEmpty: {
-        args: true,
-        msg: 'Role cannot be empty!'
-      },
-      isIn: {
-        args: ['admin','user'],
-        msg: 'Role must be either admin or user!'
-      },
+      validate: {
+        notNull: {
+          args: true,
+          msg: 'Role cannot be NULL!'
+        },
+        notEmpty: {
+          args: true,
+          msg: 'Role cannot be empty!'
+        },
+        isIn: {
+          args: ['admin','user'],
+          msg: 'Role must be either admin or user!'
+        }
+      }
     }
   }, {});
   User.associate = function(models) {
