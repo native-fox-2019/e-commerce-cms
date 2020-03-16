@@ -43,11 +43,11 @@ class Controller {
     }
 
     static update(request,response,next){
-        console.log(request.params.id)
+        // console.log(request.params.id)
         
         Product.findOne({where:{id:request.params.id}})
         .then(data=>{
-            console.log(data)
+            // console.log(data)
             if(data){
                 return Product.update({
                     name:request.body.name,
@@ -56,7 +56,7 @@ class Controller {
                     stock:request.body.stock
                     },{where:{id:request.params.id}})
             }else{
-                console.log('masuk ga ada')
+                // console.log('masuk ga ada')
                 //data ga ada
                 let error={
                     status:404,msg:"data not found"
@@ -80,9 +80,9 @@ class Controller {
             }
         })
         .catch(err=>{
-            console.log(err)
-            if(err){
-                console.log('masuk sini')
+            // console.log(err,'============================ ini error')
+            if(err.status===404){
+                // console.log('masuk sini')
                 let errobj={
                     status:404,
                     msg:err.msg
@@ -90,8 +90,59 @@ class Controller {
                 next(errobj)
             }
             else{
-                console.log('masuk ga ada error')
-                next({status:500,msg:'internal server error'})
+                if (err.errors){
+                    let errorObj={
+                        status:400,
+                        msg:[],
+                        type:err.errors[0].type
+                    }
+                    
+                    for (let i = 0 ; i < err.errors.length ; i++){
+                        errorObj.msg.push(err.errors[i].message)
+                    }
+                    next(errorObj)
+                }else{
+                    // console.log('masuk ga ada error')
+                    next({status:500,msg:'internal server error'})
+                }
+            }
+        })
+    }
+
+    static delete(request,response,next){
+        console.log(request.params.id)
+        let datum = null
+        Product.findOne({where:{id:request.params.id}})
+        .then(data=>{
+
+            if(data){
+                datum=data
+                return Product.destroy({where:{id:request.params.id}})
+            }else{  
+                let errobj = {
+                    status:404,msg:"data not found"
+                }
+                throw(errobj)
+            }
+        })
+        .then(data=>{
+            console.log('ada data=======================')
+            response.send({
+                msg:'succesfully delete data',
+                name:datum.name,
+                image_url:datum.image_url,
+                price:datum.price,
+                stock:datum.stock
+            })
+        })
+        .catch(err=>{
+            if(err.status==404){
+                next(err)
+            }else{
+                next({
+                    status:500,
+                    msg:"internal server error"
+                })
             }
         })
     }

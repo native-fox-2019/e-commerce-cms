@@ -62,7 +62,7 @@ describe('Create a new product ',function(){
 
 describe('Find all data',function(){
     describe('succes find data',function(){
-        it('Succesfully find all data', (done)=>{
+        it('should return 200', (done)=>{
             request(app)
             .get('/product')
         .then(result=>{
@@ -77,7 +77,7 @@ describe('Find all data',function(){
 
 describe('update Data', ()=>{
     describe('success update data', ()=>{
-        it('Successfully update data', (done)=>{
+        it('should return 200 and object (message,product)', (done)=>{
             request(app)
             .put(`/product/${id}`)
             .send({
@@ -96,8 +96,8 @@ describe('update Data', ()=>{
         })
     })
 
-    describe('failed update data', ()=>{
-        it('data not found', (done)=>{
+    describe('failed update data because data is not found', ()=>{
+        it('should return 404 and object (error)', (done)=>{
             request(app)
             .put('/product/666')
             .send({
@@ -115,7 +115,58 @@ describe('update Data', ()=>{
         })
     })
 
+    describe('failed update data because bad request', ()=>{
+        it('should return 400 and object (error)', (done)=>{
+            request(app)
+            .put(`/product/${id}`)
+            .send({
+                name:'',
+                image_url:'',
+                price:-100,
+                stock:-20
+            })
+            .then(data=>{
+                const {body,status}= data
+                expect(status).toBe(400)
+                expect(body).toHaveProperty('msg')
+                done()
+            })
+        })
+    })
+
 })
 
 
 
+describe('delete data',()=>{
+    describe('succes delete data',()=>{
+        it("should return 200 and object(product)", (done)=>{
+            request(app)
+            .delete(`/product/${id}`)
+        .then(result=>{
+            const {body,status}=result
+            expect(status).toBe(200)
+            expect(body).toHaveProperty("msg")
+            expect(body).toHaveProperty("name")
+            expect(body).toHaveProperty("image_url")
+            expect(body).toHaveProperty("price")
+            expect(body).toHaveProperty("stock")
+            done()
+        })
+    })
+})
+
+    describe('failed delete data',()=>{
+        it('should return 404 and object(error)', (done)=>{
+            request(app)
+            .delete(`/product/9202`)
+        .then(result=>{
+            const {body,status} = result
+            expect(status).toBe(404)
+            expect(body).toHaveProperty("msg")
+            done()
+        })
+    })
+})
+    
+})
