@@ -1,4 +1,6 @@
 'use strict';
+const { hashPass } = require('../helpers/bcrypt')
+
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
     username:{
@@ -63,7 +65,13 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     }
-  }, {});
+  }, {
+    hooks: {
+      beforeCreate: async (user) => {
+        user.password = await hashPass(user.password)
+      }
+    }
+  });
   User.associate = function(models) {
     // associations can be defined here
   };

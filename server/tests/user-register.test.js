@@ -2,6 +2,7 @@ const request = require('supertest')
 const app = require('../app')
 const { sequelize } = require('../models')
 const { queryInterface } = sequelize
+const { comparePass } = require('../helpers/bcrypt')
 
 beforeAll(done => {
     queryInterface.bulkDelete('Users', {})
@@ -9,11 +10,11 @@ beforeAll(done => {
     .catch(err => done(err))
 })
 
-afterAll(done => {
-    queryInterface.bulkDelete('Users', {})
-    .then(() => done())
-    .catch(err => done(err))
-})
+// afterAll(done => {
+//     queryInterface.bulkDelete('Users', {})
+//     .then(() => done())
+//     .catch(err => done(err))
+// })
 
 // REGISTER
 describe('Register New User:', () => {
@@ -33,7 +34,7 @@ describe('Register New User:', () => {
                 expect(status).toBe(201)
                 expect(body.username).toBe('admin')
                 expect(body.email).toBe('admin@mail.com')
-                expect(body.password).toBe('admin')
+                expect(comparePass('admin', body.password)).toBe(true)
                 expect(body.role).toBe('admin')
                 done()
             })

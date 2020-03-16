@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "clear && jest --detectOpenHandles --runInBand --forceExit"
+    "test": "clear && jest --detectOpenHandles --runInBand --forceExit",
+    "test-register": "clear && jest user-register --detectOpenHandles --runInBand --forceExit",
+    "test-login": "clear && jest user-register --detectOpenHandles --runInBand --forceExit"
   },
   "keywords": [],
   "author": "",
@@ -21,6 +23,7 @@
   },
   "devDependencies": {
     "jest": "^25.1.0",
+    "jest-cli": "^25.1.0",
     "supertest": "^4.0.2"
   }
 }
