@@ -16,11 +16,18 @@ module.exports = (sequelize, DataTypes) => {
     email: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: { args: true, msg: 'Email address already in use!' },
       validate: {
         notNull: { args: true, msg: 'column cannot be empty' },
         notEmpty: { args: true, msg: 'column cannot be empty' },
-        isEmail: true
+        isEmail: true,
+        isEmailUniq(value) {
+          return User.findOne({ where: { email: value } })
+            .then(resultEmail => {
+              if (resultEmail) {
+                throw createErrors('400', 'email is already in use')
+              }
+            })
+        }
       }
     },
     role: {

@@ -4,6 +4,9 @@ const { sequelize, User } = require('../models')
 const { queryInterface } = sequelize
 
 
+
+
+
 // delete all User after all test
 afterAll(done => {
   queryInterface
@@ -18,7 +21,7 @@ afterAll(done => {
 
 describe('Create User register', function () {
   describe('POST /users/register', function () {
-    it('responds status code 201 and object', function (done) {
+    it('responds status code 201 success', function (done) {
       let register = {
         username: "user",
         email: "user@gmail.com",
@@ -29,8 +32,9 @@ describe('Create User register', function () {
         .post('/users/register')
         .send(register)
         .expect(201)
-        .then(({ body }) => {
-          expect(typeof body).toBe('string')
+        .then(({ body, status }) => {
+          expect(status).toBe(201)
+          expect(typeof body).toBe("string")
           expect(body).toBeDefined()
           done()
         })
@@ -39,10 +43,35 @@ describe('Create User register', function () {
         })
     })
   })
-  describe('Error Register', function () {
+
+
+  describe('Error Register empty username', function () {
     it('responds status code 400 bad request', function (done) {
       let register = {
         username: null,
+        email: "user@gmail.com",
+        role: "user",
+        password: '1234567'
+      }
+      request(app)
+        .post('/users/register')
+        .send(register)
+        .expect(400)
+        .then(({ body, status }) => {
+          expect(status).toBe(400)
+          expect(body[0]).toBe('column cannot be empty')
+          done()
+        })
+        .catch(err => {
+          done(err)
+        })
+    })
+  })
+
+  describe('Error Register password', function () {
+    it('responds status code 400 bad request', function (done) {
+      let register = {
+        username: 'user',
         email: "user@gmail.com",
         role: "user",
         password: '123'
@@ -51,13 +80,86 @@ describe('Create User register', function () {
         .post('/users/register')
         .send(register)
         .expect(400)
-        .then(response => {
-          console.log(response, '<<<<<<< cari error')
+        .then(({ body, status }) => {
+          expect(status).toBe(400)
+          expect(body[0]).toBe('Password must be at least 5 characters')
+          done()
         })
         .catch(err => {
           done(err)
         })
     })
   })
+
+  describe('register email is already in use', function () {
+    it('resgister 200 response first', function (done) {
+      let register = {
+        username: 'user',
+        email: "user@gmail.com",
+        role: "user",
+        password: '1234567'
+      }
+      request(app)
+        .post('/users/register')
+        .send(register)
+        .then(({ body, status }) => {
+          done()
+        })
+        .catch(err => {
+          done(err)
+        })
+    })
+
+    it('resgister 400 response email is already in use', function (done) {
+      let register = {
+        username: 'user',
+        email: "user@gmail.com",
+        role: "user",
+        password: '1234567'
+      }
+      request(app)
+        .post('/users/register')
+        .send(register)
+        .expect(400)
+        .then(({ body, status }) => {
+          expect(status).toBe(400)
+          expect(body[0]).toBe('email is already in use')
+          done()
+        })
+        .catch(err => {
+          done(err)
+        })
+    })
+  })
+
+
+})
+
+
+describe('Login user test', function () {
+  describe('POST users/login', function () {
+    it('response 200 log', function (done) {
+      let login = {
+        email: 'user@gmail.com',
+        password: '1234567'
+      }
+      request(app)
+        .post('/users/login')
+        .send(login)
+        .expect(200)
+        .then(({ body, status }) => {
+          expect(status).toBe(200)
+          expect(typeof body).toBe("string")
+          expect(body).toBeDefined()
+          done()
+        })
+        .catch(err => {
+          done(err)
+        })
+    })
+  })
+})
+
+describe('login error test', function () {
 
 })
