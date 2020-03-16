@@ -1,22 +1,25 @@
 'use strict'
 
-const { Product } = require('../models')
+const { Products } = require('../models')
 
 class ControllerAdmin {
     static addProduct(req, res, next) {
         const { name, price, stocks, imageURL } = req.body
-        Product.create({name, price, stocks, imageURL})
+        console.log(name, price, stocks, imageURL)
+        Products.create({name, price, stocks, imageURL})
         .then(data => {
+            console.log('qwe')
             res.status(201).json(data)
         })
         .catch(err => {
+            console.log('asd')
             next(err)
-            })
+        })
     }
 
     static getOne(req, res, next) {
         let id = Number(req.params.id)
-        Product.findOne({ where: { id } })
+        Products.findOne({ where: { id } })
             .then(data => {
                 if (data) {
                     console.log(data)
@@ -36,7 +39,7 @@ class ControllerAdmin {
     static editProduct(req, res, next) {
         let id = Number(req.params.id)
         const { name, price, stocks, imageURL } = req.body
-        Product.put({ name, price, stocks, imageURL })
+        Products.put({ name, price, stocks, imageURL })
             .then(data => {
                 res.status(200).json(data)
             })
@@ -48,10 +51,10 @@ class ControllerAdmin {
     static deleteProduct(req, res, next) {
         let id = Number(req.params.id)
         let temp = ''
-        Product.findOne({ where: { id } })
+        Products.findOne({ where: { id } })
             .then(data => {
                 temp = data
-                return Product.destroy({ where: { id } })
+                return Products.destroy({ where: { id } })
             })
             .then(data => {
                 res.status(200).json(temp)
