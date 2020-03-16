@@ -14,7 +14,7 @@ const PRODUCT_NAME = 'Black Box'
 const IMG_URL = 'www.google.com'
 const PRICE = 100000
 const STOCK = 100
-const ID = 1
+let ID = ``
 
 beforeAll (done => {
     User.create({
@@ -166,6 +166,7 @@ beforeAll (done => {
         stock: 5
     })
     .then(data => {
+        ID = data.id
         done()
     })
 })
