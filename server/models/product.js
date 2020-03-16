@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         min: {
           args: [[0]],
-          msg: "Product Price can not be negative"
+          msg: "Product Price can not be negatives"
         }
       }
     },
@@ -33,7 +33,7 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         min: {
           args: [[0]],
-          msg: "Product Stock can not be negative"
+          msg: "Product Stock can not be negatives"
         }
       }
     }
