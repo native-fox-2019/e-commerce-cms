@@ -4,7 +4,6 @@ const jwt = require('jsonwebtoken')
 
 class UserController {
     static register(req, res, next){
-        console.log('masuk controller')
         let { email, password, name, role } = req.body
         let obj = {
             email : email,
@@ -12,12 +11,17 @@ class UserController {
             name : name,
             role : role
         }
-        User.Create(obj)
+        User.create(obj)
         .then(data => {
-            res.status(201).json(data)
+            let access_token = jwt.sign({ id : data.id, email : data.email }, process.env.SECRET);
+            res.status(201).json(access_token)
         }) 
         .catch(err => {
-            res.status(500).json(err)
+            let error = []
+            err.errors.forEach(x =>{
+                error.push(x.message)
+            })
+            next(error)
         })
     }
 
