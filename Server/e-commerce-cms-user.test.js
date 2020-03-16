@@ -12,7 +12,7 @@ afterAll(done => {
 
 describe('Register User', function(){
     describe('Successfully register', function(){
-        it('Should return 201 and object (token, name)', (done) => {
+        it('Should return 201 and object (token, name, message)', (done) => {
             request(app)
             .post('/user/register')
             .send({
@@ -49,6 +49,70 @@ describe('Register User', function(){
                 expect(status).toBe(400)
                 expect(body).toHaveProperty('status', 400)
                 expect(body).toHaveProperty('error')
+                done()
+            })
+            .catch(err => {
+                done(err)
+            })
+        })
+    })
+})
+
+describe('User Login', function(){
+    describe('successfully logged in', function(){
+        it('should return 200 and object(name, token, message', (done) => {
+            request(app)
+            .post('/user/login')
+            .send({
+                email: 'test@mail.com',
+                password: 'test123'
+            })
+            .then(response => {
+                let {status, body} = response;
+                expect(status).toBe(200)
+                expect(body).toHaveProperty('name')
+                expect(body).toHaveProperty('token')
+                expect(body).toHaveProperty('message', 'Successfully logged in')
+                done()
+            })
+            .catch(err => {
+                done(err)
+            })
+        })
+    })
+    describe('unsuccessfully log in due to wrong email', function(){
+        it('should return 404 and object(status, msg)', (done) => {
+            request(app)
+            .post('/user/login')
+            .send({
+                email: 'te@mail.com',
+                password: 'test123'
+            })
+            .then(response => {
+                let {status, body} = response;
+                expect(status).toBe(404)
+                expect(body).toHaveProperty('status', 404)
+                expect(body).toHaveProperty('msg', 'Wrong Email')
+                done()
+            })
+            .catch(err => {
+                done(err)
+            })
+        })
+    })
+    describe('unsuccessfully log in due to wrong password', function(){
+        it('should return 400 and object(status, msg)', (done) => {
+            request(app)
+            .post('/user/login')
+            .send({
+                email: 'test@mail.com',
+                password: 'test12'
+            })
+            .then(response => {
+                let {status, body} = response;
+                expect(status).toBe(400)
+                expect(body).toHaveProperty('status', 400)
+                expect(body).toHaveProperty('msg', 'Wrong Password')
                 done()
             })
             .catch(err => {

@@ -1,5 +1,6 @@
 const {User} = require('../models')
 const makeToken = require('../Helpers/makeToken')
+const comparePassword = require('../Helpers/comparePassword')
 
 class UserController {
     static register(req, res, next){
@@ -36,6 +37,31 @@ class UserController {
             }else{
                 next({status: 500, msg: 'Server Error'})
             }
+        })
+    }
+    static login(req, res, next){
+        let {email, password} = req.body
+        let userFound = null
+        User.findOne({where: {email}})
+        .then(user => {
+            if(user){
+                userFound = user
+                return comparePassword(password, user.password)
+            }else{
+                next({status: 404, msg: 'Wrong Email'})
+            }
+        })
+        .then(result => {
+            if (result){
+                let token = makeToken(userFound);
+                res.status(200).json({name:userFound.name, token, message: 'Successfully logged in'})
+            }else{
+                next({status: 400, msg: 'Wrong Password'})
+            }
+        })
+        .catch(err => {
+            console.log(err, '<<< dari login')
+            next({status: 500, msg: 'Server Error'})
         })
     }
 }
