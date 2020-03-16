@@ -12,7 +12,7 @@ class adminController{
             name : req.body.name,
             email : req.body.email,
             password : req.body.password,
-            roles : 'admin'
+            roles : req.body.roles
         }
         Admin.create(obj)
         .then(result=>{
@@ -41,7 +41,7 @@ class adminController{
                 return bcrypt.compare(password,data.password)
                 .then(result=>{
                     if(result === true){
-                        let token = jwt.sign({email:data.email,id:data.id},process.env.JWT_KEY)
+                        let token = jwt.sign({email:data.email,id:data.id,roles:data.roles},process.env.JWT_KEY)
                         res.status(200).json({ token })
                     } else{
                         next({status: 400, msg: 'Wrong email/password!'})

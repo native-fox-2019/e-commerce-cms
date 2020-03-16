@@ -4,12 +4,12 @@ const { sequelize } = require('../models')
 const { queryInterface } = sequelize
 
 
-// afterAll(done=>{
-//     queryInterface
-//     .bulkDelete('Admins',{})
-//     .then(()=>done())
-//     .catch(err=> done(err))
-// });
+afterAll(done=>{
+    queryInterface
+    .bulkDelete('Admins',{})
+    .then(()=>done())
+    .catch(err=> done(err))
+});
 
 let obj = {
     name : "admin2",
