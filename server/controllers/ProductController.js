@@ -11,9 +11,12 @@ class ProductController {
             stock: request.body.stock,
             user_id: request.userData.id
         }
-        Product.create(data_product)
+        Product.create(data_product, {
+                individualHooks: true
+            })
             .then(result => {
                 response.status(201).json({
+                    data: result,
                     message: 'Create Task Successfully'
                 })
             })
@@ -74,7 +77,8 @@ class ProductController {
         Product.findOne({
                 where: {
                     id: request.params.id
-                }
+                },
+                individualHooks: true
             })
             .then(result => {
                 if (result) {

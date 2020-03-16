@@ -13,7 +13,8 @@ module.exports = (err, request, response, next) => {
     } else {
         response.status(500).json({
             status_code: 500,
-            message: 'System Error'
+            message: 'System Error',
+            err
         })
     }
 }

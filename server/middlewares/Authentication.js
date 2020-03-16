@@ -20,6 +20,7 @@ module.exports = (request, response, next) => {
                         name: result.name,
                         email: result.email
                     }
+                    next()
                 } else {
                     next({
                         status_code: 400,
