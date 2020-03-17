@@ -12,7 +12,16 @@ module.exports = {
       admin: true,
       createdAt: new Date(),
       updatedAt: new Date(),
-    }], {});
+    },
+    {
+      username: 'UserBiasa',
+      password: bcrypt.hashing('12345'),
+      email: 'marcel.biasa@gmail.com',
+      admin: false,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    }
+    ], {});
   },
 
   down: (queryInterface, Sequelize) => {
