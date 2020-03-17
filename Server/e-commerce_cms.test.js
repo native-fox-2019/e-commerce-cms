@@ -18,6 +18,7 @@ describe('Create a product item', function(){
             // console.log('masuk')
             request(app)
             .post('/products')
+            .set({token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwibmFtZSI6IkFkaGl5YXRtYSBQcmFtYXlvZ2EiLCJlbWFpbCI6ImFkaGl5YXRtYS5wcmFtYXlvZ2FAZ21haWwuY29tIiwiaWF0IjoxNTg0MzU5MjMyfQ.9BuTB8wfOqCBKvsXbUiMKjJCvKKKY0aeMWWX90-pBiI'})
             .send({
                 name: 'Shoes',
                 image_url: './image/shoes.jpg',
@@ -47,6 +48,7 @@ describe('Create a product item', function(){
             // console.log('masuk')
             request(app)
             .post('/products')
+            .set({token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwibmFtZSI6IkFkaGl5YXRtYSBQcmFtYXlvZ2EiLCJlbWFpbCI6ImFkaGl5YXRtYS5wcmFtYXlvZ2FAZ21haWwuY29tIiwiaWF0IjoxNTg0MzU5MjMyfQ.9BuTB8wfOqCBKvsXbUiMKjJCvKKKY0aeMWWX90-pBiI'})
             .send({
                 name: '',
                 image_url: './image/shoes.jpg',
@@ -68,6 +70,30 @@ describe('Create a product item', function(){
             })
         })
     })
+    describe('Unsuccessfully create product due to authorization', function(){
+        it('Should return 403 and object (status, msg)', (done) => {
+            // console.log('masuk')
+            request(app)
+            .post('/products')
+            .set({token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwibmFtZSI6IlRlc3RpbmciLCJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwiaWF0IjoxNTg0NDE2MTg3fQ.Tz_9sszRZbrS60YWZymIxvWz1tSVuAyhF6u5CZu27TE'})
+            .send({
+                name: '',
+                image_url: './image/shoes.jpg',
+                price: -2,
+                stock: -1
+            })
+            .then(response => {
+                let {body, status} = response
+                expect(status).toBe(403);
+                expect(body).toHaveProperty('status', 403);
+                expect(body).toHaveProperty('msg', 'Not Authorized');
+                done()
+            })
+            .catch(err => {           
+                done(err)
+            })
+        })
+    })
 })
 
 describe('get list of products', function(){
@@ -75,10 +101,27 @@ describe('get list of products', function(){
         it('Should return 200 and object(products)', (done) => {
             request(app)
             .get('/products')
+            .set({token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwibmFtZSI6IkFkaGl5YXRtYSBQcmFtYXlvZ2EiLCJlbWFpbCI6ImFkaGl5YXRtYS5wcmFtYXlvZ2FAZ21haWwuY29tIiwiaWF0IjoxNTg0MzU5MjMyfQ.9BuTB8wfOqCBKvsXbUiMKjJCvKKKY0aeMWWX90-pBiI'})
             .then(response => {
                 let {body, status} = response
                 expect(status).toBe(200)
                 expect(body).toHaveProperty('products')
+                done()
+            })
+            .catch(err => {
+                done(err)
+            })
+        })
+    })
+    describe('unsuccessfully get products due to authentication', function(){
+        it('Should return 401 and object(status, msg)', (done) => {
+            request(app)
+            .get('/products')
+            .then(response => {
+                let {body, status} = response
+                expect(status).toBe(401)
+                expect(body).toHaveProperty('status', 401)
+                expect(body).toHaveProperty('msg', 'Please login')
                 done()
             })
             .catch(err => {
@@ -93,6 +136,7 @@ describe('get a product by id', function(){
         it('Should return 200 and object(product)', (done) => {
             request(app)
             .get(`/products/${id}`)
+            .set({token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwibmFtZSI6IkFkaGl5YXRtYSBQcmFtYXlvZ2EiLCJlbWFpbCI6ImFkaGl5YXRtYS5wcmFtYXlvZ2FAZ21haWwuY29tIiwiaWF0IjoxNTg0MzU5MjMyfQ.9BuTB8wfOqCBKvsXbUiMKjJCvKKKY0aeMWWX90-pBiI'})
             .then(response => {
                 let {status, body} = response;
                 expect(status).toBe(200)
@@ -112,6 +156,7 @@ describe('get a product by id', function(){
         it('Should return 404 and object(status, msg)', (done) => {
             request(app)
             .get(`/products/1`)
+            .set({token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwibmFtZSI6IkFkaGl5YXRtYSBQcmFtYXlvZ2EiLCJlbWFpbCI6ImFkaGl5YXRtYS5wcmFtYXlvZ2FAZ21haWwuY29tIiwiaWF0IjoxNTg0MzU5MjMyfQ.9BuTB8wfOqCBKvsXbUiMKjJCvKKKY0aeMWWX90-pBiI'})
             .then(response => {
                 let {status, body} = response;
                 expect(status).toBe(404)
@@ -132,6 +177,7 @@ describe('Edit a product item', function(){
             // console.log('masuk')
             request(app)
             .put(`/products/${id}`)
+            .set({token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwibmFtZSI6IkFkaGl5YXRtYSBQcmFtYXlvZ2EiLCJlbWFpbCI6ImFkaGl5YXRtYS5wcmFtYXlvZ2FAZ21haWwuY29tIiwiaWF0IjoxNTg0MzU5MjMyfQ.9BuTB8wfOqCBKvsXbUiMKjJCvKKKY0aeMWWX90-pBiI'})
             .send({
                 name: 'Shoes',
                 image_url: './image/shoes.jpg',
@@ -159,6 +205,7 @@ describe('Edit a product item', function(){
             // console.log('masuk')
             request(app)
             .put(`/products/${id}`)
+            .set({token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwibmFtZSI6IkFkaGl5YXRtYSBQcmFtYXlvZ2EiLCJlbWFpbCI6ImFkaGl5YXRtYS5wcmFtYXlvZ2FAZ21haWwuY29tIiwiaWF0IjoxNTg0MzU5MjMyfQ.9BuTB8wfOqCBKvsXbUiMKjJCvKKKY0aeMWWX90-pBiI'})
             .send({
                 name: '',
                 image_url: './image/shoes.jpg',
@@ -184,6 +231,7 @@ describe('Edit a product item', function(){
         it('Should return 404 and object (status, msg)', (done) => {
             request(app)
             .put('/products/1')
+            .set({token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwibmFtZSI6IkFkaGl5YXRtYSBQcmFtYXlvZ2EiLCJlbWFpbCI6ImFkaGl5YXRtYS5wcmFtYXlvZ2FAZ21haWwuY29tIiwiaWF0IjoxNTg0MzU5MjMyfQ.9BuTB8wfOqCBKvsXbUiMKjJCvKKKY0aeMWWX90-pBiI'})
             .send({
                 name: '',
                 image_url: './image/shoes.jpg',
@@ -202,6 +250,30 @@ describe('Edit a product item', function(){
             })
         })
     })
+    describe('Unsuccessfully edit product due to authorization', function(){
+        it('Should return 403 and object (status, msg)', (done) => {
+            // console.log('masuk')
+            request(app)
+            .put(`/products/${id}`)
+            .set({token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwibmFtZSI6IlRlc3RpbmciLCJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwiaWF0IjoxNTg0NDE2MTg3fQ.Tz_9sszRZbrS60YWZymIxvWz1tSVuAyhF6u5CZu27TE'})
+            .send({
+                name: '',
+                image_url: './image/shoes.jpg',
+                price: -2,
+                stock: -1
+            })
+            .then(response => {
+                let {body, status} = response
+                expect(status).toBe(403);
+                expect(body).toHaveProperty('status', 403);
+                expect(body).toHaveProperty('msg', 'Not Authorized');
+                done()
+            })
+            .catch(err => {           
+                done(err)
+            })
+        })
+    })
 })
 
 describe('Delete Product', function(){
@@ -209,6 +281,7 @@ describe('Delete Product', function(){
         it('Should return 200 and object (message)', (done) => {
             request(app)
             .delete(`/products/${id}`)
+            .set({token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwibmFtZSI6IkFkaGl5YXRtYSBQcmFtYXlvZ2EiLCJlbWFpbCI6ImFkaGl5YXRtYS5wcmFtYXlvZ2FAZ21haWwuY29tIiwiaWF0IjoxNTg0MzU5MjMyfQ.9BuTB8wfOqCBKvsXbUiMKjJCvKKKY0aeMWWX90-pBiI'})
             .then(response => {
                 let {status, body} = response
                 expect(status).toBe(200)
@@ -224,6 +297,7 @@ describe('Delete Product', function(){
         it('Should return 404 and object (status, msg', (done) => {
             request(app)
             .delete(`/products/1`)
+            .set({token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwibmFtZSI6IkFkaGl5YXRtYSBQcmFtYXlvZ2EiLCJlbWFpbCI6ImFkaGl5YXRtYS5wcmFtYXlvZ2FAZ21haWwuY29tIiwiaWF0IjoxNTg0MzU5MjMyfQ.9BuTB8wfOqCBKvsXbUiMKjJCvKKKY0aeMWWX90-pBiI'})
             .then(response => {
                 let {status, body} = response
                 expect(status).toBe(404)
@@ -232,6 +306,24 @@ describe('Delete Product', function(){
                 done()
             })
             .catch(err => {
+                done(err)
+            })
+        })
+    })
+    describe('Unsuccessfully edit product due to authorization', function(){
+        it('Should return 403 and object (status, msg)', (done) => {
+            // console.log('masuk')
+            request(app)
+            .delete(`/products/${id}`)
+            .set({token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwibmFtZSI6IlRlc3RpbmciLCJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwiaWF0IjoxNTg0NDE2MTg3fQ.Tz_9sszRZbrS60YWZymIxvWz1tSVuAyhF6u5CZu27TE'})
+            .then(response => {
+                let {body, status} = response
+                expect(status).toBe(403);
+                expect(body).toHaveProperty('status', 403);
+                expect(body).toHaveProperty('msg', 'Not Authorized');
+                done()
+            })
+            .catch(err => {           
                 done(err)
             })
         })

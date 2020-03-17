@@ -19,7 +19,15 @@ module.exports = {
             role: 'admin',
             createdAt: new Date(),
             updatedAt: new Date()
-          }
+          },
+          {
+            name: 'Testing',
+            email: 'test@gmail.com',
+            password: bcrypt.hashSync('test123', 8),
+            role: 'customer',
+            createdAt: new Date(),
+            updatedAt: new Date()
+          },
         ], {});
   },
 

@@ -1,13 +1,16 @@
 const request = require('supertest');
 const app = require('./app');
-const {sequelize, Product} = require('./models')
-const {queryInterface} = sequelize
+const {sequelize, Product, User} = require('./models')
+const {queryInterface, } = sequelize
+
+let id = null
 
 afterAll(done => {
-    queryInterface
-    .bulkDelete('Users', {})
-    .then(() => done())
-    .catch(err => done(err));
+    User.destroy({where: {id}})
+    .then(result => {
+        done()
+    })
+    .catch(err => done(err))
 });
 
 describe('Register User', function(){
@@ -27,6 +30,8 @@ describe('Register User', function(){
                 expect(body).toHaveProperty('name', 'Test')
                 expect(body).toHaveProperty('token')
                 expect(body).toHaveProperty('message', 'Successfully registered and logged in')
+                expect(body).toHaveProperty('id')
+                id = body.id
                 done()
             })
             .catch(err => {

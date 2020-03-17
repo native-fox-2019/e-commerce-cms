@@ -19,7 +19,7 @@ class UserController {
         .then(result => {
             if(result) {
                 let token = makeToken(result);
-                res.status(201).json({name: result.name, token, message: 'Successfully registered and logged in'})
+                res.status(201).json({name: result.name, token, message: 'Successfully registered and logged in', id: result.id})
             }
         })
         .catch(err => {
