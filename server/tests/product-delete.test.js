@@ -6,6 +6,7 @@ const jwt = require('jsonwebtoken')
 
 let access_token_admin = ''
 let access_token_user = ''
+let productId = 1
 
 beforeAll(done => {
     queryInterface.bulkDelete('Users', {})
@@ -20,6 +21,7 @@ beforeAll(done => {
     .then(result => {
         console.log('Admin Created w/ ID:', { id: result.id })
         access_token_admin = jwt.sign({ id: result.id }, process.env.JWT_SECRET)
+        console.log(access_token_admin)
         return User.create({
             username: 'user',
             email: 'user@mail.com',
@@ -33,28 +35,13 @@ beforeAll(done => {
         return queryInterface.bulkDelete('Products', {})
     })
     .then(() => {
-        return queryInterface.bulkInsert('Products', [{
+        return Product.create({
+            id: productId,
             name: 'Product 1',
             image_url: 'https://www.products.com/image/1.jpg',
             price: 10000,
-            stock: 10,
-            createdAt: new Date(),
-            updatedAt: new Date()
-        },{
-            name: 'Product 2',
-            image_url: 'https://www.products.com/image/2.jpg',
-            price: 20000,
-            stock: 20,
-            createdAt: new Date(),
-            updatedAt: new Date()
-        },{
-            name: 'Product 3',
-            image_url: 'https://www.products.com/image/3.jpg',
-            price: 30000,
-            stock: 30,
-            createdAt: new Date(),
-            updatedAt: new Date()
-        }], {})
+            stock: 10
+        })
     })
     .then(() => {
         done()
@@ -64,28 +51,17 @@ beforeAll(done => {
     })
 })
 
-describe('Read All Products:', () => {
-    describe('Read Success:', () => {
+describe('Delete Product:', () => {
+    describe('Delete Success:', () => {
         it('should return 200:', (done) => {
             request(app)
-            .get('/product')
+            .delete(`/product/${productId}`)
             .set('access_token', access_token_admin)
             .then(response => {
                 const { status, body } = response
                 console.log({ status, body })
                 expect(status).toBe(200)
-                expect(Array.isArray(body)).toBe(true)
-                expect(body.length).toBe(3)
-                expect(typeof body[0]).toBe('object')
-                expect(body[0] !== null).toBe(true)
-                expect(body[0]).toHaveProperty('name')
-                expect(body[0].name).toBe('Product 1')
-                expect(body[0]).toHaveProperty('image_url')
-                expect(body[0].image_url).toBe('https://www.products.com/image/1.jpg')
-                expect(body[0]).toHaveProperty('price')
-                expect(body[0].price).toBe(10000)
-                expect(body[0]).toHaveProperty('stock')
-                expect(body[0].stock).toBe(10)
+                expect(body).toBe(1)
                 done()
             })
             .catch(err => {
@@ -93,10 +69,10 @@ describe('Read All Products:', () => {
             })
         })
     })
-    describe('Read Fail:', () => {
+    describe('Delete Fail:', () => {
         it('should return 401 (Unauthenticated):', (done) => {
             request(app)
-            .get('/product')
+            .delete(`/product/${productId}`)
             // .set('access_token', access_token)
             .then(response => {
                 const { status, body } = response
@@ -111,13 +87,28 @@ describe('Read All Products:', () => {
         })
         it('should return 403 (Unauthorized):', (done) => {
             request(app)
-            .get('/product')
+            .delete(`/product/${productId}`)
             .set('access_token', access_token_user)
             .then(response => {
                 const { status, body } = response
                 console.log({ status, message: body.message })
                 expect(status).toBe(403)
                 expect(body.message).toBe('You don\'t have access to this!')
+                done()
+            })
+            .catch(err => {
+                done(err)
+            })
+        })
+        it('should return 404 (Not Found):', (done) => {
+            request(app)
+            .delete(`/product/${2}`)
+            .set('access_token', access_token_admin)
+            .then(response => {
+                const { status, body } = response
+                console.log({ status, message: body.message })
+                expect(status).toBe(404)
+                expect(body.message).toBe('Record not Found!')
                 done()
             })
             .catch(err => {

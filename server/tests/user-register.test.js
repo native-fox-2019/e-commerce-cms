@@ -9,12 +9,6 @@ beforeAll(done => {
     .catch(err => done(err))
 })
 
-afterAll(done => {
-    queryInterface.bulkDelete('Users', {})
-    .then(() => done())
-    .catch(err => done(err))
-})
-
 describe('Register New User:', () => {
     describe('Register Success:', () => {
         it('should return 201:', (done) => {

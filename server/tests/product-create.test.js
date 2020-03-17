@@ -4,13 +4,17 @@ const { sequelize, User, Product } = require('../models')
 const { queryInterface } = sequelize
 const jwt = require('jsonwebtoken')
 
-let access_token = ''
+let access_token_admin = ''
+let access_token_user = ''
+let newProduct = {
+    name: 'Product 1',
+    image_url: 'https://www.products.com/image/1.jpg',
+    price: 10000,
+    stock: 10
+}
 
 beforeAll(done => {
     queryInterface.bulkDelete('Users', {})
-    .then(() => {
-        return queryInterface.bulkDelete('Products', {})
-    })
     .then(() => {
         return User.create({
             username: 'admin',
@@ -20,20 +24,35 @@ beforeAll(done => {
         })
     })
     .then(result => {
+        console.log('Admin Created w/ ID:', { id: result.id })
+        access_token_admin = jwt.sign({ id: result.id }, process.env.JWT_SECRET)
+        return User.create({
+            username: 'user',
+            email: 'user@mail.com',
+            password: 'user',
+            role: 'user'
+        })
+    })
+    .then(result => {
         console.log('User Created w/ ID:', { id: result.id })
-        access_token = jwt.sign({ id: result.id }, process.env.JWT_SECRET)
+        access_token_user = jwt.sign({ id: result.id }, process.env.JWT_SECRET)
+        return queryInterface.bulkDelete('Products', {})
+    })
+    // .then(() => {
+    //     return Product.create({
+    //         name: 'Product 1',
+    //         image_url: 'https://www.products.com/image/1.jpg',
+    //         price: 10000,
+    //         stock: 10
+    //     })
+    // })
+    .then(() => {
         done()
     })
     .catch(err => {
         done(err)
     })
 })
-
-// afterAll(done => {
-//     queryInterface.bulkDelete('Users', {})
-//     .then(() => done())
-//     .catch(err => done(err))
-// })
 
 describe('Create Product:', () => {
     describe('Create Success:', () => {
@@ -46,7 +65,7 @@ describe('Create Product:', () => {
                 price: 600000,
                 stock: 12
             })
-            .set('access_token', access_token)
+            .set('access_token', access_token_admin)
             .then(response => {
                 const { status, body } = response
                 console.log({ status, body })
@@ -72,7 +91,7 @@ describe('Create Product:', () => {
                 price: 600000,
                 stock: 12
             })
-            .set('access_token', access_token)
+            .set('access_token', access_token_admin)
             .then(response => {
                 const { status, body } = response
                 console.log({ status, body })
@@ -93,7 +112,7 @@ describe('Create Product:', () => {
                 price: 600000,
                 stock: 12
             })
-            .set('access_token', access_token)
+            .set('access_token', access_token_admin)
             .then(response => {
                 const { status, body } = response
                 console.log({ status, body })
@@ -114,7 +133,7 @@ describe('Create Product:', () => {
                 price: 'enamratusribu',
                 stock: 12
             })
-            .set('access_token', access_token)
+            .set('access_token', access_token_admin)
             .then(response => {
                 const { status, body } = response
                 console.log({ status, body })
@@ -135,7 +154,7 @@ describe('Create Product:', () => {
                 price: 600000,
                 stock: -12
             })
-            .set('access_token', access_token)
+            .set('access_token', access_token_admin)
             .then(response => {
                 const { status, body } = response
                 console.log({ status, body })
@@ -147,5 +166,38 @@ describe('Create Product:', () => {
                 done(err)
             })
         })
+        it('should return 401 (Unauthenticated):', (done) => {
+            request(app)
+            .post('/product')
+            .send(newProduct)
+            // .set('access_token', access_token)
+            .then(response => {
+                const { status, body } = response
+                console.log({ status, message: body.message })
+                expect(status).toBe(401)
+                expect(body.message).toBe('You must log in first!')
+                done()
+            })
+            .catch(err => {
+                done(err)
+            })
+        })
+        it('should return 403 (Unauthorized):', (done) => {
+            request(app)
+            .post('/product')
+            .send(newProduct)
+            .set('access_token', access_token_user)
+            .then(response => {
+                const { status, body } = response
+                console.log({ status, message: body.message })
+                expect(status).toBe(403)
+                expect(body.message).toBe('You don\'t have access to this!')
+                done()
+            })
+            .catch(err => {
+                done(err)
+            })
+        })
+        
     })
 })

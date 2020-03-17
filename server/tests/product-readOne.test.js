@@ -50,12 +50,6 @@ beforeAll(done => {
     })
 })
 
-// afterAll(done => {
-//     queryInterface.bulkDelete('Users', {})
-//     .then(() => done())
-//     .catch(err => done(err))
-// })
-
 describe('Read One Product:', () => {
     describe('Read Success:', () => {
         it('should return 200:', (done) => {
@@ -108,6 +102,21 @@ describe('Read One Product:', () => {
                 console.log({ status, message: body.message })
                 expect(status).toBe(403)
                 expect(body.message).toBe('You don\'t have access to this!')
+                done()
+            })
+            .catch(err => {
+                done(err)
+            })
+        })
+        it('should return 404 (Not Found):', (done) => {
+            request(app)
+            .get(`/product/${2}`)
+            .set('access_token', access_token_admin)
+            .then(response => {
+                const { status, body } = response
+                console.log({ status, message: body.message })
+                expect(status).toBe(404)
+                expect(body.message).toBe('Record not Found!')
                 done()
             })
             .catch(err => {

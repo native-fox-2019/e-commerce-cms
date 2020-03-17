@@ -32,6 +32,7 @@ class productController {
         let id = Number(req.params.id)
         try {
             let found = await Product.findOne({ where: { id } })
+            if (!found) throw customError(404)
             res.status(200).json(found)
             next()
         } catch (err) {
@@ -48,6 +49,8 @@ class productController {
             stock: req.body.stock
         }
         try {
+            let found = await Product.findOne({ where: { id } })
+            if (!found) throw customError(404)
             let updated = await Product.update(editData, { where: { id } })
             res.status(200).json(updated)
             next()
@@ -59,6 +62,8 @@ class productController {
     static async delete(req, res, next) {
         let id = Number(req.params.id)
         try {
+            let found = await Product.findOne({ where: { id } })
+            if (!found) throw customError(404)
             let deleted = await Product.destroy({ where: { id } })
             res.status(200).json(deleted)
             next()

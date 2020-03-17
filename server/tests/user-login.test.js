@@ -25,12 +25,6 @@ beforeAll(done => {
     })
 })
 
-// afterAll(done => {
-//     queryInterface.bulkDelete('Users', {})
-//     .then(() => done())
-//     .catch(err => done(err))
-// })
-
 describe('User Login:', () => {
     describe('Login Success:', () => {
         it('should return 200:', (done) => {
