@@ -7,7 +7,6 @@ class UserController {
         try {
             let { email, password } = req.body
             let user = await User.findOne({ where: { email } })
-            console.log(user)
             if (!user) {
                 next(
                     {
@@ -25,7 +24,7 @@ class UserController {
                     }
                 )
             } else {
-                let token = generateToken({ id: user.id, email: user.email })
+                let token = generateToken({ id: user.id, email: user.email, role: user.role })
                 res.status(200).json({ access_token: token })
             }
         } catch (err) {
