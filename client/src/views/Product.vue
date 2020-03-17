@@ -20,7 +20,7 @@
       <h1>Product List</h1>
     </div>
     <div class="row mt-5" v-if="!addNew">
-      <div class="col-3 mt-3" v-for="item in itemList" :key="item.id">
+      <div class="col-2 mt-3 ml-5" v-for="item in itemList" :key="item.id">
         <div class="card" style="width: 18rem;">
           <img
             class="card-img-top"
