@@ -4,7 +4,9 @@ const authorizationAdmin = require('../middlewares/authorizationAdmin')
 const authentication = require('../middlewares/authentication')
 
 router.post('/login', UserController.loginAdmin)
-router.post('/register', authentication, authorizationAdmin, UserController.registerAdmin)
+router.use(authentication)
+router.use(authorizationAdmin)
+router.post('/register', UserController.registerAdmin)
 router.get('/', UserController.allUsers)
 
 module.exports = router

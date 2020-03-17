@@ -1,4 +1,6 @@
 'use strict';
+const { Product } = require('../models')
+
 module.exports = (sequelize, DataTypes) => {
   const { Model } = sequelize.Sequelize
 
@@ -19,8 +21,45 @@ module.exports = (sequelize, DataTypes) => {
           msg: "ProductId cannot empty."
         }
       }
+    },
+    quantity: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        notNull: {
+          args: true,
+          msg: "ProductId cannot null.",
+        },
+        notEmpty: {
+          args: true,
+          msg: "ProductId cannot empty."
+        }
+      }
     }
-  }, { sequelize });
+  }, {
+    // hooks: {
+    //   beforeUpdate(data, option) {
+    //     Product
+    //       .findOne({
+    //         where: {
+    //           id: data.ProductId
+    //         }
+    //       })
+    //       .then(result => {
+    //         if (result.stock < data.quantity) {
+    //           throw {
+    //             status: 400,
+    //             msg: "Not enough stock."
+    //           }
+    //         }
+    //       })
+    //       .catch(err => {
+    //         next(err)
+    //       })
+    //   }
+    //   },
+    sequelize
+  });
 
   Transaction.associate = function (models) {
     Transaction.belongsTo(models.User)

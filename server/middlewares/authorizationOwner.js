@@ -1,15 +1,15 @@
 "use strict"
-const { User } = require('../models')
+const { Transaction } = require('../models')
 
-function authorizationNonAdmin(req, res, next) {
-  User
+function authorizationOwner(req, res, next) {
+  Transaction
     .findOne({
       where: {
-        id: req.user.id
+        id: req.params.id
       }
     })
     .then(data => {
-      if (data.admin == false) {
+      if (data.UserId === req.user.id) {
         next()
       } else {
         throw {
@@ -23,4 +23,4 @@ function authorizationNonAdmin(req, res, next) {
     })
 }
 
-module.exports = authorizationNonAdmin
+module.exports = authorizationOwner

@@ -70,7 +70,7 @@ class UserController {
               username: data.username,
             }
             const token = jwt.sign(payload, process.env.SECRET)
-            res.status(200).json(token)
+            res.status(200).json({ token: token })
           } else if (data && !bcrypt.compare(password, data.password)) {
             throw {
               status: 400,
@@ -110,7 +110,7 @@ class UserController {
               email: data.email
             }
             const token = jwt.sign(payload, process.env.SECRET)
-            res.status(200).json(token)
+            res.status(200).json({ token: token })
           }
         } else {
           throw {
