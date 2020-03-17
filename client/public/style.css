@@ -4,6 +4,11 @@
     font-weight: normal;
 }
 @font-face{
+    font-family: "gotham";
+    src: url(./font/Gotham-Medium.otf);
+    font-weight: 500;
+}
+@font-face{
     font-family: "montserrat";
     src: url(./font/montserrat.regular.ttf);
     font-weight: 400;
@@ -41,6 +46,31 @@ body{
     width: 225px; height: 45px; padding: 10px 10px; font-size: 15px; margin-top: 10px; margin-bottom: 10px; border-radius: 10px;
     background-color: rgba(0, 0, 0, 0.897); color: white;
 }
-.login form button:hover, .register form button:hover{
+.login form button:hover, .register form button:hover, .btn-edit:hover, .btn-delete:hover{
     cursor: pointer;
+}
+.home{
+    width: 85%; height: auto; margin: 5px auto; text-align: center;
+}
+.products{
+    width: 100%; height: auto; display: flex; justify-content: space-around; margin-top: 20px; flex-wrap: wrap;
+}
+.card{
+    width: 250px; height: 350px; border: 1px solid rgb(194, 191, 191); margin: 20px 5px; padding: 15px 15px; text-align: left;
+    display: flex; flex-direction: column; position: relative;
+}
+.card-name{
+    font-size: 20px; margin: 5px 0px; font-weight: 500;
+}
+.card-price{
+    font-size: 18px; color: grey;
+}
+.card-action{
+    display: flex; justify-content: flex-end; bottom: 15px; position: absolute; right: 15px;
+}
+.btn-edit{
+    margin-right: 10px; font-size: 30px; color: rgba(0, 0, 0, 0.678);
+}
+.btn-delete{
+    font-size: 28px; color: rgb(255, 75, 75);
 }
