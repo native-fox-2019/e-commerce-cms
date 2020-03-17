@@ -19,6 +19,7 @@
 </template>
 <script>
 import axios from 'axios';
+import swal from 'sweetalert';
 
 export default {
   props: ['product', 'isLogin', 'baseUrl'],
@@ -29,20 +30,36 @@ export default {
   },
   methods: {
     deleteProductCard(id) {
-      const options = {
-        url: `${this.baseUrl}/products/${id}`,
-        method: 'delete',
-        headers: {
-          token: localStorage.token,
-        },
-      };
-      axios(options)
-        .then((response) => {
-          this.message = response.message;
-          this.$emit('deleteProduct', id);
-        })
-        .catch((err) => {
-          console.log(err.response);
+      swal({
+        title: 'Are you sure?',
+        text: 'Once deleted, you will not be able to recover this Product!',
+        icon: 'warning',
+        buttons: true,
+        dangerMode: true,
+      })
+        .then((willDelete) => {
+          if (willDelete) {
+            const options = {
+              url: `${this.baseUrl}/products/${id}`,
+              method: 'delete',
+              headers: {
+                token: localStorage.token,
+              },
+            };
+            axios(options)
+              .then((response) => {
+                this.message = response.message;
+                this.$emit('deleteProduct', id);
+                swal('Poof! Your product has been deleted!', {
+                  icon: 'success',
+                });
+              })
+              .catch((err) => {
+                console.log(err.response);
+              });
+          } else {
+            swal('Your product is safe!');
+          }
         });
     },
   },
