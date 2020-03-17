@@ -41,6 +41,7 @@ class ControllerUser {
         }
       })
       .catch(err => {
+        console.log(err, '<<<<<<<<<<< rr login')
         next(err)
       })
   }

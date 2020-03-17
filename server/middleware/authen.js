@@ -1,3 +1,4 @@
+const { User } = require('../models')
 const { generatingJWT, veryfingJWT } = require('../helpers/jwt')
 const createError = require('http-errors')
 
@@ -12,13 +13,13 @@ module.exports = (req, res, next) => {
         if (!dataUser) {
           throw createError(401, 'You Must Login First')
         } else {
-          console.log(req.user, '<<<<<<<< ??')
+          // console.log(req.user, '<<<<<<<< ??')
           next()
         }
       })
   }
   catch (error) {
-    next(err)
+    next(error)
     // res.status(404).json({ message: "Invalid Token " })
   }
 
