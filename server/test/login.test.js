@@ -16,6 +16,7 @@ describe('Login test for User', () => {
                     let { body, status } = response;
                     expect(status).toBe(200);
                     expect(body).toHaveProperty('token');
+                    expect(typeof body.token).toBe('string');
                     done();
                 }).catch(err => {
                     done(err);

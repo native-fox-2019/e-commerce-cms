@@ -1,16 +1,11 @@
 const app = require('../app');
 const response = require('supertest');
 const { Product, Sequelize } = require('../models');
-const { generateToken } = require('../helpers/jwt');
-let token = null;
-let fakeToken = null;
+let token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTg0NDM5NzI2fQ.wqCQussA3P1KbtxyX5Mx-_8nZhYJrL5jCEJAEE2rMQA';
+let fakeToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNTg0NDM3Njc1fQ.cXTa-T-1vQxO3fMW45wqFbMx1eM-Y3kn7gOgALbMD_s';
 const Op = Sequelize.Op;
 
 beforeAll(async () => {
-    let obj = {
-        id: 1
-    }
-    token = generateToken(obj);
     await Product.create({
         id: 1000,
         name: 'Baju',
@@ -69,7 +64,14 @@ describe('CRUD for products using admin account', () => {
                     .set('token', token)
                     .then(response => {
                         const { body, status } = response;
-                        expect(status).toBe(200); //createdAt dan updatedAt nya?
+                        expect(status).toBe(200);
+                        expect(Array.isArray(['body'])).toBe(true);
+                        expect(body[0]).toHaveProperty('createdAt');
+                        expect(body[0]).toHaveProperty('updatedAt');
+                        expect(body[0]).toHaveProperty('name');
+                        expect(body[0]).toHaveProperty('image_url');
+                        expect(body[0]).toHaveProperty('price');
+                        expect(body[0]).toHaveProperty('stock');
                         done();
                     }).catch(err => {
                         done(err);
@@ -104,7 +106,7 @@ describe('CRUD for products using admin account', () => {
         describe('Delete a product', () => {
             it('Should return 200 and msg', (done) => {
                 response(app)
-                    .delete('/product/1000') //ganti id
+                    .delete('/product/1000')
                     .set('token', token)
                     .then(response => {
                         const { body, status } = response;
@@ -137,6 +139,7 @@ describe('CRUD for products using admin account', () => {
                         const { body, status } = response;
                         expect(status).toBe(400);
                         expect(body).toHaveProperty('msg');
+                        expect(Array.isArray(['body'])).toBe(true);
                         expect(body.msg).toEqual(expect.arrayContaining(output));
                         done();
                     }).catch(err => {
@@ -153,10 +156,30 @@ describe('CRUD for products using admin account', () => {
                 response(app)
                     .post('/product')
                     .send(input)
+                    .set('token', fakeToken)
                     .then(response => {
                         const { body, status } = response;
                         expect(status).toBe(403);
                         expect(body).toHaveProperty('msg', 'You are forbidden to do that');
+                        done();
+                    }).catch(err => {
+                        done(err);
+                    });
+            });
+            it('Should return 401 and msg', (done) => {
+                let input = {
+                    name: 'Baju',
+                    image_url: 'afia.img',
+                    price: 1000,
+                    stock: 52
+                }
+                response(app)
+                    .post('/product')
+                    .send(input)
+                    .then(response => {
+                        const { body, status } = response;
+                        expect(status).toBe(401);
+                        expect(body).toHaveProperty('msg', 'You have to login first');
                         done();
                     }).catch(err => {
                         done(err);
@@ -167,10 +190,30 @@ describe('CRUD for products using admin account', () => {
             it('Should return 403 and msg', (done) => {
                 response(app)
                     .get('/product')
+                    .set('token', fakeToken)
                     .then(response => {
                         const { body, status } = response;
                         expect(status).toBe(403);
                         expect(body).toHaveProperty('msg', 'You are forbidden to do that');
+                        done();
+                    }).catch(err => {
+                        done(err);
+                    });
+            });
+            it('Should return 401 and msg', (done) => {
+                let input = {
+                    name: 'Baju',
+                    image_url: 'afia.img',
+                    price: 1000,
+                    stock: 52
+                }
+                response(app)
+                    .post('/product')
+                    .send(input)
+                    .then(response => {
+                        const { body, status } = response;
+                        expect(status).toBe(401);
+                        expect(body).toHaveProperty('msg', 'You have to login first');
                         done();
                     }).catch(err => {
                         done(err);
@@ -196,6 +239,7 @@ describe('CRUD for products using admin account', () => {
                         const { body, status } = response;
                         expect(status).toBe(400);
                         expect(body).toHaveProperty('msg');
+                        expect(Array.isArray(['body'])).toBe(true);
                         expect(body.msg).toEqual(expect.arrayContaining(output));
                         done();
                     }).catch(err => {
@@ -212,6 +256,7 @@ describe('CRUD for products using admin account', () => {
                 response(app)
                     .put('/product/1001')
                     .send(input)
+                    .set('token', fakeToken)
                     .then(response => {
                         const { body, status } = response;
                         expect(status).toBe(403);
@@ -229,7 +274,7 @@ describe('CRUD for products using admin account', () => {
                     stock: 20
                 }
                 response(app)
-                    .put('/product/1002')
+                    .put('/product/10010')
                     .send(input)
                     .set('token', token)
                     .then(response => {
@@ -241,11 +286,30 @@ describe('CRUD for products using admin account', () => {
                         done(err);
                     });
             });
+            it('Should return 401 and msg', (done) => {
+                let input = {
+                    name: 'Baju',
+                    image_url: 'afia.img',
+                    price: 1000,
+                    stock: 52
+                }
+                response(app)
+                    .post('/product')
+                    .send(input)
+                    .then(response => {
+                        const { body, status } = response;
+                        expect(status).toBe(401);
+                        expect(body).toHaveProperty('msg', 'You have to login first');
+                        done();
+                    }).catch(err => {
+                        done(err);
+                    });
+            });
         });
         describe('Fail to delete Data', () => {
             it('Should return 404 and msg', (done) => {
                 response(app)
-                    .delete('/product/1002') //ganti id
+                    .delete('/product/10010')
                     .set('token', token)
                     .then(response => {
                         const { body, status } = response;
@@ -259,10 +323,30 @@ describe('CRUD for products using admin account', () => {
             it('Should return 403 and msg', (done) => {
                 response(app)
                     .delete('/product/1001')
+                    .set('token', fakeToken)
                     .then(response => {
                         const { body, status } = response;
                         expect(status).toBe(403);
                         expect(body).toHaveProperty('msg', 'You are forbidden to do that');
+                        done();
+                    }).catch(err => {
+                        done(err);
+                    });
+            });
+            it('Should return 401 and msg', (done) => {
+                let input = {
+                    name: 'Baju',
+                    image_url: 'afia.img',
+                    price: 1000,
+                    stock: 52
+                }
+                response(app)
+                    .post('/product')
+                    .send(input)
+                    .then(response => {
+                        const { body, status } = response;
+                        expect(status).toBe(401);
+                        expect(body).toHaveProperty('msg', 'You have to login first');
                         done();
                     }).catch(err => {
                         done(err);

@@ -19,9 +19,14 @@ function errorHandler (err, req, res, next) {
             msg: err.message
         })
     } else if (err.name === 'JsonWebTokenError') {
+        res.status(401).json({
+            status: 401,
+            msg: 'You have to login first'
+        })
+    } else if (err.name === 'ForbiddenError') {
         res.status(403).json({
             status: 403,
-            msg: 'You are forbidden to do that'
+            msg: err.message
         })
     }
     else {

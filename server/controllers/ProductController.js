@@ -23,6 +23,10 @@ class ProductController {
     static async editData(req, res, next) {
         try {
             let id = Number(req.params.id);
+            let findData = await Product.findOne({ where: { id } });
+            if (!findData) {
+                throw createError(404, 'Error Not Found');
+            }
             let { name, image_url, price, stock } = req.body;
             let obj = { name, image_url, price, stock };
             let updatedData = await Product.update(obj, { where: { id } });
@@ -38,6 +42,10 @@ class ProductController {
     static async deleteData(req, res, next) {
         try {
             let id = Number(req.params.id);
+            let findData = await Product.findOne({ where: { id } });
+            if (!findData) {
+                throw createError(404, 'Error Not Found');
+            }
             await Product.destroy({ where: { id } });
             res.status(200).json({
                 msg: 'Your data has been deleted'

@@ -52,6 +52,7 @@ describe('Register for users', () => {
                     expect(body).toHaveProperty('status');
                     expect(body.status).toBe(400);
                     expect(body).toHaveProperty('msg');
+                    expect(Array.isArray(body.msg)).toBe(true);
                     expect(body.msg).toEqual(expect.arrayContaining(output));
                     done();
                 }).catch(err => {
