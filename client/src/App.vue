@@ -1,19 +1,16 @@
 <template>
-  <div>
+  <div id="app">
     <!-- <Login /> -->
-    <router-link to="/login">Go to Login</router-link>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <router-link class="btn btn-primary" to="/login">Go to Login</router-link>
+    </nav>
 
     <router-view></router-view>
   </div>
 </template>
 
 <script>
-// import Login from './views/login.vue';
-import router from './routers/index';
 export default {
-  router,
-  components: {
-    // Login
-  }
+  
 }
 </script>
