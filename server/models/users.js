@@ -1,11 +1,23 @@
 'use strict';
+const bcrypt = require('../helpers/bcrypt')
 module.exports = (sequelize, DataTypes) => {
-  const users = sequelize.define('users', {
+  const models = sequelize.Sequelize.Model
+  class users extends models { }
+
+  users.init({
     email: DataTypes.STRING,
     password: DataTypes.STRING,
     role: DataTypes.STRING
-  }, {});
-  users.associate = function(models) {
+  }, {
+    sequelize, hooks: {
+      beforeCreate: (user, options) => {
+        user.password = bcrypt.hasher(user.password)
+      }
+    }
+  })
+
+  users.associate = function (models) {
+    users.hasMany(models.products)
     // associations can be defined here
   };
   return users;
