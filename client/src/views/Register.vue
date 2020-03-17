@@ -1,77 +1,91 @@
 <template>
-    <div class="login container p-4 bg-white text-black" style="margin-top:300px; border: 1px solid black;">
-      <h1>Register Page</h1>
-    <form class="mt-5" @submit.prevent="doRegister">
+  <div class="login-form">
+    <form @submit.prevent="doRegister">
+      <h2 class="text-center">Register</h2>
       <div class="form-group">
-        <label for="exampleInputEmail1">Name</label>
         <input
           type="text"
           class="form-control"
-          id="exampleInputEmail1"
-          aria-describedby="emailHelp"
+          placeholder="Name"
+          required="required"
           v-model="name"
         />
       </div>
       <div class="form-group">
-        <label for="exampleInputEmail1">Email address</label>
         <input
           type="email"
           class="form-control"
-          id="exampleInputEmail1"
-          aria-describedby="emailHelp"
+          placeholder="Email"
+          required="required"
           v-model="email"
         />
       </div>
       <div class="form-group">
-        <label for="exampleInputPassword1">Password</label>
         <input
           type="password"
           class="form-control"
-          id="exampleInputPassword1"
+          placeholder="Password"
+          required="required"
           v-model="password"
         />
       </div>
-      <div class="form-group form-check">
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary btn-block">Create your free account</button>
       </div>
-      <button type="submit" class="btn btn-primary">Register</button>
     </form>
+    <router-link class="text-black" to="/login"
+      >Have an account? Login here</router-link
+    >
   </div>
 </template>
 <script>
-import axios from 'axios'
-export default {
-    name:'Register',
-    data() {
-        return {
-            name: null,
-            email: null,
-            password: null
-        }
-    },
-    created() {
-        this.empty()
-    },
-    methods: {
-        doRegister() {
-            axios.post('http://localhost:3000/users/register', {
-                name: this.name,
-                email: this.email,
-                password: this.password
-            })
-            .then(data => {
-                console.log(data.data.access_token)
-                localStorage.setItem('access_token', data.data.access_token) 
+import axios from "axios";
+import Swal from 'sweetalert2'
 
-            })
-            .catch(err => {
-                console.log(err)
-            })
-        },
-        empty() {
-            this.name = null,
-            this.email = null,
-            this.password = null
-        }
+export default {
+  name: "Register",
+  data() {
+    return {
+      name: ``,
+      email: ``,
+      password: ``
+    };
+  },
+  created() {
+  },
+  methods: {
+    doRegister() {
+      axios
+        .post("http://localhost:3000/users/register", {
+          name: this.name,
+          email: this.email,
+          password: this.password
+        })
+        .then(data => {
+          localStorage.setItem("access_token", data.data.access_token);
+          Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Thank you for registering',
+            showConfirmButton: false,
+            timer: 2000
+          })
+          this.$router.push({ name: "Product" });
+        })
+        .catch(response => {
+            if(response.response.data.msg){
+                Swal.fire({
+                      icon: 'error',
+                      text: response.response.data.msg
+                  })
+            } else {
+                Swal.fire({
+                      icon: 'error',
+                      text: 'Please fill all the fields'
+                  })
+            }
+        });
     }
-}
+  }
+};
 </script>

@@ -1,61 +1,100 @@
 <template>
-  <div class="login container p-4 bg-dark text-white" style="margin-top:300px; border: 1px solid black;">
-      <h1>Login Page</h1>
-    <form class="mt-5" @submit.prevent="doLogin">
+  <div class="login-form">
+    <form @submit.prevent="doLogin">
+      <h2 class="text-center">Log in</h2>
       <div class="form-group">
-        <label for="exampleInputEmail1">Email address</label>
         <input
-          type="email"
+          type="text"
           class="form-control"
-          id="exampleInputEmail1"
-          aria-describedby="emailHelp"
+          placeholder="Email"
+          required="required"
           v-model="email"
         />
       </div>
       <div class="form-group">
-        <label for="exampleInputPassword1">Password</label>
         <input
           type="password"
           class="form-control"
-          id="exampleInputPassword1"
+          placeholder="Password"
+          required="required"
           v-model="password"
         />
       </div>
-      <div class="form-group form-check">
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary btn-block">Log in</button>
       </div>
-      <button type="submit" class="btn btn-primary">Login</button>
     </form>
+    <router-link class="text-black" to="/register"
+      >Create an account</router-link
+    >
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import axios from 'axios'
+import axios from "axios";
+import Swal from "sweetalert2";
 
 export default {
   name: "Login",
   data() {
     return {
-      email: null,
-      password: null
+      email: ``,
+      password: ``
     };
   },
-  created() {
-
-  },
+  created() {},
   methods: {
-      doLogin() {
-          axios.post('http://localhost:3000/users/login', {
-            email: this.email,
-            password: this.password
-          })
-          .then(data => {
-              localStorage.setItem('access_token', data.data.access_token)
-          })
-          .catch(err => {
-              console.log(err, '<<<<<<< FROM LOGIN VUE')
-          })
-      }
+    doLogin() {
+      axios
+        .post("http://localhost:3000/users/login", {
+          email: this.email,
+          password: this.password
+        })
+        .then(data => {
+          localStorage.setItem("access_token", data.data.access_token);
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Login successfull",
+            showConfirmButton: false,
+            timer: 1500
+          });
+          this.$router.push({ name: "Product" });
+        })
+        .catch(response => {
+          const error = response.response.data.msg;
+          Swal.fire({
+            icon: "error",
+            text: error
+          });
+        });
+    }
   }
 };
 </script>
+
+<style>
+.login-form {
+  width: 340px;
+  margin: 50px auto;
+}
+.login-form form {
+  margin-bottom: 15px;
+  background: #f7f7f7;
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+  padding: 30px;
+}
+.login-form h2 {
+  margin: 0 0 15px;
+}
+.form-control,
+.btn {
+  min-height: 38px;
+  border-radius: 2px;
+}
+.btn {
+  font-size: 15px;
+  font-weight: bold;
+}
+</style>
