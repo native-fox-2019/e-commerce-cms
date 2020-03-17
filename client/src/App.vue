@@ -1,15 +1,17 @@
 <template>
     <div id="app">
+        <ItemList></ItemList>
     </div>
 </template>
 
 <script>
-import ItemCard from './components/ItemCard.vue'
+import ItemList from '@/views/ItemList.vue';
+
 export default {
-    name: "App",
-    components: {
-        ItemCard
-    }
+  name: 'App',
+  components: {
+    ItemList,
+  },
 };
 </script>
 
