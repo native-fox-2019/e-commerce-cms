@@ -63,7 +63,7 @@ class UserController {
           user_id: data.id,
           name: data.name,
           email: data.email
-        }, 'gogoo')
+        }, process.env.SECRET)
         res.type('application/json')
         res.status(200).json({messgae: "Login succes!", usertoken: token})
       }else{
