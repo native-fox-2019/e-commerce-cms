@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest --detectOpenHandles",
+    "reset": "sequelize db:migrate:undo:all && sequelize:db:migrate",
+    "test": "npm run reset && jest --detectOpenHandles",
     "dev": "nodemon app.js"
   },
   "keywords": [],
