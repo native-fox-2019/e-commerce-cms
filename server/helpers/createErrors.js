@@ -1,1 +1,1 @@
-module.exports = require(`http-errors`)
+module.exports = require(`http-errors`);
