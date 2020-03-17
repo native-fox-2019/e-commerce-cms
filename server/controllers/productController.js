@@ -26,14 +26,14 @@ class ProductController {
             msg: "Product not found."
           }
         } else if (data) {
-            res.status(200).json(data)
+          res.status(200).json(data)
         }
       })
       .catch(err => {
         next(err)
       })
   }
-  
+
   static create(req, res, next) {
     const { name, stock, urlImage, price } = req.body
     Product
@@ -42,7 +42,7 @@ class ProductController {
         stock,
         urlImage,
         price,
-        UserId = req.user.id
+        UserId: req.user.id
       })
       .then(data => {
         res.status(201).json(data)
@@ -83,10 +83,10 @@ class ProductController {
         price,
       },
         {
-        where: {
-          id: req.params.id
-        }, returning: true
-      }
+          where: {
+            id: req.params.id
+          }, returning: true
+        }
       )
       .then(data => {
         if (!data) {

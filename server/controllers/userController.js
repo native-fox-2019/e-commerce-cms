@@ -2,6 +2,7 @@
 require('dotenv').config()
 const { User } = require('../models')
 const bcrypt = require('../helpers/bcrypt')
+const jwt = require('jsonwebtoken')
 
 class UserController {
   static registerAdmin(req, res, next) {
@@ -11,7 +12,7 @@ class UserController {
         username,
         password,
         email,
-        admin = true
+        admin: true
       })
       .then(data => {
         res.status(201).json(data)
@@ -27,7 +28,7 @@ class UserController {
         username,
         password,
         email,
-        admin = false,
+        admin: false,
       })
       .then(data => {
         res.status(201).json(data)
@@ -110,6 +111,11 @@ class UserController {
             }
             const token = jwt.sign(payload, process.env.SECRET)
             res.status(200).json(token)
+          }
+        } else {
+          throw {
+            status: 400,
+            msg: 'Wrong Password!'
           }
         }
       })
