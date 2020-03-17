@@ -7,7 +7,8 @@ module.exports = function errorHandler(err, req, res, next) {
         res.status(400).json({ msg: err.errors[0].message })
     } else if (err.msg === 'incorrect USERNAME/PASSWORD') {
         res.status(404).json(err)
-    } else if (err.msg === 'Invalid Token') {
+    } else if (err.status === 401) {
+        console.log('===============',err.msg,'===========')
         res.status(401).json(err.msg)
     } else {
         res.send(err)

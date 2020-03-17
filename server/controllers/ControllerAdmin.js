@@ -39,8 +39,11 @@ class ControllerAdmin {
     static editProduct(req, res, next) {
         let id = Number(req.params.id)
         const { name, price, stocks, imageURL } = req.body
-        Products.put({ name, price, stocks, imageURL })
+        Products.update({ name, price, stocks, imageURL }, {where:{id}})
             .then(data => {
+                return Products.findOne({where:{id}})
+            })
+            .then(data =>{
                 res.status(200).json(data)
             })
             .catch(err => {
@@ -50,7 +53,7 @@ class ControllerAdmin {
 
     static deleteProduct(req, res, next) {
         let id = Number(req.params.id)
-        let temp = ''
+        let temp = null
         Products.findOne({ where: { id } })
             .then(data => {
                 temp = data
