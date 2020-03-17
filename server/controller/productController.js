@@ -8,6 +8,22 @@ class productController{
             res.status(200).json(result)
         })
         .catch(err=>{
+               next({status: 501, msg: 'Internal server error!'}) 
+        })
+    }
+
+    static add(req,res,next){
+        let obj = {
+            name : req.body.name,
+            image_url : req.body.image_url,
+            price : req.body.price,
+            stock : req.body.stock
+        }
+        Product.create(obj)
+        .then(result =>{
+            res.status(201).json(result)
+        })
+        .catch(err=>{
             if(err){
                 let totalError = {}
                 for(let i = 0; i < err.errors.length; i++){
@@ -17,25 +33,8 @@ class productController{
                 } 
                 next({status: 400, msg: totalError})
             } else{
-               next({status: 501, msg: 'Internal server error!'}) 
+                next({status: 501, msg: 'Internal server error!'})
             }
-            
-        })
-    }
-
-    static add(req,res,next){
-        let obj = {
-            name : req.body.name,
-            image_url : req.body.image,
-            price : req.body.price,
-            stock : req.body.stock
-        }
-        Product.create(obj)
-        .then(result =>{
-            res.status(201).json(result)
-        })
-        .catch(err=>{
-            next({status: 501, msg: 'Internal server error!'})
         })
     }
 
