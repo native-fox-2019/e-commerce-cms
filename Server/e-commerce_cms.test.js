@@ -101,27 +101,10 @@ describe('get list of products', function(){
         it('Should return 200 and object(products)', (done) => {
             request(app)
             .get('/products')
-            .set({token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwibmFtZSI6IkFkaGl5YXRtYSBQcmFtYXlvZ2EiLCJlbWFpbCI6ImFkaGl5YXRtYS5wcmFtYXlvZ2FAZ21haWwuY29tIiwiaWF0IjoxNTg0MzU5MjMyfQ.9BuTB8wfOqCBKvsXbUiMKjJCvKKKY0aeMWWX90-pBiI'})
             .then(response => {
                 let {body, status} = response
                 expect(status).toBe(200)
                 expect(body).toHaveProperty('products')
-                done()
-            })
-            .catch(err => {
-                done(err)
-            })
-        })
-    })
-    describe('unsuccessfully get products due to authentication', function(){
-        it('Should return 401 and object(status, msg)', (done) => {
-            request(app)
-            .get('/products')
-            .then(response => {
-                let {body, status} = response
-                expect(status).toBe(401)
-                expect(body).toHaveProperty('status', 401)
-                expect(body).toHaveProperty('msg', 'Please login')
                 done()
             })
             .catch(err => {
@@ -136,7 +119,6 @@ describe('get a product by id', function(){
         it('Should return 200 and object(product)', (done) => {
             request(app)
             .get(`/products/${id}`)
-            .set({token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwibmFtZSI6IkFkaGl5YXRtYSBQcmFtYXlvZ2EiLCJlbWFpbCI6ImFkaGl5YXRtYS5wcmFtYXlvZ2FAZ21haWwuY29tIiwiaWF0IjoxNTg0MzU5MjMyfQ.9BuTB8wfOqCBKvsXbUiMKjJCvKKKY0aeMWWX90-pBiI'})
             .then(response => {
                 let {status, body} = response;
                 expect(status).toBe(200)
