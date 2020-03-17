@@ -65,7 +65,7 @@ module.exports = {
             msg: 'Role cannot be empty!'
           },
           isIn: {
-            args: ['admin','user'],
+            args: [['admin','user']],
             msg: 'Role must be either admin or user!'
           }
         }

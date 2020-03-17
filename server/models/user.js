@@ -60,7 +60,7 @@ module.exports = (sequelize, DataTypes) => {
           msg: 'Role cannot be empty!'
         },
         isIn: {
-          args: ['admin','user'],
+          args: [['admin','user']],
           msg: 'Role must be either admin or user!'
         }
       }

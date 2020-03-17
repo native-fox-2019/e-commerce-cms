@@ -46,7 +46,7 @@ module.exports = (sequelize, DataTypes) => {
           msg: 'Product price must be integer!'
         },
         min: {
-          args: 0,
+          args: 1,
           msg: 'Product price cannot be negative value!'
         }
       }
@@ -68,7 +68,7 @@ module.exports = (sequelize, DataTypes) => {
           msg: 'Product stock must be integer!'
         },
         min: {
-          args: 0,
+          args: 1,
           msg: 'Product stock cannot be negative value!'
         }
       }

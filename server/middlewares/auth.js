@@ -5,9 +5,10 @@ const { User } = require('../models')
 module.exports = {
     authentication: async (req, res, next) => {
         try {
+            if (!req.headers.access_token) throw customError(401)
 
             let decoded = await jwt.verify(req.headers.access_token, process.env.JWT_SECRET)
-            if (!decoded) throw customError(500, 'Failed to verify access token! Please try again or log in again.')
+            if (!decoded) throw customError(500, 'Failed to verify access token! Please try again or log in first.')
 
             let matchUser = await User.findOne({ where: { id: decoded.id } })
             if (!matchUser) throw customError(401)

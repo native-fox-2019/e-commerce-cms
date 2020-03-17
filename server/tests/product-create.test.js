@@ -9,6 +9,9 @@ let access_token = ''
 beforeAll(done => {
     queryInterface.bulkDelete('Users', {})
     .then(() => {
+        return queryInterface.bulkDelete('Products', {})
+    })
+    .then(() => {
         return User.create({
             username: 'admin',
             email: 'admin@mail.com',
@@ -17,9 +20,7 @@ beforeAll(done => {
         })
     })
     .then(result => {
-        console.log('User Created w/ ID:', {
-            id: result.id,
-        })
+        console.log('User Created w/ ID:', { id: result.id })
         access_token = jwt.sign({ id: result.id }, process.env.JWT_SECRET)
         done()
     })
@@ -48,7 +49,7 @@ describe('Create Product:', () => {
             .set('access_token', access_token)
             .then(response => {
                 const { status, body } = response
-                console.log({ status, message: body.message })
+                console.log({ status, body })
                 expect(status).toBe(201)
                 expect(body.name).toBe('Corsair Vengeance RAM 8GB DDR4')
                 expect(body.image_url).toBe('https://www.scan.co.uk/images/products/2908083-a.jpg')
@@ -56,7 +57,9 @@ describe('Create Product:', () => {
                 expect(body.stock).toBe(12)
                 done()
             })
-            .catch(err)
+            .catch(err => {
+                done(err)
+            })
         })
     })
     describe('Create Fail:', () => {
@@ -72,7 +75,7 @@ describe('Create Product:', () => {
             .set('access_token', access_token)
             .then(response => {
                 const { status, body } = response
-                console.log({ status, message: body.message })
+                console.log({ status, body })
                 expect(status).toBe(400)
                 expect(body.message[0]).toBe('Product name cannot be NULL!')
                 done()
@@ -93,7 +96,7 @@ describe('Create Product:', () => {
             .set('access_token', access_token)
             .then(response => {
                 const { status, body } = response
-                console.log({ status, message: body.message })
+                console.log({ status, body })
                 expect(status).toBe(400)
                 expect(body.message[0]).toBe('Product image URL cannot be empty!')
                 done()
@@ -108,13 +111,13 @@ describe('Create Product:', () => {
             .send({
                 name: 'Corsair Vengeance RAM 8GB DDR4',
                 image_url: 'https://www.scan.co.uk/images/products/2908083-a.jpg',
-                price: '600000',
+                price: 'enamratusribu',
                 stock: 12
             })
             .set('access_token', access_token)
             .then(response => {
                 const { status, body } = response
-                console.log({ status, message: body.message })
+                console.log({ status, body })
                 expect(status).toBe(400)
                 expect(body.message[0]).toBe('Product price must be integer!')
                 done()
@@ -135,7 +138,7 @@ describe('Create Product:', () => {
             .set('access_token', access_token)
             .then(response => {
                 const { status, body } = response
-                console.log({ status, message: body.message })
+                console.log({ status, body })
                 expect(status).toBe(400)
                 expect(body.message[0]).toBe('Product stock cannot be negative value!')
                 done()
@@ -145,5 +148,4 @@ describe('Create Product:', () => {
             })
         })
     })
-    
 })

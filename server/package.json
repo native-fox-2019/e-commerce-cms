@@ -8,7 +8,11 @@
     "test": "clear && jest --detectOpenHandles --runInBand --forceExit",
     "test-register": "clear && jest user-register --detectOpenHandles --runInBand --forceExit",
     "test-login": "clear && jest user-login --detectOpenHandles --runInBand --forceExit",
-    "test-create": "clear && jest product-create --detectOpenHandles --runInBand --forceExit"
+    "test-create": "clear && jest product-create --detectOpenHandles --runInBand --forceExit",
+    "test-readAll": "clear && jest product-readAll --detectOpenHandles --runInBand --forceExit",
+    "test-readOne": "clear && jest product-readOne --detectOpenHandles --runInBand --forceExit",
+    "test-update": "clear && jest product-update --detectOpenHandles --runInBand --forceExit",
+    "test-delete": "clear && jest product-delete --detectOpenHandles --runInBand --forceExit"
   },
   "keywords": [],
   "author": "",
