@@ -15,9 +15,9 @@ class ControllerUser {
         password
       })
       .then(user => {
-        let payload = { id: user.id, email }
+        let payload = { id: user.id, email: user.email, role: user.role }
         let token = generatingJWT(payload)
-        res.status(201).json(token)
+        res.status(201).json({ token })
 
       })
       .catch(err => {
@@ -34,7 +34,7 @@ class ControllerUser {
           throw createError(400, 'Your email or password is incorrect')
         } else {
           if (verifyingPassword(password, user.password)) {
-            let payload = { id: user.id, email }
+            let payload = { id: user.id, email, role: user.role }
             let token = generatingJWT(payload)
             res.status(200).json(token)
           }

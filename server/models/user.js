@@ -9,17 +9,17 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        notNull: { args: true, msg: 'column cannot be empty' },
-        notEmpty: { args: true, msg: 'column cannot be empty' }
+        notNull: { args: true, msg: 'username cannot be empty' },
+        notEmpty: { args: true, msg: 'username cannot be empty' }
       }
     },
     email: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        notNull: { args: true, msg: 'column cannot be empty' },
-        notEmpty: { args: true, msg: 'column cannot be empty' },
-        isEmail: true,
+        notNull: { args: true, msg: 'email cannot be empty' },
+        notEmpty: { args: true, msg: 'email cannot be empty' },
+        isEmail: { args: true, msg: 'email invalid' },
         isEmailUniq(value) {
           return User.findOne({ where: { email: value } })
             .then(resultEmail => {

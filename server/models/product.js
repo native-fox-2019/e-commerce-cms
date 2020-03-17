@@ -7,32 +7,32 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        notNull: { args: true, msg: 'column cannot be empty' },
-        notEmpty: { args: true, msg: 'column cannot empty' }
+        notNull: { args: true, msg: 'column name cannot be empty' },
+        notEmpty: { args: true, msg: 'column name cannot empty' }
       }
     },
     image_url: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        notNull: { args: true, msg: 'column cannot be empty' },
-        notEmpty: { args: true, msg: 'column cannot be empty' }
+        notNull: { args: true, msg: 'column image cannot be empty' },
+        notEmpty: { args: true, msg: 'column image cannot be empty' }
       }
     },
     price: {
       type: DataTypes.INTEGER,
       allowNull: false,
       validate: {
-        notNull: { args: true, msg: 'column cannot be empty' },
-        notEmpty: { args: true, msg: 'column cannot be empty' }
+        notNull: { args: true, msg: 'column price cannot be empty' },
+        notEmpty: { args: true, msg: 'column price cannot be empty' }
       }
     },
     stock: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        notNull: { args: true, msg: 'column cannot be empty' },
-        notEmpty: { args: true, msg: 'column cannot be empty' }
+        notNull: { args: true, msg: 'column stock cannot be empty' },
+        notEmpty: { args: true, msg: 'column stock cannot be empty' }
       }
     },
     UserId: DataTypes.INTEGER,
