@@ -1,18 +1,16 @@
 module.exports = (req, res, next) =>{
-  const { Task } = require('../models')
-  
-    Task
+  const { User } = require('../models')
+    User
       .findOne({
           where:{
-              id: req.params.id
+              id: req.user
           }
       })
       .then(data => {        
         if (!data) {   
           throw {status: 404, message: 'Data Not Found'}
         } else {
-          
-          if (data.UserId === req.user) {
+          if (data.admin === true) {
             next()
           } else {
           throw {status: 401, message: 'Unauthorize'}
