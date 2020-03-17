@@ -5,12 +5,7 @@
         </div>
         <form v-on:submit.prevent="register" class="register-form">
             <div class="textbox">
-                <input
-                    type="text"
-                    id="register-name"
-                    placeholder="Name"
-                    v-model="register_name"
-                />
+                <input type="text" id="register-name" placeholder="Name" v-model="register_name" />
             </div>
             <div class="textbox">
                 <input
@@ -31,31 +26,32 @@
             <button type="submit" class="btn register-btn">Sign Up</button>
         </form>
         <div class="action-button">
-            <router-link to="/login"
-                ><span>Click Here to Login</span></router-link
-            >
-            <router-link to="/"
-                ><span>Click Here to Sign In with Google</span></router-link
-            >
+            <router-link to="/login">
+                <span>Click Here to Login</span>
+            </router-link>
+            <router-link to="/">
+                <span>Click Here to Sign In with Google</span>
+            </router-link>
         </div>
     </div>
 </template>
 <script>
-import Axios from 'axios'
-const rootUrl = 'http://localhost:3000'
+import Axios from "axios";
+const rootUrl = "http://localhost:3000";
+
 export default {
-    name: 'Register',
+    name: "Register",
     data: () => {
         return {
-            register_name: '',
-            register_email: '',
-            register_password: ''
-        }
+            register_name: "",
+            register_email: "",
+            register_password: ""
+        };
     },
     methods: {
         register: function() {
             Axios({
-                method: 'post',
+                method: "post",
                 url: `${rootUrl}/user/registration`,
                 data: {
                     name: this.register_name,
@@ -65,17 +61,18 @@ export default {
             })
                 .then(result => {
                     localStorage.setItem(
-                        'access_token',
+                        "access_token",
                         result.data.access_token
-                    )
-                    this.register_name = ''
-                    this.register_email = ''
-                    this.register_password = ''
+                    );
+                    this.register_name = "";
+                    this.register_email = "";
+                    this.register_password = "";
+                    this.$router.push({ name: "Product" });
                 })
                 .catch(err => {
-                    console.log(err)
-                })
+                    console.log(err.response);
+                });
         }
     }
-}
+};
 </script>

@@ -1,0 +1,13 @@
+footer {
+    text-align: center;
+    background-color: $color-primary;
+    color: #fff;
+    padding: 20px;
+    position: static;
+    bottom: 0;
+    width: 100%;
+
+    p {
+        background-color: inherit;
+    }
+}

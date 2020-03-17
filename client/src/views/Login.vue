@@ -23,30 +23,31 @@
             <button type="submit" class="btn login-btn">Sign In</button>
         </form>
         <div class="action-button">
-            <router-link to="/register"
-                ><span>Click Here to Register</span></router-link
-            >
-            <router-link to="/"
-                ><span>Click Here to Sign In with Google</span></router-link
-            >
+            <router-link to="/register">
+                <span>Click Here to Register</span>
+            </router-link>
+            <router-link to="/">
+                <span>Click Here to Sign In with Google</span>
+            </router-link>
         </div>
     </div>
 </template>
 <script>
-import Axios from 'axios'
-const rootUrl = 'http://localhost:3000'
+import Axios from "axios";
+const rootUrl = "http://localhost:3000";
+
 export default {
-    name: 'Login',
+    name: "Login",
     data: () => {
         return {
-            login_email: '',
-            login_password: ''
-        }
+            login_email: "",
+            login_password: ""
+        };
     },
     methods: {
         login: function() {
             Axios({
-                method: 'post',
+                method: "post",
                 url: `${rootUrl}/user/login`,
                 data: {
                     email: this.login_email,
@@ -54,19 +55,19 @@ export default {
                 }
             })
                 .then(result => {
-                    console.log(result.data.access_token)
+                    console.log(result.data.access_token);
                     localStorage.setItem(
-                        'access_token',
+                        "access_token",
                         result.data.access_token
-                    )
-                    this.login_email = ''
-                    this.login_password = ''
-                    this.$emit('login')
+                    );
+                    this.login_email = "";
+                    this.login_password = "";
+                    this.$router.push({ name: "Product" });
                 })
                 .catch(err => {
-                    console.log(err)
-                })
+                    console.log(err.response);
+                });
         }
     }
-}
+};
 </script>
