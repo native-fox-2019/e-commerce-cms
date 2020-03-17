@@ -36,17 +36,21 @@ export default {
       };
       axios(options)
         .then((response) => {
-          console.log(response.data);
-          localStorage.setItem('token', response.data.token);
-          localStorage.setItem('name', response.data.name);
-          this.email = '';
-          this.password = '';
-          this.loginError = '';
-          this.$router.push('/');
-          this.$emit('changeLoginStatus', true);
+          if (response.data.role === 'admin') {
+            localStorage.setItem('token', response.data.token);
+            localStorage.setItem('name', response.data.name);
+            localStorage.setItem('role', response.data.role);
+            this.email = '';
+            this.password = '';
+            this.loginError = '';
+            this.$router.push('/');
+            this.$emit('changeLoginStatus', true);
+          } else {
+            this.loginError = '';
+            this.loginError = 'Only admin can log in';
+          }
         })
         .catch((err) => {
-          console.log(err.response);
           this.loginError = '';
           this.loginError = err.response.data.msg;
         });

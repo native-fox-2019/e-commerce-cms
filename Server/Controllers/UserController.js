@@ -19,7 +19,7 @@ class UserController {
         .then(result => {
             if(result) {
                 let token = makeToken(result);
-                res.status(201).json({name: result.name, token, message: 'Successfully registered and logged in', id: result.id})
+                res.status(201).json({name: result.name, token, message: 'Successfully registered and logged in', id: result.id, role})
             }
         })
         .catch(err => {
@@ -54,7 +54,7 @@ class UserController {
         .then(result => {
             if (result){
                 let token = makeToken(userFound);
-                res.status(200).json({name:userFound.name, token, message: 'Successfully logged in'})
+                res.status(200).json({name:userFound.name, token, message: 'Successfully logged in', role: userFound.role})
             }else{
                 next({status: 400, msg: 'Wrong Password'})
             }

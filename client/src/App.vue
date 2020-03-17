@@ -36,6 +36,7 @@ export default {
     logOut() {
       localStorage.removeItem('token');
       localStorage.removeItem('name');
+      localStorage.removeItem('role');
       this.isLogin = false;
       this.$router.push('/');
     },
