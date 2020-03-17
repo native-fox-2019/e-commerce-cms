@@ -3,7 +3,7 @@
     <b-card>
     <b-form-group
       label-cols-lg="3"
-      label="Create Product"
+      label="Edit Product"
       label-size="lg"
       label-class="font-weight-bold pt-0"
       class="mb-0"
@@ -49,6 +49,13 @@ export default {
                 stock:0
             }
         }
+    },
+    created(){
+        var id=this.$route.params.id;
+        var product=this.$store.state.products.find(p=>p.id==id);
+        this.product.name=product.product;
+        this.product.price=product.price;
+        this.product.stock=product.stock;
     }
 }
 </script>

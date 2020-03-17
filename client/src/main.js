@@ -8,7 +8,7 @@ import router from "./router";
 
 Vue.config.productionTip = false;
 
-new Vue({
+new Vue({ 
   store,
   router,
   render: h => h(App)
