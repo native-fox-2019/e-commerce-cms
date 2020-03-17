@@ -40,6 +40,7 @@ class Controller{
   }
   static create(req, res, next) {
     const { name, image_url, price, stock, description, CategoryId } = req.body
+    console.log(req.body)
     Product
       .create({
         name,
@@ -72,7 +73,11 @@ class Controller{
           returning: true
       })
       .then(data => {
-        res.status(200).json(data)
+        if (data[0] === 0) {
+          throw {status : 404, message: "Data Not Found"}
+        } else {
+          res.status(200).json(data[1][0])
+        }
       })
       .catch(err => {
         next(err)
@@ -88,7 +93,7 @@ class Controller{
       if (!data) {
         throw {status: 404, message: "Data Not Found"}
       } else {
-        res.status(200).json(data)
+        res.status(200).json("Data Product Hasbeen Removed")
       }
       })
       .catch(err => {

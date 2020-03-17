@@ -11,7 +11,8 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false,
       validate:{
-        notEmpty: true
+        notEmpty: true,
+        isInt: true
       }},
     image_url: {
       type: DataTypes.STRING,
@@ -23,13 +24,17 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false,
       validate:{
-        notEmpty: true
+        notEmpty: true,
+        isInt: true,
+        min: 1,
       }},
     stock: {
       type: DataTypes.INTEGER,
       allowNull: false,
       validate:{
-        notEmpty: true
+        notEmpty: true,
+        isInt: true,
+        min: 1,
       }},
     description: {
       type: DataTypes.TEXT,
@@ -38,7 +43,9 @@ module.exports = (sequelize, DataTypes) => {
         notEmpty: true
       }}
   }, {sequelize});
-  Product.associate = function(models) {
+  Product.associate = function (models) {
+    Product.belongsTo(models.Category)
+    Product.hasMany(models.Cart)
     // associations can be defined here
   };
   return Product;

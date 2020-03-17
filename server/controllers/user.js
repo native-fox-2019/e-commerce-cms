@@ -63,15 +63,19 @@ class Controller{
               }
             } else {
               if (compare(password, data.password)) {
-                const payload = {
-                  id: data.id,
-                  email: data.email
+                if (data.admin === false) {
+                  const payload = {
+                    id: data.id,
+                    email: data.email
+                  }
+                  const token = generateToken(payload)
+                  res.status(200).json({
+                    name: data.name,
+                    token: token
+                  })
+                } else {
+                  throw {status: 401, message: "Unauthorize"}
                 }
-                const token = generateToken(payload)
-                res.status(200).json({
-                  name: data.name,
-                  token: token
-                })
               } else {
                 throw {
                   status: 400,
@@ -157,7 +161,7 @@ class Controller{
       })
       .then(data => {
         if (!data) {
-          throw {status: 200, message: "Data Not Found"}
+          throw {status: 404, message: "Data Not Found"}
         } else {
           res.status(200).json(data)
         }
@@ -166,14 +170,14 @@ class Controller{
         next(err)
     })
   }
-  static create(req, res, next){
-    const { name, email, password, admin } = req.body
+  static create(req, res, next) {
+    const { name, email, password } = req.body    
     User
       .create({
         name,
         email,
         password,
-        admin
+        admin: true
       })
       .then(data => {
         res.status(201).json(data)
@@ -198,7 +202,12 @@ class Controller{
         }
     )
       .then(data => {
-      res.status(200).json(data[1][0])
+        console.log(data[0])
+        if (!data[0]) {
+          throw {status: 404, message: "Data Not Found"}
+        } else {
+          res.status(200).json(data[1][0])
+        }
       })
       .catch(err => {
         next(err)
@@ -208,7 +217,7 @@ class Controller{
     const { id } = req.params
     User
       .destroy({
-        where: id
+        where: {id}
       })
       .then(data => {
         if (!data) {
@@ -217,7 +226,7 @@ class Controller{
             message: "Data Not Found"
           }
         } else {
-          res.status(200).json(data)
+          res.status(200).json('User hasbeen removed')
         }
       })
       .catch(err => {

@@ -59,21 +59,28 @@ class Controller{
         }
     )
       .then(data => {
-      res.status(200).json(data[1][0])
+        console.log(data)
+        if (data[0] === 0) {
+          throw {status : 404, message: "Data Not Found"}
+        } else {
+          res.status(200).json(data[1][0])
+        }
       })
       .catch(err => {
+        console.log('masuk catch')
+
         next(err)
     })
   }
   static destroy(req, res, next) {
     const { id } = req.params
     Category
-      .destroy({ where: id })
+      .destroy({ where: {id} })
       .then(data => {
         if (!data) {
           throw{status: 404, message: "Data Not Found"}
         } else {
-          res.status(200).json(data)
+          res.status(200).json("Category hasbeen removed")
         }
       })
       .catch(err => {

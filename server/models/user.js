@@ -12,12 +12,12 @@ module.exports = (sequelize, DataTypes) => {
     email: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: {
-        args: true,
-        msg: 'email must unique'
-      },
       validate:{
         notEmpty: true,
+      },
+      unique: {
+        args: true,
+        msg: 'Email address already in use!'
       }
     },
     password: {
@@ -42,6 +42,7 @@ module.exports = (sequelize, DataTypes) => {
     sequelize});
   User.associate = function(models) {
     // associations can be defined here
+    User.hasMany(models.Cart)
   };
   return User;
 };
