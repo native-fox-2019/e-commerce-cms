@@ -31,12 +31,18 @@
             <button type="submit" class="btn register-btn">Sign Up</button>
         </form>
         <div class="action-button">
-            <span>Click Here to Login</span>
-            <span>Click Here to Sign In with Google</span>
+            <router-link to="/login"
+                ><span>Click Here to Login</span></router-link
+            >
+            <router-link to="/"
+                ><span>Click Here to Sign In with Google</span></router-link
+            >
         </div>
     </div>
 </template>
 <script>
+import Axios from 'axios'
+const rootUrl = 'http://localhost:3000'
 export default {
     name: 'Register',
     data: () => {
@@ -48,7 +54,27 @@ export default {
     },
     methods: {
         register: function() {
-            console.log(this.register_email, this.register_password)
+            Axios({
+                method: 'post',
+                url: `${rootUrl}/user/registration`,
+                data: {
+                    name: this.register_name,
+                    email: this.register_email,
+                    password: this.register_password
+                }
+            })
+                .then(result => {
+                    localStorage.setItem(
+                        'access_token',
+                        result.data.access_token
+                    )
+                    this.register_name = ''
+                    this.register_email = ''
+                    this.register_password = ''
+                })
+                .catch(err => {
+                    console.log(err)
+                })
         }
     }
 }

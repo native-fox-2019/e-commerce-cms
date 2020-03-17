@@ -124,5 +124,9 @@ header h4 {
   background-color: darkslategray;
   margin: inherit;
 }
+.action-button a {
+  background-color: darkslategray;
+  text-decoration: none;
+}
 
 /*# sourceMappingURL=style.css.map */

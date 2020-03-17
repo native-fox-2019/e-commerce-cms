@@ -1,7 +1,7 @@
 <template>
     <div class="login-page user-access">
         <div>
-            <h4 class="login-title">Sign In</h4>
+            <h4 class="login-title">Login</h4>
         </div>
         <form v-on:submit.prevent="login" class="login-form">
             <div class="textbox">
@@ -23,12 +23,18 @@
             <button type="submit" class="btn login-btn">Sign In</button>
         </form>
         <div class="action-button">
-            <span>Click Here to Register</span>
-            <span>Click Here to Sign In with Google</span>
+            <router-link to="/register"
+                ><span>Click Here to Register</span></router-link
+            >
+            <router-link to="/"
+                ><span>Click Here to Sign In with Google</span></router-link
+            >
         </div>
     </div>
 </template>
 <script>
+import Axios from 'axios'
+const rootUrl = 'http://localhost:3000'
 export default {
     name: 'Login',
     data: () => {
@@ -39,7 +45,27 @@ export default {
     },
     methods: {
         login: function() {
-            console.log(this.login_email, this.login_password)
+            Axios({
+                method: 'post',
+                url: `${rootUrl}/user/login`,
+                data: {
+                    email: this.login_email,
+                    password: this.login_password
+                }
+            })
+                .then(result => {
+                    console.log(result.data.access_token)
+                    localStorage.setItem(
+                        'access_token',
+                        result.data.access_token
+                    )
+                    this.login_email = ''
+                    this.login_password = ''
+                    this.$emit('login')
+                })
+                .catch(err => {
+                    console.log(err)
+                })
         }
     }
 }

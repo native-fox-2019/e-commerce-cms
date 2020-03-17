@@ -1,21 +1,27 @@
 <template>
     <div id="app">
         <header>
-            <h4>T1TLE</h4>
+            <h4>TokoPedofil</h4>
             <nav>
                 <ul class="nav_link">
                     <li>
                         <router-link to="/login"
-                            ><button class="btn">Login</button></router-link
+                            ><button class="btn" v-if="!isLogin">
+                                Login
+                            </button></router-link
                         >
                     </li>
                     <li>
                         <router-link to="/register"
-                            ><button class="btn">Register</button></router-link
+                            ><button class="btn" v-if="!isLogin">
+                                Register
+                            </button></router-link
                         >
                     </li>
                     <li>
-                        <button class="btn">Logout</button>
+                        <button class="btn" v-if="isLogin" v-on:click="logout">
+                            Logout
+                        </button>
                     </li>
                 </ul>
             </nav>
@@ -23,3 +29,19 @@
         <router-view></router-view>
     </div>
 </template>
+<script>
+export default {
+    data: () => {
+        return {
+            isLogin: localStorage.getItem('access_token')
+        }
+    },
+    methods: {
+        logout: function() {
+            localStorage.removeItem('access_token')
+            this.isLogin = false
+            console.log(this.isLogin)
+        }
+    }
+}
+</script>
