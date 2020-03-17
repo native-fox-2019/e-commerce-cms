@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div>
     <!-- <Login /> -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <router-link class="btn btn-primary" to="/login">Go to Login</router-link>
@@ -11,6 +11,6 @@
 
 <script>
 export default {
-  
+
 }
 </script>
