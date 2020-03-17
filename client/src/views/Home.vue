@@ -1,8 +1,9 @@
 <template>
   <div class="home">
-    <h1>Ini Home</h1>
+    <h1>Products</h1>
     <div class="products">
-      <Card v-for="product in products" :key="product.id" :product="product" :isLogin="isLogin"/>
+      <Card v-for="product in products" :key="product.id" :product="product" :isLogin="isLogin"
+      :baseUrl="baseUrl" @deleteProduct="deleteProduct"/>
     </div>
   </div>
 </template>
@@ -13,7 +14,7 @@ import Card from '../components/Card.vue';
 
 export default {
   name: 'Home',
-  props: ['isLogin', 'products'],
+  props: ['isLogin', 'products', 'baseUrl'],
   // created() {
   //   this.getProducts();
   // },
@@ -39,6 +40,9 @@ export default {
     //       console.log(err.response.data);
     //     });
     // },
+    deleteProduct(id) {
+      this.$emit('deleteProduct', id);
+    },
   },
 };
 </script>

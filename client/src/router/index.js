@@ -34,12 +34,22 @@ const routes = [
   {
     path: '/addProduct',
     name: 'AddProduct',
+    meta: { requireAuth: true },
     component: AddProduct,
   },
 ];
 
 const router = new VueRouter({
   routes,
+});
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some((record) => record.meta.requireAuth)) {
+    if (!localStorage.getItem('token')) next({ name: 'Login' });
+    else next();
+  } else {
+    next();
+  }
 });
 
 export default router;

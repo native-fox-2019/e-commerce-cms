@@ -12,13 +12,39 @@
         <i class="fa fa-edit"></i>
       </div>
       <div class="btn-delete">
-        <i class="fa fa-trash"></i>
+        <i class="fa fa-trash" @click="deleteProductCard(product.id)"></i>
       </div>
     </div>
   </div>
 </template>
 <script>
+import axios from 'axios';
+
 export default {
-  props: ['product', 'isLogin'],
+  props: ['product', 'isLogin', 'baseUrl'],
+  data() {
+    return {
+      message: '',
+    };
+  },
+  methods: {
+    deleteProductCard(id) {
+      const options = {
+        url: `${this.baseUrl}/products/${id}`,
+        method: 'delete',
+        headers: {
+          token: localStorage.token,
+        },
+      };
+      axios(options)
+        .then((response) => {
+          this.message = response.message;
+          this.$emit('deleteProduct', id);
+        })
+        .catch((err) => {
+          console.log(err.response);
+        });
+    },
+  },
 };
 </script>

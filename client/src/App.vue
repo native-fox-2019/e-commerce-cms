@@ -15,7 +15,7 @@
       </div>
     </div>
     <router-view @changeLoginStatus="changeLoginStatus" :isLogin="isLogin" :baseUrl="baseUrl"
-    :products="products" @addProduct="addProduct"/>
+    :products="products" @addProduct="addProduct" @deleteProduct="deleteProduct"/>
   </div>
 </template>
 <script>
@@ -61,6 +61,9 @@ export default {
     },
     addProduct(product) {
       this.products.push(product);
+    },
+    deleteProduct(id) {
+      this.products = this.products.filter((item) => item.id !== id);
     },
   },
 };
