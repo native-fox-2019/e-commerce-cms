@@ -1,7 +1,8 @@
-const routes = require('express').Router()
+const router = require('express').Router()
+const userRoutes = require('./user')
 
-routes.get('/', (req, res, next) => {
+router.get('/', (req, res, next) => {
     res.status(200).send("Hope the Test passed")
 })
-
-module.exports = routes
+router.use('/user', userRoutes)
+module.exports = router
