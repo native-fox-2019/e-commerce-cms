@@ -1,0 +1,40 @@
+.btn{
+    background-color: $color-primary;
+    width: 100px;
+    height: 40px;
+    margin: 0px 5px;
+    border: 4px solid;
+    color: $color-font;
+    font-weight: 700;
+    text-transform: uppercase;
+    cursor: pointer;
+    position: relative;
+}
+
+.btn::before, .btn::after {
+    content: "";
+    position: absolute;
+    width: 14px;
+    height: 4px;
+    background: $color-primary;
+    transform: skewX(50deg);
+    transition: .4s linear;
+}
+
+.btn::before{
+    top: -4px;
+    left: 10%;
+}
+
+.btn::after{
+    bottom: -4px;
+    right: 10%;
+}
+
+.btn:hover::before {
+    left: 80%;
+}
+
+.btn:hover::after {
+    right: 80%;
+}

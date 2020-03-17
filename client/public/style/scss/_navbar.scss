@@ -1,0 +1,28 @@
+header {
+    padding: 10px 30px;
+    display: flex;
+    background-color: $color-primary;
+    justify-content: space-between;
+    align-items: center;
+
+    ul {
+        background-color: $color-primary;
+        list-style: none;
+
+        li {
+            background: inherit;
+            text-decoration: none;
+            display: inline;
+        }
+
+        a {
+            background-color: $color-primary;
+        }
+    }
+
+    h4 {
+        background-color: $color-primary;
+        padding: 0px;
+        margin: 0px;
+    }
+}
