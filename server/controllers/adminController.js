@@ -22,7 +22,13 @@ class adminController {
           token
         });
       })
-      .catch(next);
+      .catch(err => {
+        if (err.name == `SequelizeUniqueConstraintError`) {
+          next(createError(400, `Email is already used`));
+        } else {
+          next(err);
+        }
+      });
   }
 
   static login(req, res, next) {
