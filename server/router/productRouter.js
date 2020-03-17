@@ -4,13 +4,14 @@
 const productController = require("../controllers/productController");
 const router = require("express").Router();
 const authentication = require("../middleware/authentication");
+const authorization = require('../middleware/authorization')
 
 router
   .use(authentication)
-  .post("/", productController.create)
+  .post("/", authorization, productController.create)
   .get("/", productController.findAll)
-  .get("/:id", productController.filterData)
-  .put("/:id", productController.update)
-  .delete("/:id", productController.delete);
+  .get("/:id", authorization, productController.filterData)
+  .put("/:id", authorization, productController.update)
+  .delete("/:id", authorization, productController.delete);
 
 module.exports = router;

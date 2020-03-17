@@ -8,12 +8,11 @@ module.exports={
     "dialect": "postgres"
   },
   "test": {
-    "username": "root",
-    "password": null,
-    "database": "database_test",
+    "username": process.env.USER,
+    "password": process.env.PASS,
+    "database": "e_commerce_project",
     "host": "127.0.0.1",
-    "dialect": "mysql",
-    "operatorsAliases": false
+    "dialect": "postgres",
   },
   "production": {
     "username": "root",

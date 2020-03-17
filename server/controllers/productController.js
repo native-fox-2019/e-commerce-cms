@@ -7,7 +7,7 @@ const { Op } = require("sequelize");
 
 class productController {
   static create(req, res, next) {
-    const userId = req.User.id;
+    const UserId  = req.user.id;
     const body = {
       name: req.body.name,
       category: req.body.category,
@@ -15,7 +15,7 @@ class productController {
       image_url: req.body.image_url,
       stock: req.body.stock,
       price: req.body.price,
-      UserId: userId
+      UserId : UserId
     };
     Product.create(body)
       .then(data => {
@@ -70,14 +70,13 @@ class productController {
   }
 
   static update(req, res, next) {
-    const UserId = +req.User.id;
-    console.log(UserId);
+    console.log();
     const id = +req.params.id;
     console.log(id);
     const { name, description, image_url, price, stock, category } = req.body;
     Product.update(
       { name, description, image_url, price, stock, category },
-      { where: { id: id, UserId: UserId }, returning: true }
+      { where: { id: id}, returning: true }
     )
       .then(data => {
         if (data[1].length) {
@@ -96,10 +95,8 @@ class productController {
   }
 
   static delete(req, res, next) {
-    const UserId = +req.User.id
     const id = +req.params.id
-    console.log('masukkkkkkkkkk')
-    Product.destroy({where : {id, UserId}, returning : true})
+    Product.destroy({where : {id, }, returning : true})
       .then(data => {
         console.log(data)
         if (data > 0) {

@@ -16,3 +16,5 @@ app
   .listen(port, () => {
     console.log("listerning to port ", port);
   });
+
+  module.exports = app

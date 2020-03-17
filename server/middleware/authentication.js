@@ -10,7 +10,7 @@ module.exports =(req, res, next) => {
         User.findOne({where : {id : decode.id}})
             .then(data => {
                 if (data.id === decode.id) {
-                    req.User = decode
+                    req.user = decode
                     next()
                 }
             })

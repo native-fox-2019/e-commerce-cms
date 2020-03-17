@@ -1,4 +1,4 @@
-
+/** @format */
 
 "use strict";
 module.exports = (sequelize, DataTypes) => {
@@ -9,49 +9,63 @@ module.exports = (sequelize, DataTypes) => {
       name: {
         type: DataTypes.STRING,
         allowNull: false,
-        notEmpty: {
-          args:true,
-          msg: 'name can not be empty'
+        validate: {
+          notEmpty: {
+            args: true,
+            msg: "name can not be empty"
+          }
         }
       },
       description: {
         type: DataTypes.STRING,
         allowNull: false,
-        notEmpty: {
-          args:true,
-          msg: 'description can not be empty'
+        validate: {
+          notEmpty: {
+            args: true,
+            msg: "description can not be empty"
+          }
         }
       },
       image_url: {
         type: DataTypes.STRING,
         allowNull: false,
-        notEmpty: {
-          args:true,
-          msg: 'photo can not be empty'
+        validate: {
+          notEmpty: {
+            args: true,
+            msg: "photo can not be empty"
+          }
         }
       },
       price: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        notEmpty: {
-          args:true,
-          msg: 'price can not be empty'
+        validate: {
+          min: 0,
+          notEmpty: {
+            args: true,
+            msg: "price can not be empty"
+          }
         }
       },
       stock: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        notEmpty: {
-          args:true,
-          msg: 'stock can not be empty'
+        validate: {
+          min: 0,
+          notEmpty: {
+            args: true,
+            msg: "stock can not be empty"
+          }
         }
       },
       category: {
         type: DataTypes.STRING,
         allowNull: false,
-        notEmpty: {
-          args:true,
-          msg: 'category can not be empty'
+        validate: {
+          notEmpty: {
+            args: true,
+            msg: "category can not be empty"
+          }
         }
       },
       UserId: {

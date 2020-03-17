@@ -1,7 +1,10 @@
+/** @format */
+
 "use strict";
 const { User } = require("../models");
 const { comparePass } = require("../helper/passwordHelper");
 const { generateTok } = require("../helper/tokenHelper");
+const adminList = require("../helper/adminList");
 
 class UserController {
   static login(req, res, next) {
@@ -9,14 +12,19 @@ class UserController {
     User.findOne({ where: { email } })
       .then(data => {
         if (data && comparePass(password, data.password)) {
-          res.status(200).json({token: generateTok({ id: data.id, email: data.email })});
+          res.status(200).json({
+            token: generateTok({
+              id: data.id,
+              email: data.email,
+              isAdmin: data.isAdmin
+            })
+          });
         } else {
-          console.log('elseeee')
           const error = {
             status: 404,
             msg: "email or password wrong!"
           };
-          throw error
+          throw error;
         }
       })
       .catch(err => {
@@ -25,8 +33,22 @@ class UserController {
   }
 
   static register(req, res, next) {
-    const { first_name, last_name, email, password } = req.body;
-    User.create({ first_name, last_name, email, password })
+    const body = {
+      first_name: req.body.first_name,
+      last_name: req.body.last_name,
+      email: req.body.email,
+      password: req.body.password,
+      isAdmin: true
+    }
+    console.log(adminList)
+    adminList.adminList.forEach(element => {
+      if (element === req.body.email) {
+        body.isAdmin = true
+      } else {
+        body.isAdmin = false
+      }
+    });
+    User.create(body)
       .then(data => {
         res.status(201).json(data);
       })
