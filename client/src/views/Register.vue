@@ -1,12 +1,14 @@
 <template>
   <div>
-      <h1>Login</h1>
+      <h1>Register</h1>
     <form @submit.prevent="onSubmit">
+      <label>Name</label>
+      <input v-model="name" type="text">
       <label>Email</label>
       <input v-model="email" type="email">
       <label>Password</label>
       <input v-model="password" type="password">
-      <button type="submit">Login</button>
+      <button type="submit">Sign Up</button>
     </form>
   </div>
 </template>
@@ -15,23 +17,28 @@
 import { mapActions } from 'vuex';
 
 export default {
-  name: 'Login',
+  name: 'Register',
   data() {
     return {
+      name: '',
       email: '',
       password: '',
     };
   },
   methods: {
-    ...mapActions(['login']),
+    ...mapActions(['register']),
     onSubmit() {
-      this.login({ email: this.email, password: this.password });
+      this.register({ name: this.name, email: this.email, password: this.password });
     },
   },
 };
 </script>
 
 <style scoped>
+  * {
+    margin-top: 10px;
+  }
+
   form {
     display:grid;
   }

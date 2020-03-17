@@ -2,12 +2,12 @@ import axios from 'axios';
 
 const server = 'http://localhost:3000';
 
-const state = {
+const states = {
   products: [],
 };
 
 const getters = {
-  allProducts: () => state.products,
+  allProducts: (state) => state.products,
 };
 
 const actions = {
@@ -23,13 +23,13 @@ const actions = {
 };
 
 const mutations = {
-  setProducts: (products) => {
+  setProducts: (state, products) => {
     state.products = products;
   },
 };
 
 export default {
-  state,
+  states,
   getters,
   actions,
   mutations,

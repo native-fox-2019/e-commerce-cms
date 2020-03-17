@@ -1,20 +1,22 @@
 <template>
     <div>
-        <ProductCard />
+        <Navbar />
+        <Products />
     </div>
 </template>
 
 <script>
-import ProductCard from '../components/ProductCard.vue';
+import Products from '../components/Products.vue';
+import Navbar from '../components/Navbar.vue';
 
 export default {
   name: 'Home',
   components: {
-    ProductCard,
+    Products,
+    Navbar,
   },
 };
 </script>
 
 <style>
-
 </style>
