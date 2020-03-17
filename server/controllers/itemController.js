@@ -3,7 +3,14 @@ const { Item } = require('../models')
 class Controller {
 
     static create(req, res, next) {
-        let obj
+        let obj = {
+            name: req.body.name,
+            description: req.body, description,
+            image_url: req.body.image_url,
+            price: req.body.price,
+            stock: req.body.stock,
+            UserId: req.userData.id
+        }
         Item.create(obj)
         .then(data => res.status(201).json({ data }))
         .catch(next)
@@ -18,33 +25,74 @@ class Controller {
     static findOne(req, res, next) {
         let option = { where: { id: req.params.id }}
         Item.findOne(option)
-        .then(data => res.status(200).json({ data }))
-        .catch(next)
+        .then(result=>{
+            if(result){
+                res.status(200).json({ result })
+            } else{
+                throw {status: 404, message: 'Data not found'}
+            }
+        })
+        .catch(err=>{
+            next(err)
+        })
     }
 
     static findUserItem(req, res, next) {
         let option = { where: { UserId: req.params.id }}
         Item.findAll(option)
-        .then(data => res.status(200).json({ data }))
-        .catch(next)
+        .then(result=>{
+            if(result){
+                res.status(200).json({ result })
+            } else{
+                throw {status: 404, message: 'Data not found'}
+            }
+        })
+        .catch(err=>{
+            next(err)
+        })
     }
 
     static update(req, res, next) {
-        let obj
+        let obj = {
+            name: req.body.name,
+            description: req.body, description,
+            image_url: req.body.image_url,
+            price: req.body.price,
+            stock: req.body.stock,
+            UserId: req.userData.id
+        }
         let option = { where: { id: req.params.id }}
 
         Item.update(obj, option)
         .then(current => {
-            if (!current) throw {}
-
+            if (success[0]) {
+                res.status(200).json(obj)
+            } else {
+                throw {status: 404, message: 'Data not found!'}
+            }
         })
-        .catch(next)
+        .catch(err => {
+            if (err) {
+                res.status(400).json({ err })
+            } else {
+                res.status(500).json({ err })
+            }
+        })
     }
 
     static destroy(req, res, next) {
         let option = { where: { id: req.params.id }}
-        Item.destroy(option)
-        .then(destroyedData => res.status(200).json({ destroyedData }))
+
+        Item.findOne(option)
+        .then(current => {
+            if (current) {
+                Item.destroy(option)
+                .then((data) => res.status(200).json({ data }))
+                .catch(next)
+            } else {
+                throw {status: 404, message: 'Data not found!'}
+            }
+        })
         .catch(next)
     }
 }
