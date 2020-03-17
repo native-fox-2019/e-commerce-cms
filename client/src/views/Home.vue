@@ -8,37 +8,37 @@
 </template>
 
 <script>
-import axios from 'axios';
+// import axios from 'axios';
 import Card from '../components/Card.vue';
 
 export default {
   name: 'Home',
-  props: ['isLogin'],
-  created() {
-    this.getProducts();
-  },
+  props: ['isLogin', 'products'],
+  // created() {
+  //   this.getProducts();
+  // },
   components: {
     Card,
   },
   data() {
     return {
-      products: [],
+      // products: [],
     };
   },
   methods: {
-    getProducts() {
-      const options = {
-        url: 'http://localhost:3003/products',
-        method: 'get',
-      };
-      axios(options)
-        .then((response) => {
-          this.products = response.data.products;
-        })
-        .catch((err) => {
-          console.log(err.response.data);
-        });
-    },
+    // getProducts() {
+    //   const options = {
+    //     url: 'http://localhost:3003/products',
+    //     method: 'get',
+    //   };
+    //   axios(options)
+    //     .then((response) => {
+    //       this.products = response.data.products;
+    //     })
+    //     .catch((err) => {
+    //       console.log(err.response.data);
+    //     });
+    // },
   },
 };
 </script>

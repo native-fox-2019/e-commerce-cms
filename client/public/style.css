@@ -32,21 +32,21 @@ body{
 .nav a{
     color: white; text-decoration: none; margin: 0px 10px; text-transform: uppercase;
 }
-.login, .register{
+.login, .register, .add-product{
     width: 400px; height: auto; padding: 50px 10px; margin: 10px auto; text-align: center; border: 2px solid rgba(0, 0, 0, 0.897);
     display: flex; flex-direction: column; justify-content: center; border-radius: 40px;
 }
 .login h3, .register h3{
     font-size: 27px; margin-top: 2px;
 }
-.login form input, .register form input{
+.login form input, .register form input, .add-product form input{
     width: 200px; height: 20px; padding: 10px 10px; font-size: 15px; margin-top: 10px; margin-bottom: 10px; border-radius: 10px;
 }
-.login form button, .register form button{
+.login form button, .register form button, .add-product form button{
     width: 225px; height: 45px; padding: 10px 10px; font-size: 15px; margin-top: 10px; margin-bottom: 10px; border-radius: 10px;
     background-color: rgba(0, 0, 0, 0.897); color: white;
 }
-.login form button:hover, .register form button:hover, .btn-edit:hover, .btn-delete:hover{
+.login form button:hover, .register form button:hover, .btn-edit:hover, .btn-delete:hover, .add-product form button:hover{
     cursor: pointer;
 }
 .home{
@@ -69,7 +69,7 @@ body{
     display: flex; justify-content: flex-end; bottom: 15px; position: absolute; right: 15px;
 }
 .btn-edit{
-    margin-right: 10px; font-size: 30px; color: rgba(0, 0, 0, 0.678);
+    margin-right: 15px; font-size: 30px; color: rgba(0, 0, 0, 0.678);
 }
 .btn-delete{
     font-size: 28px; color: rgb(255, 75, 75);
