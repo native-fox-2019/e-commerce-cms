@@ -17,8 +17,8 @@ afterAll(done => {
 //             request(app)
 //             .post('/products/create')
 //             .send({
-//                 name: 'Shoes',
-//                 image_url: './image/shoes.jpg',
+//                 name: 'shirt',
+//                 image_url: './image/shirt.jpg',
 //                 price: 150000,
 //                 stock: 10
 //             })
@@ -27,8 +27,8 @@ afterAll(done => {
 //                 expect(status).toBe(201);
 //                 expect(body).toHaveProperty('message', 'Successfully add the product');
 //                 expect(body).toHaveProperty('product');
-//                 expect(body.product).toHaveProperty('name', 'Shoes');
-//                 expect(body.product).toHaveProperty('image_url', './image/shoes.jpg');
+//                 expect(body.product).toHaveProperty('name', 'shirt');
+//                 expect(body.product).toHaveProperty('image_url', './image/shirt.jpg');
 //                 expect(body.product).toHaveProperty('price', 150000);
 //                 expect(body.product).toHaveProperty('stock', 10);
 //                 done()

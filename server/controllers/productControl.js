@@ -8,7 +8,13 @@ class ProductControl{
     }
 
     static create(req, res, next){
-        let newData = req.body
+        let newData = {
+            name: req.body.name,
+            image_url: req.body.image_url,
+            price: req.body.price,
+            stock: req.body.stock,
+            userId: req.userdata.id
+        }
         Product.create(newData)
         .then(data=>res.status(201).json(`new data has been saved`))
         .catch(err=>next(err))
@@ -16,6 +22,7 @@ class ProductControl{
 
     static edit(req, res, next){
         let searchId = req.params.id
+        console.log(searchId+"<<<id prod")
         Product.update(req.body, {
             where: {id: searchId}
         })
