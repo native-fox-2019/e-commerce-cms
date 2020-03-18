@@ -17,17 +17,17 @@
 
 <script>
 export default {
-    data() {
-      return {
-        email: null,
-        password: null,
-      }
+  data() {
+    return {
+      email: null,
+      password: null,
+    };
+  },
+  methods: {
+    login() {
+      const data = { email: this.email, password: this.password };
+      this.$emit('login', data);
     },
-    methods: {
-        login() {
-            let data = { email: this.email, password: this.password };
-            this.$emit('login', data);
-        }
-    }
-}
+  },
+};
 </script>
