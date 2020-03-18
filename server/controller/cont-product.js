@@ -129,6 +129,7 @@ class Controller {
             // console.log('ada data=======================')
             response.send({
                 msg:'succesfully delete data',
+                id:request.params.id,
                 name:datum.name,
                 image_url:datum.image_url,
                 price:datum.price,

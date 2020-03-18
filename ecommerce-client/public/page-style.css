@@ -5,8 +5,9 @@
     background-color: rgb(46, 43, 43);
     justify-content: space-between;
     align-items: center;
-    padding-left: 15px;
-    padding-right: 15px;
+    height: 100px;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 .navLeft{
@@ -40,10 +41,31 @@
     border-radius: 10px;
 }
 
-.padding1p{
-padding-left: 3%;
-padding-right: 3%;
+.navPadding{
+
+  cursor: pointer;
+
+font-family: roboto-reg;
+font-size: 20px;
+color: white;
+padding-top: 20px;
+padding-left: 40px;
+padding-right: 40px;
+padding-bottom: 20px;
+
 }
+
+.navPadding:hover{
+  background-color: white;
+  color: black;
+
+  
+}
+.navPadding:hover:before{
+  left:-50%;
+  transform: skewX(-5deg);
+}
+
 
 .descriptionContainer{
   display: flex;

@@ -82,12 +82,17 @@ class Controller {
                     email:userDatum.email,
                     level:userDatum.level
                     }, process.env.SECRET)
-                response.send({token:token, name:userDatum.name, level:userDatum.level})
+                    let obj = {
+                      'token':token,
+                      'name':userDatum.name,
+                      'level':userDatum.level
+                    }
+                    console.log(obj,'ini dia')
+                response.send(obj)
             }else{
                 let errorObj={  
                     status:401,
                     msg:'Invalid User/Password'
-
                 }
                 throw(errorObj)
             }

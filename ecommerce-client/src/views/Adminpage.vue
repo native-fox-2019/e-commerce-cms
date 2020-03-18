@@ -9,57 +9,36 @@
         </div>
         <hr>
         <div class="divCenter">
-           <itemlist v-for="data in items" :key="data.id" :data="data"></itemlist>
+          <itemlist v-for="(data, idx) in $store.state.items" :key="idx" :data="data">
+          </itemlist>
+        </div>
+        <div>
+          <modals ></modals>
         </div>
     </div>
 </template>
 <script>
-import axios from 'axios';
 import Itemlist from '../components/itemlist.vue';
-
-const axiosUrl = 'http://localhost:3000';
+import modals from '../components/Editmodal.vue';
 
 export default {
   data() {
     return {
       name: localStorage.getItem('name'),
-      items: [],
     };
   },
   components: {
     Itemlist,
+    modals,
   },
   methods: {
-    getAllItem() {
-      axios({
-        method: 'GET',
-        url: `${axiosUrl}/product`,
-        headers: {
-          token: localStorage.getItem('token'),
-        },
-      })
-        .then((data) => {
-          console.log(data);
-          this.items = data.data;
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    },
     addForm() {
       this.$router.push('/additem');
     },
-    getNewData(payload) {
-      this.items.push(payload);
-    },
   },
   created() {
-    this.getAllItem();
+    this.$store.dispatch('getAllItem');
   },
-  watch: {
-    items() {
 
-    },
-  },
 };
 </script>

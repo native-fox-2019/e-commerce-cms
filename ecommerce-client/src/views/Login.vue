@@ -51,8 +51,8 @@ export default {
           console.log(data);
           localStorage.setItem('token', data.data.token);
           localStorage.setItem('name', data.data.name);
-          console.log(localStorage.getItem('token'));
-          console.log(localStorage.getItem('name'));
+          localStorage.setItem('level', data.data.level);
+          this.$store.dispatch('adminLogin');
           this.$router.push('/adminpage');
         })
         .catch((err) => {
