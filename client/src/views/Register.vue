@@ -1,5 +1,6 @@
 <template>
-  <div class="login-form">
+<div style="height:100vh">
+  <div class="login-form" style="margin-top:300px;">
     <form @submit.prevent="doRegister">
       <h2 class="text-center">Register</h2>
       <div class="form-group">
@@ -37,6 +38,7 @@
       >Have an account? Login here</router-link
     >
   </div>
+</div>
 </template>
 <script>
 import axios from "axios";

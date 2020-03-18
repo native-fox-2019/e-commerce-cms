@@ -1,32 +1,36 @@
 <template>
-  <div class="login-form">
-    <form @submit.prevent="doLogin">
-      <h2 class="text-center">Log in</h2>
-      <div class="form-group">
-        <input
-          type="text"
-          class="form-control"
-          placeholder="Email"
-          required="required"
-          v-model="email"
-        />
-      </div>
-      <div class="form-group">
-        <input
-          type="password"
-          class="form-control"
-          placeholder="Password"
-          required="required"
-          v-model="password"
-        />
-      </div>
-      <div class="form-group">
-        <button type="submit" class="btn btn-primary btn-block">Log in</button>
-      </div>
-    </form>
-    <router-link class="text-black" to="/register"
-      >Create an account</router-link
-    >
+  <div>
+    <div class="login-form" style="margin-top:300px;">
+      <form @submit.prevent="doLogin">
+        <h2 class="text-center">Log in</h2>
+        <div class="form-group">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Email"
+            required="required"
+            v-model="email"
+          />
+        </div>
+        <div class="form-group">
+          <input
+            type="password"
+            class="form-control"
+            placeholder="Password"
+            required="required"
+            v-model="password"
+          />
+        </div>
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary btn-block">
+            Log in
+          </button>
+        </div>
+      </form>
+      <router-link class="text-black" to="/register"
+        >Create an account</router-link
+      >
+    </div>
   </div>
 </template>
 

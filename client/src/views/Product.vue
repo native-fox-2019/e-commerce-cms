@@ -20,7 +20,7 @@
       <h1>Product List</h1>
     </div>
     <div class="row mt-5" v-if="!addNew && !edit">
-      <div class="col-2 mt-3 ml-5" v-for="item in itemList" :key="item.id">
+      <div class="col-2 mt-3 ml-5" v-for="item in this.$store.state.itemList" :key="item.id">
         <div class="card" style="width: 18rem;">
           <img
             class="card-img-top"
@@ -41,6 +41,7 @@
           </div>
         </div>
       </div>
+
     </div>
     <!-- ADD NEW FORM -->
     <div class="container p-5 mt-5">
@@ -170,7 +171,6 @@ export default {
   },
   data() {
     return {
-      itemList: null,
       addNew: false,
       edit: false,
       name: ``,
@@ -190,17 +190,7 @@ export default {
       this.$router.push({ name: "Login" });
     },
     getItems() {
-      axios
-        .get("http://localhost:3000/products", {
-          headers: { access_token: localStorage.access_token }
-        })
-        .then(data => {
-          data.data.sort((a,b) => a.id - b.id)
-          this.itemList = data.data;
-        })
-        .catch(err => {
-          console.log(err);
-        });
+      this.$store.dispatch('getItems')
     },
     addNewProduct() {
         axios({
