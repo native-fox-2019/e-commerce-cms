@@ -35,10 +35,17 @@ class UserController {
     static async register (req, res, next) {
         try {
             let { name, email, password } = req.body
+            let role
+            if (req.body.role) {
+              role = 'admin'
+            } else {
+              role = 'user'
+            }
             let obj = {
                 name,
                 email,
-                password
+                password,
+                role
             }
             let newUser = await User.create(obj)
             let token = generateToken({ id: newUser.id, email: newUser.email, role: newUser.role })

@@ -7,6 +7,7 @@ const request = require('supertest')
 const test_name = 'bambang'
 const test_email = 'bambang@gmail.com'
 const test_password = 'bambang'
+const test_role = 'admin'
 
 afterAll( done => {
     queryInterface.bulkDelete('Users')
@@ -21,7 +22,8 @@ describe('Register', () => {
                 const { body, status } = await request(app).post('/register').send({
                     name: test_name,
                     email: test_email,
-                    password: test_password
+                    password: test_password,
+                    role: test_role
                 })
                 expect(status).toBe(200)
                 expect(body).toHaveProperty('access_token')
