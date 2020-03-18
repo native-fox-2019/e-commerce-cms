@@ -1,4 +1,6 @@
 'use strict';
+const convertCurreny = require('../helpers/currency')
+
 module.exports = (sequelize, DataTypes) => {
   const Product = sequelize.define('Product', {
     name: {
@@ -20,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     price: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       allowNull: false,
       validate: {
         notEmpty: {
@@ -37,7 +39,13 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     }
-  }, {});
+  }, {
+    hooks: {
+      beforeSave: (ins, opt) => {
+        ins.price = convertCurreny(ins.price)
+      }
+    }
+  });
   Product.associate = function(models) {
     // associations can be defined here
   };

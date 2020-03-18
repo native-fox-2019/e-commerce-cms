@@ -16,10 +16,10 @@
         </ul>
       </div>
     </nav>
-    <div class="text-center mt-5" v-if="!addNew">
+    <div class="text-center mt-5" v-if="!addNew && !edit">
       <h1>Product List</h1>
     </div>
-    <div class="row mt-5" v-if="!addNew">
+    <div class="row mt-5" v-if="!addNew && !edit">
       <div class="col-2 mt-3 ml-5" v-for="item in itemList" :key="item.id">
         <div class="card" style="width: 18rem;">
           <img
@@ -31,9 +31,12 @@
           <div class="card-body">
             <h5 class="card-title">{{ item.name }}</h5>
             <p class="card-text">
-              IDR {{ item.price }}
+              {{ item.price }}
             </p>
-            <span class="btn btn-primary">Edit</span> |
+            <p class="card-text" style="font-size:14px; color:red;">
+              Stock: {{ item.stock }}
+            </p>
+            <span class="btn btn-primary" @click.prevent="editForm(item.id)">Edit</span> |
             <span class="btn btn-danger" @click.prevent="deleteProduct(item.id)">Delete</span>
           </div>
         </div>
@@ -41,7 +44,7 @@
     </div>
     <!-- ADD NEW FORM -->
     <div class="container p-5 mt-5">
-      <div id="addNewForm" v-if="addNew">
+      <div id="addNewForm" v-if="addNew && !edit">
         <form @submit.prevent="addNewProduct">
           <h2 class="text-center">Add New Product</h2>
           <div class="form-group">
@@ -91,6 +94,66 @@
         </form>
       </div>
     </div>
+
+    <!-- EDIT FORM -->
+    <div class="container p-5 mt-5" v-if="edit && !addNew">
+      <h2 class="text-center">Edit Product</h2>
+        <img
+            class="card-img-top"
+            :src="image_url_edit"
+            alt="Card image cap"
+            style="width:40%; height:350px;"
+          />
+      <div id="editForm mt-1">
+        <form @submit.prevent="editProduct">
+          
+          <div class="form-group">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Product name"
+              required="required"
+              v-model="name_edit"
+            />
+          </div>
+          <div class="form-group">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Image Url"
+              required="required"
+              v-model="image_url_edit"
+            />
+          </div>
+          <div class="form-group">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Price"
+              required="required"
+              v-model="price_edit"
+            />
+          </div>
+          <div class="form-group">
+            <input
+              type="number"
+              class="form-control"
+              placeholder="Stock"
+              required="required"
+              v-model="stock_edit"
+            />
+          </div>
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary">
+              Submit changes
+            </button><br>
+            <button type="button" class="btn btn-danger mt-1" @click.prevent="changeEditFalse">
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
   </div>
 </template>
 <script>
@@ -105,10 +168,16 @@ export default {
     return {
       itemList: null,
       addNew: false,
+      edit: false,
       name: ``,
       image_url: ``,
       price: ``,
-      stock: ``
+      stock: ``,
+      name_edit: ``,
+      image_url_edit: ``,
+      price_edit: ``,
+      stock_edit: ``,
+      id_edit: ``
     };
   },
   methods: {
@@ -122,6 +191,7 @@ export default {
           headers: { access_token: localStorage.access_token }
         })
         .then(data => {
+          data.data.sort((a,b) => a.id - b.id)
           this.itemList = data.data;
         })
         .catch(err => {
@@ -142,7 +212,10 @@ export default {
         })
         .then(data => {
             console.log(data)
-            Swal.fire('Success adding new product')
+            Swal.fire({
+              icon: 'success',
+              title: 'Product added'
+            })
             this.addNew = false
             this.getItems()
         })
@@ -167,6 +240,7 @@ export default {
         this.price = ``,
         this.stock = ``
         this.addNew = true
+        this.edit = false
     },
     deleteProduct(id) {
         axios({
@@ -176,12 +250,61 @@ export default {
         })
         .then(data => {
             console.log(data)
-            Swal.fire('Product successfully deleted')
+            Swal.fire({
+              icon: 'success',
+              title: 'Product deleted'
+            })
             this.getItems()
         })
         .catch(response => {
             console.log(response)
         })
+    },
+    editForm(id) {
+      this.id_edit = id
+      this.addNew = false
+      this.edit = true
+      this.itemList.forEach(i => {
+        if (id === i.id) {
+          this.name_edit = i.name
+          this.image_url_edit = i.image_url
+          this.price_edit = i.price
+          this.stock_edit = i.stock
+        }
+      })
+    },
+    changeEditFalse() {
+      this.edit = false
+      this.addNew = false
+    },
+    editProduct() {
+      axios({
+        method: 'PUT',
+        url: `http://localhost:3000/products/edit/${this.id_edit}`,
+        headers: { access_token : localStorage.access_token },
+        data: {
+          name : this.name_edit,
+          image_url : this.image_url_edit,
+          price : this.price_edit,
+          stock : this.stock_edit
+        }
+      })
+      .then(data => {
+        console.log(data)
+        this.edit = false
+        Swal.fire({
+          icon: 'success',
+          title: 'Update successfull'
+        })
+        this.getItems()
+      })
+      .catch(response => {
+        console.log(response)
+        Swal.fire({
+          icon: 'error',
+          title: 'Failed to update'
+        })
+      })
     }
   }
 };
