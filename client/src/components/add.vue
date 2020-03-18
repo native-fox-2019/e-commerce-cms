@@ -70,7 +70,7 @@ export default {
           image_url: this.input.image_url,
           category: this.input.category,
           price: Number(this.input.price),
-          stock: Number(this.input.price)
+          stock: Number(this.input.stock)
         };
         let { data } = await axios.post("/products", input, {
           headers: {

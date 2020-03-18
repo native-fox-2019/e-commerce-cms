@@ -33,7 +33,7 @@
             </v-avatar>
           </template>
           <template #item.action="{item}">
-            <v-icon small class="mr-2">mdi-pencil</v-icon>
+            <v-icon small v-b-modal.edit @click="edit(item)" class="mr-2">mdi-pencil</v-icon>
             <v-icon small @click="deleteItem(item.id)">mdi-delete</v-icon>
           </template>
         </v-data-table>
@@ -118,6 +118,9 @@ export default {
       } catch (error) {
         errorHandler(error);
       }
+    },
+    edit(data) {
+      this.$store.commit("one", data);
     }
   }
 };

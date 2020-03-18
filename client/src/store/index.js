@@ -6,11 +6,15 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    products: []
+    products: [],
+    oneProduct: ""
   },
   mutations: {
     get(state, data) {
       state.products = data;
+    },
+    one(state, data) {
+      state.oneProduct = data;
     }
   },
   actions: {
