@@ -3,7 +3,9 @@
     <img alt="logo" src="../assets/logowatch.png">
     <div class="panel">
     <h3> Welcome Back Admin! </h3>
-              <input type="button" class="btn btn-dark" value="View Product" v-on:click="login">
+              <router-link to="/view">
+              <input type="button" class="btn btn-dark" value="View Product">
+              </router-link>
               <router-link to="/add">
               <input type="button" class="btn btn-dark" value="Add Product">
               </router-link>

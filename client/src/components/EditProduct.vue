@@ -1,6 +1,6 @@
 <template>
-  <div class="add">
-    <h3> Add Product </h3>
+  <div class="edit">
+    <h3> Edit Product </h3>
             <form id="form-add" action="" method="POST">
                 <label for="fname">Name:</label><br>
                 <input type="text" id="Name" name="Name" value="" v-model="name" required><br>
@@ -13,65 +13,40 @@
                 <label for="lname">Stock:</label><br>
                 <input type="text" name="stock" value="" v-model="stock" required><br><br>
                 <input
-                type="submit" class="btn btn-dark" value="Add Product" v-on:click.prevent="add"
+                type="submit" class="btn btn-dark" value="Edit Product" v-on:click.prevent="edit"
                 >
             </form>
   </div>
 </template>
 <script>
-import axios from 'axios';
-
 export default {
-  name: 'Add',
+  name: 'EditProduct',
+  props: ['elementEdit'],
   data() {
     return {
-      baseUrl: 'http://localhost:3000',
-      token: null,
       name: '',
       image_url: '',
       price: '',
       stock: '',
     };
   },
-  Components: {
-
-  },
   created() {
-
+    console.log(this.elementEdit);
+    this.name = this.elementEdit.name;
+    this.image_url = this.elementEdit.image_url;
+    this.price = this.elementEdit.price;
+    this.stock = this.elementEdit.stock;
   },
   methods: {
-    add() {
-      axios({
-        method: 'POST',
-        url: `${this.baseUrl}/product`,
-        headers: { token: localStorage.getItem('token') },
-        data: {
-          name: this.name,
-          image_url: this.image_url,
-          price: this.price,
-          stock: this.stock,
-        },
-      })
-        .then((data) => {
-          console.log(data);
-          this.$router.push({ name: 'Panel' });
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+    edit() {
+      this.$store.dispatch('edit', {
+        id: this.elementEdit.id,
+        name: this.name,
+        image_url: this.image_url,
+        price: this.price,
+        stock: this.stock,
+      });
     },
   },
 };
 </script>
-<style scoped>
-.add {
-  border-color: black;
-  border-style : double;
-  width: 20%;
-  text-align: center;
-  font-family: "Lato";
-  margin : 100px auto;
-  background: white;
-  padding: 15px;
-}
-</style>
