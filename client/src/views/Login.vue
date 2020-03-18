@@ -27,7 +27,7 @@ export default {
   methods: {
     login() {
       const options = {
-        url: 'http://localhost:3003/user/login',
+        url: `${this.$store.state.baseUrl}/user/login`,
         method: 'post',
         data: {
           email: this.email,

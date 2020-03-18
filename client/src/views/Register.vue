@@ -29,7 +29,7 @@ export default {
   methods: {
     register() {
       const options = {
-        url: 'http://localhost:3003/user/register',
+        url: `${this.$store.state.baseUrl}/user/register`,
         method: 'post',
         data: {
           name: this.name,
