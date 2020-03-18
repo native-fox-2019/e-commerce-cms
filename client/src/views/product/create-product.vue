@@ -34,7 +34,7 @@
       >
         <b-form-input id="product-stock" v-model="product.stock" type="number"></b-form-input>
       </b-form-group>
-    <b-button variant="success">Submit</b-button>
+    <b-button variant="success" @click="onSubmit">Submit</b-button>
     </b-form-group>
   </b-card>
 </div>
@@ -49,6 +49,12 @@ export default {
                 stock:0
             }
         }
+    },
+    methods:{
+      onSubmit(){
+        this.$store.commit('addProduct',this.product);
+        this.$router.push('/product');
+      }
     }
 }
 </script>

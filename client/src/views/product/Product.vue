@@ -10,7 +10,7 @@
                 <template v-slot:cell(action)="row">
                    <router-link :to="'/product/edit/'+row.item.id"> <b-button variant="primary" class="mr-2">Edit</b-button> </router-link>
                     <b-button variant="secondary" @click="row.toggleDetails" class="mr-2">Detail</b-button>
-                    <b-button variant="danger">Delete</b-button>
+                    <b-button variant="danger" @click="confirmDelete(row.item.id)">Delete</b-button>
                 </template>
                 <template v-slot:row-details="row">
                     <b-card>
@@ -33,7 +33,6 @@
 export default {
     data(){
         return{
-            items:this.$store.state.products,
             fields:[
                 {
                     key:'id',
@@ -49,6 +48,25 @@ export default {
                 },
                 'action'
             ]
+        }
+    },
+    computed:{
+        items(){
+            return this.$store.state.products;
+        }
+    },
+    methods:{
+        confirmDelete(id){
+            // var self=this;
+            this.$bvModal.msgBoxConfirm(`Are you sure want to delete product with id ${id}?`)
+            .then((result)=>{
+                if(result){
+                    this.$store.commit('deleteProduct',id);
+                }
+            })
+            .catch(()=>{
+                this.$bvModal.msgBoxOk('An error occured');
+            })
         }
     }
 }
