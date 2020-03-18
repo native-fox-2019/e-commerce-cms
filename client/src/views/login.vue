@@ -1,35 +1,40 @@
 <template>
   <div>
-    <div class="login-form" style="margin-top:300px;">
-      <form @submit.prevent="doLogin">
-        <h2 class="text-center">Log in</h2>
-        <div class="form-group">
-          <input
-            type="text"
-            class="form-control"
-            placeholder="Email"
-            required="required"
-            v-model="email"
-          />
+    <div class="row">
+      <div class="col-6">
+        <div class="container login-form" style="margin-top:300px;">
+          <form @submit.prevent="doLogin">
+            <h2 class="text-center">Welcome</h2>
+            <div class="form-group">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Email"
+                v-model="email"
+              />
+            </div>
+            <div class="form-group">
+              <input
+                type="password"
+                class="form-control"
+                placeholder="Password"
+                v-model="password"
+              />
+            </div>
+            <div class="form-group">
+              <button type="submit" class="btn btn-primary btn-block">
+                Log in
+              </button>
+            </div>
+          </form>
+          <router-link class="text-black" to="/register"
+            >Create an account</router-link
+          >
         </div>
-        <div class="form-group">
-          <input
-            type="password"
-            class="form-control"
-            placeholder="Password"
-            required="required"
-            v-model="password"
-          />
-        </div>
-        <div class="form-group">
-          <button type="submit" class="btn btn-primary btn-block">
-            Log in
-          </button>
-        </div>
-      </form>
-      <router-link class="text-black" to="/register"
-        >Create an account</router-link
-      >
+      </div>
+      <div class="col-6">
+        <img src="https://cdn.logojoy.com/wp-content/uploads/2018/05/30143358/128.png" alt="your logo" style="margin-top:150px;">
+      </div>
     </div>
   </div>
 </template>
