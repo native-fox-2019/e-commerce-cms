@@ -26,7 +26,8 @@ export default {
         url: `${baseUrl}/users/login`,
         data: obj,
       }).then(({ data }) => {
-        console.log(data);
+        localStorage.setItem('token', data.token);
+        this.$router.push({ path: '/' });
       }).catch((err) => {
         console.log(err);
       });
