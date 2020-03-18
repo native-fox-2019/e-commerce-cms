@@ -2,15 +2,6 @@ const { User } = require('../models')
 const jwt = require('jsonwebtoken')
 const { compare  }= require('../helpers/bcrypt')
 class UserController {
-  
-  // static findOneUser(req, res, next){
-  //   let { name, email, password} = req.body
-  //   User.findOne({
-  //     where: {
-  //       email
-  //     }
-  //   })
-  // }
 
   static register(req, res, next){
     let {name, email, password} = req.body
@@ -22,12 +13,13 @@ class UserController {
       .then(data => {
         if(data){
           res.type('application/json')
-          res.status(401).json({message: "Email already registered"})
+          res.status(401).json({message: "Email already registered!"})
         }else{
           return User.create({
             name,
             email,
-            password
+            password,
+            role: 'user'
           })
         }
       })
