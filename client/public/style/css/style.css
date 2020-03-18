@@ -3,12 +3,11 @@
   font-family: "Baloo Chettan 2", cursive;
   margin: 0px 0px;
   color: #23a8f2;
-  background-color: #333333;
   box-sizing: border-box;
 }
 
 body {
-  background-color: #252526;
+  background-color: #333333;
 }
 
 header {
@@ -337,6 +336,32 @@ footer p {
   100% {
     transform: scale(1);
   }
+}
+.user-info {
+  padding: 10px 10px;
+  background-color: #252526;
+  margin-bottom: 10px;
+  width: max-content;
+  margin: 0 auto;
+  text-align: center;
+  font-size: 18px;
+  border-radius: 10px;
+  transition: 0.6s;
+  box-shadow: 0px 0px 14px rgba(255, 255, 255, 0.2), 10px 10px 10px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+.user-info .block {
+  display: block ruby;
+  font-weight: 1000;
+}
+.user-info .mark {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.user-info:hover {
+  box-shadow: 0px 0px 30px rgba(255, 255, 255, 0.2), 10px 10px 10px rgba(0, 0, 0, 0.1);
 }
 
 /*# sourceMappingURL=style.css.map */

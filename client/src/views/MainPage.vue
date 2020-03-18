@@ -1,6 +1,16 @@
 <template>
     <div>
         <div class="product-container">
+            <div class="user-info">
+                <span class="block">
+                    <div
+                        class="mark"
+                        v-bind:style="$store.state.user_info.is_admin?'background-color: rgb(0, 177, 0);':'background-color: rgb(177, 0, 0);'"
+                    ></div>
+                    {{$store.state.user_info.is_admin?'Super User: ':'Member: '}}
+                </span>
+                <span>{{ $store.state.user_info.name}}</span>
+            </div>
             <h4>Your Catalogue</h4>
             <div class="product-list">
                 <div

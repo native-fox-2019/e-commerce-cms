@@ -56,12 +56,7 @@ import Axios from "axios";
 export default {
     props: ["editModal"],
     data: () => {
-        return {
-            editProd_name: "",
-            editProd_image_url: "",
-            editProd_stock: "",
-            editProd_price: ""
-        };
+        return {};
     },
     methods: {
         closeEditModal: function() {
@@ -90,6 +85,7 @@ export default {
                 })
                 .catch(err => {
                     console.log(err.response);
+                    this.$store.dispatch("errorHandler", err.response);
                 });
         }
     }

@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import Axios from 'axios';
+import Swal from 'sweetalert2'
 
 Vue.use(Vuex);
 
@@ -15,11 +16,15 @@ export default new Vuex.Store({
             image_url: '',
             stock: '',
             price: ''
-        }
+        },
+        user_info: {}
     },
     mutations: {
         setData: function (state, payload) {
             state.products = payload;
+        },
+        setUser: function (state, payload) {
+            state.user_info = payload
         },
         addData: function (state, payload) {
             state.products.push(payload)
@@ -54,13 +59,18 @@ export default new Vuex.Store({
                 })
                 .then(result => {
                     context.commit('setData', result.data.data);
+                    context.commit('setUser', result.data.user);
                 })
                 .catch(err => {
                     console.log(err.response);
                 });
         },
-        // errorHandler: function (context, err_payload) {
-
-        // }
+        errorHandler: function (context, err_payload) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: `${(Array.isArray(err_payload.data.message))?err_payload.data.message.join(' And '):err_payload.data.message}`
+            })
+        }
     }
 });

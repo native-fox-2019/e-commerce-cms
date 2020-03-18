@@ -1,5 +1,6 @@
 const {
-    Product
+    Product,
+    User
 } = require('../models')
 
 class ProductController {
@@ -26,16 +27,31 @@ class ProductController {
     }
 
     static read(request, response, next) {
+        let data_product
         Product.findAll({
                 where: {
                     user_id: request.userData.id
                 }
             })
             .then(result => {
+                data_product = result
+                return User.findOne({
+                    where: {
+                        email: request.userData.email
+                    }
+                })
+            })
+            .then(result => {
+                let user_info = {
+                    name: result.name,
+                    is_admin: result.is_admin
+                }
                 response.status(200).json({
-                    data: result,
+                    data: data_product,
+                    user: user_info,
                     message: 'Read Successfully'
                 })
+
             })
             .catch(err => {
                 next(err)

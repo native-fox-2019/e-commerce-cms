@@ -11,12 +11,11 @@ cursive;
   font-family: $font;
   margin: 0px 0px;
   color: $color-font;
-  background-color: $color-base;
   box-sizing: border-box;
 }
 
 body {
-  background-color: $color-primary;
+  background-color: $color-base;
 }
 
 @import './navbar';
@@ -26,3 +25,4 @@ body {
 @import './card';
 @import './addProductBtn';
 @import './modal';
+@import './userInfo';

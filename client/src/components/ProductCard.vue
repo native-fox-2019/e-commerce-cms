@@ -6,7 +6,7 @@
                 <div class="description">
                     <p class="p-name">{{ product.name }}</p>
                     <p class="p-stock">Stock: {{ product.stock }}</p>
-                    <p class="p-stock">Price: {{ product.price }}</p>
+                    <p class="p-stock">Price: {{ product.price }} IDR</p>
                     <div class="action">
                         <i class="fa fa-edit" v-on:click="editProductForm(product.id)"></i>
                         <i class="fa fa-trash" v-on:click="deleteProduct(product.id)"></i>
@@ -37,6 +37,7 @@ export default {
                 })
                 .catch(err => {
                     console.log(err.response);
+                    this.$store.dispatch("errorHandler", err.response);
                 });
         },
         editProductForm: function(id) {
@@ -53,6 +54,7 @@ export default {
                 })
                 .catch(err => {
                     console.log(err.response);
+                    this.$store.dispatch("errorHandler", err.response);
                 });
         }
     }

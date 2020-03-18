@@ -71,6 +71,7 @@ export default {
                 })
                 .catch(err => {
                     console.log(err.response);
+                    this.$store.dispatch("errorHandler", err.response);
                 });
         }
     }
