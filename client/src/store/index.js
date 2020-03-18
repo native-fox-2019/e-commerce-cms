@@ -5,6 +5,8 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    SERVER:'http://localhost:3000',
+    isLogin:false,
     products:[
       {id:1,product:'Nike',price:'10000',stock:10},
       {id:2,product:'Nike 2',price:'10000',stock:10},

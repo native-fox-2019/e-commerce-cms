@@ -1,9 +1,7 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/login">Login</router-link> | 
-      <router-link to="/product">Product</router-link>
+      <a href="" @click.prevent="logout" v-if="$store.state.isLogin">Logout</a>
     </div>
     <div class="container">
     <router-view />
@@ -11,6 +9,27 @@
     
   </div>
 </template>
+
+<script>
+export default {
+  created(){
+    var token=localStorage.getItem('token');
+    if(token){
+      this.$store.state.isLogin=true;
+    }
+    else{
+      this.$store.state.isLogin=false;
+    }
+  },
+  methods:{
+    logout(){
+      localStorage.removeItem('token');
+      this.$router.push('/login');
+      this.$store.state.isLogin=false;
+    }
+  }
+}
+</script>
 
 <style>
 #app {

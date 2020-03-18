@@ -6,7 +6,7 @@
             </div>
             <div class="col-6">
                 <div>
-                    <b-form @submit.prevent>
+                    <b-form @submit.prevent="onSubmit">
                         <b-form-group id="email" label="Enter Your Email" label-for="email">
                             <b-form-input id="email" v-model="form.email" type="email" required></b-form-input>
                         </b-form-group>
@@ -24,6 +24,8 @@
 </template>
 
 <script>
+const axios=require('axios');
+
 export default {
     data(){
         return {
@@ -31,6 +33,26 @@ export default {
                 email:'',
                 password:''
             }
+        }
+    },
+    methods:{
+        onSubmit(){
+            
+            var url=this.$store.state.SERVER+'/auth/login';
+            axios.post(url,{
+                email:this.form.email,
+                password:this.form.password
+            })
+            .then((response)=>{
+                //console.log(response);
+                var token=response.data.token;
+                localStorage.setItem('token',token);
+                this.$store.state.isLogin=true;
+                this.$router.push('/product');
+            })
+            .catch((err)=>{
+                console.log('ada error',err);
+            })
         }
     }
 }

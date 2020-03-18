@@ -8,6 +8,7 @@ import EditProduct from '../views/product/edit-product';
 
 Vue.use(VueRouter);
 
+
 const routes = [
   {
     path: "/",
@@ -41,5 +42,14 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 });
+
+const listAuthList=['CreateProduct','Product','EditProduct'];
+
+router.beforeEach((to, from, next) => {
+  var token=localStorage.getItem('token');
+  if(to.name==='Login' && token ) next({name:'Product'})
+  else if (listAuthList.indexOf(to.name)!==-1 && !token) next({ name: 'Login' })
+  else next()
+})
 
 export default router;
