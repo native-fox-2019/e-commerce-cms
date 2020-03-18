@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const server = 'http://localhost:3000';
+const server = 'https://limitless-atoll-12110.herokuapp.com';
 
 const state = {
   products: [],

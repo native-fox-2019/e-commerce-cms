@@ -23,12 +23,19 @@ export default {
       name: '',
       email: '',
       password: '',
+      role: 'admin',
     };
   },
   methods: {
     ...mapActions(['register']),
     onSubmit() {
-      this.register({ name: this.name, email: this.email, password: this.password });
+      const userData = {
+        name: this.name,
+        email: this.email,
+        password: this.password,
+        role: this.role,
+      };
+      this.register(userData);
     },
   },
 };

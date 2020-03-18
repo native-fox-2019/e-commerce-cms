@@ -4,6 +4,7 @@ import Landing from '../views/Landing.vue';
 import Register from '../views/Register.vue';
 import Home from '../views/Home.vue';
 import AddProducts from '../views/AddProducts.vue';
+import store from '../store';
 
 Vue.use(VueRouter);
 
@@ -15,6 +16,7 @@ const routes = [
   {
     path: '/register',
     component: Register,
+    meta: { requiresSuperAdmin: true },
   },
   {
     path: '/products',
@@ -33,9 +35,18 @@ const router = new VueRouter({
   routes,
 });
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
   if (to.matched.some((record) => record.meta.requiresAuth)) {
     if (localStorage.getItem('access_token')) {
+      next();
+    } else {
+      next({
+        path: '/',
+      });
+    }
+  } else if (to.matched.some((record) => record.meta.requiresSuperAdmin)) {
+    await store.dispatch('checkSuperAdmin');
+    if (store.state.login.isSuperAdmin) {
       next();
     } else {
       next({

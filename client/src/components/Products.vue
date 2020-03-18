@@ -22,13 +22,16 @@
 
         <div v-for="product in allProducts" :key="product.id" class="row">
           <div class="cell">
-            {{product.name}}
+            <div class="label" :class="{ hide: isEdited }">{{product.name}}</div>
+            <input class="input" :class="{ show: isEdited }" type="text" v-model="name">
           </div>
           <div class="cell">
-            {{product.image_url}}
+            <div class="label" :class="{ hide: isEdited }">{{product.image_url}}</div>
+            <input class="input" :class="{ show: isEdited }" type="text" v-model="image_url">
           </div>
           <div class="cell">
-            {{product.price}}
+            <div class="label" :class="{ hide: isEdited }">{{product.price}}</div>
+            <input class="input" :class="{ show: isEdited }" type="number" v-model="price">
           </div>
           <div class="cell">
             <span @click.prevent="onAdd(product.id)"><i class="fas fa-angle-up"></i></span>
@@ -37,6 +40,7 @@
           </div>
           <div class="cell">
             <a @click.prevent="onDelete(product.id)"><i class="fa fa-trash"></i></a>
+            <a @click.prevent="onEdit(product)" ><i class="fas fa-edit"></i></a>
           </div>
         </div>
       </div>
@@ -55,6 +59,15 @@ export default {
     this.getAllProducts();
   },
   computed: mapGetters(['allProducts']),
+  data() {
+    return {
+      name: '',
+      image_url: '',
+      price: 0,
+      stock: 0,
+      isEdited: false,
+    };
+  },
   methods: {
     ...mapActions(['getAllProducts', 'deleteProduct', 'editProduct']),
 
@@ -75,12 +88,44 @@ export default {
       editedProduct[0].stock -= 1;
       this.editProduct(editedProduct[0]);
     },
+
+    async onEdit(data) {
+      if (!this.isEdited) {
+        this.name = data.name;
+        this.image_url = data.image_url;
+        this.price = data.price;
+        this.stock = data.stock;
+        this.isEdited = !this.isEdited;
+      } else {
+        const edited = {
+          id: data.id,
+          name: this.name,
+          image_url: this.image_url,
+          price: this.price,
+          stock: this.stock,
+        };
+        await this.editProduct(edited);
+        this.isEdited = !this.isEdited;
+      }
+    },
   },
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+  .label.hide {
+    display: none;
+  }
+
+  .input {
+    display: none;
+  }
+
+  .input.show {
+    display: table-cell;
+  }
+
   span {
     cursor: pointer;
   }
