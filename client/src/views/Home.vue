@@ -1,8 +1,9 @@
 <template>
-    <div>
+    <div class="home" :class="{ collapsed: isCollapsed }">
         <Navbar />
-        <sidebar-menu :menu="menu" />
-        <Products />
+        <Products >
+          <sidebar-menu @toggle-collapse="onToggleColapse"  :menu="menu" />
+        </Products>
     </div>
 </template>
 
@@ -23,102 +24,48 @@ export default {
       menu: [
         {
           header: true,
-          tittle: 'Main navigation',
-          hiddenOnCollapse: true,
+          title: 'Main',
+          hiddenOnCollapse: false,
         },
         {
-          href: '/',
+          href: '/products',
           title: 'Dashboard',
           icon: 'fa fa-user',
         },
         {
-          href: '/charts',
-          title: 'Charts',
+          href: '/products',
+          title: 'Actions',
           icon: 'fa fa-chart-area',
           child: [
             {
-              href: '/charts/sublink',
-              title: 'Sub Link',
+              href: '/products/add',
+              title: 'Add Products',
             },
           ],
         },
       ],
+      isCollapsed: false,
     };
+  },
+  methods: {
+    onToggleColapse(collapsed) {
+      if (collapsed) {
+        this.isCollapsed = true;
+      } else {
+        this.isCollapsed = false;
+      }
+    },
   },
 };
 </script>
 
-<style>
-  .v-sidebar-menu {
-      background-color: #2a2a2e;
+<style scoped>
+  .home {
+    padding-left: 350px;
+    transition: all .3s ease
   }
 
-  .v-sidebar-menu {
-    position: fixed;
-    left: 0;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    z-index: 999;
-    box-sizing: border-box;
-    width: 100%;
-    text-align: left;
-    transition: 0.3s max-width ease;
-  }
-
-  .v-sidebar-menu .vsm--scroll-wrapper {
-    height: 100%;
-    overflow-y: auto;
-    overflow-x: hidden;
-  }
-
-  .v-sidebar-menu .vsm--item {
-    position: relative;
-    display: block;
-    width: 100%;
-    white-space: nowrap;
-  }
-
-  .v-sidebar-menu .vsm--link>* {
-    vertical-align: middle;
-  }
-
-  .v-sidebar-menu .vsm--link {
-    color: #fff;
-  }
-
-  .v-sidebar-menu .vsm--link {
-    cursor: pointer;
-    position: relative;
-    display: block;
-    font-size: 16px;
-    font-weight: 400;
-    padding: 10px;
-    line-height: 30px;
-    text-decoration: none;
-    user-select: none;
-    z-index: 20;
-    transition: 0.3s all ease;
-  }
-
-  .v-sidebar-menu .vsm--link_level-1 .vsm--icon {
-    background-color: #1e1e21;
-  }
-
-  .v-sidebar-menu .vsm--link_level-1 .vsm--icon {
-    height: 30px;
-    line-height: 30px;
-    width: 30px;
-    text-align: center;
-    border-radius: 3px;
-  }
-
-  .v-sidebar-menu .vsm--icon {
-    color: #fff;
-  }
-
-  .v-sidebar-menu .vsm--icon {
-    display: inline-block;
-    margin-right: 10px;
+  .home.collapsed {
+    padding-left: 50px;
   }
 </style>

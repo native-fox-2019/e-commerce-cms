@@ -1,36 +1,45 @@
 <template>
-  <div>
-    <div class="table">
-      <div class="row header">
-        <div class="cell">
-          Name
+  <div class="limiter">
+    <div class="container-table100">
+      <div class="table">
+        <div class="row header">
+          <div class="cell">
+            Name
+          </div>
+          <div class="cell">
+            Image Url
+          </div>
+          <div class="cell">
+            Price
+          </div>
+          <div class="cell">
+            Stock
+          </div>
+          <div class="cell">
+            Action
+          </div>
         </div>
-        <div class="cell">
-          Image Url
-        </div>
-        <div class="cell">
-          Price
-        </div>
-        <div class="cell">
-          Stock
-        </div>
-      </div>
 
-      <div v-for="product in allProducts" :key="product.id" class="row">
-        <div class="cell">
-          {{product.name}}
-        </div>
-        <div class="cell">
-          {{product.image_url}}
-        </div>
-        <div class="cell">
-          {{product.price}}
-        </div>
-        <div class="cell">
-          {{product.stock}}
+        <div v-for="product in allProducts" :key="product.id" class="row">
+          <div class="cell">
+            {{product.name}}
+          </div>
+          <div class="cell">
+            {{product.image_url}}
+          </div>
+          <div class="cell">
+            {{product.price}}
+          </div>
+          <div class="cell">
+            {{product.stock}}
+          </div>
+          <div class="cell">
+            <a @click.prevent="onDelete(product.id)" ><i class="fa fa-trash"></i></a>
+          </div>
         </div>
       </div>
     </div>
+    <slot />
   </div>
   <!-- </div> -->
 </template>
@@ -41,11 +50,14 @@ import { mapGetters, mapActions } from 'vuex';
 export default {
   name: 'ProductCard',
   created() {
-    this.getAllTodos();
+    this.getAllProducts();
   },
   computed: mapGetters(['allProducts']),
   methods: {
-    ...mapActions(['getAllTodos']),
+    ...mapActions(['getAllProducts', 'deleteProduct']),
+    onDelete(id) {
+      this.deleteProduct(id);
+    },
   },
 };
 </script>
@@ -60,11 +72,26 @@ export default {
 
   body, html {
     height: 100%;
-    font-family: sans-serif;
   }
 
   /*//////////////////////////////////////////////////////////////////
   [ Table ]*/
+  .limiter {
+    max-height: 80vh;
+    width: 100%;
+    margin: 0 auto;
+    overflow: auto;
+  }
+
+  .container-table100 {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 0px 0px;
+  }
+
   .wrap-table100 {
     width: 960px;
     border-radius: 10px;
@@ -132,7 +159,6 @@ export default {
   }
 
   .row .cell {
-    font-family: Poppins-Regular;
     font-size: 15px;
     color: #666666;
     line-height: 1.2;
@@ -144,7 +170,6 @@ export default {
   }
 
   .row.header .cell {
-    font-family: Poppins-Regular;
     font-size: 18px;
     color: #fff;
     line-height: 1.2;
@@ -167,7 +192,11 @@ export default {
   }
 
   .row .cell:nth-child(4) {
-    width: 190px;
+    width: 90px;
+  }
+
+  .row .cell:nth-child(5) {
+    width: 100px;
   }
 
 
@@ -200,7 +229,6 @@ export default {
     }
 
     .row .cell {
-      font-family: Poppins-Regular;
       font-size: 18px;
       color: #555555;
       line-height: 1.2;

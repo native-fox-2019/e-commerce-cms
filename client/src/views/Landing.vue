@@ -60,5 +60,6 @@ export default {
     margin: 10px auto;
     border-radius: 20px;
     border-color: salmon;
+    cursor: pointer;
   }
 </style>

@@ -50,6 +50,7 @@ export default {
     justify-content: space-between;
     align-items: center;
     padding: 20px 10%;
+    padding-left: 350px;
   }
 
   h1 {
