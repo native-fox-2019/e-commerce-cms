@@ -1,0 +1,64 @@
+<template>
+  <div class="login">
+   <h3> Login </h3>
+        <form id="form-login" action="" method="POST">
+            <label for="fname">Email:</label><br>
+            <input type="text" id="email" name="email" value="" v-model="email" required><br>
+            <label for="lname">Password:</label><br>
+            <input type="password" name="password" value="" v-model="password" required><br><br>
+            <input type="submit" class="btn btn-dark" value="Submit" v-on:click.prevent="login">
+        </form>
+  </div>
+</template>
+<script>
+import axios from 'axios';
+
+export default {
+  name: 'Login',
+  data() {
+    return {
+      baseUrl: 'http://localhost:3000',
+      email: '',
+      password: '',
+    };
+  },
+  Components: {
+
+  },
+  created() {
+
+  },
+  methods: {
+    login() {
+      axios({
+        method: 'POST',
+        url: `${this.baseUrl}/user/login`,
+        data: {
+          email: this.email,
+          password: this.password,
+        },
+      })
+        .then((data) => {
+          console.log(data);
+          localStorage.setItem('token', data.data.token);
+          this.$router.push({ name: 'Panel' });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+  },
+};
+</script>
+<style scoped>
+.login {
+  border-color: black;
+  border-style : double;
+  width: 20%;
+  text-align: center;
+  font-family: "Lato";
+  margin : 100px auto;
+  background: white;
+  padding: 15px;
+}
+</style>

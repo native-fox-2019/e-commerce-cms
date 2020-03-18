@@ -13,8 +13,8 @@ app.use('/',router)
 app.use(errorHandler)
 
 
-// app.listen(port,function(){
-//     console.log("youre listening to port " + port)
-// })
+app.listen(port,function(){
+    console.log("youre listening to port " + port)
+})
 
 module.exports = app

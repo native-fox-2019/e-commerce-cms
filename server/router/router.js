@@ -8,11 +8,11 @@ const authorization= require('../middleware/authorization')
 router.post('/user/register',controller.register)
 router.post('/user/login',controller.login)
 
-router.get('/product',authentication,productController.view)
-router.post('/product',authentication,productController.add)
-router.get('/product/:id',authentication,productController.getOne)
-router.put('/product/:id',authentication,productController.edit)
-router.delete('/product/:id',authentication,productController.delete)
+router.get('/product',authentication,authorization,productController.view)
+router.post('/product',authentication,authorization,productController.add)
+router.get('/product/:id',authentication,authorization,productController.getOne)
+router.put('/product/:id',authentication,authorization,productController.edit)
+router.delete('/product/:id',authentication,authorization,productController.delete)
 
 
 
