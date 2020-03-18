@@ -21,7 +21,7 @@
         <button class="btn btn-primary m-1">
           Edit
         </button>
-        <button class="btn btn-danger m-1">
+        <button class="btn btn-danger m-1" @click.prevent="deleteData(data.id)">
           Delete
         </button>
       </td>
@@ -33,9 +33,11 @@
 
 <script>
 
+import axios from 'axios';
 import { mapState } from 'vuex';
 import Navbar from '../components/navbar.vue';
 
+const baseUrl = 'http://localhost:3000';
 export default {
   components: {
     Navbar,
@@ -43,6 +45,28 @@ export default {
   computed: mapState(['productData']),
   created() {
     this.$store.dispatch('getData');
+  },
+  methods: {
+    deleteData(id) {
+      axios({
+        method: 'DELETE',
+        url: `${baseUrl}/product/${id}`,
+        headers: {
+          token: localStorage.getItem('token'),
+        },
+      })
+        .then(() => {
+          this.$store.dispatch('getData');
+        }).catch((err) => {
+          if (err.response) {
+            console.log(err.response.data);
+          } else if (err.request) {
+            console.log(err.request);
+          } else {
+            console.log('Error', err.message);
+          }
+        });
+    },
   },
 };
 </script>
