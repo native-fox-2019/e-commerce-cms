@@ -57,10 +57,18 @@
 
                         i {
                             background-color: inherit;
-                            // margin-top: 5px;
                             margin: 0 8px;
                             padding-top: 8px;
                             cursor: pointer;
+                            transition: .5s;
+                        }
+
+                        .fa-edit:hover {
+                            color: white;
+                        }
+
+                        .fa-trash:hover {
+                            color: rgb(255, 0, 0);
                         }
                     }
                 }

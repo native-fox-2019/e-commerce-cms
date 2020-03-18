@@ -37,7 +37,6 @@
 </template>
 <script>
 import Axios from "axios";
-const rootUrl = "http://localhost:3000";
 
 export default {
     name: "Register",
@@ -52,7 +51,7 @@ export default {
         register: function() {
             Axios({
                 method: "post",
-                url: `${rootUrl}/user/registration`,
+                url: `${this.$store.state.rootUrl}/user/registration`,
                 data: {
                     name: this.register_name,
                     email: this.register_email,
@@ -67,6 +66,7 @@ export default {
                     this.register_name = "";
                     this.register_email = "";
                     this.register_password = "";
+                    this.$store.state.isLogin = true;
                     this.$router.push({ name: "Product" });
                 })
                 .catch(err => {

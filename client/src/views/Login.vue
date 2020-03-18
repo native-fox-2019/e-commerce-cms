@@ -34,7 +34,6 @@
 </template>
 <script>
 import Axios from "axios";
-const rootUrl = "http://localhost:3000";
 
 export default {
     name: "Login",
@@ -48,7 +47,7 @@ export default {
         login: function() {
             Axios({
                 method: "post",
-                url: `${rootUrl}/user/login`,
+                url: `${this.$store.state.rootUrl}/user/login`,
                 data: {
                     email: this.login_email,
                     password: this.login_password
@@ -62,6 +61,7 @@ export default {
                     );
                     this.login_email = "";
                     this.login_password = "";
+                    this.$store.state.isLogin = true;
                     this.$router.push({ name: "Product" });
                 })
                 .catch(err => {

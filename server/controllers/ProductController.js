@@ -67,6 +67,7 @@ class ProductController {
     }
 
     static update(request, response, next) {
+        console.log(request.body)
         let data_product = {
             name: request.body.name,
             image_url: request.body.image_url,

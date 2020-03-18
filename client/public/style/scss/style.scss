@@ -15,12 +15,14 @@ cursive;
   box-sizing: border-box;
 }
 
-// body {
-//   position: relative;
-// }
+body {
+  background-color: $color-primary;
+}
 
 @import './navbar';
 @import './button';
 @import './loginregister';
 @import './footer';
 @import './card';
+@import './addProductBtn';
+@import './modal';
