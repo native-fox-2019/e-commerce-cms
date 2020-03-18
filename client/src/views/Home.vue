@@ -1,8 +1,10 @@
 <template>
-  <div class="boxline">
-    <nav class="boxNav boxline">
-      <div class="navBoxContent boxline">WearIsysm</div>
-      <div class="navBoxContent boxline">
+  <div class="bigContainer">
+    <nav class="boxNav">
+      <div class="navBoxContent">
+        <h3>WearIsysm</h3>
+      </div>
+      <div class="navBoxContent" style="width:25em">
         <div class="wrapper">
           <div class="searchBar">
             <input
@@ -23,13 +25,18 @@
           </div>
         </div>
       </div>
-      <div class="navBoxContent boxline">
+      <div class="navBoxContent">
+        <div id="shoppingBag" class="iconNavbar">
+          <img src="../assets/shopping-bag.svg" alt />
+        </div>
         <div id="loginUser">
           <img src="../assets/log-in.svg" alt />
         </div>
       </div>
     </nav>
-    <LoginPage />
+    <div class="loginregisBox">
+      <LoginPage />
+    </div>
   </div>
 </template>
 
@@ -44,21 +51,45 @@ export default {
 };
 </script>
 <style  scoped>
+.bigContainer {
+  background-color: #fff;
+  padding: 1em 2em;
+  border-radius: 2em;
+  height: 75vh;
+}
 .boxNav {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+  justify-items: center;
+  text-align: center;
 }
 .navBoxContent {
-  padding: 0px 2em;
+  justify-content: center;
+  /* width: 100%; */
+  /* padding: 0px 2em; */
   display: flex;
+  justify-items: center;
   align-items: center;
   flex-wrap: wrap;
 }
-#loginUser {
+.navBoxContent h3 {
+  letter-spacing: 2px;
+}
+.iconNavbar {
+  margin: 2px 1em;
+}
+#loginUser,
+#shoppingBag {
   cursor: pointer;
 }
-
+.loginregisBox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  justify-items: center;
+  padding: 5em 0px;
+}
 .boxline {
   border: 1px solid black;
 }
@@ -68,7 +99,7 @@ body {
 
 .wrapper {
   width: 100%;
-  max-width: 31.25rem;
+  max-width: 35rem;
   margin: 0 auto;
 }
 
