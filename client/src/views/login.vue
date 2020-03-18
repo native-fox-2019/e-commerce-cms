@@ -62,6 +62,7 @@ export default {
         })
         .then(data => {
           localStorage.setItem("access_token", data.data.access_token);
+          localStorage.setItem("role", data.data.role);
           Swal.fire({
             position: "top-end",
             icon: "success",

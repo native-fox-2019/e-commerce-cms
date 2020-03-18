@@ -1,16 +1,25 @@
 <template>
   <div>
+    <!-- NAV BAR -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item">
             <button
-              v-if="!edit && !addNew"
+              v-if="!edit && !addNew && this.$store.getters.getRole == 'admin' &&!addBanner"
               type="button"
               class="btn btn-success"
               @click.prevent="changeAddTrue"
             >
               Add new product
+            </button>
+            <button
+              v-if="!edit && !addNew && this.$store.getters.getRole == 'admin' &&!addBanner"
+              type="button"
+              class="btn btn-warning ml-2"
+              @click.prevent="changeAddBannerTrue"
+            >
+              Add new banner
             </button>
           </li>
         </ul>
@@ -21,36 +30,16 @@
         </ul>
       </div>
     </nav>
-    <div class="text-center mt-5" v-if="!addNew && !edit">
-      <h1 style="font-family:monospace;">Welcome To Amazon</h1>
+
+    <div class="text-center mt-5" v-if="!addNew && !edit &&!addBanner">
+      <h1 style="font-family:monospace;">Admin Dashboard</h1>
     </div>
-    <div class="row mt-5">
-      <div class="col-3">
-        <img
-          src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQEHqe2wMNeo8JlouoBVmyJLUlhgkDKq4JyzcqcsF_SPdHHOKGx"
-          alt=""
-        />
-      </div>
-      <div class="col-3">
-        <img
-          src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQEHqe2wMNeo8JlouoBVmyJLUlhgkDKq4JyzcqcsF_SPdHHOKGx"
-          alt=""
-        />
-      </div>
-      <div class="col-3">
-        <img
-          src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQEHqe2wMNeo8JlouoBVmyJLUlhgkDKq4JyzcqcsF_SPdHHOKGx"
-          alt=""
-        />
-      </div>
-      <div class="col-3">
-        <img
-          src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQEHqe2wMNeo8JlouoBVmyJLUlhgkDKq4JyzcqcsF_SPdHHOKGx"
-          alt=""
-        />
-      </div>
-    </div>
-    <div class="row mt-5" v-if="!addNew && !edit">
+    
+    <!-- BANNER CARD -->
+    <Banner v-if="!addNew && !edit &&!addBanner" @doneDeleting="getItems"></Banner>
+    
+    <!-- PRODUCT CARD -->
+    <div class="row mt-5" v-if="!addNew && !edit &&!addBanner">
       <div
         class="col-2 mt-3 ml-5"
         v-for="item in this.$store.state.itemList"
@@ -61,7 +50,7 @@
             class="card-img-top"
             :src="item.image_url"
             alt="Card image cap"
-            style="width:100%; height:350px;"
+            style="width:100%; height:280px;"
           />
           <div class="card-body">
             <h5 class="card-title">{{ item.name }}</h5>
@@ -83,7 +72,7 @@
       </div>
     </div>
     <!-- ADD NEW FORM COMPONENT-->
-    <Add v-if="addNew && !edit" @doneAdd="changeAddFalse"></Add>
+    <Add v-if="addNew && !edit &&!addBanner" @doneAdd="changeAddFalse"></Add>
 
     <!-- EDIT FORM COMPONENT-->
     <Edit
@@ -92,31 +81,41 @@
       @notEdit="changeEditFalse"
       @doneEditing="changeEditFalse"
     ></Edit>
+
+    <!-- ADD BANNER COMPONENT -->
+    <addBanner v-if="addBanner && !addNew && !edit" @cancelAddBan="changeAddBanFalse" @doneAddBanner="changeAddBanFalse"></addBanner>
   </div>
 </template>
 <script>
 import Add from "../components/add.vue";
 import Edit from "../components/edit.vue";
+import Banner from '../components/banner.vue'
+import addBanner from '../components/addBanner.vue'
 
 export default {
   components: {
     Add,
-    Edit
+    Edit,
+    Banner,
+    addBanner
   },
   created() {
     this.getItems();
+    this.checkRole()
   },
   data() {
     return {
       addNew: false,
       edit: false,
       edit_prod: ``,
-      id_edit: ``
+      id_edit: ``,
+      addBanner: false
     };
   },
   methods: {
     doLogOut() {
       localStorage.removeItem("access_token");
+      localStorage.removeItem("role");
       this.$router.push({ name: "Login" });
     },
     getItems() {
@@ -125,11 +124,13 @@ export default {
     changeAddFalse() {
       this.addNew = false;
       this.edit = false;
+      this.addBanner = false
       this.getItems();
     },
     changeAddTrue() {
       this.addNew = true;
       this.edit = false;
+      this.addBanner = false
     },
     deleteProduct(id) {
       this.$store.dispatch("deleteProduct", id);
@@ -145,7 +146,19 @@ export default {
     changeEditFalse() {
       this.edit = false;
       this.addNew = false;
+      this.addBanner = false
       this.getItems();
+    },
+    checkRole() {
+      this.$store.commit('checkRole')
+    },
+    changeAddBannerTrue() {
+      this.addBanner = true
+      this.edit = false
+      this.addNew = false
+    },
+    changeAddBanFalse() {
+      this.addBanner = false
     }
   }
 };

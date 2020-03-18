@@ -7,11 +7,20 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    itemList: null
+    itemList: null,
+    role: null,
+  },
+  getters: {
+    getRole: (state) => {
+      return state.role
+    }
   },
   mutations: {
     populateItemList(state, payload) {
       state.itemList = payload;
+    },
+    checkRole(state) {
+      state.role = localStorage.role
     }
   },
   actions: {
