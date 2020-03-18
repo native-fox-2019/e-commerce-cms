@@ -4,6 +4,7 @@ import Home from '../views/Home.vue';
 import Login from '../views/Login.vue';
 import Register from '../views/Register.vue';
 import AddProduct from '../views/AddProduct.vue';
+import Product from '../views/Product.vue';
 
 Vue.use(VueRouter);
 
@@ -36,6 +37,11 @@ const routes = [
     name: 'AddProduct',
     meta: { requireAuth: true },
     component: AddProduct,
+  },
+  {
+    path: '/product/:id',
+    name: 'Product',
+    component: Product,
   },
 ];
 

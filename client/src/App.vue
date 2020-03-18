@@ -3,7 +3,7 @@
     <header class="header">
       <div class="header-content">
         <div class="title">
-          <span>Futsal.com</span>
+          <span>Footsalt.com</span>
         </div>
         <div class="nav">
           <router-link to="/">Home</router-link>

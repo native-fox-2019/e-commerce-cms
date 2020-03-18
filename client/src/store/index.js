@@ -9,6 +9,7 @@ export default new Vuex.Store({
     products: [],
     baseUrl: 'http://localhost:3003',
     isLogin: false,
+    productId: 0,
   },
   mutations: {
     getProducts(state, data) {
@@ -22,6 +23,9 @@ export default new Vuex.Store({
     },
     changeIsLogin(state, status) {
       state.isLogin = status;
+    },
+    changeProductId(state, id) {
+      state.productId = id;
     },
   },
   actions: {
