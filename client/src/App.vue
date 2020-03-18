@@ -31,9 +31,6 @@ export default {
     };
   },
   methods: {
-    changeLoginStatus(status) {
-      this.isLogin = status;
-    },
     logOut() {
       localStorage.removeItem('token');
       localStorage.removeItem('name');

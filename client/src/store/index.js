@@ -32,6 +32,7 @@ export default new Vuex.Store({
       };
       axios(options)
         .then((response) => {
+          response.data.products.sort((a, b) => a.id - b.id);
           context.commit('getProducts', response.data.products);
         })
         .catch((err) => {
