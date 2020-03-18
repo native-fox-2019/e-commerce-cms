@@ -82,17 +82,9 @@ export default {
     changeAddFalse() {
         this.addNew = false
         this.edit = false
-        this.name = ``,
-        this.image_url = ``,
-        this.price = ``,
-        this.stock = ``
         this.getItems()
     },
     changeAddTrue() {
-        this.name = ``,
-        this.image_url = ``,
-        this.price = ``,
-        this.stock = ``
         this.addNew = true
         this.edit = false
     },

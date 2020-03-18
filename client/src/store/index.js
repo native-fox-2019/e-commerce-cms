@@ -12,18 +12,6 @@ export default new Vuex.Store({
   mutations: {
     populateItemList(state, payload) {
       state.itemList = payload;
-    },
-    addNewProduct(state, payload) {
-      state.itemList.push(payload);
-    },
-    deleteProduct(state, id) {
-      let newest = []
-      state.itemList.forEach(i => {
-        if (i.id != id) {
-          newest.push(i)
-        }
-      })
-      state.itemList = newest
     }
   },
   actions: {
@@ -58,7 +46,7 @@ export default new Vuex.Store({
             icon: "success",
             title: "Product added"
           });
-          context.commit("addNewProduct", newProduct);
+          context.dispatch('getItems')
         })
         .catch(response => {
           Swal.fire({
@@ -79,7 +67,7 @@ export default new Vuex.Store({
             icon: "success",
             title: "Product deleted"
           });
-          context.commit('deleteProduct', id)
+          context.dispatch('getItems')
         })
         .catch(response => {
           console.log(response);
@@ -99,11 +87,11 @@ export default new Vuex.Store({
       })
       .then(data => {
         console.log(data)
-        this.edit = false
         Swal.fire({
           icon: 'success',
           title: 'Update successfull'
         })
+        context.dispatch('getItems')
       })
       .catch(response => {
         console.log(response)
