@@ -18,7 +18,8 @@ describe('user register', () => {
                 .send({
                     name: 'ihiw',
                     email: '123@123.com',
-                    password: '123'
+                    password: '123',
+                    role: "Admin"
                 })
                 .then(data => {
                     const { body, status } = data

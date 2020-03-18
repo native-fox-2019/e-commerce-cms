@@ -5,14 +5,11 @@ const { Products } = require('../models')
 class ControllerAdmin {
     static addProduct(req, res, next) {
         const { name, price, stocks, imageURL } = req.body
-        console.log(name, price, stocks, imageURL)
         Products.create({name, price, stocks, imageURL})
         .then(data => {
-            console.log('qwe')
             res.status(201).json(data)
         })
         .catch(err => {
-            console.log('asd')
             next(err)
         })
     }

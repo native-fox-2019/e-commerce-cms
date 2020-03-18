@@ -9,34 +9,45 @@ let access_token_user = null
 let access_token_admin = null
 
 beforeAll((done) => {
-    let obj = [
-        {
-            name: 'admin',
-            email: 'admin@admin.com',
-            password: hashPass('123'),
-            role: 'Admin'
-        },
-        {
-            name: '123',
-            email: '123@123.com',
-            password: hashPass('123'),
-            role: 'User'
-        }
-    ]
-    User.bulkCreate(obj)
-        .then(data => {
-            let { id, role, name } = data[0]
-            access_token_admin = sign({ id, role, name }, process.env.JWT_SECRET)
-            id = data[1].id
-            role = data[1].role
-            name = data[1].name
-            access_token_user = sign({ id, role, name }, process.env.JWT_SECRET)
-            done()
-        })
-        .catch(err => done(err))
+    // let obj = 
+    // [
+        // {
+        //     name: 'admin',
+        //     email: 'admin@admin.com',
+        //     password: hashPass('123'),
+        //     role: 'Admin'
+        // }
+        // ,
+        // {
+        //     name: '123',
+        //     email: '123@123.com',
+        //     password: hashPass('123'),
+        //     role: 'User'
+        // }
+    // ]
+    request(app)
+    .post('/user/register')
+    .send({
+        name: 'ihiw',
+        email: '123@123.com',
+        password: '123',
+        role: "Admin"
+    })
+    .then(data => {
+        const { body, status } = data
+        access_token_admin = body.access_token
+        // expect(status).toBe(201)
+        // expect(body).toHaveProperty('access_token')
+        done()
+    })
+    .catch(err => {
+        done(err)
+    })
 })
 
 afterAll(done => {
+    console.log(access_token_admin)
+    console.log(access_token_user)
     queryInterface
         .bulkDelete('Users', {})
         .then(() => queryInterface

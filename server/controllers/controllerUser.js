@@ -1,7 +1,7 @@
 'use strict'
 
 require('dotenv').config()
-const { User } = require('../models')
+const { User,Products } = require('../models')
 const { sign } = require('../helpers/jwt')
 const {checkPass} = require('../helpers/bcrypt')
 
@@ -46,6 +46,16 @@ class ControllerUser {
             }
         })
         .catch(err=>{
+            next(err)
+        })
+    }
+
+    static getAll(req,res,next){
+        Products.findAll({order:[['id','asc']]})
+        .then(data =>{
+            res.status(200).json(data)
+        })
+        .catch(err =>{
             next(err)
         })
     }
