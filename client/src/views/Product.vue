@@ -33,7 +33,7 @@
           <input type="text" placeholder="Price" v-model="price"><br>
           <input type="text" placeholder="Stock" v-model="stock"><br>
           <button type="submit">Edit Product</button>
-          <p style="color: red" v-for="error in addProductError" :key="error"> {{ error }}</p>
+          <p style="color: red" v-for="error in errors" :key="error"> {{ error }}</p>
         </form>
       </div>
     </div>
@@ -58,6 +58,7 @@ export default {
       stock: 0,
       image_url: '',
       isBtnEdit: false,
+      errors: [],
     };
   },
   methods: {
@@ -76,6 +77,42 @@ export default {
         })
         .catch((err) => {
           console.log(err.response);
+        });
+    },
+    editProduct() {
+      const options = {
+        url: `${this.$store.state.baseUrl}/products/${this.id}`,
+        method: 'put',
+        headers: {
+          token: localStorage.token,
+        },
+        data: {
+          name: this.name,
+          image_url: this.image_url,
+          price: Number(this.price),
+          stock: Number(this.stock),
+        },
+      };
+      axios(options)
+        .then((response) => {
+          this.message = response.data.message;
+          this.id = response.data.product.id;
+          this.name = response.data.product.name;
+          this.price = response.data.product.price;
+          this.stock = response.data.product.stock;
+          this.image_url = response.data.product.image_url;
+          this.$store.dispatch('getProducts');
+          this.isBtnEdit = false;
+        })
+        .catch((err) => {
+          this.errors = [];
+          if (err.response.data.error) {
+            err.response.data.error.forEach((item) => {
+              this.errors.push(item.msg);
+            });
+          } else {
+            this.errors.push(err.response.data.msg);
+          }
         });
     },
     changeIsBtnEdit() {
