@@ -1,0 +1,10 @@
+.forms {
+    padding-top: 3em;
+    height: 100vh;
+}
+
+.navbar {
+    position: fixed;
+    left: 0;
+    right: 0;
+}
