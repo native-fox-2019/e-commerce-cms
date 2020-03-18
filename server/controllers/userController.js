@@ -38,9 +38,8 @@ class UserController {
       last_name: req.body.last_name,
       email: req.body.email,
       password: req.body.password,
-      isAdmin: true
+      isAdmin: null
     }
-    console.log(adminList)
     adminList.adminList.forEach(element => {
       if (element === req.body.email) {
         body.isAdmin = true

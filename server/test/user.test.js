@@ -10,21 +10,45 @@ afterAll(done => {
     .catch(err => done(err));
 });
 
-describe("Test for user", function() {
-  describe("Success register user", function() {
+describe("Test for Admin", function() {
+  describe("Success register Admin", function() {
     it("Should return 201", function(done) {
       request(app)
         .post("/user/register")
         .send({
           first_name: "gusti",
           last_name: "putra",
-          email: "gusti@gmail.com",
+          email: "gusti1@gusti.com",
           password: "12345"
         })
         .then(res => {
           const { body, status } = res;
           expect(status).toEqual(201);
           expect(body).toHaveProperty("first_name", "gusti");
+          done();
+        })
+        .catch(err => {
+          done(err);
+        });
+    });
+  });
+});
+describe("Test for user", function() {
+  describe("Success register user", function() {
+    it("Should return 201", function(done) {
+      request(app)
+        .post("/user/register")
+        .send({
+          first_name: "bokir",
+          last_name: "putra",
+          email: "bokir1@gmail.com",
+          password: "12345",
+          isAdmin: false
+        })
+        .then(res => {
+          const { body, status } = res;
+          expect(status).toEqual(201);
+          expect(body).toHaveProperty("first_name", "bokir");
           done();
         })
         .catch(err => {
@@ -40,7 +64,7 @@ it('Should return 400 because first name is empty', function(done) {
       .send({
         first_name: null,
         last_name: "putra",
-        email: "gusti@gmail.com",
+        email: "bokir@gmail.com",
         password: "12345"
          
       })
@@ -60,9 +84,9 @@ it('Should return 400 because last name is empty', function(done) {
     request(app)
       .post('/user/register')
       .send({
-        first_name: "gusti",
+        first_name: "bokir",
         last_name: null,
-        email: "gusti@gmail.com",
+        email: "bokir@gmail.com",
         password: "12345"
          
       })
@@ -82,7 +106,7 @@ it('Should return 400 because email is empty', function(done) {
     request(app)
       .post('/user/register')
       .send({
-        first_name: 'gusti',
+        first_name: 'bokir',
         last_name: "putra",
         email: null,
         password: "12345"
@@ -104,9 +128,9 @@ it('Should return 400 because email is empty', function(done) {
     request(app)
       .post('/user/register')
       .send({
-        first_name: 'gusti',
+        first_name: 'bokir',
         last_name: "putra",
-        email: "gusti@gmail.com",
+        email: "bokir@gmail.com",
         password: "12345"
          
       })
@@ -126,9 +150,9 @@ it('Should return 400 because password is empty', function(done) {
     request(app)
       .post('/user/register')
       .send({
-        first_name: 'gusti',
+        first_name: 'bokir',
         last_name: "putra",
-        email: "gusti@gmail.com",
+        email: "bokir@gmail.com",
         password: null
          
       })
@@ -146,12 +170,12 @@ it('Should return 400 because password is empty', function(done) {
 
 
   describe("Test for Admin", function() {
-    describe("login sucessful as Admin", function() {
+    describe("login successful as Admin", function() {
       it("Should return 200", function(done) {
         request(app)
           .post("/user/login")
           .send({
-            email: "gusti@gmail.com",
+            email: "gusti@gusti.com",
             password: "12345"
           })
           .then(res => {
@@ -167,12 +191,12 @@ it('Should return 400 because password is empty', function(done) {
     })
   })
 
-  describe("login sucessful as User", function() {
+  describe("login successful as User", function() {
     it("Should return 200", function(done) {
       request(app)
         .post("/user/login")
         .send({
-          email: "ery@menteng.com",
+          email: "bokir@gmail.com",
           password: "12345"
         })
         .then(res => {

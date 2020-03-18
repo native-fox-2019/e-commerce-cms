@@ -7,7 +7,7 @@ const { Op } = require("sequelize");
 
 class productController {
   static create(req, res, next) {
-    const UserId  = req.user.id;
+    const UserId = req.user.id;
     const body = {
       name: req.body.name,
       category: req.body.category,
@@ -15,7 +15,7 @@ class productController {
       image_url: req.body.image_url,
       stock: req.body.stock,
       price: req.body.price,
-      UserId : UserId
+      UserId: UserId
     };
     Product.create(body)
       .then(data => {
@@ -45,38 +45,43 @@ class productController {
   }
 
   static filterData(req, res, next) {
-    const key = req.query.category;
-    Product.findAll({
-      where: {
-        category: {
-          [Op.like]: `%${key}%`
-        }
-      }
-    })
-      .then(data => {
-        if (data.length) {
-          res.status(200).json(data);
-        } else {
-          const error = {
-            status: 404,
-            msg: "data not found"
-          };
-          throw error;
+    const key = req.query.key;
+    console.log(key)
+    if (key === "") {
+      Product.findAll().then(data => {
+        res.status(200).json(data);
+      });
+    } else {
+      Product.findAll({
+        where: {
+          category: {
+            [Op.like]: `%${key}%`
+          }
         }
       })
-      .catch(err => {
-        next(err);
-      });
+        .then(data => {
+          if (data.length) {
+            res.status(200).json(data);
+          } else {
+            const error = {
+              status: 404,
+              msg: "data not found"
+            };
+            throw error;
+          }
+        })
+        .catch(err => {
+          next(err);
+        });
+    }
   }
 
   static update(req, res, next) {
-    console.log();
     const id = +req.params.id;
-    console.log(id);
     const { name, description, image_url, price, stock, category } = req.body;
     Product.update(
       { name, description, image_url, price, stock, category },
-      { where: { id: id}, returning: true }
+      { where: { id: id }, returning: true }
     )
       .then(data => {
         if (data[1].length) {
@@ -95,12 +100,11 @@ class productController {
   }
 
   static delete(req, res, next) {
-    const id = +req.params.id
-    Product.destroy({where : {id, }, returning : true})
+    const id = +req.params.id;
+    Product.destroy({ where: { id }, returning: true })
       .then(data => {
-        console.log(data)
         if (data > 0) {
-          res.status(200).json('delete succesfull');
+          res.status(200).json("delete succesfull");
         } else {
           const error = {
             status: 404,
@@ -110,10 +114,8 @@ class productController {
         }
       })
       .catch(err => {
-      next(err)
-      })
-
-
+        next(err);
+      });
   }
 }
 

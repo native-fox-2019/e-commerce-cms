@@ -2,7 +2,6 @@
 
 "use strict";
 module.exports = (err, req, res, next) => {
-  console.log(err)
   if (err.name === 'SequelizeValidationError') {
     let msg = err.errors.map(x => x.message)
     res.status(400).json({message : msg})

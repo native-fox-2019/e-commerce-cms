@@ -10,7 +10,7 @@ router
   .use(authentication)
   .post("/", authorization, productController.create)
   .get("/", productController.findAll)
-  .get("/:id", authorization, productController.filterData)
+  .get("/filter", productController.filterData)
   .put("/:id", authorization, productController.update)
   .delete("/:id", authorization, productController.delete);
 
