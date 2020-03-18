@@ -1,11 +1,6 @@
 <template>
 <div>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div>
-      <button class="btn btn-warning m-1">Log Out</button>
-      <button class="btn btn-success m-1">Add Product</button>
-    </div>
-  </nav>
+  <Navbar />
   <table class="table">
   <thead class="thead-dark">
     <tr>
@@ -39,8 +34,12 @@
 <script>
 
 import { mapState } from 'vuex';
+import Navbar from '../components/navbar.vue';
 
 export default {
+  components: {
+    Navbar,
+  },
   computed: mapState(['productData']),
   created() {
     this.$store.dispatch('getData');

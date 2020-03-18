@@ -2,6 +2,7 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Login from '../views/login.vue';
 import Home from '../views/home.vue';
+import AddProduct from '../views/addProduct.vue';
 
 Vue.use(VueRouter);
 
@@ -15,6 +16,12 @@ const routes = [
     path: '/',
     name: 'home',
     component: Home,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: '/addproduct',
+    name: 'addProduct',
+    component: AddProduct,
     meta: { requiresAuth: true },
   },
 ];

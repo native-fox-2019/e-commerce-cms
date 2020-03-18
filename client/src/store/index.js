@@ -13,6 +13,9 @@ export default new Vuex.Store({
     getData(state, data) {
       state.productData = data;
     },
+    logout(state) {
+      state.productData = [];
+    },
   },
   actions: {
     getData(context) {
@@ -28,6 +31,9 @@ export default new Vuex.Store({
         }).catch((err) => {
           console.log(err);
         });
+    },
+    logout(context) {
+      context.commit('logout');
     },
   },
   modules: {
