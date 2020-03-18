@@ -17,11 +17,13 @@
 body{
     margin: 0;
     font-family: gotham;
+    min-height: 80vh;
+    position: relative;
 }
 
-.header{
-    width: 100%; height: 90px; background-color: rgba(0, 0, 0, 0.897); padding: 10px 0px; display: flex; flex-direction: column; justify-content: center;
-    box-shadow: 0px 0px 20px 10px rgba(0, 0, 0, 0.432); margin-bottom: 80px;
+header{
+    width: 100%; height: 90px; background-color: rgb(0, 0, 0); padding: 10px 0px; display: flex; flex-direction: column; justify-content: center;
+    box-shadow: 0px 0px 20px 10px rgba(0, 0, 0, 0.432); margin-bottom: 80px; position: fixed; top: 0; z-index: 99;
 }
 .title{
     color: white; display: inline; font-size: 20px; margin-left: 20px; font-family: montserrat;
@@ -33,8 +35,8 @@ body{
     color: white; text-decoration: none; margin: 0px 10px; text-transform: uppercase;
 }
 .login, .register, .add-product{
-    width: 400px; height: auto; padding: 50px 10px; margin: 10px auto; text-align: center; border: 2px solid rgba(0, 0, 0, 0.897);
-    display: flex; flex-direction: column; justify-content: center; border-radius: 40px;
+    width: 400px; height: auto; padding: 50px 10px; margin: 0px auto; text-align: center; border: 2px solid rgba(0, 0, 0, 0.897);
+    display: flex; flex-direction: column; justify-content: center; border-radius: 40px; margin-top: 10em;
 }
 .login h3, .register h3{
     font-size: 27px; margin-top: 2px;
@@ -50,7 +52,7 @@ body{
     cursor: pointer;
 }
 .home{
-    width: 85%; height: auto; margin: 5px auto; text-align: center;
+    width: 85%; height: auto; margin: 5px auto; text-align: center; margin-top: 10em;
 }
 .products{
     width: 100%; height: auto; display: flex; justify-content: center; margin-top: 20px; flex-wrap: wrap;
@@ -60,10 +62,10 @@ body{
     display: flex; flex-direction: column; position: relative;
 }
 .card-name{
-    font-size: 20px; margin: 5px 0px; font-weight: 500;
+    font-size: 20px; margin: 5px 0px; font-weight: 500; font-family: gotham;
 }
 .card-price{
-    font-size: 18px; color: grey;
+    font-size: 16px; color: grey;
 }
 .card-action{
     display: flex; justify-content: flex-end; bottom: 15px; position: absolute; right: 15px;

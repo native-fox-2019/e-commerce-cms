@@ -1,6 +1,6 @@
 <template>
   <div class="card">
-    <img :src="product.image_url" style="width: 100%; heigth: auto; margin-bottom: 15px">
+    <img :src="product.image_url" style="margin-bottom: 15px" width="100%" height="55%">
     <div class="card-name">
       <span>{{ product.name }}</span>
     </div>

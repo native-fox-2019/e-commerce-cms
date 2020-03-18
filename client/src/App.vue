@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div class="header">
+    <header class="header">
       <div class="header-content">
         <div class="title">
           <span>E-Commerce</span>
@@ -13,7 +13,7 @@
           <a href="#" v-if="isLogin" @click="logOut">LOGOUT</a>
         </div>
       </div>
-    </div>
+    </header>
     <router-view @changeLoginStatus="changeLoginStatus" :isLogin="isLogin" :baseUrl="baseUrl"
     :products="products" @addProduct="addProduct" @deleteProduct="deleteProduct"/>
   </div>
