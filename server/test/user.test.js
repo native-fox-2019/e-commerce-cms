@@ -8,16 +8,14 @@ describe("POST /user/register check password is hashed?", () => {
 			.post('/user/register')
 			.send({name:'Malik', email:'test@mail.com', password:'test', role:'user' , role:'user'})
 			.set('Accept', 'application/json')
-			.expect(function (res){
-				res.password === 'test'
-			})
 			.expect('Content-Type', /json/)
+			.expect(401)
 			.end((err, res) => {
-					if(err){
-						return done()
-					}else{
-						return done({message: "password not already hashed"})
-					}
+				if(res.password === 'test'){
+					return done(err)
+				}else{
+					return done()
+				}
 			})
   })  
 })
@@ -44,18 +42,10 @@ describe("POST /user/register", () => {
 			.post('/user/register')
 			.send({name:'Malik', email:'test@mail.com', password:'test', role:'user' })
 			.set('Accept', 'application/json')
-			.expect(function(res){
-				res.statusCode.toBe(401)
-				res.body("Email already registered!")
-			})
 			.expect('Content-Type', /json/)
-			.end((err, res) => {
-					if(err){
-						return done()
-					}else{
-						return done(res)
-					}
-			})
+			.expect(401, {
+				message: "Email already registered!"
+			}, done)
   })  
 })
 
@@ -63,115 +53,114 @@ describe("POST /user/register", () => {
   test("Test Error validation empty name", done => {
 		request(app)
 			.post('/user/register')
-			.send({name:'', email:'test12@mail.com', password:'test', role:'user' })
+			.send({name:'', email:'test12dsd@mail.com', password:'test', role:'user' })
 			.set('Accept', 'application/json')
-			.expect(function(res) {
-				// console.log(res)
-        res.body.message = "Name can't be empty!";
-      })
 			.expect('Content-Type', /json/)
-			.expect(400, done)
+			.expect(400, [{
+				     message: "Name can't be empty!"
+			}],done)
   })  
 })
 
-// describe("POST /user/register", () => {
-//   test("Test Error validation empty email", done => {
-// 		request(app)
-// 			.post('/user/register')
-// 			.send({name:'Malik', email:'', password:'test', role:'user' })
-// 			.set('Accept', 'application/json')
-// 			.expect(res.statusCode).toBe(400)
-// 			.expect(function(res){
-// 				res.body("Email can't be empty!")
-// 			})
-// 			.expect('Content-Type', /json/)
-// 			.expect(400, done)
-//   })  
-// })
+describe("POST /user/register", () => {
+  test("Test Error validation empty email", done => {
+		request(app)
+			.post('/user/register')
+			.send({name:'Malik', email:'', password:'test', role:'user' })
+			.set('Accept', 'application/json')
+			.expect('Content-Type', /json/)
+			.expect(400, [{
+				message: "Email can't be empty!"
+			}], done)
+  })  
+})
 
-// describe("POST /user/register", () => {
-//   test("Test Error validation empty password", done => {
-// 		request(app)
-// 			.post('/user/register')
-// 			.send({name:'Malik', email:'test@mail.com', password:'', role:'user'})
-// 			.set('Accept', 'application/json')
-// 			.expect(function(res){
-// 				res.body("Password can't be empty!")
-// 			})
-// 			.expect('Content-Type', /json/)
-// 			.expect(400, done)
-//   })  
-// })
+describe("POST /user/register", () => {
+  test("Test Error validation empty password", done => {
+		request(app)
+			.post('/user/register')
+			.send({name:'Malik', email:'tesfassaasdsdfsafat@mail.com', password:'', role:'user'})
+			.set('Accept', 'application/json')
+			.expect('Content-Type', /json/)
+			.expect(400, [{
+				message: "Password can't be empty!"
+			}], done)
+  })  
+})
 
 // describe("POST /user/register", () => {
 //   test("Test Error user fill role as admin", done => {
 // 		request(app)
 // 			.post('/user/register')
-// 			.send({name:'Malik', email:'test@mail.com', password:'test', role:'admin'})
+// 			.send({name:'Malik', email:'testasfsa@mail.com', password:'test', role:'admin'})
 // 			.set('Accept', 'application/json')
-// 			.expect(function(res){
-// 				res.body("Forbidden Access!")
-// 			})
 // 			.expect('Content-Type', /json/)
-// 			.expect(403, done)
+// 			.expect(403, {
+// 				message: "Forbidden Access!"
+// 			}, done)
 //   })  
 // })
 
-// describe("POST /user/login", () => {
-// 	test("Test correct valid email and password")
-// 		request(app)
-// 		.post('/user/login')
-// 		.send({email: "test@mail.com", password: "test"})
-// 		.set('Accept', 'application/json')
-// 		.expect('Content-Type', /json/)
-// 		.expect(200, done)
-// })
 
-// describe("POST /user/login", () => {
-// 	test("Test correct valid email and password")
-// 		request(app)
-// 		.post('/user/login')
-// 		.send({email: "test@mail.com", password: "test"})
-// 		.set('Accept', 'application/json')
-// 		.expect('Content-Type', /json/)
-// 		.expect(200, done)
-// })
+describe("POST /user/login", () => {
+	test("Test correct valid email and password", done=> {
+		request(app)
+		.post('/user/login')
+		.send({email: "test@mail.com", password: "test"})
+		.set('Accept', 'application/json')
+		.expect('Content-Type', /json/)
+		.expect(200, done)
+	})
+})
 
-// describe("POST /user/login", () => {
-// 	test("Test wrong email")
-// 		request(app)
-// 		.post('/user/login')
-// 		.send({email: "test@mail.comhahaa", password: "test"})
-// 		.set('Accept', 'application/json')
-// 		.expect('Content-Type', /json/)
-// 		.expect(function(res){
-// 			res.body("Wrong email or password!")
-// 		})
-// 		.expect(401, done)
-// })
+describe("POST /user/login", () => {
+	test("Test wrong email", done=> {
+		request(app)
+		.post('/user/login')
+		.send({email: "test@mail.comhahaa", password: "test"})
+		.set('Accept', 'application/json')
+		.expect('Content-Type', /json/)
+		.expect(401, {
+			message: "Wrong email or password!"
+		}, done)
+	})
+})
 
-// describe("POST /user/login", () => {
-// 	test("Test wrong password")
-// 		request(app)
-// 		.post('/user/login')
-// 		.send({email: "test@mail.com", password: "wrongdadadada"})
-// 		.set('Accept', 'application/json')
-// 		.expect('Content-Type', /json/)
-// 		.expect(function(res){
-// 			res.body("Wrong email or password!")
-// 		})
-// 		.expect(401, done)
-// })
+describe("POST /user/login", () => {
+	test("Test wrong password", done=> {
+		request(app)
+		.post('/user/login')
+		.send({email: "test@mail.com", password: "wrongdadadada"})
+		.set('Accept', 'application/json')
+		.expect('Content-Type', /json/)
+		.expect(401, {
+			message: "Wrong email or password!"
+		}, done)
+	})
+})
 
-// describe("POST /user/login", () => {
-// 	test("Test empty form email")
-// 		request(app)
-// 		.post('/user/login')
-// 		.send({email: "test@mail.comhahaa", password: "test"})
-// 		.set('Accept', 'application/json')
-// 		.expect('Content-Type', /json/)
-// 		.expect(function(res){
-// 			res.body("Email can't be empty!")
-// 		})
-// 		.expect(401, done)
-// })
+describe("POST /user/login", () => {
+	test("Test empty form email", done=> {
+		request(app)
+		.post('/user/login')
+		.send({email: "", password: "test"})
+		.set('Accept', 'application/json')
+		.expect('Content-Type', /json/)
+		.expect(401,{
+			message: "Wrong email or password!"
+		}, done)
+	})
+})
+
+describe("POST /user/login", () => {
+	test("Test empty form password", done=> {
+		request(app)
+		.post('/user/login')
+		.send({email: "test@mail.comhahaa", password: ""})
+		.set('Accept', 'application/json')
+		.expect('Content-Type', /json/)
+		.expect(401,{
+			message: "Wrong email or password!"
+		}, done)
+	})
+})
