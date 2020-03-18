@@ -7,6 +7,7 @@ require('dotenv').config()
 class Controller {
 
     static register(request,response,next){
+        console.log('masuk register')
 
         User.findOne({where:{email:request.body.email}})
         .then(data=>{
@@ -33,7 +34,7 @@ class Controller {
                 email:request.body.email,
                 level:request.body.level
             },process.env.SECRET )
-            response.json({token})
+            response.json({token:token,name:request.body.name,level:request.body.level})
         })
         .catch(err=>{
             // console.log(err)
@@ -56,6 +57,7 @@ class Controller {
     }
     
     static login(request,response,next){
+        console.log('masuk login')
         let userDatum= null
 
         User.findOne({where:{email:request.body.email}})
@@ -80,7 +82,7 @@ class Controller {
                     email:userDatum.email,
                     level:userDatum.level
                     }, process.env.SECRET)
-                response.send({token})
+                response.send({token:token, name:userDatum.name, level:userDatum.level})
             }else{
                 let errorObj={  
                     status:401,
@@ -98,6 +100,8 @@ class Controller {
             }
         })
     }
+
+    
 
 }
 

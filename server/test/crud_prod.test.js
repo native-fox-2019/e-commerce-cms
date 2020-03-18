@@ -269,70 +269,134 @@ describe('update Data', ()=>{
 
 
 
-describe('delete data',()=>{
-        describe('succes delete data',()=>{
-            it("should return 200 and object(product)", (done)=>{
+    describe('get data by certain Product ID',()=>{
+        describe('succesfully get data by id with Admin authorization',()=>{
+            it('should return 200 and  object(product)',(done)=>{
                 request(app)
-                .delete(`/product/${id}`)
+                .get(`/product/${id}`)
                 .set("token",tokenAdmin)
-            .then(result=>{
-                const {body,status}=result
-                expect(status).toBe(200)
-                expect(body).toHaveProperty("msg")
-                expect(body).toHaveProperty("name")
-                expect(body).toHaveProperty("image_url")
-                expect(body).toHaveProperty("price")
-                expect(body).toHaveProperty("stock")
-                done()
+                .then(result=>{
+                    const {body,status} = result
+                    expect(status).toBe(200)
+                    expect(body).toHaveProperty("name")
+                    expect(body).toHaveProperty("image_url")
+                    expect(body).toHaveProperty("price")
+                    expect(body).toHaveProperty("stock")    
+                    done()
+                })
             })
-        
+        })
+
+        describe('succesfully get data by id with User authorization',()=>{
+            it('should return 200 and  object(product)',(done)=>{
+                request(app)
+                .get(`/product/${id}`)
+                .set("token",tokenUser)
+                .then(result=>{
+                    const {body,status} = result
+                    expect(status).toBe(200)
+                    expect(body).toHaveProperty("name")
+                    expect(body).toHaveProperty("image_url")
+                    expect(body).toHaveProperty("price")
+                    expect(body).toHaveProperty("stock")    
+                    done()
+                })
+            })
+        })
+        describe('failed get data by id because of authentification error',()=>{
+            it('should return 403 and  object(product)',(done)=>{
+                request(app)
+                .get(`/product/${id}`)
+                
+                .then(result=>{
+                    const {body,status} = result
+                    expect(status).toBe(403)
+                    expect(body).toHaveProperty("msg")   
+                    done()
+                })
+            })
+        })
+        describe('Cannot get because data not found',()=>{
+            it('should return 404 and  object(product)',(done)=>{
+                request(app)
+                .get(`/product/9999999`)
+                .set("token",tokenUser)
+                .then(result=>{
+                    const {body,status} = result
+                    expect(status).toBe(404)
+                    expect(body).toHaveProperty("msg")   
+                    done()
+                })
+            })
         })
     })
 
-        describe('failed delete data because of id not found',()=>{
-            it('should return 404 and object(error)', (done)=>{
-                request(app)
-                .delete(`/product/9202`)
-                .set("token",tokenAdmin)
-            .then(result=>{
-                const {body,status} = result
-                expect(status).toBe(404)
-                expect(body).toHaveProperty("msg")
-                done()
-            })
-        
-        })
-    })
-        describe('failed delete data because of authorization error',()=>{
-            it("should return 403 and object(error)", (done)=>{
-                request(app)
-                .delete(`/product/${id}`)
-                .set("token",tokenUser)
-            .then(result=>{
-                const {body,status}=result
-                expect(status).toBe(403)
-                expect(body).toHaveProperty("msg")
-                
-                done()
-            })
-        
-        })
-    })
-    describe('failed delete data because of authentification error',()=>{
-        it("should return 403 and object(error)", (done)=>{
+
+
+describe('delete data',()=>{
+    describe('succes delete data',()=>{
+        it("should return 200 and object(product)", (done)=>{
             request(app)
             .delete(`/product/${id}`)
-            .set("token",null)
+            .set("token",tokenAdmin)
         .then(result=>{
             const {body,status}=result
-            expect(status).toBe(403)
+            expect(status).toBe(200)
             expect(body).toHaveProperty("msg")
-          
+            expect(body).toHaveProperty("name")
+            expect(body).toHaveProperty("image_url")
+            expect(body).toHaveProperty("price")
+            expect(body).toHaveProperty("stock")
             done()
         })
     
     })
 })
+
+    describe('failed delete data because of id not found',()=>{
+        it('should return 404 and object(error)', (done)=>{
+            request(app)
+            .delete(`/product/9202`)
+            .set("token",tokenAdmin)
+        .then(result=>{
+            const {body,status} = result
+            expect(status).toBe(404)
+            expect(body).toHaveProperty("msg")
+            done()
+        })
     
+    })
+})
+    describe('failed delete data because of authorization error',()=>{
+        it("should return 403 and object(error)", (done)=>{
+            request(app)
+            .delete(`/product/${id}`)
+            .set("token",tokenUser)
+        .then(result=>{
+            const {body,status}=result
+            expect(status).toBe(403)
+            expect(body).toHaveProperty("msg")
+            
+            done()
+        })
     
+    })
+})
+describe('failed delete data because of authentification error',()=>{
+    it("should return 403 and object(error)", (done)=>{
+        request(app)
+        .delete(`/product/${id}`)
+        .set("token",null)
+    .then(result=>{
+        const {body,status}=result
+        expect(status).toBe(403)
+        expect(body).toHaveProperty("msg")
+      
+        done()
+    })
+
+})
+})
+
+
 })

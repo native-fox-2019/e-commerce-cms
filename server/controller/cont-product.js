@@ -146,6 +146,23 @@ class Controller {
             }
         })
     }
+    static findById(request,response,next){
+        Product.findOne({where:{id:request.params.id}})
+        .then(data=>{
+            if (data){
+                response.json(data)
+            }else{
+                throw ({status:404,msg:"Data not found"})
+            }
+        })
+        .catch(err=>{
+            if(err.status){
+                next(err)
+            }else{
+                next({status:500,msg:'internal server error'})
+            }
+        })
+    }
 
 
 }
