@@ -40,7 +40,6 @@ class ProductController {
         }
     }
     static async deleteData(req, res, next) {
-        console.log('masuk');
         try {
             let id = Number(req.params.id);
             let findData = await Product.findOne({ where: { id } });

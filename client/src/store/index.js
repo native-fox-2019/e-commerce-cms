@@ -8,6 +8,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     productData: [],
+    editData: null,
   },
   mutations: {
     getData(state, data) {
@@ -15,6 +16,9 @@ export default new Vuex.Store({
     },
     logout(state) {
       state.productData = [];
+    },
+    editData(state, data) {
+      state.editData = data;
     },
   },
   actions: {
@@ -34,6 +38,9 @@ export default new Vuex.Store({
     },
     logout(context) {
       context.commit('logout');
+    },
+    editData(context, data) {
+      context.commit('editData', data);
     },
   },
   modules: {

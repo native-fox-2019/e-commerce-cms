@@ -3,6 +3,7 @@ import VueRouter from 'vue-router';
 import Login from '../views/login.vue';
 import Home from '../views/home.vue';
 import AddProduct from '../views/addProduct.vue';
+import EditProduct from '../views/editProduct.vue';
 
 Vue.use(VueRouter);
 
@@ -22,6 +23,12 @@ const routes = [
     path: '/addproduct',
     name: 'addProduct',
     component: AddProduct,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: '/editproduct',
+    name: 'editProduct',
+    component: EditProduct,
     meta: { requiresAuth: true },
   },
 ];

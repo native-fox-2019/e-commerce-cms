@@ -18,7 +18,7 @@
       <td>Rp. {{ data.price.toLocaleString() }}</td>
       <td>{{ data.stock }}</td>
       <td>
-        <button class="btn btn-primary m-1">
+        <button class="btn btn-primary m-1" @click.prevent="editData(data.id)">
           Edit
         </button>
         <button class="btn btn-danger m-1" @click.prevent="deleteData(data.id)">
@@ -66,6 +66,13 @@ export default {
             console.log('Error', err.message);
           }
         });
+    },
+    editData(id) {
+      const filtered = this.productData.filter((productData) => productData.id === id)[0];
+      this.$store.dispatch('editData', filtered);
+      this.$router.push({
+        path: '/editproduct',
+      });
     },
   },
 };
