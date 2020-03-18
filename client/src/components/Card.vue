@@ -7,7 +7,7 @@
     <div class="card-price">
       <span>Rp{{ product.price }}</span>
     </div>
-    <div class="card-action" v-if="isLogin">
+    <div class="card-action" v-if="$store.state.isLogin">
       <div class="btn-edit">
         <i class="fa fa-edit"></i>
       </div>
@@ -22,7 +22,7 @@ import axios from 'axios';
 import swal from 'sweetalert';
 
 export default {
-  props: ['product', 'isLogin'],
+  props: ['product'],
   data() {
     return {
       message: '',

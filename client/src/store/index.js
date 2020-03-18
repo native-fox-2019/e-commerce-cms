@@ -8,6 +8,7 @@ export default new Vuex.Store({
   state: {
     products: [],
     baseUrl: 'http://localhost:3003',
+    isLogin: false,
   },
   mutations: {
     getProducts(state, data) {
@@ -18,6 +19,9 @@ export default new Vuex.Store({
     },
     deleteProduct(state, id) {
       state.products = state.products.filter((item) => item.id !== id);
+    },
+    changeIsLogin(state, status) {
+      state.isLogin = status;
     },
   },
   actions: {

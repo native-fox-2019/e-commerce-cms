@@ -1,5 +1,5 @@
 <template>
-  <div class="login" v-if="!isLogin">
+  <div class="login" v-if="!$store.state.isLogin">
     <div>
       <h3>Sign In</h3>
       <form @submit.prevent="login">
@@ -16,7 +16,7 @@ import axios from 'axios';
 
 export default {
   name: 'Login',
-  props: ['isLogin'],
+  props: [],
   data() {
     return {
       email: '',
@@ -44,7 +44,7 @@ export default {
             this.password = '';
             this.loginError = '';
             this.$router.push('/');
-            this.$emit('changeLoginStatus', true);
+            this.$store.commit('changeIsLogin', true);
           } else {
             this.loginError = '';
             this.loginError = 'Only admin can log in';

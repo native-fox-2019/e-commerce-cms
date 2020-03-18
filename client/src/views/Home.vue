@@ -2,24 +2,23 @@
   <div class="home">
     <h1>Products</h1>
     <div class="products">
-      <Card v-for="product in products" :key="product.id" :product="product" :isLogin="isLogin"/>
+      <Card v-for="product in $store.state.products" :key="product.id"
+      :product="product"/>
     </div>
   </div>
 </template>
 
 <script>
-// import axios from 'axios';
 import Card from '../components/Card.vue';
 
 export default {
   name: 'Home',
-  props: ['isLogin', 'products'],
+  props: [],
   components: {
     Card,
   },
   data() {
     return {
-      // products: [],
     };
   },
   methods: {
