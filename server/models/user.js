@@ -4,14 +4,61 @@ module.exports = (sequelize, DataTypes) => {
   const { hash } = require('../helpers/bcrypt')
   class User extends Model{}
   User.init({
-    name: DataTypes.STRING,
-    email: DataTypes.STRING,
-    password: DataTypes.STRING,
-    role: DataTypes.STRING
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate : {
+        notEmpty: {
+          msg: 'Name can\'t be empty!'
+        },
+        notNull: {
+          msg: 'Name can\'t be null!'
+        }
+      }
+    },
+    email: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate : {
+        notEmpty: {
+          msg: 'Email can\'t be empty!'
+        },
+        notNull: {
+          msg: 'Email can\'t be null!'
+        }
+      }
+    },
+    password: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate : {
+        notEmpty: {
+          msg: 'Password can\'t be empty!'
+        },
+        notNull: {
+          msg: 'Password can\'t be null!'
+        }
+      }
+    },
+    role: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate : {
+        notEmpty: {
+          msg: 'Role can\'t be empty!'
+        },
+        notNull: {
+          msg: 'Role can\'t be null!'
+        }
+      }
+    }
   },
   {
     hooks: {
       beforeSave(user, options){
+        if(user.role !== 'admin'){
+          user.role = 'user'
+        }
         return hash(user.password)
         .then(hashed => {
           user.password = hashed
