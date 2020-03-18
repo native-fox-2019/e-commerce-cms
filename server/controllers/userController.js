@@ -16,7 +16,7 @@ class UserController {
                         email: userLogin.email,
                         role: userLogin.role
                     })
-                    res.status(200).json({access_token:token})
+                    res.status(200).json({access_token:token, role:userLogin.role})
                 } else {
                     next({
                         status: 400,
@@ -49,7 +49,7 @@ class UserController {
                     email: newUser.email,
                     role: newUser.role
                 })
-                res.status(200).json({access_token:token})
+                res.status(200).json({access_token:token, role:newUser.role})
             } else {
                 next({
                     status:403,
