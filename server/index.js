@@ -17,6 +17,6 @@ app.use(`/`, router)
 
 app.use(errorHandler)
 
-// app.listen(port, () => console.log(`Jamming in Port ${port}`))
+// app.listen(3000, () => console.log(`Jamming in Port 3000`))
 
 module.exports = app

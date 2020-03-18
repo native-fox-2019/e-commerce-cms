@@ -1,7 +1,7 @@
 <template>
   <div class="d-flex justify-content-center align-items-center forms">
     <div class="box">
-      <h2>Login</h2>
+      <h2>Register</h2>
       <b-form @submit="onSubmit">
         <b-form-group label="Email address:" label-for="email">
           <b-form-input v-model="form.email" type="email" required placeholder="Enter email">
@@ -41,7 +41,7 @@ export default {
       event.preventDefault();
 
       axios({
-        url: `${this.$store.state.url}admins/login`,
+        url: `${this.$store.state.url}admins/register`,
         method: 'post',
         data: {
           email: this.form.email,

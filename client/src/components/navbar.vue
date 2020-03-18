@@ -1,14 +1,17 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light d-flex justify-content-between">
-    <a class="navbar-brand" href="#">E-Commerce</a>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark d-flex justify-content-between">
+    <router-link :to="{ name: 'main' }" class="navbar-brand">E-Commerce</router-link>
 
     <div>
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item">
-          <router-link to="/login" class="nav-link">Login</router-link>
+        <li class="nav-item" v-if="$store.state.navbar === `register`">
+          <router-link to="/admins/login" class="nav-link">Login</router-link>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Register</a>
+        <li class="nav-item" v-if="$store.state.navbar === `login`">
+          <router-link to="/admins/register" class="nav-link">Register</router-link>
+        </li>
+        <li class="nav-item" v-if="$store.state.navbar === `main`">
+          <router-link :to="{ name: 'logout' }" class="nav-link">Logout</router-link>
         </li>
       </ul>
     </div>

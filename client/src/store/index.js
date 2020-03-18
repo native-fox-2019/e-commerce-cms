@@ -5,7 +5,8 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    navbar: 'login',
+    url: 'http://localhost:3000/',
+    navbar: '',
   },
   mutations: {
   },
