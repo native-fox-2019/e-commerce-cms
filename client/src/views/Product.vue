@@ -4,7 +4,7 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <button type="button" class="btn btn-success" @click.prevent="changeAddTrue">
+            <button v-if="!edit && !addNew" type="button" class="btn btn-success" @click.prevent="changeAddTrue">
               Add new product
             </button>
           </li>
@@ -43,129 +43,23 @@
       </div>
 
     </div>
-    <!-- ADD NEW FORM -->
-    <div class="container p-5 mt-5">
-      <div id="addNewForm" v-if="addNew && !edit">
-        <form @submit.prevent="addNewProduct">
-          <h2 class="text-center">Add New Product</h2>
-          <div class="form-group">
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Product name"
-              required="required"
-              v-model="name"
-            />
-          </div>
-          <div class="form-group">
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Image Url"
-              required="required"
-              v-model="image_url"
-            />
-          </div>
-          <div class="form-group">
-            <input
-              type="number"
-              class="form-control"
-              placeholder="Price"
-              required="required"
-              v-model="price"
-            />
-          </div>
-          <div class="form-group">
-            <input
-              type="number"
-              class="form-control"
-              placeholder="Stock"
-              required="required"
-              v-model="stock"
-            />
-          </div>
-          <div class="form-group">
-            <button type="submit" class="btn btn-primary">
-              Add new product
-            </button><br>
-            <button type="button" class="btn btn-danger mt-1" @click.prevent="changeAddFalse">
-              Cancel
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
+    <!-- ADD NEW FORM COMPONENT-->
+    <Add v-if="addNew && !edit" @doneAdd="changeAddFalse"></Add>
 
-    <!-- EDIT FORM -->
-    <div class="container" v-if="edit && !addNew">
-      <h2 class="text-center mb-3">Edit Product</h2>
-        <img
-            class="card-img-top"
-            :src="image_url_edit"
-            alt="Card image cap"
-            style="width:40%; height:350px;"
-          />
-      <div id="editForm">
-        <form @submit.prevent="editProduct">
-          
-          <div class="form-group">
-            <strong>Name</strong>  
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Product name"
-              required="required"
-              v-model="name_edit"
-            />
-          </div>
-          <div class="form-group">
-            <strong>Image Url</strong>
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Image Url"
-              required="required"
-              v-model="image_url_edit"
-            />
-          </div>
-          <div class="form-group">
-            <strong>Price</strong>
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Price"
-              required="required"
-              v-model="price_edit"
-            />
-          </div>
-          <div class="form-group">
-            <strong>Stock</strong>
-            <input
-              type="number"
-              class="form-control"
-              placeholder="Stock"
-              required="required"
-              v-model="stock_edit"
-            />
-          </div>
-          <div class="form-group">
-            <button type="submit" class="btn btn-primary">
-              Submit changes
-            </button><br>
-            <button type="button" class="btn btn-danger mt-1" @click.prevent="changeEditFalse">
-              Cancel
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
+    <!-- EDIT FORM COMPONENT-->
+    <Edit v-if="edit && !addNew" :edit_prod="edit_prod" @notEdit="changeEditFalse" @doneEditing="changeEditFalse"></Edit>
+    
   </div>
 </template>
 <script>
-import axios from "axios";
-import Swal from 'sweetalert2'
+import Add from '../components/add.vue'
+import Edit from '../components/edit.vue'
 
 export default {
+  components: {
+    Add,
+    Edit
+  },
   created() {
     this.getItems();
   },
@@ -173,14 +67,7 @@ export default {
     return {
       addNew: false,
       edit: false,
-      name: ``,
-      image_url: ``,
-      price: ``,
-      stock: ``,
-      name_edit: ``,
-      image_url_edit: ``,
-      price_edit: ``,
-      stock_edit: ``,
+      edit_prod: ``,
       id_edit: ``
     };
   },
@@ -192,41 +79,14 @@ export default {
     getItems() {
       this.$store.dispatch('getItems')
     },
-    addNewProduct() {
-        axios({
-            method: 'POST',
-            url: 'http://localhost:3000/products/add',
-            headers: { access_token : localStorage.access_token },
-            data: {
-                name: this.name,
-                image_url: this.image_url,
-                price: this.price,
-                stock: this.stock
-            }
-        })
-        .then(data => {
-            console.log(data)
-            Swal.fire({
-              icon: 'success',
-              title: 'Product added'
-            })
-            this.addNew = false
-            this.getItems()
-        })
-        .catch(response => {
-            Swal.fire({
-                icon: 'error',
-                title: response.response.data.msg
-            })
-        })
-
-    },
     changeAddFalse() {
         this.addNew = false
+        this.edit = false
         this.name = ``,
         this.image_url = ``,
         this.price = ``,
         this.stock = ``
+        this.getItems()
     },
     changeAddTrue() {
         this.name = ``,
@@ -237,68 +97,21 @@ export default {
         this.edit = false
     },
     deleteProduct(id) {
-        axios({
-            method: 'DELETE',
-            url: `http://localhost:3000/products/delete/${id}`,
-            headers: { access_token:localStorage.access_token }
-        })
-        .then(data => {
-            console.log(data)
-            Swal.fire({
-              icon: 'success',
-              title: 'Product deleted'
-            })
-            this.getItems()
-        })
-        .catch(response => {
-            console.log(response)
-        })
+        this.$store.dispatch('deleteProduct', id)
     },
     editForm(id) {
-      this.id_edit = id
-      this.addNew = false
-      this.edit = true
-      this.itemList.forEach(i => {
-        if (id === i.id) {
-          this.name_edit = i.name
-          this.image_url_edit = i.image_url
-          this.price_edit = i.price
-          this.stock_edit = i.stock
-        }
-      })
+        this.$store.state.itemList.forEach(i => {
+          if (i.id === id) {
+            this.edit_prod = i
+          }
+        })
+        this.edit = true,
+        this.addNew = false
     },
     changeEditFalse() {
       this.edit = false
       this.addNew = false
-    },
-    editProduct() {
-      axios({
-        method: 'PUT',
-        url: `http://localhost:3000/products/edit/${this.id_edit}`,
-        headers: { access_token : localStorage.access_token },
-        data: {
-          name : this.name_edit,
-          image_url : this.image_url_edit,
-          price : this.price_edit,
-          stock : this.stock_edit
-        }
-      })
-      .then(data => {
-        console.log(data)
-        this.edit = false
-        Swal.fire({
-          icon: 'success',
-          title: 'Update successfull'
-        })
-        this.getItems()
-      })
-      .catch(response => {
-        console.log(response)
-        Swal.fire({
-          icon: 'error',
-          title: 'Failed to update'
-        })
-      })
+      this.getItems()
     }
   }
 };
