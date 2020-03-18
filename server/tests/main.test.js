@@ -3,10 +3,9 @@ const app = require('../app')
 
 let token = null
 let tokenBroken = 'Br0k3nT0k3n'
-let tokenUser = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJ1c2VyQGVtYWlsLmNvbSIsImlhdCI6MTU4NDQ2MDE2OX0.wtzBFV_DHKn4B2VbPnQlVvtD9F7ykhFJ59QYhex0TPA'
+let tokenUser = null
 
-// Login
-
+// User
 describe('Endpoints User', () => {
   it('astatus code 200 logged as Admin', async () => {
     const res = await request(app)
@@ -218,8 +217,8 @@ describe('Endpoints User', () => {
     const res = await request(app)
       .put('/user/2').set('token', token)
       .send({
-        name: 'admin3',
-        email: 'admin3@email.com',
+        name: 'user',
+        email: 'user@email.com',
         password: '12345'
       })
     expect(res.status).toEqual(200)
@@ -290,7 +289,7 @@ describe('Endpoints User', () => {
 // DELETE USER
   it('status code 200 get one user', async () => {
     const res = await request(app)
-      .delete('/user/2').set('token', token)
+      .delete('/user/3').set('token', token)
     expect(res.status).toEqual(200)
     expect(typeof res.body).toBe('string')
   })
@@ -460,7 +459,7 @@ describe('Endpoints categories', () => {
     expect(typeof res.body.message).toBe('string')
   })
   // delete category
-  it('status code 200 get one category', async () => {
+  it('status code 200 delete category', async () => {
     const res = await request(app)
       .delete('/categories/2').set('token', token)
     expect(res.status).toEqual(200)
@@ -495,7 +494,6 @@ describe('Endpoints categories', () => {
     expect(typeof res.body.message).toBe('string')
   })
 })
-
 // product
 describe('Endpoints products', () => {
   // CREATE product
@@ -783,6 +781,236 @@ describe('Endpoints products', () => {
   it('status code 404 notFound', async () => {
     const res = await request(app)
       .delete('/products/99').set('token', token)
+    expect(res.status).toEqual(404)
+    expect(typeof res.body.status).toBe('number')
+    expect(typeof res.body.message).toBe('string')
+  })
+})
+// cart
+describe('Endpoints carts', () => {
+  // CREATE
+  it('status code 201 created carts', async () => {
+    const res = await request(app)
+      .post('/carts').set('token', tokenUser)
+      .send({
+        ProductId: 1,
+      })
+    expect(res.status).toEqual(201)
+    expect(res.body).toHaveProperty('ProductId')
+    expect(res.body).toHaveProperty('UserId')
+    expect(res.body).toHaveProperty('quantity')
+  })
+  it('status code 400 value must number', async () => {
+    const res = await request(app)
+      .post('/carts').set('token', tokenUser)
+      .send({
+        ProductId: 'string',
+      })
+    expect(res.status).toEqual(400)
+    expect(typeof res.body.status).toBe('number')
+    expect(Array.isArray(res.body.message)).toBe(true)
+  })
+  it('status code 400 cannot Empty ', async () => {
+    const res = await request(app)
+      .post('/carts').set('token', tokenUser)
+      .send({
+        ProductId: '',
+      })
+    expect(res.status).toEqual(400)
+    expect(typeof res.body.status).toBe('number')
+    expect(Array.isArray(res.body.message)).toBe(true)
+  })
+  it('status code 400 cannot be null ', async () => {
+    const res = await request(app)
+      .post('/carts').set('token', tokenUser)
+      .send({
+        //null
+      })
+    expect(res.status).toEqual(400)
+    expect(typeof res.body.status).toBe('number')
+    expect(Array.isArray(res.body.message)).toBe(true)
+  })
+  it('status code 400 token require', async () => {
+    const res = await request(app)
+      .post('/carts') //empty
+      .send({
+        ProductId: 1,
+      })
+    expect(res.status).toEqual(400)
+    expect(typeof res.body.status).toBe('number')
+    expect(typeof res.body.message).toBe('string')
+  })
+  it('status code 400 token invalid', async () => {
+    const res = await request(app)
+      .post('/carts').set('token', tokenBroken)
+      .send({
+        ProductId: 1,
+      })
+    expect(res.status).toEqual(400)
+    expect(typeof res.body.status).toBe('number')
+    expect(typeof res.body.message).toBe('string')
+  })
+  it('status code 401 unauthorize', async () => {
+    const res = await request(app)
+      .post('/carts').set('token', token)
+      .send({
+        ProductId: 1,
+      })
+    expect(res.status).toEqual(401)
+    expect(typeof res.body.status).toBe('number')
+    expect(typeof res.body.message).toBe('string')
+  })
+  // Get all cart
+  it('status code 200 get all cart', async () => {
+    const res = await request(app)
+      .get('/carts').set('token', tokenUser)
+    expect(res.status).toEqual(200)
+    expect(Array.isArray(res.body)).toBe(true)
+  })
+  it('status code 401 unauthorize', async () => {
+    const res = await request(app)
+      .get('/carts').set('token', token)
+    expect(res.status).toEqual(401)
+    expect(typeof res.body.status).toBe('number')
+    expect(typeof res.body.message).toBe('string')
+  })
+  it('status code 400 token require', async () => {
+    const res = await request(app)
+      .get('/carts')
+    expect(res.status).toEqual(400)
+    expect(typeof res.body).toBe('object')
+    expect(typeof res.body.status).toBe('number')
+    expect(typeof res.body.message).toBe('string')
+
+  })
+  // Get one cart
+  it('status code 200 get one cart', async () => {
+    const res = await request(app)
+      .get('/carts/1').set('token', tokenUser)
+    expect(res.status).toEqual(200)
+    expect(res.body).toHaveProperty('ProductId')
+    expect(res.body).toHaveProperty('UserId')
+    expect(res.body).toHaveProperty('quantity')
+  })
+  it('status code 401 unauthorize', async () => {
+    const res = await request(app)
+      .get('/carts/1').set('token', token)
+    expect(res.status).toEqual(401)
+    expect(typeof res.body.status).toBe('number')
+    expect(typeof res.body.message).toBe('string')
+  })
+  it('status code 400 token require', async () => {
+    const res = await request(app)
+      .get('/carts/1')
+    expect(res.status).toEqual(400)
+    expect(typeof res.body).toBe('object')
+    expect(typeof res.body.status).toBe('number')
+    expect(typeof res.body.message).toBe('string')
+
+  })
+  // UPDATE
+    it('status code 200 updated cart', async () => {
+    const res = await request(app)
+      .patch('/carts/1').set('token', tokenUser)
+      .send({
+        quantity: 1,
+      })
+    expect(res.status).toEqual(200)
+    expect(res.body).toHaveProperty('ProductId')
+    expect(res.body).toHaveProperty('UserId')
+    expect(res.body).toHaveProperty('quantity')
+  })
+  it('status code 400 value must number', async () => {
+    const res = await request(app)
+      .patch('/carts/1').set('token', tokenUser)
+      .send({
+        quantity: 'string',
+      })
+    expect(res.status).toEqual(400)
+    expect(typeof res.body.status).toBe('number')
+    expect(Array.isArray(res.body.message)).toBe(true)
+  })
+  it('status code 400 cannot Empty ', async () => {
+    const res = await request(app)
+      .patch('/carts/1').set('token', tokenUser)
+      .send({
+        quantity: '',
+      })
+    expect(res.status).toEqual(400)
+    expect(typeof res.body.status).toBe('number')
+    expect(Array.isArray(res.body.message)).toBe(true)
+  })
+  it('status code 400 cannot be null ', async () => {
+    const res = await request(app)
+      .patch('/carts/1').set('token', tokenUser)
+      .send({
+        quantity: null
+      })
+    expect(res.status).toEqual(400)
+    expect(typeof res.body.status).toBe('number')
+    expect(Array.isArray(res.body.message)).toBe(true)
+  })
+  it('status code 400 token require', async () => {
+    const res = await request(app)
+      .patch('/carts/1') //empty
+      .send({
+        quantity: 1,
+      })
+    expect(res.status).toEqual(400)
+    expect(typeof res.body.status).toBe('number')
+    expect(typeof res.body.message).toBe('string')
+  })
+  it('status code 400 token invalid', async () => {
+    const res = await request(app)
+      .patch('/carts/1').set('token', tokenBroken)
+      .send({
+        quantity: 1,
+      })
+    expect(res.status).toEqual(400)
+    expect(typeof res.body.status).toBe('number')
+    expect(typeof res.body.message).toBe('string')
+  })
+  it('status code 401 unauthorize', async () => {
+    const res = await request(app)
+      .patch('/carts/1').set('token', token)
+      .send({
+        quantity: 1,
+      })
+    expect(res.status).toEqual(401)
+    expect(typeof res.body.status).toBe('number')
+    expect(typeof res.body.message).toBe('string')
+  })
+  // Delete
+  it('status code 200 delete cart', async () => {
+    const res = await request(app)
+      .delete('/carts/2').set('token', tokenUser)
+    expect(res.status).toEqual(200)
+    expect(typeof res.body).toBe('string')
+  })
+  it('status code 400 token require', async () => {
+    const res = await request(app)
+      .delete('/carts/1')
+    expect(res.status).toEqual(400)
+    expect(typeof res.body.status).toBe('number')
+    expect(typeof res.body.message).toBe('string')
+  })
+  it('status code 400 token invalid', async () => {
+    const res = await request(app)
+    .delete('/carts/1').set('token', tokenBroken)
+    expect(res.status).toEqual(400)
+    expect(typeof res.body.status).toBe('number')
+    expect(typeof res.body.message).toBe('string')
+  })
+  it('status code 401 unauthorize', async () => {
+    const res = await request(app)
+    .delete('/carts/1').set('token', token)
+    expect(res.status).toEqual(401)
+    expect(typeof res.body.status).toBe('number')
+    expect(typeof res.body.message).toBe('string')
+  })
+  it('status code 404 notFound', async () => {
+    const res = await request(app)
+    .delete('/carts/99').set('token', tokenUser)
     expect(res.status).toEqual(404)
     expect(typeof res.body.status).toBe('number')
     expect(typeof res.body.message).toBe('string')
