@@ -62,10 +62,10 @@ header{
     display: flex; flex-direction: column; position: relative;
 }
 .card-name{
-    font-size: 20px; margin: 5px 0px; font-weight: 500; font-family: gotham;
+    font-size: 16px; margin: 5px 0px; font-weight: 500; font-family: gotham;
 }
 .card-price{
-    font-size: 16px; color: grey;
+    font-size: 14px; color: grey;
 }
 .card-action{
     display: flex; justify-content: flex-end; bottom: 15px; position: absolute; right: 15px;

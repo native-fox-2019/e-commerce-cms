@@ -18,7 +18,6 @@ import axios from 'axios';
 
 export default {
   name: 'AddProduct',
-  props: ['baseUrl'],
   data() {
     return {
       name: '',
@@ -32,7 +31,7 @@ export default {
   methods: {
     addProduct() {
       const options = {
-        url: `${this.baseUrl}/products`,
+        url: `${this.$store.state.baseUrl}/products`,
         method: 'post',
         headers: {
           token: localStorage.token,
@@ -47,7 +46,8 @@ export default {
       axios(options)
         .then((response) => {
           this.product = response.data.product;
-          this.$emit('addProduct', this.product);
+          //   this.$emit('addProduct', this.product);
+          this.$store.commit('addProduct', response.data.product);
           this.addProductError = [];
           this.name = '';
           this.image_url = '';

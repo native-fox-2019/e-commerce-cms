@@ -3,7 +3,7 @@
     <header class="header">
       <div class="header-content">
         <div class="title">
-          <span>E-Commerce</span>
+          <span>Futsal.com</span>
         </div>
         <div class="nav">
           <router-link to="/">Home</router-link>
@@ -14,16 +14,15 @@
         </div>
       </div>
     </header>
-    <router-view @changeLoginStatus="changeLoginStatus" :isLogin="isLogin" :baseUrl="baseUrl"
-    :products="products" @addProduct="addProduct" @deleteProduct="deleteProduct"/>
+    <router-view @changeLoginStatus="changeLoginStatus" :isLogin="isLogin"
+    :products="$store.state.products"/>
   </div>
 </template>
 <script>
-import axios from 'axios';
 
 export default {
   created() {
-    this.getProducts();
+    this.$store.dispatch('getProducts');
     if (localStorage.token) {
       this.isLogin = true;
     }
@@ -32,7 +31,6 @@ export default {
     return {
       isLogin: false,
       baseUrl: 'http://localhost:3003',
-      products: [],
     };
   },
   methods: {
@@ -46,25 +44,9 @@ export default {
       this.isLogin = false;
       this.$router.push('/');
     },
-    getProducts() {
-      const options = {
-        url: 'http://localhost:3003/products',
-        method: 'get',
-      };
-      axios(options)
-        .then((response) => {
-          this.products = response.data.products;
-        })
-        .catch((err) => {
-          console.log(err.response.data);
-        });
-    },
-    addProduct(product) {
-      this.products.push(product);
-    },
-    deleteProduct(id) {
-      this.products = this.products.filter((item) => item.id !== id);
-    },
+    // deleteProduct(id) {
+    //   this.products = this.products.filter((item) => item.id !== id);
+    // },
   },
 };
 </script>

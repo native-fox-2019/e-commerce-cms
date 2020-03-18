@@ -22,7 +22,7 @@ import axios from 'axios';
 import swal from 'sweetalert';
 
 export default {
-  props: ['product', 'isLogin', 'baseUrl'],
+  props: ['product', 'isLogin'],
   data() {
     return {
       message: '',
@@ -40,7 +40,7 @@ export default {
         .then((willDelete) => {
           if (willDelete) {
             const options = {
-              url: `${this.baseUrl}/products/${id}`,
+              url: `${this.$store.state.baseUrl}/products/${id}`,
               method: 'delete',
               headers: {
                 token: localStorage.token,
@@ -49,7 +49,7 @@ export default {
             axios(options)
               .then((response) => {
                 this.message = response.message;
-                this.$emit('deleteProduct', id);
+                this.$store.commit('deleteProduct', id);
                 swal('Poof! Your product has been deleted!', {
                   icon: 'success',
                 });
