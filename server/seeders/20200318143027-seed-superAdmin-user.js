@@ -7,6 +7,8 @@ module.exports = {
       email: 'bambang@gmail.com',
       password: '12345',
       role: 'superAdmin',
+      createdAt: new Date(),
+      updatedAt: new Date()
     }], {});
     /*
       Add altering commands here.
