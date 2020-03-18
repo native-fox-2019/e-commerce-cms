@@ -7,7 +7,7 @@ Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/home',
+    path: '/',
     name: 'HomePage',
     meta : {requiresAuth:true},
     component: HomePage
@@ -15,6 +15,7 @@ const routes = [
   {
     path: '/login',
     name: 'LoginPage',
+    meta : {isLogin:true},
     component: LoginPage
   },
 ]
@@ -29,15 +30,21 @@ router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
     if (!localStorage.getItem('token')) {
       next({
-        path: '/login',
-        query: { redirect: to.fullPath }
+        path: '/login'
       })
     } else {
-      next({
-        // path: '/'
-      })
+      next()
     }
-  } else {
+  } else if (to.matched.some(record => record.meta.isLogin)) {
+    if (localStorage.getItem('token')) {
+      next({
+        path: '/',
+      })
+    } else {
+      next()
+    }
+  } 
+  else {
     next()
   }
 })

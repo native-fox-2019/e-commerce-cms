@@ -5,10 +5,11 @@ const authentication = require('../middlewares/authentication')
 const authorization = require('../middlewares/authorization')
 
 router.use(authentication)
+router.use(authorization)
 router.get('/', ProductController.getProduct)
 router.get('/:id', ProductController.getOneProduct)
-router.post('/', authorization, ProductController.addProduct)
-router.delete('/:id', authorization, ProductController.deleteProduct)
-router.put('/:id', authorization, ProductController.editProduct)
+router.post('/', ProductController.addProduct)
+router.delete('/:id', ProductController.deleteProduct)
+router.put('/:id', ProductController.editProduct)
 
 module.exports = router

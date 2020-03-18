@@ -34,11 +34,13 @@ class UserController {
         let {email, password} = req.body
         let dataEmail = null
         let dataId = null
+        let name = null
         User.findOne({where : {email:email}})
         .then(data =>{
             if(data){
                 dataEmail = data.email
                 dataId = data.id
+                name = data.name
                 return bcrypt.compare(password, data.password)
             } else {
                 next({
@@ -50,7 +52,7 @@ class UserController {
         .then(function(result) {
             if(result === true){
                 let access_token = jwt.sign({ id : dataId, email : dataEmail }, process.env.SECRET);
-                res.status(200).json({access_token})
+                res.status(200).json({access_token, name})
             } else {
                 next({
                     error : `Wrong email or password`,

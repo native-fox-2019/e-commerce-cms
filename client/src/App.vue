@@ -3,7 +3,6 @@
     <div id="nav">
       <router-link to="/login"></router-link>
       <router-link to="/"></router-link>
-      <router-link to="/addproduct"></router-link>
     </div>
     <router-view/>
   </div>

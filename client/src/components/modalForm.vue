@@ -35,7 +35,7 @@
           label-for="price-input"
           invalid-feedback="Price is required"
         >
-          <b-form-input id="price-input" v-model="price_modal" :state="nameState" required></b-form-input>
+          <b-form-input id="price-input" v-model="price_modal" :state="nameState" type:integer required></b-form-input>
         </b-form-group>
         <!--  -->
         <b-form-group
@@ -55,9 +55,11 @@
 <script>
 let url = `http://localhost:3000`;
 import axios from "axios";
+import Swal from 'sweetalert2';
 export default {
   data() {
     return {
+      test : 'haha',
       name: "",
       nameState: null,
       submittedNames: [],
@@ -108,13 +110,18 @@ export default {
         }
       })
         .then(() => {
+          Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: `${name} has been saved`,
+          showConfirmButton: false,
+          timer: 1500
+        })
           this.name_modal = null,
           this.image_url_modal = null,
           this.price_modal = null,
           this.stock_modal = null
-          // this.$router.push({
-          //   path : '/home'
-          // });
+          this.$store.dispatch('getProduct')
         })
         .catch(err => {
           console.log(err);

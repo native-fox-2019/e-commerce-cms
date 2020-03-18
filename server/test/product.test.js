@@ -259,6 +259,23 @@ describe('Test for products', function() {
         });
     });
 
+    describe('Fail read products', function() {
+        it('Should return 403 because not admin', function(done) {
+            request(app)
+            .get('/products')
+            .set('access_token', access_token_user)
+            .then(res => {
+                const { body, status } = res
+                expect(status).toEqual(403)
+                expect(body.message).toBe('Forbidden')
+                done()
+            })
+            .catch(err => {
+                done(err)
+            })
+        });
+    });
+
     describe('Success read one products', function() {
         it('Should return 200', function(done) {
             request(app)
