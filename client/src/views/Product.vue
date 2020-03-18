@@ -96,18 +96,19 @@
     </div>
 
     <!-- EDIT FORM -->
-    <div class="container p-5 mt-5" v-if="edit && !addNew">
-      <h2 class="text-center">Edit Product</h2>
+    <div class="container" v-if="edit && !addNew">
+      <h2 class="text-center mb-3">Edit Product</h2>
         <img
             class="card-img-top"
             :src="image_url_edit"
             alt="Card image cap"
             style="width:40%; height:350px;"
           />
-      <div id="editForm mt-1">
+      <div id="editForm">
         <form @submit.prevent="editProduct">
           
           <div class="form-group">
+            <strong>Name</strong>  
             <input
               type="text"
               class="form-control"
@@ -117,6 +118,7 @@
             />
           </div>
           <div class="form-group">
+            <strong>Image Url</strong>
             <input
               type="text"
               class="form-control"
@@ -126,6 +128,7 @@
             />
           </div>
           <div class="form-group">
+            <strong>Price</strong>
             <input
               type="text"
               class="form-control"
@@ -135,6 +138,7 @@
             />
           </div>
           <div class="form-group">
+            <strong>Stock</strong>
             <input
               type="number"
               class="form-control"
