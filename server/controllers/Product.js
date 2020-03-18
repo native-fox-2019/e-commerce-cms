@@ -53,7 +53,22 @@ class ProductController{
   }
 
   static getByCategory(req, res, next){
-    
+    let category = req.query.category
+    Product.findAll({
+      where: {
+        category
+      }
+    })
+    .then(products => {
+      if(products.length>0){
+        res.status(200).json(products)
+      }else{
+        next({status: 404, message: `Product by caterogy ${category} not found`})
+      }
+    })
+    .catch(err => {
+      next(err)
+    })
   }
 
   static update(req, res, next){
