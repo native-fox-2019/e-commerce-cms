@@ -2,16 +2,22 @@
   <div class="limiter">
     <div class="container-login100">
       <div class="wrap-login100">
-        <form class="login100-form validate-form p-l-55 p-r-55 p-t-178">
-          <img src="../images/logo.png" class="login100-form-title"/>
+        <form class="login100-form validate-form p-l-55 p-r-55 p-t-178" @submit.prevent="login">
+          <img src="../images/logo.png" class="login100-form-title" />
 
           <div class="wrap-input100 validate-input m-b-16" style="margin-top:50px;">
-            <input class="input100" type="text" name="email" placeholder="Email" />
+            <input v-model="email" class="input100" type="text" name="email" placeholder="Email" />
             <span class="focus-input100"></span>
           </div>
 
           <div class="wrap-input100 validate-input">
-            <input class="input100" type="password" name="pass" placeholder="Password" />
+            <input
+              v-model="password"
+              class="input100"
+              type="password"
+              name="pass"
+              placeholder="Password"
+            />
             <span class="focus-input100"></span>
           </div>
 
@@ -30,7 +36,50 @@
   </div>
 </template>
 <script>
+import { axios } from "../config/axios";
+import Swal from "sweetalert2";
 export default {
-  name: "Login"
+  name: "Login",
+  data() {
+    return {
+      email: "",
+      password: ""
+    };
+  },
+  methods: {
+    async login() {
+      try {
+        let input = {
+          email: this.email,
+          password: this.password
+        };
+        let { data } = await axios.post("/user/login", input);
+        localStorage.setItem("access_token", data.access_token);
+        this.$router.push({
+          path: "/"
+        });
+      } catch (error) {
+        if (error.response.status === 404) {
+          Swal.fire({
+            icon: "error",
+            title: "Invalid Email or Password !",
+            confirmButtonColor: "#39387a"
+          });
+        } else if (error.response.status === 400) {
+          Swal.fire({
+            icon: "error",
+            title: "Invalid Email or Password !",
+            confirmButtonColor: "#39387a"
+          });
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Something went wrong!"
+          });
+        }
+      }
+    }
+  }
 };
 </script>

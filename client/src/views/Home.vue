@@ -1,35 +1,24 @@
 <template>
-  <div>
-    <sidebar-menu :menu="menu" />
+  <div class="d-flex">
+    <Sidebar></Sidebar>
+    <Add></Add>
+    <div class="container p-0">
+      <Table></Table>
+    </div>
+
     <router-view />
   </div>
 </template>
 <script>
-import { SidebarMenu } from "vue-sidebar-menu";
+import Sidebar from "../components/sidebar";
+import Table from "../components/table";
+import Add from "../components/add";
+
 export default {
   components: {
-    SidebarMenu
-  },
-  data() {
-    return {
-      menu: [
-        {
-          header: true,
-          title: "Kolokal",
-          hiddenOnCollapse: true
-        },
-        {
-          href: "/",
-          title: "Dashboard",
-          icon: "fa fa-user"
-        },
-        {
-          href: "/charts",
-          title: "Charts",
-          icon: "fa fa-chart-area",
-        }
-      ]
-    };
+    Sidebar,
+    Table,
+    Add
   }
 };
 </script>

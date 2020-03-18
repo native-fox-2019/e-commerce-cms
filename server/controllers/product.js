@@ -29,13 +29,7 @@ class Controller {
   }
   static async create(req, res, next) {
     try {
-      let input = {
-        name: req.body.name,
-        image_url: req.body.image_url,
-        price: req.body.price,
-        stock: req.body.stock
-      };
-      let created = await Product.create(input);
+      let created = await Product.create(req.body);
       res
         .status(200)
         .json({ Message: "Product created succesfully.", Data: created });

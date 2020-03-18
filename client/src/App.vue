@@ -3,6 +3,8 @@
     <router-view />
   </div>
 </template>
+<script>
+</script>
 <style lang="scss">
 @import "./fonts/font-awesome-4.7.0/css/font-awesome.min.css";
 @import "./vendor/animate/animate.css";
