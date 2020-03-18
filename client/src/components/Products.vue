@@ -31,10 +31,12 @@
             {{product.price}}
           </div>
           <div class="cell">
+            <span @click.prevent="onAdd(product.id)"><i class="fas fa-angle-up"></i></span>
             {{product.stock}}
+            <span @click.prevent="onSubtract(product.id)"><i class="fas fa-angle-down"></i></span>
           </div>
           <div class="cell">
-            <a @click.prevent="onDelete(product.id)" ><i class="fa fa-trash"></i></a>
+            <a @click.prevent="onDelete(product.id)"><i class="fa fa-trash"></i></a>
           </div>
         </div>
       </div>
@@ -54,9 +56,24 @@ export default {
   },
   computed: mapGetters(['allProducts']),
   methods: {
-    ...mapActions(['getAllProducts', 'deleteProduct']),
+    ...mapActions(['getAllProducts', 'deleteProduct', 'editProduct']),
+
     onDelete(id) {
       this.deleteProduct(id);
+    },
+
+    onAdd(id) {
+      const product = this.allProducts;
+      const editedProduct = product.filter((produk) => produk.id === id);
+      editedProduct[0].stock += 1;
+      this.editProduct(editedProduct[0]);
+    },
+
+    onSubtract(id) {
+      const product = this.allProducts;
+      const editedProduct = product.filter((produk) => produk.id === id);
+      editedProduct[0].stock -= 1;
+      this.editProduct(editedProduct[0]);
     },
   },
 };
@@ -64,6 +81,14 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+  span {
+    cursor: pointer;
+  }
+
+  .fas {
+    margin: 0px 10px;
+  }
+
   * {
     margin: 0px;
     padding: 0px;

@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="addProduct" :class="{ collapsed: isCollapsed }">
     <Navbar />
-    <sidebar-menu :menu="menu" />
+    <sidebar-menu @toggle-collapse="onToggleCollapse" :menu="menu" />
     <form @submit.prevent="onSubmit" >
       <label>Name</label>
       <input type="text" v-model="name">
@@ -39,10 +39,11 @@ export default {
       stock: 0,
       isSuccess: false,
       onSuccess: 'Successfully Add a product',
+      isCollapsed: false,
       menu: [
         {
           header: true,
-          title: 'Main navigation',
+          title: 'Main',
           hiddenOnCollapse: false,
         },
         {
@@ -77,6 +78,14 @@ export default {
       await this.addProduct(newProduct);
       this.isSuccess = true;
     },
+
+    onToggleCollapse(collapsed) {
+      if (collapsed) {
+        this.isCollapsed = true;
+      } else {
+        this.isCollapsed = false;
+      }
+    },
   },
 };
 </script>
@@ -84,6 +93,15 @@ export default {
 <style scoped>
   * {
     margin-top: 10px;
+  }
+
+  .addProduct {
+    padding-left: 350px;
+    transition: all .3s ease;
+  }
+
+  .addProduct.collapsed {
+    padding-left: 50px;
   }
 
   form {

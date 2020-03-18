@@ -17,7 +17,7 @@ const actions = {
         access_token: localStorage.getItem('access_token'),
       },
     });
-
+    data.sort((a, b) => a.id - b.id);
     commit('setProducts', data);
   },
 
@@ -29,6 +29,16 @@ const actions = {
     });
 
     commit('addProduct', data);
+  },
+
+  async editProduct({ commit }, product) {
+    await axios.put(`${server}/products/${product.id}`, product, {
+      headers: {
+        access_token: localStorage.getItem('access_token'),
+      },
+    });
+
+    commit('editProduct', product);
   },
 
   async deleteProduct({ commit }, id) {
@@ -50,6 +60,13 @@ const mutations = {
 
   addProduct: (states, product) => {
     states.products.push(product);
+  },
+
+  editProduct: (states, data) => {
+    const newState = states;
+    const filtered = states.products.filter((product) => product.id !== data.id);
+    filtered.push(data);
+    newState.products = filtered.sort((a, b) => a.id - b.id);
   },
 
   deleteProduct: (states, id) => {

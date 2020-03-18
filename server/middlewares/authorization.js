@@ -1,7 +1,7 @@
 const { User } = require('../models')
 
 const authorization = (req, res, next) => {
-    if (req.userData.role === 'admin') {
+    if (req.userData.role === 'admin' || req.userData.role === 'superAdmin') {
         next()
     } else {
         next(

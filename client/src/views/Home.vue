@@ -2,7 +2,7 @@
     <div class="home" :class="{ collapsed: isCollapsed }">
         <Navbar />
         <Products >
-          <sidebar-menu @toggle-collapse="onToggleColapse"  :menu="menu" />
+          <sidebar-menu @toggle-collapse="onToggleCollapse" :menu="menu" />
         </Products>
     </div>
 </template>
@@ -48,7 +48,7 @@ export default {
     };
   },
   methods: {
-    onToggleColapse(collapsed) {
+    onToggleCollapse(collapsed) {
       if (collapsed) {
         this.isCollapsed = true;
       } else {
