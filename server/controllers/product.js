@@ -3,9 +3,10 @@ const createError = require('http-errors')
 
 class ControllerProduct {
   static addProduct(req, res, next) {
-    let { name, image_url, price, stock } = req.body
+    let { name, image_url, price, stock, CategoryId } = req.body
+    let UserId = req.user.id
     Product
-      .create({ name, image_url, price, stock })
+      .create({ name, image_url, price, stock, CategoryId, UserId })
       .then(result => {
         // console.log(result)
         res.status(201).json(result)
@@ -18,7 +19,11 @@ class ControllerProduct {
 
   static getAllProduct(req, res, next) {
     Product
-      .findAll()
+      .findAll({
+        include: [
+          { model: Category }
+        ]
+      })
       .then(result => {
         res.status(200).json(result)
       })
@@ -41,9 +46,9 @@ class ControllerProduct {
 
   static updateProduct(req, res, next) {
     let id = req.params.id
-    let { name, image_url, price, stock } = req.body
+    let { name, image_url, price, stock, CategoryId } = req.body
     Product
-      .update({ name, image_url, price, stock }, { where: { id }, returning: true })
+      .update({ name, image_url, price, stock, CategoryId }, { where: { id }, returning: true })
       .then(result => {
         res.status(200).json(result[1][0])
       })
