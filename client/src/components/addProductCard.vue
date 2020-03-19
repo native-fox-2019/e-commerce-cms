@@ -17,6 +17,7 @@
       <input type="number" min="1" class="form-control" v-model="stock">
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
+    <button class="btn btn-danger m-2" @click.prevent="backHome">Cancel</button>
   </form>
 </template>
 
@@ -39,6 +40,11 @@ export default {
         stock: this.stock,
       };
       this.$emit('addProduct', obj);
+    },
+    backHome() {
+      this.$router.push({
+        path: '/',
+      });
     },
   },
 };

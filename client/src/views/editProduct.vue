@@ -1,16 +1,77 @@
 <template>
   <div>
-    <EditProduct />
+    <EditProduct
+      @editProduct="editProduct"
+    />
   </div>
 </template>
 
 <script>
 
+import axios from 'axios';
+import Swal from 'sweetalert2';
 import EditProduct from '../components/editProductCard.vue';
 
+const baseUrl = 'http://localhost:3000';
 export default {
   components: {
     EditProduct,
+  },
+  methods: {
+    editProduct(payload) {
+      const obj = {
+        name: payload.name,
+        image_url: payload.image_url,
+        price: payload.price,
+        stock: payload.stock,
+      };
+      axios({
+        method: 'PUT',
+        url: `${baseUrl}/product/${payload.id}`,
+        data: obj,
+        headers: {
+          token: localStorage.getItem('token'),
+        },
+      })
+        .then(() => {
+          const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            onOpen: (toast) => {
+              toast.addEventListener('mouseenter', Swal.stopTimer);
+              toast.addEventListener('mouseleave', Swal.resumeTimer);
+            },
+          });
+          Toast.fire({
+            icon: 'success',
+            title: 'Your product have been edited',
+          });
+          this.$router.push({
+            path: '/',
+          });
+        }).catch((err) => {
+          let msg = null;
+          if (err.response) {
+            if (Array.isArray(err.response.data.msg)) {
+              msg = err.response.data.msg.join('<br>');
+            } else {
+              msg = err.response.data.msg;
+            }
+          } else if (err.request) {
+            msg = err.request;
+          } else {
+            msg = err.message;
+          }
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            html: `${msg}`,
+          });
+        });
+    },
   },
 };
 </script>

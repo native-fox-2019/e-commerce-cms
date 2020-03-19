@@ -34,6 +34,7 @@
 <script>
 
 import axios from 'axios';
+import Swal from 'sweetalert2';
 import { mapState } from 'vuex';
 import Navbar from '../components/navbar.vue';
 
@@ -48,24 +49,51 @@ export default {
   },
   methods: {
     deleteData(id) {
-      axios({
-        method: 'DELETE',
-        url: `${baseUrl}/product/${id}`,
-        headers: {
-          token: localStorage.getItem('token'),
-        },
-      })
-        .then(() => {
-          this.$store.dispatch('getData');
-        }).catch((err) => {
-          if (err.response) {
-            console.log(err.response.data);
-          } else if (err.request) {
-            console.log(err.request);
-          } else {
-            console.log('Error', err.message);
-          }
-        });
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!',
+      }).then((result) => {
+        if (result.value) {
+          Swal.fire(
+            'Deleted!',
+            'Your file has been deleted.',
+            'success',
+          );
+          axios({
+            method: 'DELETE',
+            url: `${baseUrl}/product/${id}`,
+            headers: {
+              token: localStorage.getItem('token'),
+            },
+          })
+            .then(() => {
+              this.$store.dispatch('getData');
+            }).catch((err) => {
+              let msg = null;
+              if (err.response) {
+                if (Array.isArray(err.response.data.msg)) {
+                  msg = err.response.data.msg.join('<br>');
+                } else {
+                  msg = err.response.data.msg;
+                }
+              } else if (err.request) {
+                msg = err.request;
+              } else {
+                msg = err.message;
+              }
+              Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                html: `${msg}`,
+              });
+            });
+        }
+      });
     },
     editData(id) {
       const filtered = this.productData.filter((productData) => productData.id === id)[0];
