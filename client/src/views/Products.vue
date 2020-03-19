@@ -16,10 +16,6 @@ export default {
         return {
             error: '',
             products: [],
-            name:'',
-            image_url:'',
-            price:'',
-            stock:''
         }
   },
   created(){
@@ -27,10 +23,7 @@ export default {
   },
   methods:{
     getProducts(){
-      axios({
-        methods: "get",
-        url: 'http://localhost:3000/products/show',
-      })
+      axios.get('http://localhost:3000/products/show')
       .then(result=>{
         console.log(result.data)
         this.products = result.data

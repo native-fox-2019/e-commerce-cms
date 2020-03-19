@@ -7,6 +7,14 @@ class ProductControl{
         .catch(err=>res.status)
     }
 
+    static myshow(req, res, next){
+        Product.findAll({
+            where: {userId: req.userdata.id}
+        })
+        .then(data=> res.status(200).json(data))
+        .catch(err=>res.status)
+    }
+
     static create(req, res, next){
         let newData = {
             name: req.body.name,
@@ -22,7 +30,6 @@ class ProductControl{
 
     static edit(req, res, next){
         let searchId = req.params.id
-        console.log(searchId+"<<<id prod")
         Product.update(req.body, {
             where: {id: searchId}
         })
