@@ -46,30 +46,32 @@
           </b-form-group>
         </form>
       </b-modal> 
-    <table class="table table-striped border" border="1">
-      <thead>
-        <tr>
-          <th scope="col">No</th>
-          <th scope="col">Name</th>
-          <th scope="col">Image</th>
-          <th scope="col">Price</th>
-          <th scope="col">Stock</th>
-          <th scope="col">Edit</th>
-          <th scope="col">Delete</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="(product, index) in products" :key="product.id">
-          <th scope="row">{{index += 1}}</th>
-          <td>{{product.name}}</td>
-          <td><img :src="product.image_url" style="width : 25%"></td>
-          <td>Rp.{{product.price.toLocaleString()}}</td>
-          <td>{{product.stock}}</td>
-          <td><b-button v-b-modal.modal-prevent @click.prevent="editItem(product.id)">Edit</b-button></td>
-          <td><button @click.prevent="deleteItem(product.id)" class="btn btn-danger">Delete</button></td>
-        </tr>
-      </tbody>
-    </table>
+    <div style="height : 620px; overflow: auto">
+      <table class="table table-striped border" border="1">
+        <thead>
+          <tr>
+            <th scope="col">No</th>
+            <th scope="col">Name</th>
+            <th scope="col">Image</th>
+            <th scope="col">Price</th>
+            <th scope="col">Stock</th>
+            <th scope="col">Edit</th>
+            <th scope="col">Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(product, index) in products" :key="product.id">
+            <th scope="row">{{index += 1}}</th>
+            <td>{{product.name}}</td>
+            <td><img :src="product.image_url" style="width : 25%"></td>
+            <td>Rp.{{product.price.toLocaleString()}}</td>
+            <td>{{product.stock}}</td>
+            <td><b-button v-b-modal.modal-prevent @click.prevent="editItem(product.id)">Edit</b-button></td>
+            <td><button @click.prevent="deleteItem(product.id)" class="btn btn-danger">Delete</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>    
 </template>
 

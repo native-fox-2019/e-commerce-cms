@@ -3,10 +3,11 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light" style="text-align:center;">
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
-          <a class="nav-item nav-link active" href="#">Motorcycle Build And Repair<span class="sr-only">(current)</span></a>
+          <a class="nav-item nav-link active" href="" @click.prevent="home">Motorcycle Build And Repair<span class="sr-only">(current)</span></a>
         </div>
       </div>
-      <h5 class="pr-5 mt-2">Welcome back, {{name}}</h5>
+      <h5 class="pr-3 mt-2">Welcome back, {{name}}</h5>
+      <a class="btn btn-info ml-1" @click.prevent="addAdmin">Add Admin</a>
       <a class="btn btn-warning ml-3" @click.prevent="logout">Logout</a>
     </nav>
   </div>
@@ -21,6 +22,16 @@ export default {
       }
     },
     methods : {
+      home(){
+        this.$router.push({
+          path: '/'
+        })
+      },
+      addAdmin(){
+        this.$router.push({
+          path: '/addadmin'
+        })
+      },
       logout(){
         let timerInterval
         Swal.fire({

@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import HomePage from '../views/HomePage.vue'
 import LoginPage from '../views/LoginPage.vue'
+import AddAdmin from '../views/AddAdmin.vue'
 
 Vue.use(VueRouter)
 
@@ -17,6 +18,12 @@ const routes = [
     name: 'LoginPage',
     meta : {isLogin:true},
     component: LoginPage
+  },
+  {
+    path: '/addadmin',
+    name: 'AddAdmin',
+    meta : {requiresAuth:true},
+    component: AddAdmin
   },
 ]
 
