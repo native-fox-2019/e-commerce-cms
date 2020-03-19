@@ -16,7 +16,7 @@
 
           <v-list-item v-for="item in items" :key="item.title" link>
             <v-list-item-icon>
-              <v-icon>{{ item.icon }}</v-icon>
+              <v-icon class="mr-2">{{ item.icon }}</v-icon>
             </v-list-item-icon>
 
             <v-list-item-content>
@@ -40,9 +40,9 @@ export default {
   data() {
     return {
       items: [
-        { title: "Dashboard", icon: "mdi-view-dashboard" },
-        { title: "Photos", icon: "mdi-image" },
-        { title: "About", icon: "mdi-help-box" }
+        { title: "Products", icon: "mdi-folder-open-outline" },
+        { title: "Campaign", icon: "mdi-view-dashboard" },
+        { title: "Register", icon: "mdi-account-multiple-plus" }
       ]
     };
   },

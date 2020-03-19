@@ -11,5 +11,19 @@ module.exports = {
     } catch (error) {
       next(error);
     }
+  },
+  admin(req, res, next) {
+    try {
+      if (req.user.role === "superadmin") {
+        next();
+      } else {
+        throw createError(
+          403,
+          "Forbiden access you're unauthorize to register"
+        );
+      }
+    } catch (error) {
+      next(error);
+    }
   }
 };

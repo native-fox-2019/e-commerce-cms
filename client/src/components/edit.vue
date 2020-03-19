@@ -96,7 +96,7 @@ export default {
           this.$store.dispatch("get");
           Toast.fire({
             icon: "success",
-            title: "Task has been edited."
+            title: "Product has been edited."
           });
         }
       } catch (error) {

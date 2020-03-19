@@ -47,6 +47,7 @@ describe("Create new product", () => {
         .post("/products")
         .send({
           name: "Bakwan",
+          category: "Gorengan",
           image_url:
             "https://cdn-brilio-net.akamaized.net/news/2019/07/29/168048/1073028-1000xauto-resep-bakwan-kekinian.jpg",
           price: 2000,
@@ -65,6 +66,7 @@ describe("Create new product", () => {
         .post("/products")
         .send({
           name: "",
+          category: "Gorengan",
           image_url:
             "https://cdn-brilio-net.akamaized.net/news/2019/07/29/168048/1073028-1000xauto-resep-bakwan-kekinian.jpg",
           price: 2000,
@@ -78,13 +80,15 @@ describe("Create new product", () => {
       );
     });
   });
-  describe("Image_url cannot be empty", () => {
-    it("should return 400 and return message Validation notEmpty on image_url failed", async () => {
+  describe("Category cannot be empty", () => {
+    it("should return 400 and return message Validation notEmpty on category failed", async () => {
       let { body, status } = await request(app)
         .post("/products")
         .send({
           name: "bakwan",
-          image_url: "",
+          category: "",
+          image_url:
+            "https://cdn-brilio-net.akamaized.net/news/2019/07/29/168048/1073028-1000xauto-resep-bakwan-kekinian.jpg",
           price: 2000,
           stock: 5
         })
@@ -92,7 +96,7 @@ describe("Create new product", () => {
       expect(status).toBe(400);
       expect(body[0]).toHaveProperty(
         "message",
-        "Validation notEmpty on image_url failed"
+        "Validation notEmpty on category failed"
       );
     });
   });
@@ -102,6 +106,7 @@ describe("Create new product", () => {
         .post("/products")
         .send({
           name: "bakwan",
+          category: "Gorengan",
           image_url:
             "https://cdn-brilio-net.akamaized.net/news/2019/07/29/168048/1073028-1000xauto-resep-bakwan-kekinian.jpg",
           price: "",
@@ -120,7 +125,8 @@ describe("Create new product", () => {
       let { body, status } = await request(app)
         .post("/products")
         .send({
-          name: "bakwa",
+          name: "bakwan",
+          category: "Gorengan",
           image_url:
             "https://cdn-brilio-net.akamaized.net/news/2019/07/29/168048/1073028-1000xauto-resep-bakwan-kekinian.jpg",
           price: 2000,
@@ -140,6 +146,7 @@ describe("Create new product", () => {
         .post("/products")
         .send({
           name: "bakwan",
+          category: "Gorengan",
           image_url:
             "https://cdn-brilio-net.akamaized.net/news/2019/07/29/168048/1073028-1000xauto-resep-bakwan-kekinian.jpg",
           price: -1,
@@ -159,6 +166,7 @@ describe("Create new product", () => {
         .post("/products")
         .send({
           name: "bakwan",
+          category: "Gorengan",
           image_url:
             "https://cdn-brilio-net.akamaized.net/news/2019/07/29/168048/1073028-1000xauto-resep-bakwan-kekinian.jpg",
           price: 2000,
@@ -178,6 +186,7 @@ describe("Create new product", () => {
         .post(`/products`)
         .send({
           name: "risol",
+          category: "Gorengan",
           image_url:
             "https://www.masakapahariini.com/wp-content/uploads/2019/02/risoles-ayam-telur-asin-780x440.jpg",
           price: 2000,
@@ -197,6 +206,7 @@ describe("Create new product", () => {
         .post(`/products`)
         .send({
           name: "risol",
+          category: "Gorengan",
           image_url:
             "https://www.masakapahariini.com/wp-content/uploads/2019/02/risoles-ayam-telur-asin-780x440.jpg",
           price: 2000,
@@ -213,6 +223,7 @@ describe("Create new product", () => {
         .post(`/products`)
         .send({
           name: "risol",
+          category: "Gorengan",
           image_url:
             "https://www.masakapahariini.com/wp-content/uploads/2019/02/risoles-ayam-telur-asin-780x440.jpg",
           price: 2000,
@@ -232,6 +243,7 @@ describe("Start update product by id", () => {
         .put(`/products/${id}`)
         .send({
           name: "risol",
+          category: "Gorengan",
           image_url:
             "https://www.masakapahariini.com/wp-content/uploads/2019/02/risoles-ayam-telur-asin-780x440.jpg",
           price: 2000,
@@ -249,6 +261,7 @@ describe("Start update product by id", () => {
         .put(`/products/${id}`)
         .send({
           name: "risol",
+          category: "Gorengan",
           image_url:
             "https://www.masakapahariini.com/wp-content/uploads/2019/02/risoles-ayam-telur-asin-780x440.jpg",
           price: 2000,
@@ -268,6 +281,7 @@ describe("Start update product by id", () => {
         .put(`/products/${id}`)
         .send({
           name: "",
+          category: "Gorengan",
           image_url:
             "https://www.masakapahariini.com/wp-content/uploads/2019/02/risoles-ayam-telur-asin-780x440.jpg",
           price: 2000,
@@ -281,13 +295,15 @@ describe("Start update product by id", () => {
       );
     });
   });
-  describe("Image_url cannot be empty", () => {
-    it("should return 400 and return message Validation notEmpty on image_url failed", async () => {
+  describe("Category cannot be empty", () => {
+    it("should return 400 and return message Validation notEmpty on category failed", async () => {
       let { body, status } = await request(app)
         .put(`/products/${id}`)
         .send({
           name: "risol",
-          image_url: "",
+          category: "",
+          image_url:
+            "https://www.masakapahariini.com/wp-content/uploads/2019/02/risoles-ayam-telur-asin-780x440.jpg",
           price: 2000,
           stock: 5
         })
@@ -295,7 +311,7 @@ describe("Start update product by id", () => {
       expect(status).toBe(400);
       expect(body[0]).toHaveProperty(
         "message",
-        "Validation notEmpty on image_url failed"
+        "Validation notEmpty on category failed"
       );
     });
   });
@@ -305,6 +321,7 @@ describe("Start update product by id", () => {
         .put(`/products/${id}`)
         .send({
           name: "risol",
+          category: "Gorengan",
           image_url:
             "https://www.masakapahariini.com/wp-content/uploads/2019/02/risoles-ayam-telur-asin-780x440.jpg",
           price: "",
@@ -324,6 +341,7 @@ describe("Start update product by id", () => {
         .put(`/products/${id}`)
         .send({
           name: "risol",
+          category: "Gorengan",
           image_url:
             "https://www.masakapahariini.com/wp-content/uploads/2019/02/risoles-ayam-telur-asin-780x440.jpg",
           price: 2000,
@@ -343,6 +361,7 @@ describe("Start update product by id", () => {
         .put(`/products/${id}`)
         .send({
           name: "risol",
+          category: "Gorengan",
           image_url:
             "https://www.masakapahariini.com/wp-content/uploads/2019/02/risoles-ayam-telur-asin-780x440.jpg",
           price: -1,
@@ -362,6 +381,7 @@ describe("Start update product by id", () => {
         .put(`/products/${id}`)
         .send({
           name: "risol",
+          category: "Gorengan",
           image_url:
             "https://www.masakapahariini.com/wp-content/uploads/2019/02/risoles-ayam-telur-asin-780x440.jpg",
           price: 2000,
@@ -381,6 +401,7 @@ describe("Start update product by id", () => {
         .post(`/products`)
         .send({
           name: "risol",
+          category: "Gorengan",
           image_url:
             "https://www.masakapahariini.com/wp-content/uploads/2019/02/risoles-ayam-telur-asin-780x440.jpg",
           price: 2000,
@@ -397,9 +418,10 @@ describe("Start update product by id", () => {
   describe("Product not found", () => {
     it("should return 404 and return message product not found", async () => {
       let { body, status } = await request(app)
-        .put(`/products/1`)
+        .put(`/products/1000`)
         .send({
           name: "risol",
+          category: "Gorengan",
           image_url:
             "https://www.masakapahariini.com/wp-content/uploads/2019/02/risoles-ayam-telur-asin-780x440.jpg",
           price: 2000,
@@ -416,6 +438,7 @@ describe("Start update product by id", () => {
         .put(`/products/${id}`)
         .send({
           name: "risol",
+          category: "Gorengan",
           image_url:
             "https://www.masakapahariini.com/wp-content/uploads/2019/02/risoles-ayam-telur-asin-780x440.jpg",
           price: 2000,
@@ -432,6 +455,7 @@ describe("Start update product by id", () => {
         .put(`/products/${id}`)
         .send({
           name: "risol",
+          category: "Gorengan",
           image_url:
             "https://www.masakapahariini.com/wp-content/uploads/2019/02/risoles-ayam-telur-asin-780x440.jpg",
           price: 2000,
