@@ -6,11 +6,11 @@
           <form v-on:submit.prevent="login">
             <div class="form-group">
               <label for="email_login">Email:</label>
-              <input type="email" class="form-control" v-model="email_login">
+              <input type="email" class="form-control" v-model="email_login" required>
             </div>
             <div class="form-group">
               <label for="exampleInputPassword1">Password:</label>
-              <input type="password" class="form-control" v-model="password_login">
+              <input type="password" class="form-control" v-model="password_login" required>
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
           </form>
@@ -43,7 +43,6 @@ export default {
         let timerInterval
         Swal.fire({
           title: `Welcome, ${response.data.name}`,
-          // html: 'I will close in <b></b> milliseconds.',
           timer: 1100,
           timerProgressBar: true,
           onBeforeOpen: () => {

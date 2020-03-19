@@ -5,29 +5,39 @@ const bcrypt = require('bcrypt');
 
 class UserController {
     static register(req, res, next){
-        let { email, password, name, role } = req.body
+        let superpassword = 'password1234'
+        let { email, password, name } = req.body
         let obj = {
             email : email,
             password : password,
             name : name,
-            role : role
+            role : 'admin'
         }
-        User.create(obj)
-        .then(data => {
-            let access_token = jwt.sign({ id : data.id, email : data.email }, process.env.SECRET);
-            res.status(201).json({access_token})
-        }) 
-        .catch(err => {
-            if(err.name === 'SequelizeUniqueConstraintError'){
-                next(err)
-            } else {
-            let error = []
-            err.errors.forEach(x =>{
-                error.push(x.message)
+        if(superpassword === req.body.superpassword){
+            console.log('masuk')
+            User.create(obj)
+            .then(data => {
+                // let access_token = jwt.sign({ id : data.id, email : data.email }, process.env.SECRET);
+                // res.status(201).json({access_token})
+                res.status(201).json(data.name)
+            }) 
+            .catch(err => {
+                console.log(err + ' <<<< err')
+                if(err.name === 'SequelizeUniqueConstraintError'){
+                    next(err)
+                } else {
+                let error = []
+                err.errors.forEach(x =>{
+                    error.push(x.message)
+                })
+                next({error : error, status : 400})
+            }
             })
-            next({error : error, status : 400})
+        } else {
+            next({
+                status : 403
+            })
         }
-        })
     }
 
     static login(req, res, next){
