@@ -8,7 +8,7 @@ class userController {
         let input = {
             email: req.body.email,
             password: req.body.password,
-            role: "User"
+            role: "Admin"
         }
 
         users.create(input)

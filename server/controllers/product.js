@@ -4,6 +4,7 @@ class productsController {
 
     static addProduct(req, res) {
         console.log("masuk", req.payloadUser)
+        console.log("masuk ga?")
         let input = {
             name: req.body.name,
             image_url: req.body.image_url,
