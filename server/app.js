@@ -13,8 +13,8 @@ app
   .use(express.urlencoded({ extended: true }))
   .use(index)
   .use(errorHandling)
-  // .listen(port, () => {
-  //   console.log("listerning to port ", port);
-  // });
+  .listen(port, () => {
+    console.log("listerning to port ", port);
+  });
 
   module.exports = app

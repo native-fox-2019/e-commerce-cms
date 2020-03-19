@@ -1,63 +1,109 @@
 <template>
-  <div>
-    <b-form @submit="onSubmit" @reset="onReset" v-if="show">
-      <b-form-group
-        id="input-group-1"
-        label="Email address:"
-        label-for="input-1"
-        description="We'll never share your email with anyone else."
-      >
-        <b-form-input
-          id="input-1"
-          v-model="form.email"
-          type="email"
-          required
-          placeholder="Enter email"
-        ></b-form-input>
-      </b-form-group>
+  <div class="card container my-5" style="width : 19em; border-radius : 41px; ">
+    <div class="my-2">
+    <h5
+      class="card-header white-text text-center py-8"
+      style="border-radius : 50px; -webkit-box-shadow: inset 0px 0px 32px 9px rgba(51,181,229,0.6);
+      -moz-box-shadow: inset 0px 0px 32px 9px rgba(51,181,229,0.6);
+      box-shadow: inset 0px 0px 32px 9px rgba(51,181,229,0.6); "
+    >
 
-      <b-form-group id="input-group-2" label="Your Name:" label-for="input-2">
-        <b-form-input
-          id="input-2"
-          v-model="form.name"
-          required
-          placeholder="Enter name"
-        ></b-form-input>
-      </b-form-group>
-      <b-button type="submit" variant="primary">Submit</b-button>
-    </b-form>
-    <b-card class="mt-3" header="Form Data Result">
-      <pre class="m-0">{{ form }}</pre>
-    </b-card>
+   <div style="color:black; font-size:5em; margin-bottom:-45px; margin-top:-30px">
+      <i class="fab fa-aviato"></i>
+   </div>
+      <strong style="color: black">Sign in</strong>
+    </h5>
+ </div>
+    <div class="card-body px-lg-5 pt-0">
+      <form class="text-center" style="color: #757575;" v-on:submit.prevent="loginAct">
+        <div class="md-form">
+          <input type="email" id="materialLoginFormEmail" class="form-control" required v-model="input_email" />
+          <label for="materialLoginFormEmail">email</label>
+        </div>
+
+        <div class="md-form">
+          <input type="password" id="materialLoginFormPassword" class="form-control" required v-model="input_password" />
+          <label for="materialLoginFormPassword">password</label>
+        </div>
+
+        <!-- Sign in button -->
+        <button
+          class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0"
+          type="submit"
+          style="border-radius:50px; border-color: rgba(32,252,32,0.6);"
+        >Sign in</button>
+        <p>
+          Not a member?
+          <a href @click.prevent="registerPage">Register</a>
+        </p>
+        <p>or sign in with:</p>
+        <a type="button" class="btn-floating btn-git btn-sm" style="color:rgb(51, 181, 229)">
+          <i style="font-size:35px;" class="fab fa-google-plus"></i>
+        </a>
+      </form>
+    </div>
   </div>
 </template>
 
 <script>
-  export default {
-    data() {
-      return {
-        form: {
-          email: '',
-          name: ''
-        },
-      }
+   import Vue from "vue";
+   import url from "../../config/config"
+    import axios from 'axios'
+    import Swal from 'sweetalert2'
+export default Vue.extend ({
+  name : 'Login',
+  component : {
+
+  },
+  data() {
+    return {
+      input_email : "",
+      input_password : ""
+    }
+  },
+  methods : {
+    registerPage() {
+      this.$router.push({path : '/register'})
     },
-    methods: {
-      onSubmit(evt) {
-        evt.preventDefault()
-        alert(JSON.stringify(this.form))
-      },
-      onReset(evt) {
-        evt.preventDefault()
-        // Reset our form values
-        this.form.email = ''
-        this.form.name = ''
-        // Trick to reset/clear native browser form validation state
-        this.show = false
-        this.$nextTick(() => {
-          this.show = true
-        })
-      }
+    loginAct() {
+      axios({
+        url : `${url}/user/login`,
+        method : 'POST',
+        data : {
+          email : this.input_email,
+          password : this.input_password
+        }
+      })
+      .then(data => {
+        console.log(data.data.body)
+      Swal.fire({
+      position: 'center',
+      icon: 'success',
+      title: `Welcome to AVIATO ${data.data.body.first_name} ${data.data.body.last_name}`,
+      showConfirmButton: false,
+      timer: 3000
+      })
+      localStorage.setItem('token', data.data.token)
+      this.$router.push({path : '/'})
+       
+      })
+      .catch(err => {
+        const msg = err.response.data.message.join(', ')
+        Swal.fire({
+        icon: 'error',
+        title: 'something wrong',
+        text: `${msg}`,
+        footer: 'app made by love 💖'
+
+      });
+      })
     }
   }
+})
+
+
 </script>
+
+<style>
+
+</style>

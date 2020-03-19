@@ -5,7 +5,9 @@ import store from './store'
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
+import { SidebarComponent, SidebarPlugin } from '@syncfusion/ej2-vue-navigations';
 
+Vue.component(SidebarPlugin.name, SidebarComponent);
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
 

@@ -1,4 +1,4 @@
-/** @format */
+
 require("dotenv").config();
 const request = require("supertest");
 const app = require("../app");
@@ -318,7 +318,7 @@ describe("Success find all products by category", function() {
       .then(res => {
         const { body, status } = res;
         expect(status).toEqual(200);
-       expect(body[0]).toHaveProperty("name", "bakso");
+        expect(body[0]).toHaveProperty("name", "bakso");
         done();
       })
       .catch(err => {
@@ -334,10 +334,10 @@ describe("Fail filter products by category", function() {
       .set("token", access_token_admin)
       .then(res => {
         const { body, status } = res;
-        console.log(body.message)
+        console.log(body.message);
         expect(status).toEqual(404);
         if (body.message === undefined) {
-          body.message = 'data not found'
+          body.message = "data not found";
         }
         expect(body.message).toContain("data not found");
         done();
@@ -381,7 +381,7 @@ describe("Success edit products", function() {
       .then(res => {
         const { body, status } = res;
         expect(status).toEqual(200);
-        expect(body[0]).toHaveProperty('name', 'bakso telor')
+        expect(body[0]).toHaveProperty("name", "bakso telor");
         done();
       })
       .catch(err => {
