@@ -59,7 +59,7 @@ import Swal from 'sweetalert2';
 export default {
   data() {
     return {
-      test : 'haha',
+      // test : 'haha',
       name: "",
       nameState: null,
       submittedNames: [],
@@ -115,7 +115,7 @@ export default {
           icon: 'success',
           title: `${name} has been saved`,
           showConfirmButton: false,
-          timer: 1500
+          timer: 1200
         })
           this.name_modal = null,
           this.image_url_modal = null,
@@ -124,7 +124,15 @@ export default {
           this.$store.dispatch('getProduct')
         })
         .catch(err => {
-          console.log(err);
+          if(err.response.status === 400){
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'Price and Stock must be a number'
+            })
+          } else {
+            console.log(err.response)
+          }
         });
     }
   }

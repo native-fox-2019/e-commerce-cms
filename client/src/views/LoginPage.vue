@@ -20,6 +20,7 @@
 
 <script>
 import axios from 'axios'
+import Swal from 'sweetalert2'
 let url = 'http://localhost:3000'
 export default {
   data () {
@@ -39,10 +40,44 @@ export default {
         }
       })
       .then(response =>{
+        let timerInterval
+        Swal.fire({
+          title: `Welcome, ${response.data.name}`,
+          // html: 'I will close in <b></b> milliseconds.',
+          timer: 1100,
+          timerProgressBar: true,
+          onBeforeOpen: () => {
+            Swal.showLoading()
+            timerInterval = setInterval(() => {
+              const content = Swal.getContent()
+              if (content) {
+                const b = content.querySelector('b')
+                if (b) {
+                  b.textContent = Swal.getTimerLeft()
+                }
+              }
+            }, 100)
+          },
+          onClose: () => {
+            clearInterval(timerInterval)
+          }
+        }).then((result) => {
+          /* Read more about handling dismissals below */
+          if (result.dismiss === Swal.DismissReason.timer) {
+            console.log('I was closed by the timer')
+          }
+        })
         localStorage.setItem('token', response.data.access_token)
         localStorage.setItem('name', response.data.name)
         this.$router.push({
           path : '/'
+        })
+      })
+      .catch(err=>{
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: `${err.response.data.message}`,
         })
       })
     }

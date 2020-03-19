@@ -14,16 +14,21 @@ class ProductController {
             res.status(201).json({data})
         })
         .catch(err=>{
-            let error = []
+            if(err.name = 'SequelizeDatabaseError'){
+                next({
+                    status : 400
+                })
+            } else {let error = []
             err.errors.forEach(x =>{
                 error.push(x.message)
             })
             next({error : error, status : 400})
+            }
         })
     }
 
     static getProduct(req, res, next){
-        Product.findAll()
+        Product.findAll({order : [['id', 'ASC']]})
         .then(data=>{
             res.status(200).json({data})
         })

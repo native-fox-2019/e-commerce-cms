@@ -96,23 +96,16 @@ export default {
   },
   methods : {
     deleteItem(id){
-      const swalWithBootstrapButtons = Swal.mixin({
-        customClass: {
-          confirmButton: 'btn btn-success',
-          cancelButton: 'btn btn-danger'
-        },
-        buttonsStyling: false
-      })
-
-      swalWithBootstrapButtons.fire({
+      Swal.fire({
         title: 'Are you sure?',
-        text: "Your Item Will Be Deleted!",
+        text: "You won't be able to revert this!",
         icon: 'warning',
         showCancelButton: true,
-        confirmButtonText: 'Delete',
-        cancelButtonText: 'Cancel',
-        reverseButtons: true
-      }).then((result) => {
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      })
+      .then((result) => {
         if (result.value) {
           return axios({
             method : 'delete',
@@ -121,26 +114,18 @@ export default {
             access_token: localStorage.getItem("token")
             },
           })
-        .then(()=>{
-          swalWithBootstrapButtons.fire(
+          .then(()=>{
+            Swal.fire(
             'Deleted!',
             'Your file has been deleted.',
             'success'
-          )
-        this.$store.dispatch('getProduct')
-        })
-        .catch(err =>{
-        console.log(err)
-        })
-        } else if (
-          result.dismiss === Swal.DismissReason.cancel
-        ) {
-          swalWithBootstrapButtons.fire(
-            'Cancelled',
-            'Your file is safe',
-            'error'
-          )
+            )
+            this.$store.dispatch('getProduct')
+          })
         }
+      })
+      .catch(err =>{
+        console.log(err)
       })
     },
     editItem(id){
@@ -205,7 +190,7 @@ export default {
         this.$store.dispatch('getProduct')
       })
       .catch(err =>{
-        console.log(err)
+        console.log(err.response)
       })
     }
   },
