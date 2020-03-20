@@ -8,7 +8,7 @@ class productController{
             res.status(200).json(result)
         })
         .catch(err=>{
-               next({status: 501, msg: 'Internal server error!'}) 
+               next({status: 500, msg: 'Internal server error!'}) 
         })
     }
 
@@ -33,7 +33,7 @@ class productController{
                 } 
                 next({status: 400, msg: totalError})
             } else{
-                next({status: 501, msg: 'Internal server error!'})
+                next({status: 500, msg: 'Internal server error!'})
             }
         })
     }
@@ -49,7 +49,7 @@ class productController{
               }
         })
         .catch(err=>{
-            next({status: 501, msg: 'Internal server error!'})
+            next({status: 500, msg: 'Internal server error!'})
         })
     }
 
@@ -75,7 +75,7 @@ class productController{
                 } 
                 next({status: 400, msg: totalError})
             } else{
-                next({status: 501, msg: 'Internal server error!'})
+                next({status: 500, msg: 'Internal server error!'})
             }
             
         })
@@ -88,7 +88,7 @@ class productController{
             res.status(200).json(result)
         })
         .catch(err=>{
-            next({status: 501, msg: 'Internal server error!'})
+            next({status: 500, msg: 'Internal server error!'})
         })
         
     }

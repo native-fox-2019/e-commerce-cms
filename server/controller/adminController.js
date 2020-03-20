@@ -28,7 +28,7 @@ class adminController{
                 } 
                 next({status: 400, msg: totalError})
                 } else{
-                next({status: 501, msg: 'Internal server error!'})
+                next({status: 500, msg: 'Internal server error!'})
                 }
         })
     }
@@ -49,7 +49,7 @@ class adminController{
                 })
         })
         .catch(err=>{
-            next({status: 501, msg: 'Internal server error!'})
+            next({status: 500, msg: 'Internal server error!'})
         })
     }
 
