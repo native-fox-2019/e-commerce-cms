@@ -2,8 +2,6 @@ const request = require('supertest')
 const app = require('../app')
 const { sequelize,Admin,Product } = require('../models')
 const { queryInterface } = sequelize
-const jwt = require('jsonwebtoken')
-require('dotenv').config()
 
 
 let obj = {
@@ -27,40 +25,13 @@ let objEmpty = {
     stock : "5"
 }
 
-let objAdmin = {
-    name : "dummy2",
-    email : "dummy2@email.com",
-    password : "1234",
-    roles : "admin"
-}
 
-let objUser = {
-    name : "user",
-    email : "user@email.com",
-    password : "1234",
-    roles : "user"
-}
-
-let tokenAdmin
-let tokenUser
-let productId = 5
+let tokenAdmin = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImR1bW15MkBlbWFpbC5jb20iLCJpZCI6MTE1LCJyb2xlcyI6ImFkbWluIiwiaWF0IjoxNTg0NzEzMzAyfQ.Fi4lcb_ELPjfO6Xf40JZHYwFW4V22uV2IJaJv_CyZfo"
+let tokenUser = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAZW1haWwuY29tIiwiaWQiOjExNiwicm9sZXMiOiJ1c2VyIiwiaWF0IjoxNTg0NzEzMzQ3fQ.b4e5761OULg4SFmz_NqHtkM9gkZhDKQa2eIqYsSTvk4"
+let productId
 let productEmpty = 20
 let idDeleted = 4
 
-beforeAll(done=>{
-    queryInterface
-    let admin = Admin.create(objAdmin)
-    .then(()=>done())
-    .catch(err=> done(err))
-    
-    let user = Admin.create(objUser)
-    .then(()=>done())
-    .catch(err=> done(err))
-    let tokenA = jwt.sign({email:admin.email,id:admin.id,roles:admin.roles},process.env.JWT_KEY)
-    let tokenU = jwt.sign({email:user.email,id:user.id,roles:user.roles},process.env.JWT_KEY)
-    tokenAdmin = tokenA
-    tokenUser = tokenU
-})
 
 afterAll(done=>{
     queryInterface
@@ -102,6 +73,21 @@ describe('view product fail',function(){
         })
 
     })
+    it('should return status 401 and error message when user roles are not admin',function(done){
+        request(app)
+        .get(`/product`)
+        .set({token: tokenUser})
+        .then(response =>{
+            const { body, status } = response;
+            expect(status).toBe(401)
+            expect(body).toHaveProperty('msg')
+            done()
+        })
+        .catch(err =>{
+            done(err)
+        })
+
+    })
 })
 
 
@@ -117,6 +103,8 @@ describe('add product success',function(){
             expect(status).toBe(201)
             expect(body.name).toBe("Tag Heuer Carerra")
             done()
+            productId = body.id
+            console.log(productId)
         })
         .catch(err=>{
             done(err)
@@ -133,6 +121,21 @@ describe('add product fails',function(){
         .then(response =>{
             const { body, status } = response;
             expect(status).toBe(403)
+            expect(body).toHaveProperty('msg')
+            done()
+        })
+        .catch(err =>{
+            done(err)
+        })
+
+    })
+    it('should return status 401 and error message when user roles are not admin',function(done){
+        request(app)
+        .post(`/product`)
+        .set({token: tokenUser})
+        .then(response =>{
+            const { body, status } = response;
+            expect(status).toBe(401)
             expect(body).toHaveProperty('msg')
             done()
         })
@@ -192,6 +195,21 @@ describe('get one product fail',function(){
         })
 
     })
+    it('should return status 401 and error message when user roles are not admin',function(done){
+        request(app)
+        .get(`/product/${productId}`)
+        .set({token: tokenUser})
+        .then(response =>{
+            const { body, status } = response;
+            expect(status).toBe(401)
+            expect(body).toHaveProperty('msg')
+            done()
+        })
+        .catch(err =>{
+            done(err)
+        })
+
+    })
     it('should return status 404 and error message when product not found',function(done){
         request(app)
         .get(`/product/${productEmpty}`)
@@ -238,6 +256,21 @@ describe('update product fail',function(){
             done(err)
         })
     })
+    it('should return status 401 and error message when user roles are not admin',function(done){
+        request(app)
+        .put(`/product/${productId}`)
+        .set({token: tokenUser})
+        .then(response =>{
+            const { body, status } = response;
+            expect(status).toBe(401)
+            expect(body).toHaveProperty('msg')
+            done()
+        })
+        .catch(err =>{
+            done(err)
+        })
+
+    })
     it('should return status 400 and error message, when one of element empty',function(done){
         request(app)
         .put(`/product/${productId}`)
@@ -279,6 +312,21 @@ describe('delete product fail',function(){
             const { body,status } = response;
             expect(status).toBe(403)
             done()
+        })
+
+    })
+    it('should return status 401 and error message when user roles are not admin',function(done){
+        request(app)
+        .delete(`/product/${productId}`)
+        .set({token: tokenUser})
+        .then(response =>{
+            const { body, status } = response;
+            expect(status).toBe(401)
+            expect(body).toHaveProperty('msg')
+            done()
+        })
+        .catch(err =>{
+            done(err)
         })
 
     })
