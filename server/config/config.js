@@ -18,7 +18,7 @@ module.exports = {
     "username": "crqkurssjsatlp",
     "password": "5b81dc8682f6a3d6089fae248dc6cdfeeb6d2a58354e41b5575a9950ff4c2e18",
     "database": "dfl0j7l4vtc9su",
-    "host": "127.0.0.1",
+    "host": "ec2-52-45-14-227.compute-1.amazonaws.com",
     "dialect": "postgres"
   }
 }
