@@ -5,8 +5,24 @@ module.exports = (sequelize, DataTypes) => {
   class users extends models { }
 
   users.init({
-    email: DataTypes.STRING,
-    password: DataTypes.STRING,
+    email: {
+      type: DataTypes.STRING,
+      allowNull:false,
+      validate: {
+        isEmail: {
+          msg: 'Must be filled with Email'
+        }
+    }
+  },
+    password: {
+     type: DataTypes.STRING,
+     allowNull:false,
+     validate: {
+      notEmpty: {
+        msg: 'Must be filled with Email'
+      }
+  }
+    },
     role: DataTypes.STRING
   }, {
     sequelize, hooks: {

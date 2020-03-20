@@ -10,6 +10,7 @@ class userController {
             password: req.body.password,
             role: "Admin"
         }
+        console.log("ini req.body",req.body)
 
         users.create(input)
             .then(data => {
@@ -19,10 +20,10 @@ class userController {
                     email: data.email
                 })
                 console.log("isi token", token)
-                res.status(201).json({ token })
+                res.status(201).json({token})
                 console.log("ini token")
             }).catch(err => {
-                res.status(401).json(err)
+                res.status(401).json({msg:"email and password must be filled"})
             })
     }
 
@@ -44,12 +45,17 @@ class userController {
                         id: user.id,
                         email: user.email
                     })
+                    console.log("ini token",token)
+                    console.log("ini obj token",{token})
                     res.status(200).json({ token })
+                    console.log("ini token",token)
+                    console.log("ini obj token",{token})
                 } else {
-                    res.status(404).json({ msg: "id or email is not found" })
+                    res.status(404).json({ msg:"id or email is not found" })
                 }
             }).catch(err => {
-                res.status(500).json({ msg: "internal server error" })
+                res.status(500).json({ msg: "internal server error",
+            error:err.error })
             })
     }
 

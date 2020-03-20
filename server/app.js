@@ -1,4 +1,4 @@
-require('dotenv').config()
+  require('dotenv').config()
 const express = require ('express')
 const app = express()
 const cors = require('cors')
@@ -13,12 +13,14 @@ io.on("connection", socket => {
       console.log("ADA YG KELUAR");
     });
   });
-  
+
 app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 app.use('/',router)
 
-http.listen(PORT, function() {
-    console.log(`listening on ${PORT}`);
-  });
+// app.listen(PORT, () => console.log(`Example app listening on port ${PORT}!`))
+// http.listen(PORT, function() {
+//     console.log(`listening on ${PORT}`);
+//   });
+module.exports = app
