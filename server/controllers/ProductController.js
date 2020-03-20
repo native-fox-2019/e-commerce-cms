@@ -14,11 +14,12 @@ class ProductController {
             res.status(201).json({data})
         })
         .catch(err=>{
-            if(err.name = 'SequelizeDatabaseError'){
+            if(err.name === 'SequelizeDatabaseError'){
                 next({
                     status : 400
                 })
-            } else {let error = []
+            } else {
+            let error = []
             err.errors.forEach(x =>{
                 error.push(x.message)
             })

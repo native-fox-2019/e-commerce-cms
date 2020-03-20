@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt');
 
 class UserController {
-    static register(req, res, next){
+    static registerAdmin(req, res, next){
         let superpassword = 'password1234'
         let { email, password, name } = req.body
         let obj = {
@@ -14,7 +14,6 @@ class UserController {
             role : 'admin'
         }
         if(superpassword === req.body.superpassword){
-            console.log('masuk')
             User.create(obj)
             .then(data => {
                 // let access_token = jwt.sign({ id : data.id, email : data.email }, process.env.SECRET);
@@ -22,7 +21,7 @@ class UserController {
                 res.status(201).json(data.name)
             }) 
             .catch(err => {
-                console.log(err + ' <<<< err')
+                // console.log(err + ' <<<< err')
                 if(err.name === 'SequelizeUniqueConstraintError'){
                     next(err)
                 } else {
@@ -30,6 +29,7 @@ class UserController {
                 err.errors.forEach(x =>{
                     error.push(x.message)
                 })
+                // console.log(error)
                 next({error : error, status : 400})
             }
             })

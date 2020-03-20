@@ -17,7 +17,7 @@ beforeAll((done) => {
         name : 'Admin-name',
         role : 'admin',
         email : 'test@admin.com',
-        password : '1234'
+        password : '1234',
     }
     User.create(obj)
     .then(data => {
@@ -128,6 +128,7 @@ describe('Test for products', function() {
             .then(res => {
                 const { body, status } = res
                 expect(status).toEqual(400)
+                console.log(body.message + ' <<<<< body')
                 expect(body.message).toContain('Validation min on price failed')
                 done()
             })

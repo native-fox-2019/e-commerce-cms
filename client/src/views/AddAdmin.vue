@@ -54,7 +54,7 @@ export default {
       if(this.password_register === this.confirm_password_register){
         axios({
           method : 'post',
-          url : `${url}/users/register`,
+          url : `${url}/users/registeradmin`,
           data : {
             name : this.name_register,
             email : this.email_register,
