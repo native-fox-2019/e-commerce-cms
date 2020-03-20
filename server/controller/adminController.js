@@ -49,7 +49,7 @@ class adminController{
                 })
         })
         .catch(err=>{
-            next({status: 500, msg: 'Internal server error!'})
+            next(err)
         })
     }
 

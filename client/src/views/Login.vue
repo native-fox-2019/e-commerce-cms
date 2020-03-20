@@ -1,14 +1,19 @@
 <template>
-  <div class="login">
-   <h3> Login </h3>
-        <form id="form-login" action="" method="POST">
-            <label for="fname">Email:</label><br>
-            <input type="text" id="email" name="email" value="" v-model="email" required><br>
-            <label for="lname">Password:</label><br>
-            <input type="password" name="password" value="" v-model="password" required><br><br>
-            <input type="submit" class="btn btn-dark" value="Submit" v-on:click.prevent="login">
-        </form>
-  </div>
+<div>
+    <div class="alert alert-danger" role="alert" v-if="alert">
+      {{ this.msg }}
+    </div>
+    <div class="login">
+    <h3> Login </h3>
+          <form id="form-login" action="" method="POST">
+              <label for="fname">Email:</label><br>
+              <input type="text" id="email" name="email" value="" v-model="email" required><br>
+              <label for="lname">Password:</label><br>
+              <input type="password" name="password" value="" v-model="password" required><br><br>
+              <input type="submit" class="btn btn-dark" value="Submit" v-on:click.prevent="login">
+          </form>
+    </div>
+</div>
 </template>
 <script>
 import axios from 'axios';
@@ -17,6 +22,8 @@ export default {
   name: 'Login',
   data() {
     return {
+      alert: false,
+      msg: '',
       baseUrl: 'http://localhost:3000',
       email: '',
       password: '',
@@ -45,6 +52,8 @@ export default {
         })
         .catch((error) => {
           console.log(error);
+          this.alert = true;
+          this.msg = 'Wrong Email/Password!';
         });
     },
   },
