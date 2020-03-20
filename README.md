@@ -1,5 +1,5 @@
 # Deploy Link :
-## [http://localhost:8080](http://localhost:8080)
+## [https://e-commerce-cms-563db.firebaseapp.com](https://e-commerce-cms-563db.firebaseapp.com)
 
 # Endpoint:
 ## [https://cryptic-oasis-44923.herokuapp.com](https://cryptic-oasis-44923.herokuapp.com)
