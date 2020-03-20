@@ -57,7 +57,7 @@ class productController{
         let id = req.params.id
         let obj = {
             name : req.body.name,
-            image_url : req.body.image,
+            image_url : req.body.image_url,
             price : req.body.price,
             stock : req.body.stock
         }

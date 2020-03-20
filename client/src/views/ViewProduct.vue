@@ -16,14 +16,15 @@
                 <li class="list-group-item">Price : Rp.{{ data.price.toLocaleString('ID') }}</li>
                 <li class="list-group-item">Stock : {{ data.stock }}</li>
             </ul>
-            <div class="card-body">
+            <div class="card-body d-flex justify-content-between">
                 <input type="button" class="btn btn-warning ml-3" value="Edit Product"
                 v-on:click.prevent="edit(data.id)">
-                <input type="button" class="btn btn-danger ml-3" value="Delete Product">
+                <input type="button" class="btn btn-danger ml-3"
+                v-on:click.prevent="deleteProduct(data.id)" value="Delete Product">
             </div>
         </div>
     </div>
-    <EditProduct :elementEdit="elementEdit" @editButton="editButton" v-if="editBox"></EditProduct>
+    <EditProduct :elementEdit="elementEdit" v-if="editBox"></EditProduct>
 </div>
 </template>
 <script>
@@ -57,9 +58,8 @@ export default {
       this.editBox = true;
       this.view = false;
     },
-    editButton() {
-      this.editBox = false;
-      this.view = true;
+    deleteProduct(id) {
+      this.$store.dispatch('deleteProduct', id);
     },
   },
 };

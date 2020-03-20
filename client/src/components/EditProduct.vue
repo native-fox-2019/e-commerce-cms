@@ -6,7 +6,7 @@
                 <input type="text" id="Name" name="Name" value="" v-model="name" required><br>
                 <label for="fname">Image Url:</label><br>
                 <input
-                type="text" id="email" name="email" value="" v-model="image_url" required
+                type="text" id="email" name="image_url" value="" v-model="image_url" required
                 ><br>
                 <label for="lname">Price:</label><br>
                 <input type="text" name="price" value="" v-model="price" required><br><br>
