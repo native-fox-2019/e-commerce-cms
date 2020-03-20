@@ -4,7 +4,8 @@
   "description": "E-Commerce",
   "main": "app.js",
   "scripts": {
-    "test": "jest --detectOpenHandles"
+    "test": "jest --detectOpenHandles",
+    "dev":"nodemon index"
   },
   "repository": {
     "type": "git",
