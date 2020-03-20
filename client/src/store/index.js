@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import router from '../routers/index';
 
 const baseUrl = 'http://localhost:3000';
 Vue.use(Vuex);
@@ -51,6 +52,10 @@ export default new Vuex.Store({
             icon: 'error',
             title: 'Error',
             html: `${msg}`,
+            onClose: () => {
+              localStorage.removeItem('token');
+              router.push({ path: '/login' });
+            },
           });
         });
     },

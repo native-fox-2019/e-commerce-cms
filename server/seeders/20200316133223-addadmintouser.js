@@ -1,18 +1,19 @@
 'use strict';
 
+const { hashSync } = require('../helpers/bcrypt');
 module.exports = {
   up: (queryInterface, Sequelize) => {
       return queryInterface.bulkInsert('Users', [
         {
           email: 'admin@admin.com',
-          password: '$2b$10$ntk93rltzXUuElxIRFrGgO8rEj.lxteBwZOUUwf1rd0DC1KcABGn2',
+          password: hashSync('admin'),
           role: 'Admin',
           createdAt: new Date(),
           updatedAt: new Date()
         },
         {
-          email: 'admin2@admin.com',
-          password: '$2b$10$ntk93rltzXUuElxIRFrGgO8rEj.lxteBwZOUUwf1rd0DC1KcABGn2',
+          email: 'user@user.com',
+          password: hashSync('user'),
           role: 'User',
           createdAt: new Date(),
           updatedAt: new Date()
