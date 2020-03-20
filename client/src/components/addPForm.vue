@@ -69,31 +69,41 @@ export default {
             this.$emit("closeAddModal");
         },
         addProduct: function() {
-            Axios({
-                method: "post",
-                url: `${this.$store.state.rootUrl}/product`,
-                headers: {
-                    access_token: localStorage.getItem("access_token")
-                },
-                data: {
-                    name: this.addProd_name,
-                    image_url: this.addProd_image_url,
-                    stock: this.addProd_stock,
-                    price: this.addProd_price
-                }
-            })
-                .then(result => {
-                    this.addProd_name = "";
-                    this.addProd_image_url = "";
-                    this.addProd_stock = 0;
-                    this.addProd_price = 0;
-                    this.$emit("closeAddModal");
-                    this.$store.commit("addData", result.data.data);
+            if (this.$store.state.user_info.is_admin) {
+                Axios({
+                    method: "post",
+                    url: `${this.$store.state.rootUrl}/product`,
+                    headers: {
+                        access_token: localStorage.getItem("access_token")
+                    },
+                    data: {
+                        name: this.addProd_name,
+                        image_url: this.addProd_image_url,
+                        stock: this.addProd_stock,
+                        price: this.addProd_price
+                    }
                 })
-                .catch(err => {
-                    console.log(err.response);
-                    this.$store.dispatch("errorHandler", err.response);
+                    .then(result => {
+                        this.addProd_name = "";
+                        this.addProd_image_url = "";
+                        this.addProd_stock = 0;
+                        this.addProd_price = 0;
+                        this.$emit("closeAddModal");
+                        this.$store.commit("addData", result.data.data);
+                    })
+                    .catch(err => {
+                        console.log(err.response);
+                        this.$store.dispatch("errorHandler", err.response);
+                    });
+            } else {
+                console.log("masuk");
+                this.$store.dispatch("errorHandler", {
+                    data: {
+                        message:
+                            "Sorry you are not super user, you can't add any product. Ask the Super User to promote you as an Admin"
+                    }
                 });
+            }
         }
     }
 };

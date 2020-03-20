@@ -18,6 +18,8 @@
 </template>
 <script>
 import Axios from "axios";
+import Swal from "sweetalert2";
+
 export default {
     props: ["product"],
     data: () => {
@@ -25,20 +27,37 @@ export default {
     },
     methods: {
         deleteProduct: function(id) {
-            Axios({
-                method: "delete",
-                url: `${this.$store.state.rootUrl}/product/${id}`,
-                headers: {
-                    access_token: localStorage.getItem("access_token")
+            Swal.fire({
+                title: "Delete this product?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, delete it!"
+            }).then(result => {
+                if (result.value) {
+                    Axios({
+                        method: "delete",
+                        url: `${this.$store.state.rootUrl}/product/${id}`,
+                        headers: {
+                            access_token: localStorage.getItem("access_token")
+                        }
+                    })
+                        .then(() => {
+                            this.$store.commit("deleteData", id);
+                            Swal.fire(
+                                "Deleted!",
+                                "Your file has been deleted.",
+                                "success"
+                            );
+                        })
+                        .catch(err => {
+                            console.log(err.response);
+                            this.$store.dispatch("errorHandler", err.response);
+                        });
                 }
-            })
-                .then(() => {
-                    this.$store.commit("deleteData", id);
-                })
-                .catch(err => {
-                    console.log(err.response);
-                    this.$store.dispatch("errorHandler", err.response);
-                });
+            });
         },
         editProductForm: function(id) {
             Axios({

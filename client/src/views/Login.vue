@@ -26,9 +26,9 @@
             <router-link to="/register">
                 <span>Click Here to Register</span>
             </router-link>
-            <router-link to="/">
+            <!-- <router-link to="/">
                 <span>Click Here to Sign In with Google</span>
-            </router-link>
+            </router-link>-->
         </div>
     </div>
 </template>
