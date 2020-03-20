@@ -32,6 +32,7 @@ export default new Vuex.Store({
         },
       })
         .then(({ data }) => {
+          data.sort((a, b) => a.id - b.id);
           context.commit('getData', data);
         }).catch((err) => {
           let msg = null;
