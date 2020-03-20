@@ -4,7 +4,7 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 import router from '../routers/index';
 
-const baseUrl = 'http://localhost:3000';
+const baseUrl = 'https://cryptic-oasis-44923.herokuapp.com';
 Vue.use(Vuex);
 
 export default new Vuex.Store({

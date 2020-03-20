@@ -2,7 +2,7 @@
 ## [http://localhost:8080](http://localhost:8080)
 
 # Endpoint:
-## [http://localhost:8080](http://localhost:3000)
+## [https://cryptic-oasis-44923.herokuapp.com](https://cryptic-oasis-44923.herokuapp.com)
 
 # POST /users/register
 

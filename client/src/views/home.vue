@@ -38,7 +38,7 @@ import Swal from 'sweetalert2';
 import { mapState } from 'vuex';
 import Navbar from '../components/navbar.vue';
 
-const baseUrl = 'http://localhost:3000';
+const baseUrl = 'https://cryptic-oasis-44923.herokuapp.com';
 export default {
   components: {
     Navbar,

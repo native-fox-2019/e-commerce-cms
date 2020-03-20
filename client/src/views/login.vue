@@ -11,7 +11,7 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 import LoginCard from '../components/loginCard.vue';
 
-const baseUrl = 'http://localhost:3000';
+const baseUrl = 'https://cryptic-oasis-44923.herokuapp.com';
 export default {
   components: {
     LoginCard,

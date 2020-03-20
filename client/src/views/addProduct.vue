@@ -2,7 +2,7 @@
 <div>
   <Navbar />
   <div class="text-center m-2">
-    <h1>Add a new Product</h1>
+    <h1>Add a New Product</h1>
   </div>
   <div class="container">
     <AddProductCard
@@ -18,7 +18,7 @@ import Swal from 'sweetalert2';
 import Navbar from '../components/navbar.vue';
 import AddProductCard from '../components/addProductCard.vue';
 
-const baseUrl = 'http://localhost:3000';
+const baseUrl = 'https://cryptic-oasis-44923.herokuapp.com';
 export default {
   components: {
     Navbar,
