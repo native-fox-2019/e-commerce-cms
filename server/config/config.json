@@ -18,7 +18,7 @@
     "password": "508a761b465a2c18c2c4a5ad06db77fe21fe50ca0815a7eea47bbebeae26a866",
     "database": "daebnjdikdh5ao",
     "host": "ec2-3-229-210-93.compute-1.amazonaws.com",
-    "dialect": "mysql",
+    "dialect": "postgres",
     "operatorsAliases": false
   }
 }
