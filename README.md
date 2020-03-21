@@ -1,5 +1,4 @@
 # e-commerce-cms
-to register as an Admin, you can click Das Comic's name on the navbar, gonna hid it somewhere else
 
 admin email: admin@admin.com
 admin password :tests
@@ -10,3 +9,12 @@ user password : tests
 user email:joni@dangdut.mail.com
 user password :tests
 https://dascomix.firebaseapp.com/
+
+PRODUCT ROUTE
+|    ROUTE     |HTTP            | HEADERS  | BODY  | DESCRIPTION  | RESPONSE CODE    |
+| ------------- |:-------------:|    -----:| -----:|        -----:|       -----:|
+|     PRODUCT/          |  GET            |   NONE       |    NONE   |  GET ALL PRODUCT            |    200      |
+|     PRODUCT/          |  POST             |          |    NONE   |  GET ALL PRODUCT            |            |
+|     PRODUCT/:ID          |  GET            |   NONE       |    NONE   |  GET ALL PRODUCT            |            |
+|     PRODUCT/          |  GET            |   NONE       |    NONE   |  GET ALL PRODUCT            |            |
+|     PRODUCT/          |  GET            |   NONE       |    NONE   |  GET ALL PRODUCT            |            |
