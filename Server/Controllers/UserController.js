@@ -23,7 +23,6 @@ class UserController {
             }
         })
         .catch(err => {
-            console.log(err, '<<< dari register')
             if(err.errors){
                 let error = []
                 err.errors.forEach(item => {
@@ -60,7 +59,6 @@ class UserController {
             }
         })
         .catch(err => {
-            console.log(err, '<<< dari login')
             next({status: 500, msg: 'Server Error'})
         })
     }
