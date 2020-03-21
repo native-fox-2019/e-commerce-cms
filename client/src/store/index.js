@@ -7,8 +7,8 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    // SERVER:'https://aqueous-badlands-12134.herokuapp.com',
-    SERVER:'http://localhost:3000',
+    SERVER:'https://aqueous-badlands-12134.herokuapp.com',
+    // SERVER:'http://localhost:3000',
     isLogin:false,
     products:[],
     token:'',
@@ -133,6 +133,36 @@ export default new Vuex.Store({
       .catch((err)=>{
         console.log('Ada error saat load banner',err);
         return err
+      })
+    },
+
+    addBanner({state,commit},banner){
+      var bannerForm=form.add(banner);
+      return axios.post(state.SERVER+'/banners',bannerForm,{
+        headers:state.headers
+      })
+      .then((result)=>{
+        commit('setBannerLoaded',false);
+        return result;
+      })
+      .catch(err=>{
+        console.log('Ada error saat upload banner',err)
+      })
+    },
+
+    deleteBanner({state,commit},banner){
+
+      var bannerName=banner.name;
+      return axios.delete(state.SERVER+'/banners/'+bannerName,{
+        headers:state.headers
+      })
+      .then(result=>{
+        commit('setBannerLoaded',false);
+        console.log(result);
+        return result;
+      })
+      .catch(err=>{
+        console.log('Ada error saat delete banner',err);
       })
     }
   },

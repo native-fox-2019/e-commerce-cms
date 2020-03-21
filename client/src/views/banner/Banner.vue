@@ -11,7 +11,7 @@
                     <img :src="$store.state.SERVER+'/banner/'+banner.name" class="banner-img" alt="">
                 </b-col>
                 <b-col sm="2">
-                    <button class="btn btn-danger">Delete</button>
+                    <button class="btn btn-danger" @click="deleteBanner(banner)">Delete</button>
                 </b-col>
             </b-row>
         </b-card>
@@ -29,6 +29,22 @@ export default {
     },
     created(){
         this.$store.dispatch('loadBanner');
+    },
+    methods:{
+        deleteBanner(banner){
+            this.$bvModal.msgBoxConfirm(`Are you sure want to delete this banner?`)
+            .then((result)=>{
+                if(result){
+                    this.$store.dispatch('deleteBanner',banner)
+                    .then(()=>{
+                        this.$store.dispatch('loadBanner');
+                    });
+                }
+            })
+            .catch(()=>{
+                this.$bvModal.msgBoxOk('An error occured');
+            })
+        }
     }
 }
 </script>
