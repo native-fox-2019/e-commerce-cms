@@ -6,3 +6,7 @@ admin password :tests
 
 user email: user@user.com 
 user password : tests
+
+user email:joni@dangdut.mail.com
+user password :tests
+https://dascomix.firebaseapp.com/
