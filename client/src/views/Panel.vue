@@ -9,7 +9,7 @@
               <router-link to="/add">
               <input type="button" class="btn btn-dark" value="Add Product">
               </router-link>
-              <input type="button" class="btn btn-danger" value="Logout" v-on:click="logout">
+              <input type="button" class="btn btn-warning" value="Logout" v-on:click="logout">
     </div>
   </div>
 </template>
@@ -44,7 +44,7 @@ export default {
 .panel {
   border-color: black;
   border-style : double;
-  width: 30%;
+  width: 35%;
   text-align: center;
   margin : 20px auto;
   background: white;
@@ -55,7 +55,7 @@ export default {
   margin-left : 15px;
   padding-left: 15px;
 }
-.btn-danger {
+.btn-warning {
   margin-top: 20px;
   margin-left : 15px;
   padding-left: 15px;

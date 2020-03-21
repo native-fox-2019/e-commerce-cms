@@ -1,9 +1,13 @@
 <template>
-  <div class="hello">
-    <h3>Welcome to LuxWatch Admin Panel.</h3>
+<div class="card text-white bg-dark mb-3" style="max-width: 40rem;">
+  <div class="card-body">
+    <h3>Welcome to Admin Panel!</h3>
     <h3>Please Click Login to Continue</h3>
-    <input type="submit" class="btn btn-danger" value="Login" v-on:click="loginButton">
   </div>
+  <div>
+    <input type="submit" class="btn btn-warning" value="Login" v-on:click="loginButton">
+  </div>
+</div>
 </template>
 
 <script>
@@ -19,9 +23,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  .hello {
-  border-color: black;
-  border-style : double;
+  .card {
   width: 30%;
   text-align: center;
   margin : 10px auto;

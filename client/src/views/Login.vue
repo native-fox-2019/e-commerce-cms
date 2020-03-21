@@ -60,12 +60,14 @@ export default {
 };
 </script>
 <style scoped>
+@import url(https://fonts.googleapis.com/css?family=Lato:300,400&display=swap);
 .login {
   border-color: black;
   border-style : double;
   width: 20%;
   text-align: center;
-  font-family: "Lato";
+  font-family: 'Lato';
+  font-weight: 300;
   margin : 100px auto;
   background: white;
   padding: 15px;
