@@ -17,6 +17,7 @@ export default {
 };
 </script>
 <style>
+@import url("https://fonts.googleapis.com/css?family=Roboto&display=swap");
 body {
   padding: 3em;
   /* background-color: rgba(229, 231, 232, 0.598); */

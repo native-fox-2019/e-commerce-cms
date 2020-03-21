@@ -56,7 +56,7 @@ export default {
           Swal.fire({
             icon: "error",
             title: "Oops...",
-            text: `${err.response.data}`
+            text: `email or password wrong`
           });
         });
     }

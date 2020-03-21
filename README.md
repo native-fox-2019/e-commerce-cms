@@ -3,7 +3,7 @@
 Link Hosting: 
 
 ```
-https://ecom-cms.firebaseapp.com
+https://ecomm-cms.firebaseapp.com/
 ```
 
 Link Server :
