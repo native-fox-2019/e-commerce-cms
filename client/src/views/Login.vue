@@ -13,7 +13,7 @@
                         <b-form-group id="password" label="Enter Your Password" label-for="password">
                             <b-form-input id="password" v-model="form.password" type="password" required></b-form-input>
                         </b-form-group>
-                        <b-button type="submit" variant="primary">Submit</b-button>
+                        <b-button type="submit" variant="primary" :disabled="isLogging">Submit</b-button>
                     </b-form>
 
                 </div>
@@ -32,7 +32,8 @@ export default {
             form:{
                 email:'',
                 password:''
-            }
+            },
+            isLogging:false
         }
     },
     methods:{
@@ -54,6 +55,10 @@ export default {
             .catch((err)=>{
                 console.log('ada error',err);
             })
+            .finally(()=>{
+                this.isLogging=false;
+            })
+            this.isLogging=true;
         }
     }
 }

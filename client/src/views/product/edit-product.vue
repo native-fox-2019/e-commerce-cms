@@ -46,7 +46,7 @@
           drop-placeholder="Drop file here..."
         ></b-form-file>
       </b-form-group>
-    <b-button variant="success" @click="onSubmit">Submit</b-button>
+    <b-button variant="success" @click="onSubmit" :disabled="isSubmitting">Submit</b-button>
     </b-form-group>
   </b-card>
 </div>
@@ -60,7 +60,8 @@ export default {
                 price:0,
                 stock:0,
                 id:-1,
-            }
+            },
+            isSubmitting:false
         }
     },
     created(){
@@ -81,6 +82,10 @@ export default {
         .then(()=>{
           self.$router.push('/product');
         })
+         .finally(()=>{
+          this.isSubmitting=false;
+        })
+        this.isSubmitting=true;
       }
     }
 }
