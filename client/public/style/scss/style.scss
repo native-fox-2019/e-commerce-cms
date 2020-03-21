@@ -1,0 +1,55 @@
+@import url('https://fonts.googleapis.com/css?family=Baloo+Chettan+2:400,500&display=swap');
+
+$color-base: #333333;
+$color-primary: #252526;
+$color-font: #23a8f2;
+$color-backrgound: #1d1d1d;
+$font: 'Baloo Chettan 2',
+cursive;
+
+* {
+  font-family: $font;
+  margin: 0px 0px;
+  color: $color-font;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: $color-base;
+}
+
+@import './navbar';
+@import './button';
+@import './loginregister';
+@import './footer';
+@import './card';
+@import './addProductBtn';
+@import './modal';
+@import './userInfo';
+
+.users-title {
+  text-align: center;
+  margin: 30px 40% 0 40%;
+  font-size: 24px;
+  padding: 15px;
+  background-color: $color-primary;
+  border-radius: 5px;
+}
+
+.users-table {
+
+  table {
+    margin: 0 auto;
+    margin-top: 20px;
+    padding: 15px;
+    background-color: $color-primary;
+    border-radius: 5px;
+    border: 1px $color-font solid;
+  }
+}
+
+.btn-simple {
+  min-width: 100px;
+  border-radius: 5px;
+  cursor: pointer;
+}
