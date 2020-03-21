@@ -51,10 +51,10 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   if (to.matched.some((record) => record.meta.requireAuth)) {
-    if (localStorage.role === 'customer') {
-      next({ name: 'Home' });
-    } else {
+    if (localStorage.role === 'admin') {
       next();
+    } else {
+      next({ name: 'Home' });
     }
   } else {
     next();
