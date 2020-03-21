@@ -33,12 +33,6 @@ export default new Vuex.Store({
       })
       .catch(err => {
         console.log(err)
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          html: `something wrong with server`,
-          footer: "made by love 💖"
-        });
       })
     },
     addData(contex, data) {
