@@ -227,4 +227,8 @@ export default {
 .menu img {
   margin-right: 1em;
 }
+a {
+  text-decoration: none;
+  color: black;
+}
 </style>

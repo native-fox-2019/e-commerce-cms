@@ -51,11 +51,11 @@ export default {
             timer: 1500
           });
         })
-        .catch(({ err }) => {
+        .catch(err => {
           Swal.fire({
             icon: "error",
             title: "Oops...",
-            text: "Your email or password is incorrect"
+            text: `${err.response.data}`
           });
         });
     }

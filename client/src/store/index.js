@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
+import Swal from 'sweetalert2'
 const server = `http://localhost:3000`
 Vue.use(Vuex)
 
@@ -72,25 +73,58 @@ export default new Vuex.Store({
       })
         .then(({ data }) => {
           context.dispatch('getAll')
+          Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Your work has been saved',
+            showConfirmButton: false,
+            timer: 1500
+          })
         })
         .catch(err => {
           console.log(err)
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: `${err.response.data}`,
+            showConfirmButton: false,
+            timer: 1500
+          })
         })
     },
     deleteProduct(context, id) {
-      axios({
-        method: 'DELETE',
-        url: `${server}/products/${id}`,
-        headers: {
-          token: localStorage.token
+
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        if (result.value) {
+          Swal.fire(
+            'Deleted!',
+            'Your file has been deleted.',
+            'success'
+          )
+          axios({
+            method: 'DELETE',
+            url: `${server}/products/${id}`,
+            headers: {
+              token: localStorage.token
+            }
+          })
+            .then(({ data }) => {
+              context.dispatch('getAll')
+            })
+            .catch(err => {
+              console.log(err)
+
+            })
         }
       })
-        .then(({ data }) => {
-          context.dispatch('getAll')
-        })
-        .catch(err => {
-          console.log(err)
-        })
     },
     getOneProduct(context, id) {
       axios({
@@ -106,6 +140,11 @@ export default new Vuex.Store({
         })
         .catch(err => {
           console.log(err)
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: `${err.response.data}`
+          });
         })
     },
     updateProduct(context, dataObj) {
@@ -122,9 +161,20 @@ export default new Vuex.Store({
           // console.log(data, "<<<<<< data")
           context.dispatch('getAll')
           context.commit('setIsEditProductFalse')
+          Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Your work has been saved',
+            showConfirmButton: false,
+            timer: 1500
+          })
         })
         .catch(err => {
-          console.log(err)
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: `${err.response.data}`
+          });
         })
     }
   },
