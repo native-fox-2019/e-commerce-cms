@@ -1,6 +1,7 @@
 const {User} = require('../models');
 
 function authorization(req, res, next){
+
     User.findOne({
         where: {
             id: req.user.id

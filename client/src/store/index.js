@@ -16,9 +16,9 @@ export default new Vuex.Store({
   actions: {
     getData(context){
       axios({
-          method: 'get',
-          url: `http://localhost:3000/products`,
-          headers: {token: localStorage.getItem('token')}
+          method : 'get',
+          url : `http://localhost:3000/products`,
+          headers : {token: localStorage.getItem('token')}
       })
         .then(res=>{
             context.commit('showProducts', res.data)
@@ -27,7 +27,5 @@ export default new Vuex.Store({
             console.log(err);
         })
     }
-  },
-  modules: {
   }
 })

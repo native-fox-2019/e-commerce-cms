@@ -9,6 +9,7 @@
         @show="resetModal"
         @hidden="resetModal"
         @ok="handleOk"
+        ok-title="Update"
         >
         <form ref="form" @submit.stop.prevent="createData">
           <b-form-group
@@ -159,14 +160,14 @@ export default {
 
     editData(){
       axios({
-        method: 'put',
-        url: `${this.endpoint}/products/${this.idEdit}`,
-        headers: {token: localStorage.getItem('token')},
-        data: {
-          name: this.nameEdit,
-          image_url: this.imageEdit,
-          price: this.priceEdit,
-          stock: this.stockEdit
+        method : 'put',
+        url : `${this.endpoint}/products/${this.idEdit}`,
+        headers : {token: localStorage.getItem('token')},
+        data : {
+          name : this.nameEdit,
+          image_url : this.imageEdit,
+          price : this.priceEdit,
+          stock : this.stockEdit
         }
       })
         .then(()=>{

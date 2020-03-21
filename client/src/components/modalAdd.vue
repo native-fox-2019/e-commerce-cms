@@ -6,6 +6,7 @@
         @show="resetModal"
         @hidden="resetModal"
         @ok="handleOk"
+        ok-title="Add new product"
         >
         <form ref="form" @submit.stop.prevent="createData">
             <b-form-group

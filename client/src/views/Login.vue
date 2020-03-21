@@ -1,7 +1,10 @@
 <template>
     <div>
-        <img alt="logo" src="../assets/guitar.png" style="width: 15%;">
-        <h1 class="mt-3">Login (Admin)</h1>
+        <img alt="logo" src="../assets/guitar.png" style="width: 15%; margin-top: 5%">
+        <h1>
+            Oldie Music Admin Page
+        </h1>
+        <h3 class="mt-3">Login (Admin)</h3>
         <div class="container">
             <div class="d-flex justify-content-center">
                 <div class="card bg-dark" style="width: 18rem; opacity: 75%;">
@@ -25,6 +28,7 @@
 </template>
 <script>
 import axios from 'axios';
+import Swal from 'sweetalert2';
 
 export default {
     data(){
@@ -37,11 +41,11 @@ export default {
     methods: {
         login(){
             axios({
-                method: 'post',
-                url: `${this.endpoint}/users/adminLogin`,
-                data: {
-                    email: this.email,
-                    password: this.password
+                method : 'post',
+                url : `${this.endpoint}/users/adminLogin`,
+                data : {
+                    email : this.email,
+                    password : this.password
                 }
             })
                 .then(res=>{
@@ -51,7 +55,12 @@ export default {
                     })
                 })
                 .catch(err=>{
-                    console.log(err);
+                    Swal.fire({
+                        icon : 'error',
+                        title : `Error`,
+                        text : `${err.response.data.message}`,
+                        confirmButtonText : 'Close'
+                    })
                 })
         }
     }

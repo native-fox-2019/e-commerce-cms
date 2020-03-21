@@ -6,6 +6,7 @@
         @show="resetModal"
         @hidden="resetModal"
         @ok="handleOk"
+        ok-title="Create"
         >
         <form ref="form" @submit.stop.prevent="createAdmin">
           <b-form-group
@@ -88,19 +89,19 @@ export default {
 
         createAdmin(){
             axios({
-                method: 'post',
-                url: `${this.endpoint}/users/adminRegister`,
-                data: {
-                    email: this.emailRegis,
-                    password: this.passwordRegis,
-                    username: this.usernameRegis
+                method : 'post',
+                url : `${this.endpoint}/users/adminRegister`,
+                data : {
+                    email : this.emailRegis,
+                    password : this.passwordRegis,
+                    username : this.usernameRegis
                 }
             })
                 .then(()=>{
                     this.$store.dispatch('getData');
                 })
                 .catch(err=>{
-                    console.log(err)
+                    console.log(err.response.data.message)
                 })
             
             this.$nextTick(() => {
