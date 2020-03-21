@@ -30,17 +30,125 @@ module.exports = {
         UserId: 1,
         createdAt: new Date,
         updatedAt: new Date,
+      },
+      {
+        name: "Coffee Arabica",
+        stock: 12,
+        urlImage: 'https://s0.bukalapak.com/img/0065315813/w-1000/Bawadi_Coffee_Arabica_200g.jpg',
+        price: 120000,
+        UserId: 1,
+        createdAt: new Date,
+        updatedAt: new Date,
+      },
+      {
+        name: "Coffee Arabica",
+        stock: 12,
+        urlImage: 'https://s0.bukalapak.com/img/0065315813/w-1000/Bawadi_Coffee_Arabica_200g.jpg',
+        price: 120000,
+        UserId: 1,
+        createdAt: new Date,
+        updatedAt: new Date,
+      },
+      {
+        name: "Coffee Arabica",
+        stock: 12,
+        urlImage: 'https://s0.bukalapak.com/img/0065315813/w-1000/Bawadi_Coffee_Arabica_200g.jpg',
+        price: 120000,
+        UserId: 1,
+        createdAt: new Date,
+        updatedAt: new Date,
+      },
+      {
+        name: "Coffee Arabica",
+        stock: 12,
+        urlImage: 'https://s0.bukalapak.com/img/0065315813/w-1000/Bawadi_Coffee_Arabica_200g.jpg',
+        price: 120000,
+        UserId: 1,
+        createdAt: new Date,
+        updatedAt: new Date,
+      },
+      {
+        name: "Coffee Arabica",
+        stock: 12,
+        urlImage: 'https://s0.bukalapak.com/img/0065315813/w-1000/Bawadi_Coffee_Arabica_200g.jpg',
+        price: 120000,
+        UserId: 1,
+        createdAt: new Date,
+        updatedAt: new Date,
+      },
+      {
+        name: "Coffee Arabica",
+        stock: 12,
+        urlImage: 'https://s0.bukalapak.com/img/0065315813/w-1000/Bawadi_Coffee_Arabica_200g.jpg',
+        price: 120000,
+        UserId: 1,
+        createdAt: new Date,
+        updatedAt: new Date,
+      },
+      {
+        name: "Coffee Arabica",
+        stock: 12,
+        urlImage: 'https://s0.bukalapak.com/img/0065315813/w-1000/Bawadi_Coffee_Arabica_200g.jpg',
+        price: 120000,
+        UserId: 1,
+        createdAt: new Date,
+        updatedAt: new Date,
+      },
+      {
+        name: "Coffee Arabica",
+        stock: 12,
+        urlImage: 'https://s0.bukalapak.com/img/0065315813/w-1000/Bawadi_Coffee_Arabica_200g.jpg',
+        price: 120000,
+        UserId: 1,
+        createdAt: new Date,
+        updatedAt: new Date,
+      },
+      {
+        name: "Coffee Arabica",
+        stock: 12,
+        urlImage: 'https://s0.bukalapak.com/img/0065315813/w-1000/Bawadi_Coffee_Arabica_200g.jpg',
+        price: 120000,
+        UserId: 1,
+        createdAt: new Date,
+        updatedAt: new Date,
+      },
+      {
+        name: "Coffee Arabica",
+        stock: 12,
+        urlImage: 'https://s0.bukalapak.com/img/0065315813/w-1000/Bawadi_Coffee_Arabica_200g.jpg',
+        price: 120000,
+        UserId: 1,
+        createdAt: new Date,
+        updatedAt: new Date,
+      },
+      {
+        name: "Coffee Arabica",
+        stock: 12,
+        urlImage: 'https://s0.bukalapak.com/img/0065315813/w-1000/Bawadi_Coffee_Arabica_200g.jpg',
+        price: 120000,
+        UserId: 1,
+        createdAt: new Date,
+        updatedAt: new Date,
+      },
+      {
+        name: "Coffee Arabica",
+        stock: 12,
+        urlImage: 'https://s0.bukalapak.com/img/0065315813/w-1000/Bawadi_Coffee_Arabica_200g.jpg',
+        price: 120000,
+        UserId: 1,
+        createdAt: new Date,
+        updatedAt: new Date,
       }
     ], {});
   },
 
   down: (queryInterface, Sequelize) => {
+    return queryInterface.bulkDelete('Products', null, {});
     /*
       Add reverting commands here.
       Return a promise to correctly handle asynchronicity.
 
       Example:
-      return queryInterface.bulkDelete('People', null, {});
     */
   }
 };

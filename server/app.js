@@ -11,6 +11,6 @@ app.use(express.urlencoded({ extended: true }))
 
 app.use('/', index)
 
-// app.listen(PORT, console.log('listening on port ' + PORT))
+app.listen(PORT, console.log('listening on port ' + PORT))
 
 module.exports = app

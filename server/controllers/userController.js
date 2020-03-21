@@ -110,7 +110,7 @@ class UserController {
               email: data.email
             }
             const token = jwt.sign(payload, process.env.SECRET)
-            res.status(200).json({ token: token })
+            res.status(200).json({ token: token, admin: true })
           }
         } else {
           throw {

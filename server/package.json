@@ -9,7 +9,7 @@
     "migrate": "npx sequelize-cli db:migrate && npm run seed",
     "seed": "npx sequelize-cli db:seed:all",
     "migrate:reset": "npx sequelize-cli db:migrate:undo:all && npm run migrate",
-    "test": "NODE_ENV=test jest --testTimeout=10000",
+    "test": "NODE_ENV=test jest --testTimeout=10000 --forceExit",
     "pretest": "NODE_ENV=test npm run migrate:reset"
   },
   "keywords": [],
@@ -22,7 +22,8 @@
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
     "pg": "^7.18.2",
-    "sequelize": "^5.21.5"
+    "sequelize": "^5.21.5",
+    "vuex": "^3.1.3"
   },
   "devDependencies": {
     "jest": "^25.1.0",
