@@ -1,8 +1,8 @@
 <template>
   <div id="app">
     <div id="nav">
-      <a href="" @click.prevent="logout" v-if="$store.state.isLogin">Logout</a> | 
-      <router-link to="/product">Product</router-link>
+      <a href="" @click.prevent="logout" v-if="$store.state.isLogin">Logout</a>
+      <router-link to="/product" v-if="$store.state.isLogin">Product</router-link>
     </div>
     <div class="container">
     <router-view />
@@ -48,6 +48,7 @@ export default {
 #nav a {
   font-weight: bold;
   color: #2c3e50;
+  margin-left:10px;
 }
 
 #nav a.router-link-exact-active {

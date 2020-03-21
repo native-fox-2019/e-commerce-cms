@@ -15,17 +15,26 @@
                 <template v-slot:row-details="row">
                     <b-card>
                         <b-row>
-                            <b-col sm="2"><span class="bold">Product Name:</span></b-col>
-                            <b-col class="text-sm-left"> {{row.item.name}}</b-col>
+                            <b-col sm="6">
+                                <b-row>
+                                    <b-col sm="6"><span class="bold">Product Name:</span></b-col>
+                                    <b-col class="text-sm-left" sm="6"> {{row.item.name}}</b-col>
+                                </b-row>
+                                <b-row>
+                                    <b-col sm="6"><span class="bold">Product Price:</span></b-col>
+                                    <b-col class="text-sm-left" sm="6">{{row.item.price}}</b-col>
+                                </b-row>
+                                <b-row>
+                                    <b-col sm="6"><span class="bold">Product Stock:</span></b-col>
+                                    <b-col class="text-sm-left" sm="6">{{row.item.stock}}</b-col>
+                                </b-row>
+                            </b-col>
+                            <b-col sm="6">
+                                <img :src="'/img/'+row.item.image_url " class="product-img" alt="">
+                            </b-col>
+
                         </b-row>
-                        <b-row>
-                            <b-col sm="2"><span class="bold">Product Price:</span></b-col>
-                            <b-col class="text-sm-left">{{row.item.price}}</b-col>
-                        </b-row>
-                         <b-row>
-                            <b-col sm="2"><span class="bold">Product Stock:</span></b-col>
-                            <b-col class="text-sm-left">{{row.item.stock}}</b-col>
-                        </b-row>
+
                     </b-card>
                 </template>
             </b-table>
@@ -81,5 +90,10 @@ export default {
 <style scoped>
     .bold{
         font-weight: bold;
+    }
+
+    .product-img{
+        width: 200px;
+        height: 100px;
     }
 </style>

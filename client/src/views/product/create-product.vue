@@ -34,6 +34,18 @@
       >
         <b-form-input id="product-stock" v-model="product.stock" type="number"></b-form-input>
       </b-form-group>
+      <b-form-group
+        label-cols-sm="3"
+        label="Product Image:"
+        label-align-sm="right"
+        label-for="product-image"
+      >
+          <b-form-file
+          v-model="product.image"
+          placeholder="Choose a file or drop it here..."
+          drop-placeholder="Drop file here..."
+        ></b-form-file>
+      </b-form-group>
     <b-button variant="success" @click="onSubmit">Submit</b-button>
     </b-form-group>
   </b-card>
@@ -54,6 +66,7 @@ export default {
       onSubmit(){
         // this.$store.commit('addProduct',this.product);
         var self=this;
+        console.log(self.product);
         this.$store.dispatch('addProduct',this.product)
         .then(()=>{
           self.$router.push('/product');

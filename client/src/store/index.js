@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import axios from 'axios';
+import form from '../helpers/form';
 
 Vue.use(Vuex);
 
@@ -12,6 +13,10 @@ export default new Vuex.Store({
     token:'',
     headers:{
       'Content-Type':'application/json',
+      token:localStorage.token
+    },
+    headers2:{
+      'Content-Type': 'multipart/form-data',
       token:localStorage.token
     }
   },
@@ -59,8 +64,9 @@ export default new Vuex.Store({
       })
     },
     addProduct({state,commit},product){
-      return axios.post(state.SERVER+'/product',product,{
-        headers:state.headers
+      var formProduct=form.add(product);
+      return axios.post(state.SERVER+'/product',formProduct,{
+        headers:state.headers2
       })
       .then((res)=>{
         var data=res.data.product;
@@ -74,9 +80,9 @@ export default new Vuex.Store({
     },
     updateProduct({state,commit},payload){
       var id=payload.id;
-      var product=payload.product;
+      var product=form.add(payload.product);
       return axios.put(state.SERVER+'/product/'+id,product,{
-        headers:state.headers
+        headers:state.headers2
       })
       .then(()=>{
         commit('updateProduct',payload);

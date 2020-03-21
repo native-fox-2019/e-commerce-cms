@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row">
             <div class="col-6">
-                <h1>Vue-Shoes</h1>
+                <img src="/logo.jfif" alt="">
             </div>
             <div class="col-6">
                 <div>
