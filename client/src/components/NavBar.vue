@@ -54,7 +54,8 @@ export default {
           onClose: () => {
             clearInterval(timerInterval)
           }
-          }).then((result) => {
+          })
+          .then((result) => {
             if (result.dismiss === Swal.DismissReason.timer) {
               console.log('I was closed by the timer')
             }
@@ -63,7 +64,14 @@ export default {
           this.$router.push({
             path: '/login'
           })
-        })
+          })
+          .catch(err=>{
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: `${err.response}`,
+            })
+          })
       }
     }
 }
