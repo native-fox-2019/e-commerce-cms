@@ -3,7 +3,7 @@
 This is the documentation for using KANBAN API. The base url for this API is `https://whispering-cliffs-47024.herokuapp.com`
 
 
-To use this app with user interface, kindly visit this link https://kanban-1584072346233.firebaseapp.com/
+To use this app with user interface, kindly visit this link https://footsalt-cms.firebaseapp.com/
 
 ### 1. Register (If you Already have an account, you can skip this part, Only register new Costumer)
 
