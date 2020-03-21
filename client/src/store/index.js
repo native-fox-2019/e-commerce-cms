@@ -58,6 +58,7 @@ export default new Vuex.Store({
         }
       })
       .then(({data}) => {
+        contex.dispatch('findAll')
         Swal.fire({
                   position: "center",
                   icon: "success",
@@ -110,6 +111,7 @@ export default new Vuex.Store({
         data : data
     })
     .then(({data}) => {
+        contex.dispatch('findAll')
          Swal.fire({
           position: "center",
           icon: "success",

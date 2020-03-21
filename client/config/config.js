@@ -1,3 +1,3 @@
 "use strict"
-const url = 'http://localhost:3000'
+const url = 'https://thawing-dusk-26741.herokuapp.com'
 module.exports = url
