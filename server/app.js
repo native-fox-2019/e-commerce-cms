@@ -13,6 +13,6 @@ app.use(express.urlencoded({ extended: true }))
 app.use(route)
 app.use(errorHandler)
 
-// app.listen(port, console.log(`localhost:`,port))
+app.listen(port, console.log(`localhost:`,port))
 
 module.exports = app

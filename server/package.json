@@ -1,5 +1,5 @@
 {
-  "name": "ecommerce-server",
+  "name": "ecommerce-cms-server",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -12,7 +12,9 @@
     "test-readAll": "clear && jest product-readAll --detectOpenHandles --runInBand --forceExit",
     "test-readOne": "clear && jest product-readOne --detectOpenHandles --runInBand --forceExit",
     "test-update": "clear && jest product-update --detectOpenHandles --runInBand --forceExit",
-    "test-delete": "clear && jest product-delete --detectOpenHandles --runInBand --forceExit"
+    "test-delete": "clear && jest product-delete --detectOpenHandles --runInBand --forceExit",
+    "initdb_dev": "sequelize db:create --env=development && sequelize db:migrate --env=development && sequelize db:seed:all --env=development",
+    "dev": "nodemon app.js --env=development"
   },
   "keywords": [],
   "author": "",

@@ -1,0 +1,36 @@
+* {
+    scrollbar-width: thin;
+}
+
+#app {
+    font-family: Avenir, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
+    color: #2c3e50;
+}
+
+.auth-form {
+    width: 320px !important;
+}
+
+.table-container {
+    height: calc(100vh - 120px) !important;
+    max-height: calc(100vh - 120px) !important;
+}
+
+.img-thumbnail {
+    width: 240px;
+    height: 240px;
+}
+
+.modal-content  {
+    -webkit-border-radius: 0px !important;
+    -moz-border-radius: 0px !important;
+    border-radius: 0px !important;
+    border: none;
+}
+
+tr td {
+    vertical-align: middle !important;
+}
