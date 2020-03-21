@@ -11,20 +11,3 @@
      let result = temp.reverse().join('')
      return `Rp. ${result}`
  }
-
- //  module.exports = {
- //      rpConverter
- //  }
-
- let arr = [{
-         i: 10000
-     },
-     {
-         i: 1000
-     },
-     {
-         i: 1000000000
-     }
- ]
-
- console.log(arr.map(data => data.i * 1))

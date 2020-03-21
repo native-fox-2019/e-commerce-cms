@@ -44,7 +44,9 @@
                                 v-model="addProd_price"
                             />
                         </div>
-                        <button id="addProduct-submit" class="submit-btn btn">Add</button>
+                        <button id="addProduct-submit" class="submit-btn btn">
+                            Add
+                        </button>
                     </form>
                 </div>
             </div>
@@ -52,29 +54,29 @@
     </div>
 </template>
 <script>
-import Axios from "axios";
+import Axios from 'axios';
 
 export default {
-    props: ["addModal"],
+    props: ['addModal'],
     data: () => {
         return {
-            addProd_name: "",
-            addProd_image_url: "",
+            addProd_name: '',
+            addProd_image_url: '',
             addProd_stock: 0,
             addProd_price: 0
         };
     },
     methods: {
         closeAddModal: function() {
-            this.$emit("closeAddModal");
+            this.$emit('closeAddModal');
         },
         addProduct: function() {
             if (this.$store.state.user_info.is_admin) {
                 Axios({
-                    method: "post",
+                    method: 'post',
                     url: `${this.$store.state.rootUrl}/product`,
                     headers: {
-                        access_token: localStorage.getItem("access_token")
+                        access_token: localStorage.getItem('access_token')
                     },
                     data: {
                         name: this.addProd_name,
@@ -84,23 +86,21 @@ export default {
                     }
                 })
                     .then(result => {
-                        this.addProd_name = "";
-                        this.addProd_image_url = "";
+                        this.addProd_name = '';
+                        this.addProd_image_url = '';
                         this.addProd_stock = 0;
                         this.addProd_price = 0;
-                        this.$emit("closeAddModal");
-                        this.$store.commit("addData", result.data.data);
+                        this.$emit('closeAddModal');
+                        this.$store.commit('addData', result.data.data);
                     })
                     .catch(err => {
-                        console.log(err.response);
-                        this.$store.dispatch("errorHandler", err.response);
+                        this.$store.dispatch('errorHandler', err.response);
                     });
             } else {
-                console.log("masuk");
-                this.$store.dispatch("errorHandler", {
+                this.$store.dispatch('errorHandler', {
                     data: {
                         message:
-                            "Sorry you are not super user, you can't add any product. Ask the Super User to promote you as an Admin"
+                            "Sorry you are not super user, you can't add any product. Ask the Super User to promote you as a Member. Contact: rqz.agastya@gmail.com"
                     }
                 });
             }

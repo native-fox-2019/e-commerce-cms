@@ -44,7 +44,9 @@
                                 v-model="$store.state.product_temp.price"
                             />
                         </div>
-                        <button id="editProduct-submit" class="submit-btn btn">Update</button>
+                        <button id="editProduct-submit" class="submit-btn btn">
+                            Update
+                        </button>
                     </form>
                 </div>
             </div>
@@ -52,22 +54,22 @@
     </div>
 </template>
 <script>
-import Axios from "axios";
+import Axios from 'axios';
 export default {
-    props: ["editModal"],
+    props: ['editModal'],
     data: () => {
         return {};
     },
     methods: {
         closeEditModal: function() {
-            this.$emit("closeEditModal");
+            this.$emit('closeEditModal');
         },
         editProduct: function() {
             Axios({
-                method: "put",
+                method: 'put',
                 url: `${this.$store.state.rootUrl}/product/${this.$store.state.product_temp.id}`,
                 headers: {
-                    access_token: localStorage.getItem("access_token")
+                    access_token: localStorage.getItem('access_token')
                 },
                 data: {
                     name: this.$store.state.product_temp.name,
@@ -78,14 +80,13 @@ export default {
             })
                 .then(() => {
                     this.$store.commit(
-                        "editData",
+                        'editData',
                         this.$store.state.product_temp
                     );
-                    this.$emit("closeEditModal");
+                    this.$emit('closeEditModal');
                 })
                 .catch(err => {
-                    console.log(err.response);
-                    this.$store.dispatch("errorHandler", err.response);
+                    this.$store.dispatch('errorHandler', err.response);
                 });
         }
     }

@@ -9,7 +9,7 @@ export default new Vuex.Store({
     state: {
         products: [],
         isLogin: localStorage.getItem("access_token"),
-        rootUrl: 'http://localhost:3000',
+        rootUrl: 'https://polar-lowlands-62629.herokuapp.com',
         product_temp: {
             id: '',
             name: '',
