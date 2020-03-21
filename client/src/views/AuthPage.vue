@@ -35,7 +35,7 @@ export default {
     login() {
       Axios({
         method: 'POST',
-        url: process.env.VUE_APP_BASE_URL + '/user/login',
+        url: 'https://mighty-stream-85910.herokuapp.com/user/login',
         data: {
           username: this.username,
           password: this.password
