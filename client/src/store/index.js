@@ -7,7 +7,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     products: [],
-    baseUrl: 'http://localhost:3003',
+    baseUrl: 'https://whispering-cliffs-47024.herokuapp.com',
     isLogin: false,
     isAdmin: false,
     productId: 0,
