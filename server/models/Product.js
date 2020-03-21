@@ -16,6 +16,9 @@ module.exports = (sequelize, DataTypes) => {
         validate: {
           notEmpty: {
             msg: `Image url can't be empty!`
+          },
+          isUrl: {
+            msg: `image URL must be URL`
           }
         }
       },

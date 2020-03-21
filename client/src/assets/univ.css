@@ -14,4 +14,27 @@
     position: fixed;
     left: 0;
     right: 0;
+    z-index: 10;
+}
+
+.b-toaster {
+    z-index: 5;
+}
+
+.toast-header {
+    border: 1px solid black;
+    border-bottom: inherit;
+}
+
+.toast-header, .toast-header button {
+    background-color: rgb(247, 110, 110);
+    color: white;
+    opacity: 1;
+}
+
+.toast-body {
+    background-color: rgb(248, 183, 183);
+    color: black;
+    border: 1px solid black;
+    border-top: none;
 }

@@ -1,5 +1,6 @@
 const model = require(`../models`);
 const createError = require(`../helpers/createErrors`);
+const jwt = require(`../helpers/jwt`);
 
 class productController {
   static create(req, res, next) {
@@ -21,6 +22,7 @@ class productController {
   }
 
   static read(req, res, next) {
+
     model.Product.findAll()
       .then(data => {
         res.status(200).json(data);
@@ -57,7 +59,7 @@ class productController {
   static delete(req, res, next) {
     model.Product.destroy({
       where: {
-        id: req.user.id
+        id: req.params.id
       }
     })
       .then(data => {

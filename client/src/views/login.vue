@@ -50,12 +50,13 @@ export default {
       })
         .then(({ data }) => {
           localStorage.token = data.token;
+          localStorage.role = data.role;
           this.$router.push({ name: 'main' });
           this.form.email = '';
           this.form.password = '';
         })
         .catch((err) => {
-          console.log(err.response.data);
+          this.$store.dispatch('toast', { vm: this, message: err.response.data.status_message.join(', ') });
         });
     },
   },

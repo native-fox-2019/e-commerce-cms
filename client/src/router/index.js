@@ -41,7 +41,10 @@ const routes = [
     name: 'logout',
     component: login,
     beforeEnter(to, from, next) {
+      localStorage.removeItem('role');
       localStorage.removeItem('token');
+      store.state.role = null;
+      store.state.navbar = 'login';
       next();
     },
   },

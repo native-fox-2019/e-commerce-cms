@@ -19,7 +19,8 @@ class adminController {
         });
 
         res.status(201).json({
-          token
+          token,
+          role: data.role
         });
       })
       .catch(err => {
@@ -48,7 +49,8 @@ class adminController {
             });
 
             res.status(200).json({
-              token
+              token,
+              role: data.role
             });
           } else {
             throw createError(404, `Wrong Email/Password`);

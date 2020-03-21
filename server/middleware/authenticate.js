@@ -18,7 +18,7 @@ module.exports = (req, res, next) => {
         }
     })
         .then(data => {
-            if (data) {
+            if (data || (data && req.user.role === `admin`)) {
                 next()
             } else {
                 throw createError(404, `User does not exist`)
