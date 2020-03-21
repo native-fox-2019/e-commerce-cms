@@ -1,4 +1,8 @@
 <template>
+<div>
+    <div class="alert alert-danger" role="alert" v-if="alert">
+      {{ this.msg }}
+  </div>
   <div class="add">
     <h3> Add Product </h3>
             <form id="form-add" action="" method="POST">
@@ -13,10 +17,14 @@
                 <label for="lname">Stock:</label><br>
                 <input type="text" name="stock" value="" v-model="stock" required><br><br>
                 <input
-                type="submit" class="btn btn-dark" value="Add Product" v-on:click.prevent="add"
+                type="submit" class="btn btn-dark mr-2" value="Add Product" v-on:click.prevent="add"
                 >
+                <router-link to="/panel">
+                <input type="button" class="btn btn-warning" value="Back">
+                </router-link>
             </form>
   </div>
+</div>
 </template>
 <script>
 import axios from 'axios';
@@ -25,6 +33,8 @@ export default {
   name: 'Add',
   data() {
     return {
+      alert: false,
+      msg: '',
       baseUrl: 'http://localhost:3000',
       token: null,
       name: '',
@@ -56,8 +66,10 @@ export default {
           console.log(data);
           this.$router.push({ name: 'Panel' });
         })
-        .catch((error) => {
-          console.log(error);
+        .catch((err) => {
+          console.log(err.err);
+          this.alert = true;
+          this.msg = 'Field Cannot be empty!';
         });
     },
   },
@@ -70,7 +82,7 @@ export default {
   width: 20%;
   text-align: center;
   font-family: "Lato";
-  margin : 100px auto;
+  margin : 60px auto;
   background: white;
   padding: 15px;
 }

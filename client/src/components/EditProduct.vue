@@ -13,8 +13,12 @@
                 <label for="lname">Stock:</label><br>
                 <input type="text" name="stock" value="" v-model="stock" required><br><br>
                 <input
-                type="submit" class="btn btn-dark" value="Edit Product" v-on:click.prevent="edit"
+                type="submit" class="btn btn-dark mr-2" value="Edit Product"
+                v-on:click.prevent="edit"
                 >
+                <router-link to="/panel">
+                <input type="button" class="btn btn-warning" value="Back">
+                </router-link>
             </form>
   </div>
 </template>
@@ -50,3 +54,15 @@ export default {
   },
 };
 </script>
+<style scoped>
+.edit {
+  border-color: black;
+  border-style : double;
+  width: 20%;
+  text-align: center;
+  font-family: "Lato";
+  margin : 60px auto;
+  background: white;
+  padding: 15px;
+}
+</style>

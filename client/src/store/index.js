@@ -9,6 +9,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     productList: null,
+    token: null,
   },
   mutations: {
     viewProducts(state, params) {
@@ -51,14 +52,18 @@ export default new Vuex.Store({
             })
               .then((data) => {
                 console.log(data);
+                swal('file has been edited! click view product to see the product again', {
+                  icon: 'success',
+                });
                 router.push({ name: 'Panel' });
               })
               .catch((error) => {
+                swal({
+                  icon: 'error',
+                  title: 'data can be edited! make sure you have filled the data',
+                });
                 console.log(error);
               });
-            swal('file has been edited! click view product to see the product again', {
-              icon: 'success',
-            });
           } else {
             swal('file edit cancelled! click view product to see the product again');
             router.push({ name: 'Panel' });

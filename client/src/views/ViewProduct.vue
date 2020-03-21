@@ -3,7 +3,7 @@
     <div class="view d-flex row justify-content-center"
     v-if="view">
         <div
-        class="card col-3 ml-3 mb-3"
+        class="card col-2 ml-3 mb-3"
         style="width: 18rem;"
         v-for="data in this.$store.state.productList"
         :key="data.id"
@@ -16,11 +16,11 @@
                 <li class="list-group-item">Price : Rp.{{ data.price.toLocaleString('ID') }}</li>
                 <li class="list-group-item">Stock : {{ data.stock }}</li>
             </ul>
-            <div class="card-body d-flex justify-content-between">
-                <input type="button" class="btn btn-warning ml-3" value="Edit Product"
+            <div class="card-body d-flex justify-content-between row">
+                <input type="button" class="btn btn-xs btn-warning ml-3" value="Edit"
                 v-on:click.prevent="edit(data.id)">
                 <input type="button" class="btn btn-danger ml-3"
-                v-on:click.prevent="deleteProduct(data.id)" value="Delete Product">
+                v-on:click.prevent="deleteProduct(data.id)" value="Delete">
             </div>
         </div>
     </div>
@@ -65,8 +65,8 @@ export default {
 };
 </script>
 <style scoped>
-.flex-row {
-    margin-left: 10px;
+.view {
+    padding-top: 20px;
 }
 
 </style>

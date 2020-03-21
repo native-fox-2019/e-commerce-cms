@@ -1,14 +1,17 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/register">Register</router-link> |
+    <div id="nav" class="navbar bg-dark justify-content-start">
+      <div class="Home mr-3" v-if="!this.$store.state.token">
+        <router-link to="/">Home</router-link>
+      </div>
+      <div class="Register mr-3" v-if="!this.$store.state.token">
+        <router-link to="/register">Register</router-link>
+      </div>
       <router-link to="/panel">Admin Panel</router-link>
     </div>
     <router-view/>
   </div>
 </template>
-
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -24,10 +27,10 @@
 
 #nav a {
   font-weight: bold;
-  color: #2c3e50;
+  color: #ffffff;
 }
 
 #nav a.router-link-exact-active {
-  color: #e34848;
+  color: #fbb000;
 }
 </style>

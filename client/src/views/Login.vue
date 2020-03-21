@@ -46,8 +46,8 @@ export default {
         },
       })
         .then((data) => {
-          console.log(data);
           localStorage.setItem('token', data.data.token);
+          this.$store.state.token = localStorage.getItem('token');
           this.$router.push({ name: 'Panel' });
         })
         .catch((error) => {
