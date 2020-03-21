@@ -1,14 +1,14 @@
 # e-commerce-cms
 
 # Deploy Link :
-<!-- ## [Kanban](https://first-time-deploy-d2b3b.firebaseapp.com/#) -->
+## [fznakbar e-commerce-cms](https://fznakbar-e-commerce-cms.firebaseapp.com/login)
 
 # Endpoint:
 ## [http://localhost:3000](http://localhost:3000)
 
 # POST /register
 ## Endpoint
-> /users/register
+> /users/registeradmin
 
 ## Request body:
 ```
@@ -16,17 +16,17 @@
     email: string,
     name:string,
     password:string,
-    role: string
+    superpassword:'password1234'
 }
 ```
-All req.body is **required**, Role must be 'Admin'
+All req.body is **required**, superpassword have to be 'password1234'
 
 
 ## Response
 Status 201
 ```
 {
-"access_token": "YOUR_TOKEN"
+"name": "YOUR_NAME"
 }
 ```
 Status 400
@@ -38,6 +38,16 @@ Status 400
 }
 ```
 Message may vary according to empty key or constraint email
+
+Status 403
+```
+{
+    "message": [
+        "Forbidden"
+    ]
+}
+```
+
 
 
 Status 500
@@ -65,7 +75,8 @@ All req.body is **required**
 Status 200
 ```
 {
-   access_token: "YOUR_TOKEN"
+   access_token: "YOUR_TOKEN",
+   name : "YOUR_NAME"
 }
 ```
 Status 400
@@ -82,12 +93,12 @@ Status 500
 }
 ```
 
-# GET /tasks - Get All Product
+# GET /products - Get All Product
 ## Endpoint
 > /products
 
 ## Authentication:
-Token (required)
+Admin Token (required)
 
 ## Request header: 
 ```
@@ -96,22 +107,26 @@ access_token: YOUR_TOKEN
 ## Response:
 Status 200
 ```
-[
-    {
-        id: 1,
-        title: "Try To Make Kanban Documentation",
-        category: "Back-Log"
-        description: "Kanban Using Vue.js",
-        createdAt: 2020-03-03T15:01:27.405Z,
-        updatedAt: 2020-03-03T15:01:27.405Z
-    }
-]
+"data": [
+            {
+                "id": 1,
+                "name": "Crankshaft",
+                "image_url": "https://www.static-src.com/wcsstore/Indraprastha/images/catalog/full/MTA-5112070/faito_faito-racing-struk-up-crankshaft-kruk-as-motor-for-kawasaki-ksr110--3-0-mm-_full02.jpg",
+                "price": 450000,
+                "stock": 10,
+                "createdAt": "2020-03-21T01:34:05.910Z",
+                "updatedAt": "2020-03-21T01:34:05.910Z"
+            },
+            {
+                .
+                .
+            }
+        ]
 ```
 Status 401
 ```
 {
-   status: 401,
-   msg: error message
+    "message": "Invalid Token"
 }
 ```
 Status 403
@@ -129,12 +144,12 @@ Status 500
 }
 ```
 
-# POST /tasks - Add Product
+# POST /products - Add Product
 ## Endpoint
-> /product
+> /products
 
 ## Authentication:
-Token (required)
+Admin Token (required)
 
 ## Request header: 
 ```
@@ -156,7 +171,7 @@ Status 201
 {
     "data": {
         "id": 1,
-        "name": "Pencil",
+        "name": "Headlamp",
         "image_url": "yourimageurl.com",
         "price": 10000,
         "stock": 30,
@@ -197,12 +212,12 @@ Status 500
 }
 ```
 
-# GET /projects/:id - Get One Project
+# GET /products/:id - Get One Project
 ## Endpoint
-> /projects/:id
+> /products/:id
 
 ## Authentication:
-Token (required)
+Admin Token (required)
 
 ## Request header: 
 ```
@@ -214,7 +229,7 @@ Status 200
 {
     "data": {
         "id": 1,
-        "name": "Pencil",
+        "name": "Headlamp",
         "image_url": "yourimageurl.com",
         "price": 10000,
         "stock": 30,
@@ -244,11 +259,11 @@ Status 500
 }
 ```
 
-# DELETE /projects/:id - Delete Task
+# DELETE /products/:id - Delete Task
 ## Endpoint
->/projects/:id
+>/products/:id
 ## Authentication:
-Token (required)
+Admin Token (required)
 
 ## Request header: 
 ```
@@ -287,12 +302,12 @@ Status 500
 }
 ```
 
-# PUT /projects/edit/:id - Edit Project
+# PUT /products/:id - Edit Project
 ## Endpoint
-> /projects/edit/:id
+> /products/:id
 
 ## Authentication:
-Token (required)
+Admin Token (required)
 
 ## Request header: 
 ```
@@ -301,10 +316,10 @@ access_token: YOUR_TOKEN
 ## Request body:
 ```
 {
-    email: string,
-    name:string,
-    password:string,
-    role: string
+    name: string,
+    image_url: string,
+    price: integer,
+    stock: integer
 }
 ```
 ## Response:
