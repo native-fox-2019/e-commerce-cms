@@ -1,9 +1,10 @@
 'use strict';
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
+const salt = bcrypt.genSaltSync(saltRounds);
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    let hash = bcrypt.hash('1234', saltRounds)
+    const hash = bcrypt.hashSync('1234', salt);
     return queryInterface.bulkInsert('Users', [{
       name: 'Admin',
       role: 'admin',
