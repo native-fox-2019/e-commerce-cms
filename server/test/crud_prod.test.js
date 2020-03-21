@@ -3,7 +3,7 @@ const app = require('../app');
 const {sequelize, Products} = require('../models/index');
 const {queryInterface} = sequelize;
 
-let tokenAdmin = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiZ2FicmllbCIsImVtYWlsIjoiYWRtaW5AbWFpbC5jb20iLCJsZXZlbCI6ImFkbWluIiwiaWF0IjoxNTg0MzYzMjUzfQ.B87QFgxvI7jXZlFPx1FAMRU0mWZycOckq05GH_tWoTk'
+let tokenAdmin = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiZ2FicmllbCIsImVtYWlsIjoiYWRtaW5AbWFpbC5jb20iLCJsZXZlbCI6ImFkbWluIiwiaWF0IjoxNTg0NzgxNjU0fQ.ANXYxFIvyEmF1UdoVp3Vx_eblXIP_Lglz_1eokKkYJM'
 let tokenUser = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiZ2FicmllbDIiLCJlbWFpbCI6InVzZXJAbWFpbC5jb20iLCJsZXZlbCI6InVzZXIiLCJpYXQiOjE1ODQzNjMzNDB9.IFdaKJJItUpzfuBlfszcQgNPQr_ixVqvwVHN_kcScMM'
 
 
