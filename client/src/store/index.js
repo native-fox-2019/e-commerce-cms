@@ -2,7 +2,8 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
 import Swal from 'sweetalert2'
-const server = `http://localhost:3000`
+// const server = `http://localhost:3000`
+const server = `https://shrouded-badlands-50874.herokuapp.com`
 Vue.use(Vuex)
 
 export default new Vuex.Store({
