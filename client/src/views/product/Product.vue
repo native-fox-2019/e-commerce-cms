@@ -28,6 +28,10 @@
                                     <b-col sm="6"><span class="bold">Product Stock:</span></b-col>
                                     <b-col class="text-sm-left" sm="6">{{row.item.stock}}</b-col>
                                 </b-row>
+                                 <b-row>
+                                    <b-col sm="6"><span class="bold">Product Category:</span></b-col>
+                                    <b-col class="text-sm-left" sm="6">{{row.item.category}}</b-col>
+                                </b-row>
                             </b-col>
                             <b-col sm="6">
                                 <img :src="$store.state.SERVER+'/img/'+row.item.image_url " class="product-img" alt="">

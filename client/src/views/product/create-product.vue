@@ -34,6 +34,21 @@
       >
         <b-form-input id="product-stock" v-model="product.stock" type="number"></b-form-input>
       </b-form-group>
+       <b-form-group
+        label-cols-sm="3"
+        label="Product Category:"
+        label-align-sm="right"
+        label-for="product-category"
+      >
+          <b-form-select
+            v-model="product.category"
+            :options="categories"
+            class="mb-3"
+            value-field="item"
+            text-field="name"
+            disabled-field="notEnabled"
+          ></b-form-select>
+      </b-form-group>
       <b-form-group
         label-cols-sm="3"
         label="Product Image:"
@@ -58,9 +73,11 @@ export default {
             product:{
                 name:'',
                 price:0,
-                stock:0
+                stock:0,
+                category:null
             },
-            isSubmitting:false
+            isSubmitting:false,
+            categories:this.$store.state.categories
         }
     },
     methods:{

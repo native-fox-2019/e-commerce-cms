@@ -15,7 +15,14 @@ export default new Vuex.Store({
     headers:{
       'Content-Type': 'multipart/form-data',
       token:localStorage.token
-    }
+    },
+    categories:[
+      { item: 'lifestyle', name: 'lifestyle' },
+      { item: 'gym', name: 'gym' },
+      { item: 'basketball', name: 'basketball' },
+      { item: 'soccer', name: 'soccer' },
+     
+  ]
   },
   mutations: {
     setProducts(state,products){
