@@ -6,7 +6,8 @@
   "scripts": {
     "initdb":"sequelize db:migrate --env=test",
     "undodb":"sequelize db:migrate:undo:all --env=test",
-    "test": "clear && jest --detectOpenHandles --runInBand --forceExit"
+    "test": "clear && jest --detectOpenHandles --runInBand --forceExit",
+    "start":"node app.js"
   },
   "repository": {
     "type": "git",
