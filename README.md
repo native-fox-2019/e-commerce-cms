@@ -6,7 +6,11 @@ e-commerce-cms
 
 </h1>
 
-## Server router of KANBAN :
+## Server router of e-commerce-CMS:
+
+-deploy : https://e-commerce-cms-5a89f.firebaseapp.com
+-admin email : gusti@gmail.com
+        password : 12345
 
 ====================USER SIDE=========================
 
