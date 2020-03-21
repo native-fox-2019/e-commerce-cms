@@ -1,5 +1,10 @@
 # e-commerce-cms
 
+# Firebase link
+
+```bash
+https://ecommerce-cms-168f2.firebaseapp.com/
+```
 
 # Server dependencies
 ### Dependencies

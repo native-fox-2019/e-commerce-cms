@@ -20,7 +20,7 @@ export default {
   name: 'Panel',
   data() {
     return {
-      baseUrl: 'http://localhost:3000',
+      baseUrl: 'https://rocky-bayou-33894.herokuapp.com',
       email: '',
       password: '',
     };

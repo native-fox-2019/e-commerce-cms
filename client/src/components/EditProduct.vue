@@ -35,7 +35,6 @@ export default {
     };
   },
   created() {
-    console.log(this.elementEdit);
     this.name = this.elementEdit.name;
     this.image_url = this.elementEdit.image_url;
     this.price = this.elementEdit.price;

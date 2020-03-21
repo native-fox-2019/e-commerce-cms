@@ -35,7 +35,7 @@ export default {
     return {
       alert: false,
       msg: '',
-      baseUrl: 'http://localhost:3000',
+      baseUrl: 'https://rocky-bayou-33894.herokuapp.com',
       token: null,
       name: '',
       image_url: '',
@@ -63,11 +63,9 @@ export default {
         },
       })
         .then((data) => {
-          console.log(data);
           this.$router.push({ name: 'Panel' });
         })
-        .catch((err) => {
-          console.log(err.err);
+        .catch((error) => {
           this.alert = true;
           this.msg = 'Field Cannot be empty!';
         });

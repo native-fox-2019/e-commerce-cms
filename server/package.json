@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node app.js",
     "test": "jest --detectOpenHandles --runInBand --forceExit",
     "initdb": "sequelize db:create --env=test && sequelize db:migrate --env=test",
     "testProduct": "jest comerceProduct.test.js --detectOpenHandles --runInBand --forceExit"

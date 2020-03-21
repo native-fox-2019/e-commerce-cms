@@ -20,14 +20,13 @@ export default new Vuex.Store({
     getProducts(context) {
       axios({
         method: 'GET',
-        url: 'http://localhost:3000/product',
+        url: 'https://rocky-bayou-33894.herokuapp.com/product',
         headers: { token: localStorage.getItem('token') },
       })
         .then((data) => {
           context.commit('viewProducts', data.data);
         })
         .catch((error) => {
-          console.log(error);
         });
     },
     edit(context, params) {
@@ -41,7 +40,7 @@ export default new Vuex.Store({
           if (willEdit) {
             axios({
               method: 'PUT',
-              url: `http://localhost:3000/product/${params.id}`,
+              url: `https://rocky-bayou-33894.herokuapp.com/product/${params.id}`,
               headers: { token: localStorage.getItem('token') },
               data: {
                 name: params.name,
@@ -51,7 +50,6 @@ export default new Vuex.Store({
               },
             })
               .then((data) => {
-                console.log(data);
                 swal('file has been edited! click view product to see the product again', {
                   icon: 'success',
                 });
@@ -62,13 +60,11 @@ export default new Vuex.Store({
                   icon: 'error',
                   title: 'data can be edited! make sure you have filled the data',
                 });
-                console.log(error);
               });
           } else {
             swal('file edit cancelled! click view product to see the product again');
             router.push({ name: 'Panel' });
           }
-          console.log('deleted');
         });
     },
     deleteProduct(context, id) {
@@ -82,15 +78,13 @@ export default new Vuex.Store({
           if (willDelete) {
             axios({
               method: 'DELETE',
-              url: `http://localhost:3000/product/${id}`,
+              url: `https://rocky-bayou-33894.herokuapp.com/product/${id}`,
               headers: { token: localStorage.getItem('token') },
             })
               .then((data) => {
-                console.log(data);
                 context.dispatch('getProducts');
               })
               .catch((error) => {
-                console.log(error);
               });
             swal('file has been deleted!', {
               icon: 'success',
@@ -99,7 +93,6 @@ export default new Vuex.Store({
             swal('deleting file cancelled!');
             router.push({ name: 'Panel' });
           }
-          console.log('deleted');
         });
     },
 

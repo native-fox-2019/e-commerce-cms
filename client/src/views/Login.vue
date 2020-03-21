@@ -24,7 +24,7 @@ export default {
     return {
       alert: false,
       msg: '',
-      baseUrl: 'http://localhost:3000',
+      baseUrl: 'https://rocky-bayou-33894.herokuapp.com',
       email: '',
       password: '',
     };
@@ -50,8 +50,7 @@ export default {
           this.$store.state.token = localStorage.getItem('token');
           this.$router.push({ name: 'Panel' });
         })
-        .catch((error) => {
-          console.log(error);
+        .catch(() => {
           this.alert = true;
           this.msg = 'Wrong Email/Password!';
         });

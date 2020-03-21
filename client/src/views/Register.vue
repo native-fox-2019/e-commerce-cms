@@ -19,7 +19,7 @@ export default {
   name: 'Register',
   data() {
     return {
-      baseUrl: 'http://localhost:3000',
+      baseUrl: 'https://rocky-bayou-33894.herokuapp.com',
       name: '',
       email: '',
       password: '',
@@ -45,11 +45,9 @@ export default {
         },
       })
         .then((data) => {
-          console.log(data);
           this.$router.push({ name: 'Login' });
         })
         .catch((error) => {
-          console.log(error);
         });
     },
   },
