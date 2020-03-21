@@ -3,33 +3,35 @@
     <div id="sideMenu">
       <!-- menu -->
       <div id="headMenu">
-        <h3>WearIsysm</h3>
+        <router-link to="/dashboard/all">
+          <h3>WearIsysm</h3>
+        </router-link>
       </div>
-      <div class="menu">
+      <router-link to="/dashboard/baju" class="menu">
         <span>
           <img src="../assets/grid.svg" alt />
         </span>
         <span>Baju</span>
-      </div>
-      <div class="menu">
+      </router-link>
+      <router-link to="/dashboard/jaket" class="menu">
         <span>
           <img src="../assets/hexagon.svg" alt />
         </span>
         <span>Jaket</span>
-      </div>
-      <div class="menu">
+      </router-link>
+      <router-link to="/dashboard/celana" class="menu">
         <span>
           <img src="../assets/underline.svg" alt />
         </span>
         <span>Celana</span>
-      </div>
-      <div class="menu">
+      </router-link>
+      <router-link to="/dashboard/sepatu" class="menu">
         <span>
           <img src="../assets/pause.svg" alt />
         </span>
         <span>Sepatu</span>
-      </div>
-      <div class="menu">
+      </router-link>
+      <div class="menu" @click="actionAddProduct">
         <span>
           <img src="../assets/pause.svg" alt />
         </span>
@@ -40,12 +42,27 @@
     </div>
 
     <div id="contentCms">
-      <div id="logoutIcon">
+      <div id="logoutIcon" @click="logOut">
         <img src="../assets/log-out.svg" alt />
       </div>
       <!--  -->
-      <div id="containerContentCms">
+      <div
+        id="containerContentCms"
+        v-if="!this.$store.state.isAddProduct && !this.$store.state.isEditProduct"
+      >
         <Product v-for="product in products" :key="product.id" :barang="product" />
+      </div>
+      <div
+        class="containerContentCmsProduct"
+        v-if="this.$store.state.isAddProduct && !this.$store.state.isEditProduct"
+      >
+        <AddProduct />
+      </div>
+      <div
+        class="containerContentCmsProduct"
+        v-if="!this.$store.state.isAddProduct && this.$store.state.isEditProduct"
+      >
+        <EditProduct />
       </div>
     </div>
   </div>
@@ -53,18 +70,70 @@
 
 <script>
 import Product from "../components/admin/Product.vue";
+import AddProduct from "../components/admin/AddProduct.vue";
+import EditProduct from "../components/admin/EditProduct.vue";
+import { mapGetters } from "vuex";
 export default {
+  data() {
+    return {
+      // isAddProduct: false
+      category: "all"
+    };
+  },
   components: {
-    Product
+    Product,
+    AddProduct,
+    EditProduct
+  },
+
+  created() {
+    this.$store.dispatch("getAll");
   },
   mounted() {
     this.$store.dispatch("getAll");
-    this.$store.state.dataProducts;
+    // this.$store.state.dataProducts;
+    // console.log(this.$route, "<<<<<< route");
+  },
+  watch: {
+    $route(to, from) {
+      this.category = to.params.category;
+    }
   },
   computed: {
     products() {
+      let kategoryId = null;
+      if (this.category == "baju") {
+        kategoryId = 1;
+      } else if (this.category == "jaket") {
+        kategoryId = 2;
+      } else if (this.category == "celana") {
+        kategoryId = 3;
+      } else if (this.category == "sepatu") {
+        kategoryId = 4;
+      }
       let arr = this.$store.state.dataProducts;
-      return arr;
+      if (this.category == "all") {
+        return arr;
+      } else {
+        return arr.filter(item => {
+          return item.CategoryId == kategoryId;
+        });
+      }
+    }
+  },
+  methods: {
+    actionAddProduct() {
+      // this.$store.dispatch("addProduct");
+      this.$store.commit("setIsAddProductTrue");
+      this.$store.commit("setIsEditProductFalse");
+    },
+
+    logOut() {
+      localStorage.clear();
+      this.$store.commit("toIsLoginFalse");
+      this.$router.push({
+        path: "/"
+      });
     }
   }
 };
@@ -114,6 +183,7 @@ export default {
   padding: 0.5em;
   align-items: center;
   text-align: right;
+  cursor: pointer;
 }
 #containerContentCms {
   display: flex;
@@ -123,6 +193,14 @@ export default {
   width: 100%;
   justify-content: space-between;
   padding: 2em;
+}
+.containerContentCmsProduct {
+  display: flex;
+  flex-wrap: wrap;
+  height: 1000px;
+  width: 100%;
+  justify-content: center;
+  /* align-items: center; */
 }
 .menu {
   display: flex;

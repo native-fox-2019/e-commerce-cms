@@ -24,7 +24,8 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       validate: {
         notNull: { args: true, msg: 'column price cannot be empty' },
-        notEmpty: { args: true, msg: 'column price cannot be empty' }
+        notEmpty: { args: true, msg: 'column price cannot be empty' },
+        min: 0
       }
     },
     stock: {
@@ -32,7 +33,8 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       validate: {
         notNull: { args: true, msg: 'column stock cannot be empty' },
-        notEmpty: { args: true, msg: 'column stock cannot be empty' }
+        notEmpty: { args: true, msg: 'column stock cannot be empty' },
+        min: 0
       }
     },
     UserId: DataTypes.INTEGER,

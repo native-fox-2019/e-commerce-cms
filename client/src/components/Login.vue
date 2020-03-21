@@ -17,6 +17,7 @@
 
 <script>
 import axios from "axios";
+import Swal from "sweetalert2";
 const server = `http://localhost:3000`;
 export default {
   data() {
@@ -42,9 +43,20 @@ export default {
           this.$router.push({
             path: "/dashboard"
           });
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Welcome",
+            showConfirmButton: false,
+            timer: 1500
+          });
         })
-        .catch(err => {
-          console.log(err, "<<<<<<< err");
+        .catch(({ err }) => {
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Your email or password is incorrect"
+          });
         });
     }
   }

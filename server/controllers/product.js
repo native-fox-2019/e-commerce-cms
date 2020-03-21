@@ -19,11 +19,16 @@ class ControllerProduct {
 
   static getAllProduct(req, res, next) {
     Product
-      .findAll({
-        include: [
-          { model: Category }
-        ]
-      })
+      .findAll(
+        {
+          include: [
+            { model: Category }
+          ],
+          order: [
+            ['updatedAt', 'DESC']
+          ]
+        }
+      )
       .then(result => {
         res.status(200).json(result)
       })

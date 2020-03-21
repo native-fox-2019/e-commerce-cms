@@ -1,19 +1,20 @@
 <template>
   <div>
     <!-- items barang card -->
+
     <div class="card" style="width:15rem">
       <img :src="barang.image_url" class="card-img-top" />
       <div class="card-body">
         <h5 class="card-title">{{barang.name}}</h5>
-        <p class="card-text">Price : {{barang.price}}</p>
+        <p class="card-text">Price : {{price(barang.price)}}</p>
         <p class="card-text">Stock : {{barang.stock}}</p>
         <p class="card-text">category : {{barang.Category.name}}</p>
         <div class="btn-group btn-group-toggle" data-toggle="buttons">
-          <label class="btn btn-secondary">
+          <label class="btn btn-secondary" @click="actionEdit(barang)">
             <input type="radio" name="options" data-toggle="modal" />
             <i class="far fa-edit"></i>
           </label>
-          <label class="btn btn-secondary">
+          <label class="btn btn-secondary" @click="actionDelete(barang.id)">
             <input type="radio" name="options" />
             <i class="fas fa-eraser"></i>
           </label>
@@ -25,9 +26,23 @@
 </template>
 
 <script>
+import idr from "../helper/idr";
 export default {
   name: "Product",
-  props: ["barang"]
+  props: ["barang"],
+  methods: {
+    price(value) {
+      return idr(value);
+    },
+    actionDelete(id) {
+      this.$store.dispatch("deleteProduct", id);
+    },
+    actionEdit(barang) {
+      // this.$store.dispatch("getOneProduct", barang);
+      this.$store.commit("setIsEditProductTrue");
+      this.$store.commit("dataEditfromActions", barang);
+    }
+  }
 };
 </script>
 
