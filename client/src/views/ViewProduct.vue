@@ -68,6 +68,7 @@ export default {
 </script>
 <style scoped>
 .view {
+    width: 100%;
     padding-top: 20px;
 }
 
