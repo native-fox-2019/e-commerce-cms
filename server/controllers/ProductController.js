@@ -14,7 +14,9 @@ class ProductController{
 
     static async index(req,res){
         try{
-            let products=await Product.findAll();
+            let products=await Product.findAll({
+                order:['id']
+            });
             res.status(200).json(products);
         }catch(err){
             console.log(err);

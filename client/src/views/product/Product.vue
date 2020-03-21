@@ -16,11 +16,15 @@
                     <b-card>
                         <b-row>
                             <b-col sm="2"><span class="bold">Product Name:</span></b-col>
-                            <b-col class="text-sm-left"> {{row.item.product}}</b-col>
+                            <b-col class="text-sm-left"> {{row.item.name}}</b-col>
                         </b-row>
                         <b-row>
                             <b-col sm="2"><span class="bold">Product Price:</span></b-col>
                             <b-col class="text-sm-left">{{row.item.price}}</b-col>
+                        </b-row>
+                         <b-row>
+                            <b-col sm="2"><span class="bold">Product Stock:</span></b-col>
+                            <b-col class="text-sm-left">{{row.item.stock}}</b-col>
                         </b-row>
                     </b-card>
                 </template>
@@ -39,7 +43,7 @@ export default {
                     sortable:true
                 },
                 {
-                    key:'product',
+                    key:'name',
                     sortable:true
                 },
                 {
@@ -53,7 +57,10 @@ export default {
     computed:{
         items(){
             return this.$store.state.products;
-        }
+        } 
+    },
+    created(){
+        this.$store.dispatch('fetchProducts');
     },
     methods:{
         confirmDelete(id){
@@ -61,7 +68,7 @@ export default {
             this.$bvModal.msgBoxConfirm(`Are you sure want to delete product with id ${id}?`)
             .then((result)=>{
                 if(result){
-                    this.$store.commit('deleteProduct',id);
+                    this.$store.dispatch('deleteProduct',id);
                 }
             })
             .catch(()=>{

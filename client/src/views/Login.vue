@@ -48,6 +48,7 @@ export default {
                 var token=response.data.token;
                 localStorage.setItem('token',token);
                 this.$store.state.isLogin=true;
+                this.$store.commit('setToken',token);
                 this.$router.push('/product');
             })
             .catch((err)=>{

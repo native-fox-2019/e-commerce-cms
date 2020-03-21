@@ -1,7 +1,8 @@
 <template>
   <div id="app">
     <div id="nav">
-      <a href="" @click.prevent="logout" v-if="$store.state.isLogin">Logout</a>
+      <a href="" @click.prevent="logout" v-if="$store.state.isLogin">Logout</a> | 
+      <router-link to="/product">Product</router-link>
     </div>
     <div class="container">
     <router-view />

@@ -52,18 +52,23 @@ export default {
         }
     },
     created(){
-        var id=this.id=this.$route.params.id;
+        var id=this.$route.params.id;
         var product=this.$store.state.products.find(p=>p.id==id);
-        this.product.name=product.product;
+        this.product.name=product.name;
         this.product.price=product.price;
         this.product.stock=product.stock;
+        this.product.id=id;
         console.log('onCreated',this.product,this.id);
     },
     methods:{
       onSubmit(){
-        console.log('onSubmit',this.product,this.id);
-        this.$store.commit('updateProduct',{id:this.id,product:this.product});
-        this.$router.push('/product');
+        console.log('onSubmit',this.product,this.product.id);
+        var self=this;
+
+        this.$store.dispatch('updateProduct',{id:this.product.id,product:this.product})
+        .then(()=>{
+          self.$router.push('/product');
+        })
       }
     }
 }

@@ -52,8 +52,12 @@ export default {
     },
     methods:{
       onSubmit(){
-        this.$store.commit('addProduct',this.product);
-        this.$router.push('/product');
+        // this.$store.commit('addProduct',this.product);
+        var self=this;
+        this.$store.dispatch('addProduct',this.product)
+        .then(()=>{
+          self.$router.push('/product');
+        })
       }
     }
 }
