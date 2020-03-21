@@ -40,7 +40,7 @@ class Controller {
         Item.findAll(option)
         .then(result=>{
             if(result){
-                res.status(200).json({ result })
+                res.status(200).json(result)
             } else{
                 throw {status: 404, message: 'Data not found'}
             }
@@ -58,7 +58,6 @@ class Controller {
             UserId: req.userData.id,
         }
         let option = { where: { id: req.params.id }}
-
         Item.update(obj, option)
         .then((data) => res.status(200).json(data))
         .catch(next)
@@ -66,7 +65,6 @@ class Controller {
 
     static destroy(req, res, next) {
         let option = { where: { id: req.params.id }}
-
         Item.findOne(option)
         .then(current => {
             if (current) {
