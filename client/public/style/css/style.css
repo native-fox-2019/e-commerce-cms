@@ -81,7 +81,7 @@ header h4 {
 
 .user-access {
   max-width: 500px;
-  margin: 4.5rem auto 2rem auto;
+  margin: 4.5rem auto 8rem auto;
   border-radius: 10px;
   padding: 2rem;
   background-color: #252526;
@@ -140,17 +140,30 @@ header h4 {
   text-decoration: none;
 }
 
-footer {
-  text-align: center;
+.footer {
   background-color: #252526;
-  color: #fff;
-  padding: 20px;
-  position: static;
-  bottom: 0;
+  height: 150px;
+  position: relative;
   width: 100%;
+  bottom: 0px;
+  left: 0px;
 }
-footer p {
-  background-color: inherit;
+.footer .footer-content {
+  font-size: 18px;
+  height: 100px;
+  text-align: center;
+  padding-top: 25px;
+}
+.footer .footer-content p {
+  color: whitesmoke;
+}
+.footer .footer-bottom {
+  background-color: #1d1d1d;
+  color: #23a8f2;
+  height: 50px;
+  width: 100%;
+  text-align: center;
+  padding-top: 20px;
 }
 
 .product-container {

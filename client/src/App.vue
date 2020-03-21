@@ -13,7 +13,10 @@
                 <li>
                     <router-link to="/users">
                         <span
-                            v-if="this.$store.state.isLogin && this.$store.state.user_info.superUser"
+                            v-if="
+                                this.$store.state.isLogin &&
+                                    this.$store.state.user_info.superUser
+                            "
                         >See Users</span>
                     </router-link>
                 </li>
@@ -41,9 +44,13 @@
             </nav>
         </header>
         <router-view></router-view>
-        <!-- <footer>
-      <p>Copyright © 2020, Toko</p>
-        </footer>-->
+        <div class="footer">
+            <div class="footer-content">
+                <p>Super User Contact:</p>
+                <p>email: rqz.agastya@gmail.com</p>
+            </div>
+            <div class="footer-bottom">&copy; Toko Gunpla | by Gusti Agung A T</div>
+        </div>
     </div>
 </template>
 <script>
