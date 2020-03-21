@@ -5,6 +5,8 @@ import Login from "../views/Login.vue";
 import Product from '../views/product/Product.vue';
 import CreateProduct from '../views/product/create-product';
 import EditProduct from '../views/product/edit-product';
+import Banner from '../views/banner/Banner';
+import AddBanner from '../views/banner/add-banner';
 
 Vue.use(VueRouter);
 
@@ -29,6 +31,16 @@ const routes = [
     path:'/product',
     name:'Product',
     component:Product
+  },
+  {
+    path:'/banner',
+    name:'Banner',
+    component:Banner
+  },
+  {
+    path:'/banner/add',
+    name:'AddBanner',
+    component:AddBanner
   },
   {
     path:'/product/edit/:id',

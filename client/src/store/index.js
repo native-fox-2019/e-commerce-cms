@@ -7,26 +7,34 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    SERVER:'https://aqueous-badlands-12134.herokuapp.com',
-    // SERVER:'http://localhost:3000',
+    // SERVER:'https://aqueous-badlands-12134.herokuapp.com',
+    SERVER:'http://localhost:3000',
     isLogin:false,
     products:[],
     token:'',
     headers:{
       'Content-Type': 'multipart/form-data',
-      token:localStorage.token
+      token:localStorage.token,
+      'Sec-Fetch-Mode':'cors'
     },
     categories:[
       { item: 'lifestyle', name: 'lifestyle' },
       { item: 'gym', name: 'gym' },
       { item: 'basketball', name: 'basketball' },
       { item: 'soccer', name: 'soccer' },
-     
-  ]
+    ],
+    bannerLoaded:false,
+    banners:[]
   },
   mutations: {
     setProducts(state,products){
       state.products=products;
+    },
+    setBannerLoaded(state,isLoaded){
+      state.bannerLoaded=isLoaded;
+    },
+    setBanner(state,banners){
+      state.banners=banners;
     },
     addProduct(state,product){
       let newProduct={};
@@ -108,6 +116,23 @@ export default new Vuex.Store({
       .catch((err)=>{
         console.log('Ada error saat delete product');
         return err;
+      })
+    },
+    loadBanner({state,commit}){
+      if(state.bannerLoaded)
+        return Promise.resolve();
+
+      return axios.get(state.SERVER+'/banners',{
+        headers:state.headers
+      })
+      .then((result)=>{
+        var data=result.data;
+        commit('setBanner',data);
+        commit('setBannerLoaded',true);
+      })
+      .catch((err)=>{
+        console.log('Ada error saat load banner',err);
+        return err
       })
     }
   },

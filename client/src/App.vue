@@ -3,6 +3,7 @@
     <div id="nav">
       <a href="" @click.prevent="logout" v-if="$store.state.isLogin">Logout</a>
       <router-link to="/product" v-if="$store.state.isLogin">Product</router-link>
+       <router-link to="/banner" v-if="$store.state.isLogin">Banner</router-link>
     </div>
     <div class="container">
     <router-view />
