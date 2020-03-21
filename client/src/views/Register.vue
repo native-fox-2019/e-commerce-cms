@@ -41,12 +41,13 @@ export default {
         .then((response) => {
           localStorage.setItem('token', response.data.token);
           localStorage.setItem('name', response.data.name);
+          localStorage.setItem('role', response.data.role);
           this.name = '';
           this.email = '';
           this.password = '';
           this.registerError = [];
           this.$router.push('/');
-          this.$emit('changeLoginStatus', true);
+          this.$store.commit('changeIsLogin', true);
         })
         .catch((err) => {
           this.registerError = [];
