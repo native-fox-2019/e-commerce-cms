@@ -468,7 +468,7 @@ _Response (200, response if success):_
 ```javascript
 {
   {
-    "id": 2,
+    "id": v2,
     "name,":"kopi sidingkalang"
     "stock,":"10"
     "urlImage,":"http://aisaosiaod.com"

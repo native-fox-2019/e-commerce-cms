@@ -14,6 +14,11 @@
     class="container"
   >
   <h1>Login</h1>
+
+    <v-alert v-if="err" type="error">
+      {{errMsg}}
+    </v-alert>
+
     
     <v-text-field
       v-model="email"
@@ -58,10 +63,12 @@
 export default {
   name: 'LoginPage',
   data: () => ({
+    err: false,
     valid: true,
     email: '',
     password: '',
     secret: '',
+    errMsg: '',
     nameRules: [
       v => !!v || 'Name is required',
       v => (v && v.length <= 10) || 'Name must be less than 10 characters',
@@ -89,17 +96,19 @@ export default {
         .then(({ data }) => {
           console.log(data);
           localStorage.setItem('token', data.token)
-          if (data.admin === true) {
             this.$router.push({ name: "AdminPage"})
             this.$store.commit('setToken')
-          } else {
-            this.$router.push({name: "Home" })
-          }
         })
         .catch(({response}) =>{
           console.log(response);
+          this.errMsg="Wrong Username/Password!"
+          this.err = true
         })        
-      } 
+      } else {
+            this.errMsg="Wrong Secret Code!!"
+            this.err = true
+            // this.$router.push({name: "Home" })
+          }
       // else if (this.secret === "") {
       //     this.$axios({
       //     url: '/users/login',
@@ -117,11 +126,7 @@ export default {
       //   })
       //   .catch(({response}) =>{
       //     console.log(response);
-      //   })        
-       else {
-        console.log("Wrong Request!!!!");
-        
-      }
+      //   })
     }
   },
 }

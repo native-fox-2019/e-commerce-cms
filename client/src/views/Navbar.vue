@@ -16,7 +16,7 @@
           <!-- <registerBtn v-if="token ? false : true"></registerBtn> -->
           <logoutBtn v-if="token ? true : false" v-on:logOut="logOut"></logoutBtn>
           <backToAdminHome  v-if="token && !changePage ? true : false" v-on:toAdmin="toAdmin"></backToAdminHome>
-          <backToHome  v-if="token && changePage || changeLogHome ? true : false" v-on:toHome="toHome"></backToHome>          
+          <backToHome  v-if="token && changePage ? true : false" v-on:toHome="toHome"></backToHome>          
         </div>
     </v-toolbar>
 </template>
