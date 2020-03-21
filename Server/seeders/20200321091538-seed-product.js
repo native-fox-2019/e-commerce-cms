@@ -59,7 +59,7 @@ module.exports = {
       Return a promise to correctly handle asynchronicity.
 
       Example:
-      return queryInterface.bulkDelete('Person', null, {});
-    */
+      */
+     return queryInterface.bulkDelete('Products', null, {});
   }
 };
