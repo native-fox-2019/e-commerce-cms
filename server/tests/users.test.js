@@ -26,7 +26,7 @@ describe('Create User register', function () {
             expect(status).toBe(201)
             expect(typeof body).toBe("object")
             expect(body).toBeDefined()
-            // expect(body).toHaveProperty("token")
+            expect(body).toHaveProperty("token")
             done()
           })
           .catch(err => {
@@ -73,6 +73,7 @@ describe('Error invalid email', function () {
           .then(({ body, status }) => {
             expect(status).toBe(200)
             expect(body).toBeDefined()
+            expect(body).toHaveProperty("token")
             done()
           })
           .catch(err => {
