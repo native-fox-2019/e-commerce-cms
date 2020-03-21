@@ -1,13 +1,5 @@
 # e-commerce-cms
 
-# kanban
-
-# third party
-```bash
-{
-    Google Auth
-}
-```
 
 # Server dependencies
 ### Dependencies
