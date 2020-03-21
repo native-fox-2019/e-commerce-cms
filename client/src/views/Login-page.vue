@@ -1,5 +1,6 @@
 <template>
   <div class="form-container">
+    <Alert v-show="isError.status" :isError="isError" @hide="isError.status=!isError.status"/>
     <form @submit.prevent="login">
       <div class="input-email">
         <label for="email">EMAIL</label>
@@ -26,17 +27,22 @@
 
 <script>
 import axios from 'axios'
+import Alert from '../components/Alert'
 const url = 'http://localhost:3000'
 
 export default {
   name: 'Login-page',
   components: {
-    // Login
+    Alert
   },
   data () {
     return {
       email: '',
-      password: ''
+      password: '',
+      isError: {
+        status: false,
+        msg: ''
+      }
     }
   },
   methods: {
@@ -54,7 +60,8 @@ export default {
           this.$router.push({ name: 'Home' })
         })
         .catch(err => {
-          console.log(err.response.data.msg)
+          this.isError.msg = err.response.data.msg
+          this.isError.status = true
         })
     }
   }

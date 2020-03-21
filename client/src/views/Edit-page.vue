@@ -57,11 +57,13 @@ export default {
         }
       })
         .then(data => {
-          // console.log(data.data)
           this.singledata.name = data.data.name
           this.singledata.price = data.data.price
           this.singledata.stocks = data.data.stocks
           this.singledata.imageURL = data.data.imageURL
+        })
+        .catch(() => {
+          this.$router.push('/home')
         })
     },
     edit () {
@@ -82,7 +84,6 @@ export default {
           this.$router.push({ name: 'Home' })
         })
         .catch(err => {
-          console.log(err.response.data.msg)
           this.isError.msg = err.response.data.msg.join(' ,  \n')
           this.isError.status = true
         })

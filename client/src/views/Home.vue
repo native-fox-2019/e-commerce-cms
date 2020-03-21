@@ -33,6 +33,10 @@ export default {
   },
   data () {
     return {
+      isError: {
+        status: false,
+        msg: ''
+      }
     }
   },
   computed: {

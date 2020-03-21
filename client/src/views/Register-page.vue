@@ -1,5 +1,6 @@
   <template>
   <div class="form-container">
+    <Alert v-show="isError.status" :isError="isError" @hide="isError.status=!isError.status"/>
     <form @submit.prevent="register">
       <div>
         <label for="name">NAME</label>
@@ -32,14 +33,22 @@
 
 <script>
 import axios from 'axios'
+import Alert from '../components/Alert'
 const url = 'http://localhost:3000'
 export default {
   name: 'register-page',
+  components: {
+    Alert
+  },
   data () {
     return {
       name: '',
       email: '',
-      password: ''
+      password: '',
+      isError: {
+        status: false,
+        msg: ''
+      }
     }
   },
   methods: {
@@ -61,7 +70,8 @@ export default {
           this.$router.push({ name: 'Home' })
         })
         .catch(err => {
-          console.log(err.response.data.msg)
+          this.isError.msg = err.response.data.msg.join(' ,  \n')
+          this.isError.status = true
         })
     }
   }
