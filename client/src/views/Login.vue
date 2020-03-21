@@ -1,9 +1,17 @@
 <template>
-    <div class= "row d-flex flex-column m-3">
-<input type="text" v-model="email"/>
-<input type="password" v-model="password"/>
-<input type="submit" @click.prevent="loginUser">
+  <div class="row d-flex flex-column m-3">
+    <input type="text" v-model="email" />
+    <input
+      :type="showPassword?'text':'password'"
+      v-model="password"
+      class="form-control"
+    />
+    <div class="form-group form-check">
+      <input type="checkbox" v-model="showPassword" />Show Password
+      <label class="form-check-label" for="exampleCheck1"></label>
     </div>
+    <input type="submit" @click.prevent="loginUser" />
+  </div>
 </template>
 <script>
 import axios from "axios"
@@ -11,7 +19,9 @@ export default {
     data(){
 return{
     email:"",
-    password:""
+    password:"",
+    showPassword:false
+
 }
     },
 

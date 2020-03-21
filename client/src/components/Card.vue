@@ -57,6 +57,7 @@ export default {
         }
       });
     },
+
     deleteAction() {
       axios({
         method: "delete",

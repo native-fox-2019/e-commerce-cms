@@ -72,8 +72,7 @@ class productsController {
                 res.status(200).json(data)
             }).catch(err => {
                 res.status(400).json({
-                    msg: "update fail",
-                    error: err
+                    msg: "update fail"
                 })
             })
     }
