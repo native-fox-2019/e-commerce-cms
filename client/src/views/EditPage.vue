@@ -20,7 +20,7 @@
            <input type ="number" v-model="price" class="input inputText" >
       </div>
           <div class="containerForm">
-              <input class="btn" type="submit" value="Edit Watch">
+              <input class="btn btn-info" type="submit" value="Edit Watch">
           </div>
   </form>
   </div>

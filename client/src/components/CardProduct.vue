@@ -3,10 +3,15 @@
   <div class="titleContainer">
   <span class="itemTitle"> {{this.data.name}}</span>
   </div>
-  <div class="descriptionContainer d-flex" >
+  <div class="descriptionContainer row">
       <img :src="this.data.image_url" style="width:120px; height:170px;">
+      <div class="col">
       <span> price : RP {{this.data.price}}</span>
+      </div>
+      
+      <div class="col">
       <span> stock : {{this.data.stock}} </span>
+      </div>
       <div class="edit">
             <button class="btn btn-warning" @click.prevent="editThisData()">Edit</button>
             <button class="btn btn-danger" @click.prevent="deleteThisData()">Delete</button>
