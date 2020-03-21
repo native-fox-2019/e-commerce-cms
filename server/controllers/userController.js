@@ -9,7 +9,6 @@ const adminList = require("../helper/adminList");
 class UserController {
   static login(req, res, next) {
     const { email, password } = req.body;
-    console.log(req.body)
     User.findOne({ where: { email } })
       .then(data => {
         if (data && comparePass(password, data.password)) {
@@ -30,7 +29,6 @@ class UserController {
   }
 
   static register(req, res, next) {
-    console.log('register')
     const body = {
       first_name: req.body.first_name,
       last_name: req.body.last_name,
@@ -39,6 +37,7 @@ class UserController {
       isAdmin: null
     }
     adminList.adminList.forEach(element => {
+      console.log(element ===  req.body.email)
       if (element === req.body.email) {
         body.isAdmin = true
       } else {
@@ -47,7 +46,6 @@ class UserController {
     });
     User.create(body)
       .then(data => {
-        console.log(data)
         res.status(201).json(data);
       })
       .catch(err => {

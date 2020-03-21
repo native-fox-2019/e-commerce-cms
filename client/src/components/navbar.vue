@@ -12,12 +12,12 @@
 
   </div>
   <div id="sidebarMenu">
-    <ul class="sidebarMenuInner container text-center" style="margin-top: -2em">
-      <li> <i style="font-size: 10em;" class="fab fa-aviato"></i><span style="color:#ffff;margin-bottom: -1em; margin-top:-2em">rase for the sky cause tommoro will never come</span></li>
-      <li><a href>Category</a></li>
-      <li><a href>Add Product</a></li>
-      <li><a href>Add Staff</a></li>
-      <li><button type="button" class="btn btn-danger" style="border-radius: 50px">LOGOUT</button></li>
+    <ul class="sidebarMenuInner container text-center" style="margin-top: -2em;">
+      <li> <i style="font-size: 10em;" class="fab fa-aviato"></i><span style="color:#fff;margin-bottom: -1em; margin-top:-2em">rase for the sky cause tommoro will never come</span></li>
+      <li style="color: black"><a href>Category</a></li>
+      <li style="color: black"><a href>Add Product</a></li>
+      <li style="color: black"><a href>Add Staff</a></li>
+      <li><button type="button" class="btn btn-danger" style="border-radius: 50px" @click="logout">LOGOUT</button></li>
     </ul>
     
   </div>
@@ -27,25 +27,30 @@
     <button style="line-height: 0.5; border-radius:40px" class="btn btn-outline-info my-sm-0" type="submit">Search</button>
   </form>
   </div>
-  <div id='center' class="main center bg-dark">
-    <div class="mainInner">
-      <div>PURE CSS SIDEBAR TOGGLE MENU</div>
-    </div>
-    <div class="mainInner">
-      <div>PURE CSS SIDEBAR TOGGLE MENU</div>
-    </div>
-    <div class="mainInner">
-      <div>PURE CSS SIDEBAR TOGGLE MENU</div>
-    </div>
-  </div>
   </div>
 
 </template>
 
 <script>
-export default {
+import Vue from 'vue'
+import Swal from 'sweetalert2'
+export default Vue.extend({
+    name : 'Navbar',
+    methods : {
+        logout() {
+            localStorage.removeItem('token')
+            this.$router.push({path : '/login'})
+            Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Logging Out!",
+            showConfirmButton: false,
+            timer: 1500
+          });
+        }
+    }
 
-}
+})
 </script>
 
 <style>
@@ -66,7 +71,7 @@ body {
     width: 100%;
     max-width: 100%;
     box-shadow: none;
-     background: rgb(2,0,36);
+    background: rgb(2,0,36);
     background: linear-gradient(260deg, rgba(2,0,36,0.3) 0%, rgba(186,52,146,0.06904760195093662) 35%, rgba(0,212,255,1) 100%); 
     position: fixed;
     height: 60px!important;

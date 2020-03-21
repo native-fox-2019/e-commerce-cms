@@ -37,8 +37,8 @@
           <a href @click.prevent="registerPage">Register</a>
         </p>
         <p>or sign in with:</p>
-        <a type="button" class="btn-floating btn-git btn-sm" style="color:rgb(51, 181, 229)">
-          <i style="font-size:35px;" class="fab fa-google-plus"></i>
+        <a type="button" class="btn-floating btn-git" style="color:rgb(51, 181, 229)">
+          <i class="fab fa-google-plus" style="font-size:2em"></i>
         </a>
       </form>
     </div>
@@ -75,7 +75,6 @@ export default Vue.extend ({
         }
       })
       .then(data => {
-        console.log(data.data.body)
       Swal.fire({
       position: 'center',
       icon: 'success',
@@ -100,10 +99,4 @@ export default Vue.extend ({
     }
   }
 })
-
-
 </script>
-
-<style>
-
-</style>

@@ -1,4 +1,4 @@
 "use strict"
 module.exports = {
-    adminList : ['gustimertaputra@gmail.com', 'gusti@gusti.com']
+    adminList : ['gustimertaputra@gmail.com', 'gusti@gmail.com']
 }

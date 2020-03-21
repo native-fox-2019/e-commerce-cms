@@ -17,11 +17,11 @@
     <div class="card-body px-lg-5 pt-0">
       <form class="text-center" style="color: #757575;" v-on:submit.prevent="register">
         <div class="md-form">
-          <input type="text" id="name" class="form-control" required v-model="input_firstname" />
+          <input type="text" id="first_name" class="form-control" required v-model="input_firstname" />
           <label for="first_name">first name</label>
         </div>
         <div class="md-form">
-          <input type="text" id="name" class="form-control" required v-model="input_lastname"/>
+          <input type="text" id="last_name" class="form-control" required v-model="input_lastname"/>
           <label for="first_name">last name</label>
         </div>
 
@@ -67,7 +67,7 @@ data() {
     input_password : ""
   }
 },
-created : {
+created () {
 
 },
 methods : {
