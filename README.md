@@ -28,8 +28,8 @@ PORT=3000
 
 ### Default Port
 
-    SERVER = http://localhost:3000
-    CLIENT = http://localhost:8080
+    SERVER = https://murmuring-badlands-47024.herokuapp.com
+    CLIENT = https://e-commerce-cms-a6bed.firebaseapp.com
 
 ## Server
 
