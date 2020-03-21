@@ -30,7 +30,7 @@ export default {
       console.log("ini email", this.email, "ini password", this.password);
       axios({
         method: "POST",
-        url: "http://localhost:3000/user/register",
+        url: "https://hidden-beyond-35816.herokuapp.com/register",
         data: {
           email: this.email,
           password: this.password

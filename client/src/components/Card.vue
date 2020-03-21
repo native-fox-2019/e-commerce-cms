@@ -33,7 +33,7 @@ export default {
     Edit() {
       axios({
         method: "get",
-        url: `http://localhost:3000/product/${this.id}`,
+        url: `https://hidden-beyond-35816.herokuapp.com/product/${this.id}`,
         headers: { token: localStorage.getItem("token") }
       }).then(response => {
         console.log("ini response", response.data);
@@ -61,7 +61,7 @@ export default {
     deleteAction() {
       axios({
         method: "delete",
-        url: `http://localhost:3000/product/${this.id}`,
+        url: `https://hidden-beyond-35816.herokuapp.com/product/${this.id}`,
         headers: { token: localStorage.getItem("token") }
       }).then(response => {
         console.log(response.data);

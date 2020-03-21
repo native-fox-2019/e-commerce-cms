@@ -67,7 +67,7 @@ import axios from "axios"
         console.log('2.name',this.name,'3.image_url',this.image_url,'4.price',this.price,'5.stock',this.stock)
         axios({
           method:"PUT",
-          url:`http://localhost:3000/product/${id}`,
+          url:`https://hidden-beyond-35816.herokuapp.com/${id}`,
           data:{
             name:this.name,
             image_url:this.image_url,

@@ -71,7 +71,7 @@ export default {
       );
       axios({
         method: "POST",
-        url: "http://localhost:3000/product/",
+        url: "https://hidden-beyond-35816.herokuapp.com/product/",
         data: {
           name: this.name,
           image_url: this.image_url,
