@@ -1,7 +1,7 @@
 <template>
   <div class="register" :class="{ collapsed: isCollapsed }">
     <Navbar />
-    <sidebar-menu @toggle-collapse="onToggleCollapse" :menu="menu" />
+    <Sidebar @collapsed="onToggleCollapse" />
     <h1>Register</h1>
     <form @submit.prevent="onSubmit">
       <label>Name</label>
@@ -20,17 +20,17 @@
 </template>
 
 <script>
-import { SidebarMenu } from 'vue-sidebar-menu';
 import { mapActions, mapGetters } from 'vuex';
 import Error from '../components/Error.vue';
 import Navbar from '../components/Navbar.vue';
+import Sidebar from '../components/Sidebar.vue';
 
 export default {
   name: 'Register',
   components: {
     Error,
     Navbar,
-    SidebarMenu,
+    Sidebar,
   },
   data() {
     return {
@@ -41,29 +41,6 @@ export default {
       errors: null,
       registered: null,
       isCollapsed: false,
-      menu: [
-        {
-          header: true,
-          title: 'Main',
-          hiddenOnCollapse: false,
-        },
-        {
-          href: '/products',
-          title: 'Dashboard',
-          icon: 'fa fa-user',
-        },
-        {
-          href: '/products',
-          title: 'Actions',
-          icon: 'fa fa-chart-area',
-          child: [
-            {
-              href: '/products/add',
-              title: 'Add Products',
-            },
-          ],
-        },
-      ],
     };
   },
   computed: mapGetters(['accessToken']),

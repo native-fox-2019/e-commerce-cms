@@ -1,7 +1,7 @@
 <template>
   <div class="addProduct" :class="{ collapsed: isCollapsed }">
     <Navbar />
-    <sidebar-menu @toggle-collapse="onToggleCollapse" :menu="menu" />
+    <Sidebar @collapsed="onToggleCollapse" />
     <form @submit.prevent="onSubmit" >
       <label>Name</label>
       <input type="text" v-model="name">
@@ -18,14 +18,14 @@
 </template>
 
 <script>
-import { SidebarMenu } from 'vue-sidebar-menu';
 import { mapActions } from 'vuex';
 import Navbar from '../components/Navbar.vue';
+import Sidebar from '../components/Sidebar.vue';
 
 export default {
   name: 'AddProducts',
   components: {
-    SidebarMenu,
+    Sidebar,
     Navbar,
   },
   created() {
@@ -40,29 +40,6 @@ export default {
       isSuccess: false,
       onSuccess: 'Successfully Add a product',
       isCollapsed: false,
-      menu: [
-        {
-          header: true,
-          title: 'Main',
-          hiddenOnCollapse: false,
-        },
-        {
-          href: '/products',
-          title: 'Dashboard',
-          icon: 'fa fa-user',
-        },
-        {
-          href: '/products',
-          title: 'Actions',
-          icon: 'fa fa-chart-area',
-          child: [
-            {
-              href: '/products/add',
-              title: 'Add Products',
-            },
-          ],
-        },
-      ],
     };
   },
   methods: {

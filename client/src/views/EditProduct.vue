@@ -1,7 +1,7 @@
 <template>
-  <div class="edit-product">
+  <div class="edit-product" :class="{ collapsed: isCollapsed }">
     <Navbar />
-    <sidebar-menu @toggle-collapse="onToggleCollapse" :menu="menu" />
+    <Sidebar @collapsed="onToggleCollapse" />
     <form @submit.prevent="onSubmit" >
       <label>Name</label>
       <input type="text" v-model="name">
@@ -17,16 +17,16 @@
 </template>
 
 <script>
-import { SidebarMenu } from 'vue-sidebar-menu';
 import { mapActions } from 'vuex';
 import Navbar from '../components/Navbar.vue';
+import Sidebar from '../components/Sidebar.vue';
 
 export default {
   name: 'EditProduct',
   props: ['product', 'id'],
   components: {
     Navbar,
-    SidebarMenu,
+    Sidebar,
   },
   created() {
     if (!this.product) {
@@ -40,29 +40,6 @@ export default {
         url: '',
         stock: '',
         price: '',
-        menu: [
-          {
-            header: true,
-            title: 'Main',
-            hiddenOnCollapse: false,
-          },
-          {
-            href: '/products',
-            title: 'Dashboard',
-            icon: 'fa fa-user',
-          },
-          {
-            href: '/products',
-            title: 'Actions',
-            icon: 'fa fa-chart-area',
-            child: [
-              {
-                href: '/products/add',
-                title: 'Add Products',
-              },
-            ],
-          },
-        ],
       };
     }
     return {
@@ -71,29 +48,6 @@ export default {
       price: this.product.price,
       stock: this.product.stock,
       isCollapsed: false,
-      menu: [
-        {
-          header: true,
-          title: 'Main',
-          hiddenOnCollapse: false,
-        },
-        {
-          href: '/products',
-          title: 'Dashboard',
-          icon: 'fa fa-user',
-        },
-        {
-          href: '/products',
-          title: 'Actions',
-          icon: 'fa fa-chart-area',
-          child: [
-            {
-              href: '/products/add',
-              title: 'Add Products',
-            },
-          ],
-        },
-      ],
     };
   },
   methods: {

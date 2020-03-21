@@ -2,48 +2,25 @@
     <div class="home" :class="{ collapsed: isCollapsed }">
         <Navbar />
         <Products >
-          <sidebar-menu @toggle-collapse="onToggleCollapse" :menu="menu" />
+          <Sidebar @collapsed="onToggleCollapse" />
         </Products>
     </div>
 </template>
 
 <script>
-import { SidebarMenu } from 'vue-sidebar-menu';
 import Products from '../components/Products.vue';
 import Navbar from '../components/Navbar.vue';
+import Sidebar from '../components/Sidebar.vue';
 
 export default {
   name: 'Home',
   components: {
     Products,
     Navbar,
-    SidebarMenu,
+    Sidebar,
   },
   data() {
     return {
-      menu: [
-        {
-          header: true,
-          title: 'Main',
-          hiddenOnCollapse: false,
-        },
-        {
-          href: '/products',
-          title: 'Dashboard',
-          icon: 'fa fa-user',
-        },
-        {
-          href: '/products',
-          title: 'Actions',
-          icon: 'fa fa-chart-area',
-          child: [
-            {
-              href: '/products/add',
-              title: 'Add Products',
-            },
-          ],
-        },
-      ],
       isCollapsed: false,
     };
   },
