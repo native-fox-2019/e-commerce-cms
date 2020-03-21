@@ -1,6 +1,7 @@
 <template>
   <div class="product">
-    <div class="product-content">
+    <p style="text-align: center; font-weight: 500; font-size: 25px" v-if="isLoading">LOADING...<p>
+    <div class="product-content" v-if="!isLoading">
         <div class="product-image">
           <img :src="image_url" width="300px" height="auto">
           <div class="action" v-if="$store.state.isAdmin">
@@ -63,6 +64,7 @@ export default {
       image_url: '',
       isBtnEdit: false,
       errors: [],
+      isLoading: true,
     };
   },
   methods: {
@@ -78,6 +80,7 @@ export default {
           this.price = response.data.product.price;
           this.stock = response.data.product.stock;
           this.image_url = response.data.product.image_url;
+          this.isLoading = false;
         })
         .catch((err) => {
           console.log(err.response);

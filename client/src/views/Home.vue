@@ -1,6 +1,8 @@
 <template>
   <div class="home">
-    <h1>Products</h1>
+    <h1 v-if="$store.state.products.length !== 0">Products</h1>
+    <p v-if="$store.state.products.length === 0"
+      style="font-weight: 500; font-size: 25px">LOADING....</p>
     <div class="products">
       <Card v-for="product in $store.state.products" :key="product.id"
       :product="product"/>
