@@ -9,7 +9,7 @@ class UserController {
         User.create({
             email,
             password,
-            isadmin : false
+            isadmin : true
         })
             .then(user => {
                 
