@@ -134,19 +134,6 @@ describe('Find all data ',function(){
         })
     })
 
-    describe('failure get data because of authentification failure',function(){
-        it('should return 403 and object(error) ', (done)=>{
-            request(app)
-            .get('/product')
-            
-        .then(result=>{
-            const {body,status}=result
-            expect(status).toBe(403)
-            done()
-            })
-            
-        })
-    })
 
 })
 
