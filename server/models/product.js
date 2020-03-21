@@ -8,8 +8,12 @@ module.exports = (sequelize, DataTypes) => {
   Product.init({
     name: {
       type:DataTypes.STRING,
+      allowNull:false,
       validate:{
         notEmpty:{
+          msg:'name cannot be empty'
+        },
+        notNull:{
           msg:'name cannot be empty'
         }
       }
@@ -28,15 +32,23 @@ module.exports = (sequelize, DataTypes) => {
         min:{
           args:[0],
           msg:"Price cannot be negative value"
-        }
+        },
+        isNumeric: {
+          msg:'Price must be number'
+        },  
       }
     },
     stock: {type:DataTypes.INTEGER,
+      allowNull:false,
+      isNumeric: true,  
     validate:{
       min:{
         args:[1],
-        msg:"Product's Stock must be positive value"
-      }
+        msg:"Product's Stock(s) must be positive value"
+      },
+      isNumeric: {
+        msg:'Stock(s) must be number'
+      },  
     }}
   },{
     sequelize

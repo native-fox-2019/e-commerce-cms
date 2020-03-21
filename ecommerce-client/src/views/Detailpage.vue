@@ -1,5 +1,6 @@
 <template>
   <div class="divCenter">
+    <div class="yea" v-if="level==='admin'">
     <form  v-on:submit.prevent="update(productDatum)">
       <div class="containerForm"> <span class="textForm"> Product's Name </span> </div>
       <div class="containerForm">
@@ -21,15 +22,27 @@
       <div class="containerForm">
           <input  class="input inputText" v-model="productDatum.price" />
       </div>
-          <div class="containerForm">
+          <div class="containerForm" >
               <input class="btn" type="submit" value="Edit Comic">
           </div>
-  </form>
+      </form>
+    </div>
+    <div class="divCenter">
+      <div class="detailContainer">
+        <img :src="productDatum.image_url" style="width:240px; height:340px;">
+      </div>
+      <div class="detailContainer">
+        <span class="inputText"> {{productDatum.name}}</span>
+        <span class="inputText"> stock: {{productDatum.stock}} </span>
+        <i  style="color:blue; font-size :40px" class="fa fa-shopping-cart"></i>
+      </div>
+    </div>
   </div>
 </template>
 <script>
 
 import axios from 'axios';
+import Swal from 'sweetalert2';
 
 export default {
   data() {
@@ -41,6 +54,7 @@ export default {
         price: '',
         stock: '',
       },
+      level: localStorage.getItem('level'),
     };
   },
   methods: {
@@ -59,6 +73,8 @@ export default {
         });
     },
     update(object) {
+      console.log(object.price, 'price');
+      console.log(object.stock, 'stock');
       axios({
         method: 'PUT',
         url: `${this.$store.state.axiosUrl}/product/${this.id}`,
@@ -76,6 +92,27 @@ export default {
           this.$router.push('/adminpage');
         })
         .catch((err) => {
+          // swal
+          if (Array.isArray(err.response.data.msg)) {
+            console.log('masuk sini');
+            const arrError = [];
+            for (let i = 0; i < err.response.data.msg.length; i += 1) {
+              arrError.push(err.response.data.msg[i]);
+            }
+            console.log(arrError, 'ini array');
+            Swal.fire({
+              icon: 'error',
+              title: 'cannot update Product',
+              html: `<span>${arrError.join('<br>')}</span>`,
+            });
+          } else {
+            Swal.fire({
+              icon: 'error',
+              title: 'cannot update Product',
+              html: `<span>${err.response.data.msg}</span>`,
+            });
+          }
+          // swal
           console.log(err);
         });
     },

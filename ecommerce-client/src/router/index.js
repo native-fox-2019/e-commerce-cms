@@ -5,6 +5,8 @@ import Login from '../views/Login.vue';
 import Admin from '../views/Adminpage.vue';
 import Additem from '../views/Additem.vue';
 import Detailpage from '../views/Detailpage.vue';
+import adminRegister from '../views/adminregister.vue';
+import register from '../views/register.vue';
 
 Vue.use(VueRouter);
 
@@ -43,6 +45,17 @@ const routes = [
     path: '/detail/:id',
     name: 'Detail',
     component: Detailpage,
+    meta: { requireAuth: true },
+  },
+  {
+    path: '/register',
+    name: 'register',
+    component: register,
+  },
+  {
+    path: '/adminregister',
+    name: 'adminregister',
+    component: adminRegister,
   },
 ];
 
@@ -52,7 +65,15 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   if (to.matched.some((record) => record.meta.requireAuth)) {
-    if (!localStorage.getItem('token') && localStorage.getItem('level') !== 'admin') next({ name: 'Login' });
+    if (!localStorage.getItem('token')) next({ name: 'Login' });
+    else next();
+  } else {
+    next();
+  }
+});
+router.beforeEach((to, from, next) => {
+  if (to.matched.some((record) => record.meta.requireAuth)) {
+    if (localStorage.getItem('level') !== 'admin') next({ name: 'Home' });
     else next();
   } else {
     next();

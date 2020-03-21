@@ -8,8 +8,12 @@
           <a class="btn" @click="addForm()"> Add New Comic </a>
         </div>
         <hr>
-        <div class="divCenter">
-          <itemlist v-for="(data, idx) in $store.state.items" :key="idx" :data="data">
+        <div class="divCenter" v-if="$store.state.refresh==false">
+          <itemlist v-for="(data, idx) in this.$store.state.items" :key="idx" :data="data">
+          </itemlist>
+        </div>
+        <div class="divCenter" v-else>
+          <itemlist v-for="(data, idx) in this.arrayItems" :key="idx" :data="data">
           </itemlist>
         </div>
         <div>
@@ -25,6 +29,7 @@ export default {
   data() {
     return {
       name: localStorage.getItem('name'),
+      arrayItems: [],
     };
   },
   components: {
@@ -38,6 +43,7 @@ export default {
   },
   created() {
     this.$store.dispatch('getAllItem');
+    this.arrayItems = this.$store.state.items;
   },
 
 };

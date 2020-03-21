@@ -14,7 +14,7 @@ afterAll(done =>{
 
 describe('User register',()=>{
     describe('Success register user',()=>{
-        it('should return 200 and object (token)',(done)=>{
+        it('should return 200 and object (token,name,level)',(done)=>{
             request(app)
             .post('/user/register')
             .send({
@@ -27,6 +27,8 @@ describe('User register',()=>{
                 const {status,body}=result
                 expect(status).toBe(200)
                 expect(body).toHaveProperty("token")
+                expect(body).toHaveProperty("name")
+                expect(body).toHaveProperty("level")
                 // token = body.token
                 done()
             })
@@ -81,7 +83,7 @@ describe('User register',()=>{
 
 describe('User login',()=>{
     describe('succesful user login',()=>{
-        it('should return 200 and object(token)',(done)=>{
+        it('should return 200 and object(token,name,level)',(done)=>{
             request(app)
             .post('/user/login')
             .send({
@@ -93,7 +95,7 @@ describe('User login',()=>{
                 expect(status).toBe(200)
                 expect(body).toHaveProperty("token")
                 expect(body).toHaveProperty("level")
-                
+                expect(body).toHaveProperty("name")
                 done()
             })
            

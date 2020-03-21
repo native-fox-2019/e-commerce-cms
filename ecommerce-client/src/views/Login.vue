@@ -24,6 +24,7 @@
 </template>
 <script>
 import axios from 'axios';
+import Swal from 'sweetalert2';
 
 const axiosUrl = 'http://localhost:3000';
 
@@ -52,11 +53,36 @@ export default {
           localStorage.setItem('token', data.data.token);
           localStorage.setItem('name', data.data.name);
           localStorage.setItem('level', data.data.level);
-          this.$store.dispatch('adminLogin');
-          this.$router.push('/adminpage');
+          if (localStorage.getItem('level') === 'admin') {
+            this.$store.commit('toggleLoginAdmin');
+            this.$store.dispatch('adminLogin');
+            this.$router.push('/adminpage');
+          } else {
+            this.$store.commit('toggleLoginUser');
+            this.$store.dispatch('userLogin');
+            this.$router.push('/');
+          }
         })
         .catch((err) => {
-          console.log(err);
+          if (Array.isArray(err.response.data.msg)) {
+            console.log('masuk sini');
+            const arrError = [];
+            for (let i = 0; i < err.response.data.msg.length; i += 1) {
+              arrError.push(err.response.data.msg[i]);
+            }
+            console.log(arrError, 'ini array');
+            Swal.fire({
+              icon: 'error',
+              title: 'cannot login',
+              html: `<span>${arrError.join('<br>')}</span>`,
+            });
+          } else {
+            Swal.fire({
+              icon: 'error',
+              title: 'cannot login',
+              html: `<span>${err.response.data.msg}</span>`,
+            });
+          }
         });
     },
   },

@@ -29,6 +29,7 @@
 
 import { VMoney } from 'v-money';
 import axios from 'axios';
+import Swal from 'sweetalert2';
 
 const axiosUrl = 'http://localhost:3000';
 
@@ -73,7 +74,27 @@ export default {
           this.$router.push('/adminpage');
         })
         .catch((err) => {
-          console.log(err);
+          // swal
+          if (Array.isArray(err.response.data.msg)) {
+            console.log('masuk sini');
+            const arrError = [];
+            for (let i = 0; i < err.response.data.msg.length; i += 1) {
+              arrError.push(err.response.data.msg[i]);
+            }
+            console.log(arrError, 'ini array');
+            Swal.fire({
+              icon: 'error',
+              title: 'cannot add Product',
+              html: `<span>${arrError.join('<br>')}</span>`,
+            });
+          } else {
+            Swal.fire({
+              icon: 'error',
+              title: 'cannot add Product',
+              html: `<span>${err.response.data.msg}</span>`,
+            });
+          }
+          // swal
         });
     },
   },

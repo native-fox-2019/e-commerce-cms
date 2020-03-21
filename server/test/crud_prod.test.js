@@ -40,7 +40,7 @@ describe('Create a new product ',function(){
         })
     })
 
-    describe('Fail to create product',function(){
+    describe('Fail to create product because of invalid input',function(){
         it('Should return 400 and object (Error)', (done)=>{
             request(app)
             .post('/product')
@@ -105,8 +105,6 @@ describe('Create a new product ',function(){
         })
     })
 
-
-
 })
 
 describe('Find all data ',function(){
@@ -114,7 +112,6 @@ describe('Find all data ',function(){
         it('should return 200', (done)=>{
             request(app)
             .get('/product')
-            .set("token",tokenUser)
         .then(result=>{
             const {body,status}=result
             expect(status).toBe(200)
@@ -128,7 +125,6 @@ describe('Find all data ',function(){
         it('should return 200 ', (done)=>{
             request(app)
             .get('/product')
-            .set("token",tokenAdmin)
         .then(result=>{
             const {body,status}=result
             expect(status).toBe(200)
@@ -274,7 +270,6 @@ describe('update Data', ()=>{
             it('should return 200 and  object(product)',(done)=>{
                 request(app)
                 .get(`/product/${id}`)
-                .set("token",tokenAdmin)
                 .then(result=>{
                     const {body,status} = result
                     expect(status).toBe(200)
@@ -291,7 +286,6 @@ describe('update Data', ()=>{
             it('should return 200 and  object(product)',(done)=>{
                 request(app)
                 .get(`/product/${id}`)
-                .set("token",tokenUser)
                 .then(result=>{
                     const {body,status} = result
                     expect(status).toBe(200)
@@ -299,19 +293,6 @@ describe('update Data', ()=>{
                     expect(body).toHaveProperty("image_url")
                     expect(body).toHaveProperty("price")
                     expect(body).toHaveProperty("stock")    
-                    done()
-                })
-            })
-        })
-        describe('failed get data by id because of authentification error',()=>{
-            it('should return 403 and  object(product)',(done)=>{
-                request(app)
-                .get(`/product/${id}`)
-                
-                .then(result=>{
-                    const {body,status} = result
-                    expect(status).toBe(403)
-                    expect(body).toHaveProperty("msg")   
                     done()
                 })
             })

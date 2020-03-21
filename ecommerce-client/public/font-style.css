@@ -43,3 +43,7 @@
   font-family: rale-reg;
   font-size: 25px;
 }
+.fa:hover{
+  color: black;
+  cursor: pointer;
+}
