@@ -14,7 +14,8 @@
     "test-update": "clear && jest product-update --detectOpenHandles --runInBand --forceExit",
     "test-delete": "clear && jest product-delete --detectOpenHandles --runInBand --forceExit",
     "initdb_dev": "sequelize db:create --env=development && sequelize db:migrate --env=development && sequelize db:seed:all --env=development",
-    "dev": "nodemon app.js --env=development"
+    "dev": "nodemon app.js --env=development",
+    "start": "node app.js"
   },
   "keywords": [],
   "author": "",
