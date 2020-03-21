@@ -24,7 +24,15 @@ Status 200
 
 ```javascript
 [
-  
+    {
+        "id": 2,
+        "name": "iPhone sepuluh",
+        "image_url": "www.google.com",
+        "price": 10000000,
+        "stock": 1,
+        "createdAt": "2020-03-20T15:04:33.095Z",
+        "updatedAt": "2020-03-21T10:25:39.618Z"
+    }
 ]
 ```
 <br>
@@ -53,10 +61,31 @@ Create a product
 }
 ```
 
+#### Request Body
+```javascript
+{
+	"name": "iphone 11",
+	"image_url": "www.google.com",
+	"price": 30000000,
+	"stock": 2
+}
+```
+
 #### Response
 Status 201
 ```javascript
-
+{
+    "newProduct": {
+        "id": 5,
+        "name": "iphone 11",
+        "image_url": "www.google.com",
+        "price": 30000000,
+        "stock": 2,
+        "updatedAt": "2020-03-21T16:17:59.382Z",
+        "createdAt": "2020-03-21T16:17:59.382Z"
+    },
+    "message": "Added a new product!"
+}
 ```
 
 Status 400
@@ -99,13 +128,26 @@ Update a product details by the id from the products resources
 
 #### Request Body
 ```javascript
-
+{
+	"name": "iphone 11",
+	"image_url": "www.google.com",
+	"price": 20000000,
+	"stock": 2
+}
 ```
 
 #### Response
 Status (200)
 ```javascript
-
+{
+    "edited": {
+        "name": "iphone 11",
+        "image_url": "www.google.com",
+        "price": 20000000,
+        "stock": 2
+    },
+    "message": "Product edited"
+}
 ```
 
 Status (400)
@@ -156,7 +198,18 @@ Delete a products
 #### Response
 Status (200)
 ```javascript
-
+{
+    "deleted": {
+        "id": 5,
+        "name": "iphone 11",
+        "image_url": "www.google.com",
+        "price": 20000000,
+        "stock": 2,
+        "createdAt": "2020-03-21T16:17:59.382Z",
+        "updatedAt": "2020-03-21T16:19:15.215Z"
+    },
+    "message": "Product deleted"
+}
 ```
 
 Status (403)
@@ -186,6 +239,7 @@ Sign up an account
     - Can not be null or empty
 - password (String)
     - Can not be null or empty
+- role (String)
 
 #### Request Headers
 ```javascript
@@ -197,10 +251,10 @@ Sign up an account
 #### Request Body
 ```javascript
 {
-	"first_name" : "Puji",
-	"last_name" : "Yanto",
-	"email" : "puji@gmail.com",
-	"password" : "qeqeqe"
+	"name": "ivan",
+	"email": "ivan@gmail.com",
+	"password": "12345",
+	"role": "admin"
 }
 ```
 
@@ -208,13 +262,7 @@ Sign up an account
 Status (201)
 ```javascript
 {
-  "id": 16,
-  "first_name": "Puji",
-  "last_name": "Yanto",
-  "email": "puji@gmail.com",
-  "password": "qeqeqe",
-  "updatedAt": "2020-03-07T05:14:26.233Z",
-  "createdAt": "2020-03-07T05:14:26.233Z"
+    "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiZW1haWwiOiJpdmFuQGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTU4NDgwNzI2N30.x2FuQQkRKqAThBV6CpgvoFbpitVoGaaT3tZg08BRvhA"
 }
 ```
 Status (400)
@@ -255,7 +303,9 @@ Generates a token for authentication
 #### Response
 Status (200)
 ```javascript
-"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiZW1haWwiOiJha2JhckBnbWFpbC5jb20iLCJpYXQiOjE1ODM1NTM1OTN9.pV44TwKKmaEKIwXgs5-JTLosad7HSji8gIvtWN4Acvs"
+{
+    "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJiYW1iYW5nQGdtYWlsLmNvbSIsInJvbGUiOiJzdXBlckFkbWluIiwiaWF0IjoxNTg0ODA3MTEyfQ.rsURxf-VH6m4XkN5IDR3I6qUzYbSr7zJYHY-2gMtVSs"
+}
 ```
 
 Status (400)
