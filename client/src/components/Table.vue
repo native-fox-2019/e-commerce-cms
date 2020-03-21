@@ -14,7 +14,7 @@
       <th style="width:15%; font-size:25px; font-weight:700" scope="col">Name</th>
       <th style="width:10%; font-size:25px; font-weight:700" scope="col">Category</th>
       <th style="width:20; font-size:25px; font-weight:700" scope="col">Desciption</th>
-      <th style="width:10%; font-size:25px; font-weight:700" scope="col">Price</th>
+      <th style="width:10%; font-size:25px; font-weight:700" scope="col">Price(M)</th>
       <th style="width:10%; font-size:25px; font-weight:700" scope="col">stock</th>
       <th style="width:20%; font-size:25px; font-weight:700" scope="col">Image</th>
       <th style="width:5%; font-size:25px; font-weight:700" scope="col">Action</th>

@@ -105,16 +105,18 @@ export default new Vuex.Store({
         data : data
     })
     .then(({data}) => {
+      console.log(data)
         contex.dispatch('findAll')
          Swal.fire({
           position: "center",
           icon: "success",
-          title: `Data ${data.category} has editted succesfully!`,
+          title: `Data has editted succesfully!`,
           showConfirmButton: false,
           timer: 3000
         });
     })
     .catch(err => {
+      console.log(err)
       const error = err.response.data.message
       let errorStr = error.join('<li class="container text-left mx-5" style="margin-left: 6rem !important" >')
         Swal.fire({
