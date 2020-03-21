@@ -33,6 +33,7 @@ class Controller{
     }
 
     static addData(req, res, next){
+
         let dataAdd = {
             name: req.body.name,
             image_url: req.body.image_url,

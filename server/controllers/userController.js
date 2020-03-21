@@ -38,6 +38,7 @@ class Controller{
     }
 
     static login(req, res, next){
+        
         let idLogin;
         let emailLogin;
         let usernameLogin;
@@ -47,7 +48,7 @@ class Controller{
                 email: req.body.email
             }
         })
-            .then(data=>{
+        .then(data=>{
                 idLogin = data.id;
                 emailLogin = data.email;
                 usernameLogin= data.username;
@@ -72,6 +73,61 @@ class Controller{
             })
             .catch(err=>{
                 next(err)
+            })
+    }
+
+    static adminRegister(req, res, next){
+        let dataRegisterAdmin = {
+            email: req.body.email,
+            password: req.body.password,
+            role: 'admin',
+            username: req.body.username
+        }
+
+        User.create(dataRegisterAdmin)
+            .then(data=>{
+                res.status(201).json({message: 'Admin created'});
+            })
+            .catch(err=>{
+                next(err);
+            })
+    }
+
+    static adminLogin(req, res, next){
+        let idLogin;
+        let emailLogin;
+        let usernameLogin;
+
+        User.findOne({
+            where: {
+                email: req.body.email 
+            }
+        })
+            .then(data=>{
+                idLogin = data.id;
+                emailLogin = data.email;
+                usernameLogin= data.username;
+
+                return bcrypt.compare(req.body.password, data.password)
+            })
+            .then(function(result){
+                if(result){
+                    let token = jwt.sign({
+                        id: idLogin,
+                        email: emailLogin,
+                        usernameLogin: usernameLogin
+                    }, process.env.SECRET)
+
+                    res.status(200).json({access_token: token});
+                }else{
+                    throw {
+                        msg: 'Wrong email/password',
+                        status: 400
+                    }
+                }
+            })
+            .catch(err=>{
+                next(err);
             })
     }
 }

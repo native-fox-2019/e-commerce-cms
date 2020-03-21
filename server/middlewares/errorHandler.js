@@ -11,6 +11,8 @@ function errorHandler (err, req, res, next) {
         res.status(err.status).json({message: err.errors});
     }else if(err.msg === 'User not found'){
         res.status(err.status).json({message: err.msg});
+    }else if(err.msg === 'You are not admin'){
+        res.status(err.status).json({message: err.msg});
     }else{
         res.status(500);
     }
