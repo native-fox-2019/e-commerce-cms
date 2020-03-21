@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "involuted-fold-271803",
+  "private_key_id": "f33401073fb66ef445e50f12a4d820da9f107918",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQC0ZRejjpyRvnrQ\nBlkT6or4MV9ECRwgbmP+mxQ8TNYfUj8wTmU3b5yrWkKPKBDKncvB/jO80AD2KZOE\nYodAtYBc1dctFAdHqxAU3MbWzMJcUtl8k2bWFssoFyvuj8kQq3y2mr5fZlIOpDGv\n+hKADUXvR09W8w41m5mKIS/2I5sBAFucD2hOFkO2VOGSw3FvW18QDx4JM0rvrExj\nlde/a5IYkMHGpZFcqJqmO608EtzdTEC+0Qjp/aXyJ/F1VA4ZpfCyXmd6nGW3g9yw\n8fR0+wK7Kos8r7w489EJrrO37KrKT8REo737SLfiwo1EicYeEsEKLohGgNuDROOx\np94/qo2BAgMBAAECggEACB9TI1H3r8JCrQd+zvGXue7If3uPhiWiSqOjPhx8OaMj\nkDe/a/G9EqQOQibc1q/92ClrcpwaUaXJQW6Jm3rF9v1z4lDitlyNQqXhgr4WdD9m\nESthN9Dald6xON0a1wLPAI59dYsvClS581alqu6uEETcMtSKdmnKoy21B0v5czUu\n/i7lug2MhYmINH8j4ot02aRmF8hEl4B4xFQbuzd5rQdz5TOHyBhDr00eBYD/77lP\n1yRBYessp5PJs1VV0uPPLy7Nor47W+eT/HhjBSQLoytOdgGlgric9h91SBFzxpP6\nYwwL7PX/Dox2DVLYU/NptmBOa37hlEd2y3sYZNlB/wKBgQDqRUOceTAYGSGuno/3\nRm9HmLgR6HgfalNa0ZskUK52/apADWoQi9oRevAUdbAB07llCtIodDjw0oGXuhIH\nQhGHFHnKhlQDPuO8VDB7223AEHCrQW1CbFHfwL3hP1v8C6oqCscFGf17ZdkKZjCp\nbkvCn8H15njfyi6LJiG6sah2mwKBgQDFII4BZI5h1ByBiYFzkJvARMiW5+soEhZz\nj605LkplXfrbfMGOS5NnAsTWiLr17TKZCSqZa9+Ury0+wSsq5fSAfezBQdp0/vxb\nSzabGNhHjMk0cHxIOvILiWvVtSD/tqwctB7U/PJW8cFdHqvoHcMPq1vUzangWjAX\nXiVnPjlAEwKBgGK0zlj2YsI0jJGDc4svXSGggiXhegNajEZevGxfpjKyjHIydLcG\nBdqJnvAv6fnLGHkvRv8OgRNOzpV8K65tMu9kPDCNyoYXkGLAYjE9cg+TnbU6euua\nsiCBmD94r6wRyh+urM5Edh3w+rK7/dLViww0vcd61QENsfClH18HDcDzAoGAfonQ\nPjqjX07+YXS4IUvhfwFoVd5XyGgb+2BuTLdXUEyMnFowETyYSVawrholEXqKsUv+\nCXACnHn6rD7pi+cDFXw//ypbpiCMM7pLOjIvm3ZXLg9K6D7WYut6yjs0DJHhV6eT\n5xrcIU2c1z66EQ0Ryrwv/aFre7XJCycHEYgSzfsCgYA7o01XUsQCmu5OmWF/VnDS\noYS++QAg7TBAHNl4b8TAdyqCYl68oDXGx1PXAFQCApsDH6vzQnjvGet9iBQPuhVA\nPNdOd30AH3W7aMzmPCCgT5LNr6Qj91RavDQPNoKU86tuZIm6bLo4CkDRxHxMpD5b\n9AJWL12MSYkNcEUwoBBVVg==\n-----END PRIVATE KEY-----\n",
+  "client_email": "agung-800@involuted-fold-271803.iam.gserviceaccount.com",
+  "client_id": "113206280364447619827",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/agung-800%40involuted-fold-271803.iam.gserviceaccount.com"
+}

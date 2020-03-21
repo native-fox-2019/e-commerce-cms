@@ -1,13 +1,15 @@
 'use strict';
 const bcrypt = require('bcrypt')
+require('dotenv').config()
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
     let superUser = [{
       name: 'I Gusti Agung Agastya T',
       email: 'rqz.agastya@gmail.com',
+      superUser: true,
       is_admin: true,
-      password: bcrypt.hashSync('qwerty', 10),
+      password: bcrypt.hashSync(process.env.SUPER_PASS, 10),
       createdAt: new Date(),
       updatedAt: new Date()
     }]

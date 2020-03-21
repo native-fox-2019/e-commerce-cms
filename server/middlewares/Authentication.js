@@ -18,12 +18,14 @@ module.exports = (request, response, next) => {
                     request.userData = {
                         id: result.id,
                         name: result.name,
-                        email: result.email
+                        email: result.email,
+                        is_admin: result.is_admin,
+                        superUser: result.superUser
                     }
                     next()
                 } else {
                     next({
-                        status_code: 400,
+                        status_code: 403,
                         message: 'Unauthenticated'
                     })
                 }

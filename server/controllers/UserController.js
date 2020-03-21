@@ -4,6 +4,7 @@ const {
 } = require('../models')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
+const Op = require('sequelize').Sequelize.Op
 
 class UserController {
     static login(request, response, next) {
@@ -57,6 +58,7 @@ class UserController {
             name: request.body.name,
             email: request.body.email,
             is_admin: false,
+            superUser: false,
             password: request.body.password
         }
         User.findOne({
@@ -102,7 +104,7 @@ class UserController {
                     if (result.is_admin) {
                         throw {
                             status_code: 400,
-                            message: 'This User is Already an Admin'
+                            message: 'This User is Already a Member'
                         }
                     } else {
                         data_user = result
@@ -123,13 +125,69 @@ class UserController {
             })
             .then(result => {
                 response.status(200).json({
-                    message: `User ${data_user.name} is Admin Now`
+                    message: `User ${data_user.name} is Member Now`
                 })
             })
             .catch(err => {
                 next(err)
             })
     }
+
+    static removeAdmin(request, response, next) {
+        let id_removeAdmin = request.params.id
+        let data_user
+        User.findByPk(id_removeAdmin)
+            .then(result => {
+                if (result) {
+                    if (result.is_admin) {
+                        data_user = result
+                        return User.update({
+                            is_admin: false
+                        }, {
+                            where: {
+                                id: id_removeAdmin
+                            }
+                        })
+                    } else {
+                        throw {
+                            status_code: 400,
+                            message: 'This User is Already Non Member'
+                        }
+                    }
+                } else {
+                    throw {
+                        status_code: 404,
+                        message: 'User Not Found'
+                    }
+                }
+            })
+            .then(result => {
+                response.status(200).json({
+                    message: `User ${data_user.name} is Non Member Now`
+                })
+            })
+            .catch(err => {
+                next(err)
+            })
+    }
+
+    static listAll(request, response, next) {
+        User.findAll({
+                where: {
+                    superUser: false
+                },
+                order: [
+                    ['id', 'ASC']
+                ]
+            })
+            .then(result => {
+                response.status(200).json(result)
+            })
+            .catch(err => {
+                next(err)
+            })
+    }
+
 }
 
 module.exports = UserController

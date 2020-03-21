@@ -50,6 +50,11 @@
         font-size: 18px;
         background-color: $color-primary;
         margin: inherit;
+        transition: 0.5s linear;
+    }
+
+    span:hover {
+        color: aliceblue;
     }
 
     a {

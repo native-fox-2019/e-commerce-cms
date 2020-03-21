@@ -1,7 +1,23 @@
 <template>
     <div id="app">
         <header>
-            <h4>Toko Gunpla</h4>
+            <router-link to="/" style="text-decoration: none;">
+                <h4>Toko Gunpla: CMS</h4>
+            </router-link>
+            <ul class="middle-nav">
+                <li>
+                    <router-link to="/">
+                        <span v-if="this.$store.state.isLogin">See Product</span>
+                    </router-link>
+                </li>
+                <li>
+                    <router-link to="/users">
+                        <span
+                            v-if="this.$store.state.isLogin && this.$store.state.user_info.superUser"
+                        >See Users</span>
+                    </router-link>
+                </li>
+            </ul>
             <nav>
                 <ul class="nav_link">
                     <li>

@@ -3,6 +3,7 @@ import VueRouter from "vue-router";
 import Login from "../views/Login.vue";
 import Register from "../views/Register.vue";
 import Product from "../views/MainPage.vue";
+import Users from "../views/Users.vue";
 
 Vue.use(VueRouter);
 
@@ -29,6 +30,10 @@ const routes = [{
       isAlreadyLogin: true
     },
     component: Register
+  }, {
+    path: '/users',
+    name: 'Users',
+    component: Users
   }
 ];
 

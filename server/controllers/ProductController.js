@@ -44,7 +44,8 @@ class ProductController {
             .then(result => {
                 let user_info = {
                     name: result.name,
-                    is_admin: result.is_admin
+                    is_admin: result.is_admin,
+                    superUser: result.superUser
                 }
                 response.status(200).json({
                     data: data_product,

@@ -5,11 +5,11 @@
                 <span class="block">
                     <div
                         class="mark"
-                        v-bind:style="$store.state.user_info.is_admin?'background-color: rgb(0, 177, 0);':'background-color: rgb(177, 0, 0);'"
+                        v-bind:style="user_info.superUser?'background-color: rgb(0, 0, 177);':user_info.is_admin?'background-color: rgb(0, 177, 0);':'background-color: rgb(177, 0, 0);'"
                     ></div>
-                    {{$store.state.user_info.is_admin?'Super User: ':'Member: '}}
+                    {{user_info.superUser?'Super User: ':user_info.is_admin?'Member: ':'Non-Member: '}}
                 </span>
-                <span>{{ $store.state.user_info.name}}</span>
+                <span>{{ user_info.name}}</span>
             </div>
             <h4>Your Catalogue</h4>
             <div class="product-list">
@@ -32,6 +32,7 @@
 import ProductCard from "../components/ProductCard";
 import addPForm from "../components/addPForm";
 import editPForm from "../components/editPform";
+import { mapState } from "vuex";
 
 export default {
     name: "Product",
@@ -68,6 +69,9 @@ export default {
         if (localStorage.getItem("access_token")) {
             this.getAllProduct();
         }
+    },
+    computed: {
+        ...mapState(["user_info"])
     }
 };
 </script>

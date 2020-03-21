@@ -62,7 +62,7 @@ export default new Vuex.Store({
                     context.commit('setUser', result.data.user);
                 })
                 .catch(err => {
-                    console.log(err.response);
+                    context.dispatch('errHandler', err.response)
                 });
         },
         errorHandler: function (context, err_payload) {

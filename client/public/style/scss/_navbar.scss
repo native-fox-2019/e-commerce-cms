@@ -5,6 +5,12 @@ header {
     justify-content: space-between;
     align-items: center;
 
+    .middle-nav {
+        span {
+            margin: 0px 10px;
+        }
+    }
+
     ul {
         background-color: $color-primary;
         list-style: none;
