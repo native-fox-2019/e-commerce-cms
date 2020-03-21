@@ -17,7 +17,6 @@ export default {
 </script>
 <style>
 .navbar {
-  /* position: fixed; */
   width: 97.8vw;
   z-index: 1;
   top: 0;

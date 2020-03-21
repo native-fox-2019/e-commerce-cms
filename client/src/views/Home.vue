@@ -1,18 +1,25 @@
 <template>
   <div class="home">
     <Navbar/>
+    <Alert v-show="isError.status" :isError="isError" @hide="isError.status=!isError.status"/>
     <div class="container">
       <div class="add-container">
       </div>
+      <div>
+        <h1>Products List</h1>
+      </div>
       <div class="card-container">
-        <div class="card" v-for="product in products" :key="product.id" @click.prevent="edit(product.id)">
+        <div class="card" v-for="product in products" :key="product.id" >
           <div>
-            <img :src="product.imageURL" alt="">
+            <img :src="product.imageURL">
           </div>
-          <div class="detail">
+          <div class="detail" @click.prevent="edit(product.id)">
             <h2>{{product.name}}</h2>
             <p>Rp. {{product.price}}</p>
             <p>stocks: {{product.stocks}}</p>
+          </div>
+          <div v-if="product.stocks === 0" class="delete-btn">
+            <button @click.prevent="remove(product.id)" style="background-color=:red;">Remove</button>
           </div>
         </div>
         <div class="card add" @click="add">
@@ -25,11 +32,15 @@
 
 <script>
 import Navbar from '../components/navbar'
+import axios from 'axios'
+import Alert from '../components/Alert'
+const url = 'http://localhost:3000'
 
 export default {
   name: 'Home',
   components: {
-    Navbar
+    Navbar,
+    Alert
   },
   data () {
     return {
@@ -50,6 +61,22 @@ export default {
     },
     edit (id) {
       this.$router.push(`/edit/${id}`)
+    },
+    remove (id) {
+      axios({
+        url: `${url}/admin/products/${id}`,
+        method: 'delete',
+        headers: {
+          access_token: localStorage.access_token
+        }
+      })
+        .then(data => {
+          this.$store.dispatch('getAll')
+        })
+        .catch(err => {
+          this.isError.msg = err.response.data.msg
+          this.isError.status = true
+        })
     }
   },
   created () {
@@ -67,12 +94,10 @@ export default {
 }
 .detail {
   background-color: whitesmoke;
-  z-index: 1;
-  margin-top: -8vh;
   overflow-y: auto ;
   display: flex;
   flex-flow: column;
-  justify-content: space-between;
+  justify-content: center;
   width: 100%;
 }
 .add-container {
@@ -84,7 +109,6 @@ export default {
   flex-flow: row wrap;
   justify-content: center ;
   align-items: center;
-  /* max-width: 80vh; */
 }
 .card:hover {
   transform: scale(1.08) ;
@@ -94,13 +118,13 @@ export default {
   background-color: whitesmoke;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
+  align-items: center;
+  justify-content: center ;
   border-radius: 10px;
   margin: 2.5vh;
   width: 20vw;
   cursor: pointer;
-  height: 50vh;
+  height: 55vh;
 }
 .add {
   border: 2px solid ;
@@ -113,8 +137,16 @@ export default {
   color: #6D435A;
 }
 img {
+  /* margin-top: -10vh; */
   width: 20vw;
   height: 30vh;
   border-radius: 10px;
+}
+.remove-btn button{
+  color: red;
+  border:2px red;
+}
+.remove-btn:hover {
+  transform: scale(1.08);
 }
 </style>
