@@ -82,7 +82,7 @@ describe('User routes', function(){
                 })
             });
         
-        it('should give an error: wrong email/password', function(done){
+        it('should give an error: Wrong email/password', function(done){
             request(app)
                 .post('/users/login')
                 .send({email: 'test@mail.com', password: '1235'})

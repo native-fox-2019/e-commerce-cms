@@ -14,11 +14,10 @@ module.exports = {
     "dialect": "postgres"
   },
   "production": {
-    "username": "root",
-    "password": null,
-    "database": "database_production",
-    "host": "127.0.0.1",
-    "dialect": "mysql",
-    "operatorsAliases": false
+    "username": "saapjuihfsjqic",
+    "password": "ef7bc9fb4b41c9a3b044ac69448dc011e938dd5b18fc66f1efd6b1111fb1c9d6",
+    "database": "d6l3104hcmoe74",
+    "host": "ec2-3-91-112-166.compute-1.amazonaws.com",
+    "dialect": "postgres"
   }
 }

@@ -74,7 +74,7 @@ export default {
     props: ['showData'],
     data(){
         return {
-            endpoint: 'http://localhost:3000',
+            endpoint: 'https://still-tundra-68355.herokuapp.com',
             addState: null,
             nameAdd: null,
             imageAdd: null,

@@ -35,7 +35,7 @@ export default {
         return{
             email : null,
             password : null,
-            endpoint : 'http://localhost:3000',
+            endpoint : 'https://still-tundra-68355.herokuapp.com',
         }
     },
     methods: {

@@ -17,7 +17,7 @@ export default new Vuex.Store({
     getData(context){
       axios({
           method : 'get',
-          url : `http://localhost:3000/products`,
+          url : `https://still-tundra-68355.herokuapp.com/products`,
           headers : {token: localStorage.getItem('token')}
       })
         .then(res=>{

@@ -125,7 +125,7 @@ export default {
   data () {
     return {
         products : [],
-        endpoint : 'http://localhost:3000',
+        endpoint : 'https://still-tundra-68355.herokuapp.com',
         nameEdit : null,
         imageEdit : null,
         priceEdit : null,
