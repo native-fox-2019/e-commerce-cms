@@ -1,7 +1,8 @@
 <template>
   <div>
     <Navbar/>
-    <div class="div-container">
+    <Alert v-show="isError.status" :isError="isError" @hide="isError.status=!isError.status"/>
+    <div class="form-container">
       <form @submit.prevent="edit">
         <Form :singledata="singledata" />
         <div>
@@ -17,16 +18,19 @@
 
 <script>
 import Form from '../components/add-edit-input.vue'
+import Alert from '../components/Alert.vue'
 import Navbar from '../components/navbar'
 import axios from 'axios'
-// const id = Number(this.$route.params.id)
 const url = 'http://localhost:3000'
-// console.log(id)
 export default {
   name: 'Edit',
   data () {
     return {
       id: null,
+      isError: {
+        status: false,
+        msg: ''
+      },
       singledata: {
         name: '',
         price: 0,
@@ -37,7 +41,8 @@ export default {
   },
   components: {
     Form,
-    Navbar
+    Navbar,
+    Alert
   },
   created () {
     this.id = this.$route.params.id
@@ -76,7 +81,11 @@ export default {
         .then(data => {
           this.$router.push({ name: 'Home' })
         })
-        .catch(err => console.log(err))
+        .catch(err => {
+          console.log(err.response.data.msg)
+          this.isError.msg = err.response.data.msg.join(' ,  \n')
+          this.isError.status = true
+        })
     }
   },
   watch: {

@@ -3,18 +3,20 @@
     <Navbar/>
     <div class="container">
       <div class="add-container">
-        <button class="AddBtn" @click="add">ADD PRODUCT</button>
       </div>
-      <div class="table-container">
-        <div class="card" v-for="product in products" :key="product.id">
+      <div class="card-container">
+        <div class="card" v-for="product in products" :key="product.id" @click.prevent="edit(product.id)">
           <div>
             <img :src="product.imageURL" alt="">
           </div>
-            <p>{{product.name}}</p>
           <div class="detail">
-            <p>price: {{product.price}}</p>
-            <p>available: {{product.stocks}}</p>
+            <h2>{{product.name}}</h2>
+            <p>Rp. {{product.price}}</p>
+            <p>stocks: {{product.stocks}}</p>
           </div>
+        </div>
+        <div class="card add" @click="add">
+          <i class="fas fa-plus-circle fa-8x" style=""></i>
         </div>
       </div>
     </div>
@@ -31,7 +33,6 @@ export default {
   },
   data () {
     return {
-      // products: null
     }
   },
   computed: {
@@ -42,6 +43,9 @@ export default {
   methods: {
     add () {
       this.$router.push({ name: 'Add' })
+    },
+    edit (id) {
+      this.$router.push(`/edit/${id}`)
     }
   },
   created () {
@@ -51,61 +55,62 @@ export default {
 </script>
 
 <style>
-.detail{
+.detail h2 {
+  margin: 0;
+  margin-top: 10px;
+  min-height: 5vh;
+  color: #6D435A;
+}
+.detail {
+  background-color: whitesmoke;
+  z-index: 1;
+  margin-top: -8vh;
+  overflow-y: auto ;
   display: flex;
-  flex-flow: row;
+  flex-flow: column;
   justify-content: space-between;
   width: 100%;
 }
 .add-container {
   margin-bottom: 5vh;
-  margin-top: 5vh;
+  margin-top: 15vh;
 }
-table {
-  max-height: 60vh;
-  border: 2px #340068 solid;
-  background-color: #B1EDE8;
-}
-td {
-  padding: 3px;
-  border: 2px  solid;
-  background-color: white;
-}
-th {
-  border: 2px #340068 solid;
-  background-color: white;
-}
-.table-container {
+.card-container {
   display: flex;
   flex-flow: row wrap;
   justify-content: center ;
   align-items: center;
-  /* max-width: 60vh; */
+  /* max-width: 80vh; */
+}
+.card:hover {
+  transform: scale(1.08) ;
+  box-shadow: 1vh 1vh gray;
 }
 .card {
+  background-color: whitesmoke;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
-  border: 2px solid black;
-  margin: 2vh;
+  border-radius: 10px;
+  margin: 2.5vh;
   width: 20vw;
-  height: 60vh;
-  /* padding: 1vh; */
+  cursor: pointer;
+  height: 50vh;
+}
+.add {
+  border: 2px solid ;
+  justify-content: center;
+  align-items: center;
+  opacity: 60%;
 }
 .home {
   min-height: 100vh;
-  position: relative;
-}
-.AddBtn {
-  border-radius: 7px;
-  border-color: #B1EDE8;
-  background-color: #6D435A;
-  color: white;
-  padding: 5px;
+  color: #6D435A;
 }
 img {
   width: 20vw;
-  height: 40vh
+  height: 30vh;
+  border-radius: 10px;
 }
 </style>

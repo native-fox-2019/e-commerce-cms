@@ -15,7 +15,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false,
       validate: {
-        min: 0,
+        min: {
+          args: [0],
+          msg: 'price cant be a negative'
+        },
         notEmpty: {
           msg: 'price of products cant be empty',
         },
@@ -25,7 +28,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false,
       validate: {
-        min: 0,
+        min: {
+          args: [0],
+          msg: 'stocks cant be a negative'
+        },
         notEmpty: {
           msg: 'stocks of products cant be empty'
         },
@@ -42,9 +48,11 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {
     hooks: {
-      beforeSave: (instance, option) => {
-        instance.price = changeToCurrency(instance.price)
-      }
+      // afterFind: (instances, option) => {
+      //   instances.forEach( el => {
+      //   el.price =`Rp. ${new Intl.NumberFormat(['ban', 'id']).format(el.price)}`
+      //   })
+      // }
     }, sequelize
   });
   Products.associate = function (models) {

@@ -1,25 +1,35 @@
 <template>
-  <div>
+  <div class="add-page">
+    <div class="form-container">
     <form @submit.prevent="add">
       <Form :singledata="singledata"/>
-      <div>
-        <button>Add</button>
-      </div>
+      <button>Add</button>
     </form>
+    </div>
     <div>
       <router-link to="/home"><button>back</button></router-link>
     </div>
+    <Alert v-show="isError.status" :isError="isError" @hide="isError.status=!isError.status"/>
   </div>
 </template>
 
 <script>
 import Form from '../components/add-edit-input.vue'
+import Alert from '../components/Alert.vue'
 import axios from 'axios'
 const url = 'http://localhost:3000'
 export default {
   name: 'Add',
+  components: {
+    Form,
+    Alert
+  },
   data () {
     return {
+      isError: {
+        status: false,
+        msg: ''
+      },
       singledata: {
         name: '',
         price: '',
@@ -27,9 +37,6 @@ export default {
         imageURL: ''
       }
     }
-  },
-  components: {
-    Form
   },
   methods: {
     add () {
@@ -49,12 +56,28 @@ export default {
         .then(data => {
           this.$router.push({ name: 'Home' })
         })
-        .catch(err => console.log(err.response.data.msg))
+        .catch(err => {
+          this.isError.status = true
+          this.isError.msg = err.response.data.msg.join(', \n')
+        })
     }
   }
 }
 </script>
 
 <style>
-
+.add-page {
+  display: flex;
+  flex-flow: column wrap;;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+}
+.form-container {
+  min-height: 90vh;
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  align-content: center;
+}
 </style>

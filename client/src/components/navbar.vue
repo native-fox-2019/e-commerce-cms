@@ -17,23 +17,28 @@ export default {
 </script>
 <style>
 .navbar {
-  position: fixed;
-  width: 100%;
+  /* position: fixed; */
+  width: 97.8vw;
   z-index: 1;
   top: 0;
   display: flex;
   flex-flow: row;
   justify-content: flex-end;
   align-content: center;
-  background-color: #340068;
-  border: 3px #340068 solid;
+  background-color: #6D435A;
+  border: 3px #6D435A solid;
   padding: 7px;
   height: 10vh;
 }
 .signout {
   margin-right: 1vw;
   background-color: #B1EDE8;
+  cursor: pointer;
   border: 2px #FF6978 solid;
   border-radius: 7px;
+}
+.signout:hover {
+  transform: scale(1.08);
+
 }
 </style>

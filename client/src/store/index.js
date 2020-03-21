@@ -35,7 +35,9 @@ export default new Vuex.Store({
         }
       })
         .then(result => {
-          console.log(result)
+          result.data.forEach(el => {
+            el.price = new Intl.NumberFormat(['ban', 'id']).format(el.price)
+          })
           commit('LIST_PRODUCT', result.data)
         })
         .catch(err => {

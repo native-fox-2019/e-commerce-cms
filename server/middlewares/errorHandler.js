@@ -2,6 +2,7 @@ module.exports = function errorHandler(err, req, res, next) {
     if (err.name === 'SequelizeValidationError') {
         let msg = []
         err.errors.map(el => msg.push(el.message))
+        console.log(err.errors)
         res.status(400).json({ msg })
     } else if (err.name === 'SequelizeUniqueConstraintError') {
         res.status(400).json({ msg: err.errors[0].message })
