@@ -51,7 +51,7 @@ export default {
         addNewBanner() {
             axios({
                 method: 'POST',
-                url: 'http://localhost:3000/products/banner',
+                url: 'https://peaceful-thicket-02203.herokuapp.com/products/banner',
                 headers: {access_token:localStorage.access_token},
                 data: {
                     name: this.name,

@@ -26,7 +26,7 @@ export default new Vuex.Store({
   actions: {
     getItems(context) {
       axios
-        .get("http://localhost:3000/products", {
+        .get("https://peaceful-thicket-02203.herokuapp.com/products", {
           headers: { access_token: localStorage.access_token }
         })
         .then(data => {
@@ -40,7 +40,7 @@ export default new Vuex.Store({
     addNewProduct(context, newProduct) {
       axios({
         method: "POST",
-        url: "http://localhost:3000/products/add",
+        url: "https://peaceful-thicket-02203.herokuapp.com/products/add",
         headers: { access_token: localStorage.access_token },
         data: {
           name: newProduct.name,
@@ -67,7 +67,7 @@ export default new Vuex.Store({
     deleteProduct(context, id) {
       axios({
         method: "DELETE",
-        url: `http://localhost:3000/products/delete/${id}`,
+        url: `https://peaceful-thicket-02203.herokuapp.com/products/delete/${id}`,
         headers: { access_token: localStorage.access_token }
       })
         .then(data => {
@@ -85,7 +85,7 @@ export default new Vuex.Store({
     editProduct(context, payload) {
       axios({
         method: 'PUT',
-        url: `http://localhost:3000/products/edit/${payload.id}`,
+        url: `https://peaceful-thicket-02203.herokuapp.com/products/edit/${payload.id}`,
         headers: { access_token : localStorage.access_token },
         data: {
           name : payload.name,

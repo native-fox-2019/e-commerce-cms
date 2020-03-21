@@ -41,7 +41,7 @@
     <!-- PRODUCT CARD -->
     <div class="row mt-5" v-if="!addNew && !edit &&!addBanner">
       <div
-        class="col-2 mt-3 ml-5"
+        class="col-3 mt-3 ml-5 d-flex flex-column"
         v-for="item in this.$store.state.itemList"
         :key="item.id"
       >

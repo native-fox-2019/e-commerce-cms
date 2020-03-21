@@ -25,7 +25,7 @@ export default {
     getBanner() {
       axios({
         method: "GET",
-        url: "http://localhost:3000/products/banner",
+        url: "https://peaceful-thicket-02203.herokuapp.com/products/banner",
         headers: { access_token: localStorage.access_token }
       })
         .then(data => {
@@ -39,7 +39,7 @@ export default {
     deleteBanner(id) {
       axios({
         method: "DELETE",
-        url: `http://localhost:3000/products/banner/${id}`,
+        url: `https://peaceful-thicket-02203.herokuapp.com/products/banner/${id}`,
         headers: { access_token: localStorage.access_token }
       })
         .then(data => {

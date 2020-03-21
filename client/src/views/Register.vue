@@ -67,7 +67,7 @@ export default {
   methods: {
     doRegister() {
       axios
-        .post("http://localhost:3000/users/register", {
+        .post("https://peaceful-thicket-02203.herokuapp.com/users/register", {
           name: this.name,
           email: this.email,
           password: this.password

@@ -56,7 +56,7 @@ export default {
   methods: {
     doLogin() {
       axios
-        .post("http://localhost:3000/users/login", {
+        .post("https://peaceful-thicket-02203.herokuapp.com/users/login", {
           email: this.email,
           password: this.password
         })
