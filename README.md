@@ -32,6 +32,7 @@ GET PRODUCT BY ID
 
 GET PRODUCT BY ID
 |    ROUTE     |HTTP            | HEADERS  | BODY  | DESCRIPTION  | RESPONSE CODE    |
+| ------------- |:-------------:|    -----:| -----:|        -----:|       -----:|
 |PRODUCT/:ID       |  PUT          |   TOKEN   | NAME,STOCK,PRICE,IMAGE_URL |UPDATE PRODUCT BY ID|    200 (SUCCESS)      |
 |PRODUCT/:ID (NOT FOUND)      |  PUT          |   TOKEN   | NAME,STOCK,PRICE,IMAGE_URL |CANNOT UPDATE BECAUSE DATA IS NOT EXIST|    404 (ERROR)      |
 |PRODUCT/:ID     |  PUT          |   TOKEN   | INVALID/ MISSING ONE OR MORE|BAD REQUEST|    400 (ERROR)      |
@@ -40,17 +41,17 @@ GET PRODUCT BY ID
 
 DELETE PRODUCT BY ID
 |    ROUTE     |HTTP            | HEADERS  | BODY  | DESCRIPTION  | RESPONSE CODE    |
+| ------------- |:-------------:|    -----:| -----:|        -----:|       -----:|
 |PRODUCT/:ID       |  DELETE          |   TOKEN   | NONE |DELETE PRODUCT BY ID|    200 (SUCCESS)      |
 |PRODUCT/:ID (NOT FOUND)    |  DELETE          |   TOKEN   | NONE |CANNOT DELETE BECAUSE DATA IS NOT EXIST|    404 (ERROR)      |
 |PRODUCT/:ID (NOT FOUND)    |  DELETE          |   NONE   | NONE |INVALID CREDENTIALS|    403 (ERROR)      |
 |PRODUCT/:ID (NOT FOUND)    |  DELETE          |   TOKEN (USER)   | NONE |INVALID CREDENTIALS|    403 (ERROR)      |
 
-Router.post('/register',Controller.register)
-Router.post('/login',Controller.login)
 
 
 USER REGISTER
 |    ROUTE     |HTTP            | HEADERS  | BODY  | DESCRIPTION  | RESPONSE CODE    |
+| ------------- |:-------------:|    -----:| -----:|        -----:|       -----:|
 |USER/REGISTER       |  POST          |   NONE   | NAME,EMAIL,PASSWORD,LEVEL |SUCCESFULL REGSITER|    200 (SUCCESS)      |
 |USER/REGISTER       |  POST          |   NONE   | MISSING/INVALID ONE OR MORE |FAILED REGSITER|    400 (ERROR)      |
 |USER/REGISTER       |  POST          |   NONE   | NAME,EMAIL,PASSWORD,LEVEL|FAILED BECAUSE EMAIL HAS BEEN USED|    400 (ERROR)      |
@@ -59,5 +60,6 @@ USER REGISTER
 
 USER LOGIN
 |    ROUTE     |HTTP            | HEADERS  | BODY  | DESCRIPTION  | RESPONSE CODE    |
+| ------------- |:-------------:|    -----:| -----:|        -----:|       -----:|
 |USER/LOGIN       |  POST          |   NONE   | EMAIL PASSWORD |SUCESSFUL LOGIN|    200 (SUCCESS)      |
 |USER/LOGIN       |  POST          |   NONE   | EMAIL PASSWORD |PASSWORD MISMATCH|    401 (ERROR)      |
