@@ -19,6 +19,9 @@ export default {
     Navbar,
     Sidebar,
   },
+  created() {
+    document.body.style.cursor = 'default';
+  },
   data() {
     return {
       isCollapsed: false,

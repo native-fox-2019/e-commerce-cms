@@ -42,6 +42,7 @@ export default {
     ...mapActions(['login', 'checkSuperAdmin']),
     async onSubmit() {
       try {
+        document.body.style.cursor = 'wait';
         await this.login({ email: this.email, password: this.password });
         localStorage.setItem('access_token', this.accessToken);
         await this.checkSuperAdmin(localStorage.getItem('access_token'));
