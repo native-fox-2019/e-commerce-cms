@@ -34,7 +34,8 @@
 import Navbar from '../components/navbar'
 import axios from 'axios'
 import Alert from '../components/Alert'
-const url = 'http://localhost:3000'
+// const url = 'http://localhost:3000'
+const url = 'https://secure-eyrie-18193.herokuapp.com'
 
 export default {
   name: 'Home',
@@ -70,7 +71,7 @@ export default {
           access_token: localStorage.access_token
         }
       })
-        .then(data => {
+        .then(() => {
           this.$store.dispatch('getAll')
         })
         .catch(err => {
@@ -93,6 +94,7 @@ export default {
   color: #6D435A;
 }
 .detail {
+  border-radius: 10px;
   background-color: whitesmoke;
   overflow-y: auto ;
   display: flex;
@@ -115,6 +117,7 @@ export default {
   box-shadow: 1vh 1vh gray;
 }
 .card {
+  border-radius: 10px;
   background-color: whitesmoke;
   display: flex;
   flex-direction: column;
@@ -130,7 +133,7 @@ export default {
   border: 2px solid ;
   justify-content: center;
   align-items: center;
-  opacity: 60%;
+  /* opacity: 20%; */
 }
 .home {
   min-height: 100vh;

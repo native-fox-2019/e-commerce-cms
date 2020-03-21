@@ -1,10 +1,13 @@
 ## E-Commerce CMS
 ### by Erry Satrio
 
-# GET /products
+for more detail can see this documentation made with POSTMAN
+https://web.postman.co/collections/10566542-72257a31-c704-44d8-bbe9-e1b5f85ea391/publish?version=latest&workspace=d1851e39-f425-4335-8601-b09bf8498bbc
+
+# GET /user
 ### Get All Products
 ## Endpoint
-> 
+> https://secure-eyrie-18193.herokuapp.com/user
 
 ## Authentication:
 Token (required)
@@ -36,24 +39,16 @@ Status 401
     "message": "invalid token"
 }
 ```
-Status 404
-```
-{
-    "name": "Not Found",
-    "message": "Not Found"
-}
-```
 Status 500
 ```
 {
    msg: "Internal Server Error"
 }
 ```
-# POST /products
+# POST /admin/products
 ### Create A Product
 ## Endpoint
-> https://jadilapak.herokuapp.com/products
-
+> https://secure-eyrie-18193.herokuapp.com/admin/products
 
 
 ## Authentication:
@@ -68,9 +63,9 @@ token: YOUR_TOKEN
 ```
 {
     name: String
-    image_url: String,
     price: Integer,
-    stock: Integer
+    stock: Integer,
+    image_url: String
 }
 ```
 #### All Request Body is **REQUIRED**
@@ -78,10 +73,9 @@ token: YOUR_TOKEN
 Status 201
 ```
 {
-    "Message": "Product succesfully created.",
     "Data": {
         "id": 1,
-        "name": "Bakwan",
+        "name": "Pisang Goreng",
         "image_url": "http://example.com",
         "price": "2000",
         "Stock": 5
@@ -93,29 +87,17 @@ Status 400
 ```
 [
    {
-      "message": "Input Cannot Be Empty",
-      "type": "Validation error",
-    }
+      "message":[ 
+                    "Input1 Cannot Be Empty",
+                    "Input2 Cannot Be Empty"
+                ]
+   }
 ]
 ```
 Status 401
 ```
 {
-    "name": "JsonWebTokenError",
     "message": "invalid token"
-}
-```
-Status 403
-```
-{
-    "message": "Forbidden access role not admin."
-}
-```
-Status 403
-```
-{
-    "name": "JsonWebTokenError",
-    "message": "jwt must be provided"
 }
 ```
 Status 500
@@ -124,10 +106,10 @@ Status 500
    msg: "Internal Server Error"
 }
 ```
-# GET /products/:id
+# GET /admin/products/:id
 ### Get Products By ID
 ## Endpoint
-> https://jadilapak.herokuapp.com/products/:id
+> https://secure-eyrie-18193.herokuapp.com/admin/products/:id
 
 ## Authentication:
 Token (required)
@@ -141,7 +123,7 @@ Status 200
 ```
 {
     "id": 1,
-    "name": "Bakwan",
+    "name": "Pisang Goreng",
     "image_url": "http://example.com",
     "price": "2000",
     "Stock": 5,
@@ -153,27 +135,12 @@ Status 200
 Status 401
 ```
 {
-    "name": "JsonWebTokenError",
     "message": "invalid token"
 }
-```
-Status 403
-```
-{
-    "message": "Forbidden access role not admin."
-}
-```
-Status 403
-```
-{
-    "name": "JsonWebTokenError",
-    "message": "jwt must be provided"
-}
-```
 Status 404
 ```
 {
-   msg: "Data Not Found"
+   msg: "Not Found"
 }
 ```
 Status 500
@@ -187,7 +154,7 @@ Status 500
 # PUT /products/:id
 ### Update Products By ID
 ## Endpoint
-> https://jadilapak.herokuapp.com/products/:id
+> https://secure-eyrie-18193.herokuapp.com/admin/products/:id
 
 ## Authentication:
 Token (required)
@@ -213,7 +180,7 @@ Status 200
     "Message": "Products succesfully updated",
     "Data": {
         "id": 1,
-        "name": "Bakwan",
+        "name": "Pisang Goreng",
         "image_url": "http://example.com",
         "price": "2000",
         "Stock": 5
@@ -225,29 +192,17 @@ Status 400
 ```
 [
    {
-      "message": "Input Cannot Be Empty",
-      "type": "Validation error",
+      "message":[ 
+                    "Input1 Cannot Be Empty",
+                    "Input2 Cannot Be Empty"
+                ]
     }
 ]
 ```
 Status 401
 ```
 {
-    "name": "JsonWebTokenError",
     "message": "invalid token"
-}
-```
-Status 403
-```
-{
-    "message": "Forbidden access role not admin."
-}
-```
-Status 403
-```
-{
-    "name": "JsonWebTokenError",
-    "message": "jwt must be provided"
 }
 ```
 Status 404
@@ -267,7 +222,7 @@ Status 500
 # DELETE /products/:id
 ### Delete Products From Todo List
 ## Endpoint
-> https://jadilapak.herokuapp.com/products/:id
+> https://secure-eyrie-18193.herokuapp.com/admin/products/:id
 ## Authentication:
 Token (required)
 
@@ -286,14 +241,12 @@ Status 200
 Status 401
 ```
 {
-    "name": "JsonWebTokenError",
     "message": "invalid token"
 }
 ```
 Status 403
 ```
 {
-    "name": "JsonWebTokenError",
     "message": "jwt must be provided"
 }
 ```
@@ -314,7 +267,7 @@ Status 500
 # POST /user/register
 ### Register User
 ## Endpoint
-> https://jadilapak.herokuapp.com/user/register
+> https://secure-eyrie-18193.herokuapp.com/user/register
 
 ## Request body:
 ```
@@ -340,8 +293,10 @@ Status 400
 ```
 [
    {
-      "message": "Input Cannot Be Empty",
-      "type": "Validation error",
+      "message":[ 
+                    "Input1 Cannot Be Empty",
+                    "Input2 Cannot Be Empty"
+                ]
     }
 ]
 ```
@@ -356,7 +311,7 @@ Status 500
 # POST /user/login
 ### Login User
 ## Endpoint
-> https://jadilapak.herokuapp.com/user/login
+> https://secure-eyrie-18193.herokuapp.com/user/login
 ## Request body:
 ```
 {
@@ -378,7 +333,11 @@ Status 200
 Status 400
 ```
 {
-     "message": "Bad Request"
+     "name": "Bad Request"
+     "message":[ 
+                "Input1 Cannot Be Empty",
+                "Input2 Cannot Be Empty"
+               ]
 }
 ```
 Status 500

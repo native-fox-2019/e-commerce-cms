@@ -21,7 +21,8 @@ import Form from '../components/add-edit-input.vue'
 import Alert from '../components/Alert.vue'
 import Navbar from '../components/navbar'
 import axios from 'axios'
-const url = 'http://localhost:3000'
+const url = 'https://secure-eyrie-18193.herokuapp.com'
+
 export default {
   name: 'Edit',
   data () {
@@ -80,7 +81,7 @@ export default {
           imageURL: this.singledata.imageURL
         }
       })
-        .then(data => {
+        .then(() => {
           this.$router.push({ name: 'Home' })
         })
         .catch(err => {

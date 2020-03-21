@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
-const url = 'http://localhost:3000'
+const url = 'https://secure-eyrie-18193.herokuapp.com'
 
 Vue.use(Vuex)
 
@@ -39,9 +39,6 @@ export default new Vuex.Store({
             el.price = new Intl.NumberFormat(['ban', 'id']).format(el.price)
           })
           commit('LIST_PRODUCT', result.data)
-        })
-        .catch(err => {
-          console.log(err.response.data)
         })
     }
   },

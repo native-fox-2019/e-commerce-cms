@@ -34,7 +34,8 @@
 <script>
 import axios from 'axios'
 import Alert from '../components/Alert'
-const url = 'http://localhost:3000'
+// const url = 'http://localhost:3000'
+const url = 'https://secure-eyrie-18193.herokuapp.com'
 export default {
   name: 'register-page',
   components: {

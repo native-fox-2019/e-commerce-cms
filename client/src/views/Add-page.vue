@@ -17,7 +17,8 @@
 import Form from '../components/add-edit-input.vue'
 import Alert from '../components/Alert.vue'
 import axios from 'axios'
-const url = 'http://localhost:3000'
+const url = 'https://secure-eyrie-18193.herokuapp.com'
+
 export default {
   name: 'Add',
   components: {
