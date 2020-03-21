@@ -6,6 +6,7 @@
       <input v-model="email" type="email">
       <label>Password</label>
       <input v-model="password" type="password">
+      <Error v-if="errors" :errors="errors" />
       <button type="submit">Login</button>
     </form>
   </div>
@@ -13,22 +14,41 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
+import Error from '../components/Error.vue';
 
 export default {
   name: 'Login',
+  components: {
+    Error,
+  },
   data() {
     return {
       email: '',
       password: '',
+      errors: null,
     };
   },
   computed: mapGetters(['accessToken']),
+  watch: {
+    email() {
+      this.errors = null;
+    },
+
+    password() {
+      this.errors = null;
+    },
+  },
   methods: {
-    ...mapActions(['login']),
+    ...mapActions(['login', 'checkSuperAdmin']),
     async onSubmit() {
-      await this.login({ email: this.email, password: this.password });
-      localStorage.setItem('access_token', this.accessToken);
-      this.$router.push({ path: '/products' });
+      try {
+        await this.login({ email: this.email, password: this.password });
+        localStorage.setItem('access_token', this.accessToken);
+        await this.checkSuperAdmin(localStorage.getItem('access_token'));
+        this.$router.push({ path: '/products' });
+      } catch (err) {
+        this.errors = err.message;
+      }
     },
   },
 };

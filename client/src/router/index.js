@@ -45,7 +45,6 @@ router.beforeEach(async (to, from, next) => {
       });
     }
   } else if (to.matched.some((record) => record.meta.requiresSuperAdmin)) {
-    await store.dispatch('checkSuperAdmin');
     if (store.state.login.isSuperAdmin) {
       next();
     } else {

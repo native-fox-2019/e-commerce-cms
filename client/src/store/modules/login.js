@@ -15,13 +15,21 @@ const getters = {
 
 const actions = {
   async login({ commit }, userData) {
-    const response = await axios.post(`${server}/login`, userData);
-    commit('setAccessToken', response.data.access_token);
+    try {
+      const response = await axios.post(`${server}/login`, userData);
+      commit('setAccessToken', response.data.access_token);
+    } catch (err) {
+      throw err.response.data;
+    }
   },
 
   async register({ commit }, userData) {
-    const response = await axios.post(`${server}/register`, userData);
-    commit('setAccessToken', response.data.access_token);
+    try {
+      const response = await axios.post(`${server}/register`, userData);
+      commit('setAccessToken', response.data.access_token);
+    } catch (err) {
+      throw err.response.data;
+    }
   },
 
   async checkSuperAdmin({ commit }) {
@@ -30,6 +38,8 @@ const actions = {
       const userData = jwt.verify(accessToken, 'rahasia');
       if (userData.role === 'superAdmin') {
         commit('setRole', true);
+      } else {
+        commit('setRole', false);
       }
     } else {
       commit('setRole', false);

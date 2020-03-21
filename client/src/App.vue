@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" :class="{ waiting: isProcessed }" @load="isProcessed = false">
     <router-view />
     <!-- <Home /> -->
   </div>
@@ -9,6 +9,11 @@
 
 export default {
   name: 'App',
+  data() {
+    return {
+      isProcessed: false,
+    };
+  },
 };
 </script>
 
@@ -24,5 +29,9 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+}
+
+#app.waiting {
+  cursor: wait;
 }
 </style>
