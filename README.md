@@ -2,6 +2,12 @@
 
 # Deploy Link :
 ## [fznakbar e-commerce-cms](https://fznakbar-e-commerce-cms.firebaseapp.com/login)
+For login, use this account :
+
+email : fauzan@admin.com
+
+password : 1234
+
 
 # Endpoint:
 ## [http://localhost:3000](http://localhost:3000)
