@@ -5,7 +5,7 @@
         <!-- logo -->
         <div class="logo">
           <router-link to="">
-            <img src="assets/logo.png" width="30" alt />
+            <img src="https://rofandi.blob.core.windows.net/neon/assets/logo.png" width="30" alt />
           </router-link>
         </div>
 
