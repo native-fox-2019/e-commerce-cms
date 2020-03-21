@@ -1,12 +1,12 @@
 <template>
   <div>
     <div id="divlogin" class="container">
-      <h2>Login</h2>
-      <form v-on:submit.prevent="submitlogin" id="login-form">
+      <h2>Register</h2>
+      <form v-on:submit.prevent="submitregister" id="register-form">
         <div class="form-group">
           <label for="usr">Email:</label>
           <input
-            v-model="loginemail"
+            v-model="registeremail"
             type="text"
             class="form-control"
             placeholder="Email"
@@ -18,7 +18,7 @@
         <div class="form-group">
           <label for="pwd">Password:</label>
           <input
-            v-model="loginpassword"
+            v-model="registerpassword"
             type="password"
             class="form-control"
 
@@ -42,19 +42,19 @@ export default {
   
   data: function() {
     return {
-      loginemail: ``,
-      loginpassword: ``
+      registeremail: ``,
+      registerpassword: ``
     };
   },
 
   methods: {
-    submitlogin() {
+    submitregister() {
       axios({
         method: "post",
-        url: `http://localhost:3000/users/login`,
+        url: `http://localhost:3000/users/register`,
         data: {
-          email: this.loginemail,
-          password: this.loginpassword,
+          email: this.registeremail,
+          password: this.registerpassword,
         }
       })
         .then(result => {

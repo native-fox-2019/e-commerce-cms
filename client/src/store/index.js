@@ -7,19 +7,28 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     products : [],
-    isLogin : false,
-    isAdmin: false
+    productEdit : {}
   },
   mutations: {
     fillProducts(state , payload){
       state.products = payload
     },
-    toggleLoginAdmin (state){
-      state.isLogin = true;
-      state.isAdmin = true
-    },
+
     commitNewdata (state, payload) {
       state.products.push(payload)
+    },
+    commitDeleteData (state, payload) {
+      state.products = state.products.filter(item => item.id !== payload)
+    },
+    commitEditData (state, payload) {
+      state.productEdit['data'] = payload
+    },
+    commitUpdateData (state, payload) {
+      state.products.forEach(element => {
+        if(element.id == state.productEdit.data.id){
+          element = payload
+        }
+      })
     }
   },
   actions: {
@@ -37,12 +46,18 @@ export default new Vuex.Store({
         console.log(err)
       })
     },
-    adminLogin(context) {
-      context.commit("toggleLoginAdmin")
-    },
     addNewData(context, payload) {
       context.commit("commitNewData", payload)
-    } 
+    },
+    deleteData(context, payload) {
+      context.commit('commitDeleteData', payload)
+    },
+    holdEditData(context, payload) {
+      context.commit('commitEditData', payload)
+    },
+    updateData(context, payload) {
+      context.commit('commitUpdateData', payload)
+    }
   },
   modules: {}
 });
