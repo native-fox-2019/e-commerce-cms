@@ -5,11 +5,11 @@ const express = require('express')
 const router = express.Router()
 
 router.get('/', ItemController.findAll)
-router.post('/', ItemController.create)
-
 router.get('/:id', ItemController.findOne)
-router.put('/:id', ItemController.update)
-router.delete('/:id', ItemController.destroy)
+
+router.post('/', authentication, ItemController.create)
+router.put('/:id', authentication, ItemController.update)
+router.delete('/:id', authentication, ItemController.destroy)
 
 // const { authentication, authCustomer, authAdmin, authorization} = require('../middlewares/auth')
 // const multer = require('../middlewares/multer')

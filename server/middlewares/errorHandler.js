@@ -1,57 +1,22 @@
 function errorHandler(err, req, res, next) {
-    console.log('Error', err)
+    console.log('Error:', err)
+    let status, error = ''
 
-    let status, message, error = []
-
-    if (err.name === 'ValidationError') {
+    if (err.name === 'SequelizeValidationError') {
         status = 400
-        for (let key in err.errors) {
-            error.push(err.errors[key].message)
-        }
-    } else if (err.name === 'CastError') {
-        status = 404
-        error.push('data not found')
+        error = err.errors[0]
+    } else if (err.name === 'SequelizeDatabaseError') {
+        status = 400
+        error = { message: 'Please enter the right information!' }
     } else if (err.message.name === 'JsonWebTokenError') {
         status = 400
-        error.push('login first')
+        error = { message: 'You need to login first!' }
     } else {
         if (err.status) status = err.status
         else status = 500
-        error.push(err)
+        error = err
     }
-
-    res.status(status).json({ error })
-
+    res.status(status).json(error)
 }
 
 module.exports = errorHandler
-
-
-// "use strict"
-
-// function errorHandler(err, req, res, next) {
-//     console.log('ERROR HANDLER')
-//     console.log(err)
-//     console.log('ERROR NAME')
-//     console.log(err.name)
-//     let status, error = []
-
-//     switch (err.name) {
-//         case ('SequelizeValidationError'):
-//             status = 400
-//             for (let key in err.errors) error.push(err.errors[key].message)
-//             break
-//         case ('JsonWebTokenError'):
-//             status = 400
-//             error.push(`You're not authenticated to do that!`)
-//             break
-//         default:
-//             status = err.status || 500
-//             error.push(err)
-//             break
-//     }
-//     console.log('SENDING ERROR')
-//     res.status(status).json({ error })
-// }
-
-// module.exports = errorHandler

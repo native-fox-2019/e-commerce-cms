@@ -1,15 +1,32 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import Home from '../views/Home.vue';
+
+import LandingPage from '@/views/LandingPage.vue';
+import Register from '@/views/Register.vue';
+import LogIn from '@/views/LogIn.vue';
+import ItemDetail from '@/views/ItemDetail.vue';
+import UserProfile from '@/views/UserProfile.vue';
+import AddItem from '@/views/AddItem.vue';
 
 Vue.use(VueRouter);
 
 const routes = [
+  { path: '/', name: 'LandingPage', component: LandingPage },
+  { path: '/register', name: 'Register', component: Register },
+  { path: '/login', name: 'LogIn', component: LogIn },
   {
-    path: '/',
-    name: 'Home',
-    component: Home,
+    path: '/user/:id',
+    name: 'UserProfile',
+    component: UserProfile,
+    props: true,
   },
+  {
+    path: '/item/:id',
+    name: 'ItemDetail',
+    component: ItemDetail,
+    props: true,
+  },
+  { path: '/add-item', name: 'AddItem', component: AddItem },
   {
     path: '/about',
     name: 'About',
@@ -21,6 +38,7 @@ const routes = [
 ];
 
 const router = new VueRouter({
+  mode: 'history',
   routes,
 });
 
