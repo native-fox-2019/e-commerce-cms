@@ -13,8 +13,8 @@ app.use('/',router)
 app.use(errorHandler)
 
 
-app.listen(port, ()=>{
-    console.log('running on port',port)
-})
+// app.listen(port, ()=>{
+//     console.log('running on port',port)
+// })
 
 module.exports = app

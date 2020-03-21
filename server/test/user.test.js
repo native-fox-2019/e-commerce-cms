@@ -92,6 +92,7 @@ describe('User login',()=>{
                 const {status,body}=result
                 expect(status).toBe(200)
                 expect(body).toHaveProperty("token")
+                expect(body).toHaveProperty("level")
                 
                 done()
             })
