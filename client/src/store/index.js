@@ -4,9 +4,15 @@ import Vuex from 'vuex';
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-  state: {
+  state() {
+    return {
+      products: [],
+    };
   },
   mutations: {
+    laught() {
+      console.log('wkwkwkwk');
+    },
   },
   actions: {
   },
