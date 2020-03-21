@@ -39,7 +39,7 @@ export default new Vuex.Store({
       
       axios({
           method:"GET",
-          url:"http://localhost:3000/product",
+          url:"https://hidden-beyond-35816.herokuapp.com/product",
           headers:{token:localStorage.getItem("token")}
       }).then(response=>{
         context.commit("fillProduct",response.data)

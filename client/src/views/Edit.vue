@@ -63,11 +63,9 @@ import axios from "axios"
       },
       update(){
         let id = this.$store.state.productEdit.data.id
-        console.log('1.masuk product')
-        console.log('2.name',this.name,'3.image_url',this.image_url,'4.price',this.price,'5.stock',this.stock)
         axios({
           method:"PUT",
-          url:`https://hidden-beyond-35816.herokuapp.com/${id}`,
+          url:`https://hidden-beyond-35816.herokuapp.com/product/${id}`,
           data:{
             name:this.name,
             image_url:this.image_url,
@@ -76,7 +74,6 @@ import axios from "axios"
           },
           headers:{token:localStorage.getItem('token')}
         }).then(response =>{
-          console.log("ini response",response.data)
           this.$store.dispatch('updateData', response.data);
           this.$router.push('product')
         })

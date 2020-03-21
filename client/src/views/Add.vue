@@ -51,24 +51,12 @@ export default {
     },
     onReset(evt) {
       evt.preventDefault();
-      // Reset our form values
       this.name = "";
       this.image_url = "";
       this.price = 0;
       this.stock = 0;
     },
     addProduct() {
-      console.log("1.masuk product");
-      console.log(
-        "2.name",
-        this.name,
-        "3.image_url",
-        this.image_url,
-        "4.price",
-        this.price,
-        "5.stock",
-        this.stock
-      );
       axios({
         method: "POST",
         url: "https://hidden-beyond-35816.herokuapp.com/product/",
@@ -80,7 +68,6 @@ export default {
         },
         headers: { token: localStorage.getItem("token") }
       }).then(response => {
-        console.log("ini response", response.data);
         this.$store.dispatch("pushData", response.data);
         this.$router.push("product");
       });

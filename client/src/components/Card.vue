@@ -36,7 +36,6 @@ export default {
         url: `https://hidden-beyond-35816.herokuapp.com/product/${this.id}`,
         headers: { token: localStorage.getItem("token") }
       }).then(response => {
-        console.log("ini response", response.data);
         this.$store.dispatch("holdEditData", response.data);
         this.$router.push("Edit");
       });
@@ -63,8 +62,7 @@ export default {
         method: "delete",
         url: `https://hidden-beyond-35816.herokuapp.com/product/${this.id}`,
         headers: { token: localStorage.getItem("token") }
-      }).then(response => {
-        console.log(response.data);
+      }).then(() => {
         this.$store.dispatch("deleteData", this.id);
       });
     }

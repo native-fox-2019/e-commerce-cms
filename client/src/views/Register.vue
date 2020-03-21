@@ -27,10 +27,9 @@ export default {
 
   methods: {
     registerUser() {
-      console.log("ini email", this.email, "ini password", this.password);
       axios({
         method: "POST",
-        url: "https://hidden-beyond-35816.herokuapp.com/register",
+        url: "https://hidden-beyond-35816.herokuapp.com/user/register",
         data: {
           email: this.email,
           password: this.password
@@ -40,8 +39,7 @@ export default {
           localStorage.setItem("token", response.data.token);
           this.$router.push("product");
         })
-        .catch(err => {
-          console.log(err.response);
+        .catch(() => {
         });
     }
   }
