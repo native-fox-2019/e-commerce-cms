@@ -74,7 +74,7 @@ header{
     display: flex; justify-content: flex-end; bottom: 15px; position: absolute; right: 15px;
 }
 .btn-edit{
-    margin-right: 25px; font-size: 38px; color: rgba(0, 0, 0, 0.678);
+    margin-right: 25px; font-size: 31px; color: rgba(0, 0, 0, 0.678);
 }
 .btn-delete{
     font-size: 28px; color: rgb(255, 75, 75);
@@ -105,5 +105,5 @@ a{
     display: flex; flex-direction: column; justify-content: center; border-radius: 40px; margin-top: 2em;
 }
 .action{
-    margin-top: 20px; display: flex;
+    margin-top: 20px; display: flex; justify-content: center;
 }

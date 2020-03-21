@@ -3,12 +3,12 @@
     <div class="product-content">
         <div class="product-image">
           <img :src="image_url" width="300px" height="auto">
-          <div class="action" v-if="$store.state.isLogin">
+          <div class="action" v-if="$store.state.isAdmin">
               <div class="btn-edit" @click="changeIsBtnEdit">
                   <i class="fa fa-edit"></i>
               </div>
               <div class="btn-delete">
-                  <i class="fa fa-trash" style="font-size: 35px" @click="deleteProduct(id)"></i>
+                  <i class="fa fa-trash" style="font-size: 30px" @click="deleteProduct(id)"></i>
               </div>
           </div>
         </div>
@@ -48,10 +48,14 @@ export default {
   props: ['data'],
   created() {
     this.getProduct();
+    if (localStorage.role === 'admin') {
+      this.isAdmin = true;
+    }
   },
   data() {
     return {
       id: 0,
+      isAdmin: false,
       message: '',
       name: '',
       price: 0,

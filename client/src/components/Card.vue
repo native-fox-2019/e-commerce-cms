@@ -9,7 +9,7 @@
     <div class="card-price">
       <span>Rp{{ product.price }}</span>
     </div>
-    <div class="card-action" v-if="$store.state.isLogin">
+    <div class="card-action" v-if="$store.state.isAdmin">
       <div class="btn-delete">
         <i class="fa fa-trash" @click="deleteProductCard(product.id)"></i>
       </div>
@@ -22,14 +22,19 @@ import swal from 'sweetalert';
 
 export default {
   props: ['product'],
+  created() {
+    if (localStorage.role === 'admin') {
+      this.isAdmin = true;
+    }
+  },
   data() {
     return {
       message: '',
       link: {
         name: 'Product',
         params: { id: this.product.id },
-        data: this.product.id,
       },
+      isAdmin: false,
     };
   },
   methods: {
@@ -65,6 +70,9 @@ export default {
             swal('Your product is safe!');
           }
         });
+    },
+    getId() {
+      this.$store.commit('changeProductId', this.product.id);
     },
   },
 };
