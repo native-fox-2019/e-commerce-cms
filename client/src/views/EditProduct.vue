@@ -1,5 +1,5 @@
 <template>
-  <div class="addProduct" :class="{ collapsed: isCollapsed }">
+  <div class="edit-product">
     <Navbar />
     <sidebar-menu @toggle-collapse="onToggleCollapse" :menu="menu" />
     <form @submit.prevent="onSubmit" >
@@ -11,9 +11,8 @@
       <input type="number" v-model="price">
       <label>Stock</label>
       <input type="number" v-model="stock">
-      <button type="submit">Add</button>
+      <button type="submit">Edit</button>
     </form>
-    <h3 v-if="isSuccess" >{{ onSuccess }}</h3>
   </div>
 </template>
 
@@ -23,22 +22,54 @@ import { mapActions } from 'vuex';
 import Navbar from '../components/Navbar.vue';
 
 export default {
-  name: 'AddProducts',
+  name: 'EditProduct',
+  props: ['product', 'id'],
   components: {
-    SidebarMenu,
     Navbar,
+    SidebarMenu,
   },
   created() {
-    this.isSuccess = false;
+    if (!this.product) {
+      this.$router.push({ path: '/products' });
+    }
   },
   data() {
+    if (!this.product) {
+      return {
+        name: '',
+        url: '',
+        stock: '',
+        price: '',
+        menu: [
+          {
+            header: true,
+            title: 'Main',
+            hiddenOnCollapse: false,
+          },
+          {
+            href: '/products',
+            title: 'Dashboard',
+            icon: 'fa fa-user',
+          },
+          {
+            href: '/products',
+            title: 'Actions',
+            icon: 'fa fa-chart-area',
+            child: [
+              {
+                href: '/products/add',
+                title: 'Add Products',
+              },
+            ],
+          },
+        ],
+      };
+    }
     return {
-      name: '',
-      url: '',
-      price: 0,
-      stock: 0,
-      isSuccess: false,
-      onSuccess: 'Successfully Add a product',
+      name: this.product.name,
+      url: this.product.image_url,
+      price: this.product.price,
+      stock: this.product.stock,
       isCollapsed: false,
       menu: [
         {
@@ -66,19 +97,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(['addProduct']),
-
-    async onSubmit() {
-      const newProduct = {
-        name: this.name,
-        image_url: this.url,
-        price: this.price,
-        stock: this.stock,
-      };
-      await this.addProduct(newProduct);
-      this.isSuccess = true;
-    },
-
+    ...mapActions(['editProduct']),
     onToggleCollapse(collapsed) {
       if (collapsed) {
         this.isCollapsed = true;
@@ -86,17 +105,29 @@ export default {
         this.isCollapsed = false;
       }
     },
+
+    async onSubmit() {
+      const edited = {
+        id: this.product.id,
+        name: this.name,
+        image_url: this.image_url,
+        price: this.price,
+        stock: this.stock,
+      };
+      await this.editProduct(edited);
+      this.$router.push({ path: '/products' });
+    },
   },
 };
 </script>
 
 <style scoped>
-  .addProduct {
+.edit-product {
     padding-left: 350px;
     transition: all .3s ease;
   }
 
-  .addProduct.collapsed {
+  .edit-product.collapsed {
     padding-left: 50px;
   }
 

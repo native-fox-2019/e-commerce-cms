@@ -40,7 +40,9 @@
           </div>
           <div class="cell">
             <a @click.prevent="onDelete(product.id)"><i class="fa fa-trash"></i></a>
-            <a @click.prevent="onEdit(product)" ><i class="fas fa-edit"></i></a>
+            <router-link :to="{ name: 'Edit', params: { product, id: product.id } }">
+              <span><i class="fas fa-edit"></i></span>
+            </router-link>
           </div>
         </div>
       </div>
@@ -88,32 +90,17 @@ export default {
       editedProduct[0].stock -= 1;
       this.editProduct(editedProduct[0]);
     },
-
-    async onEdit(data) {
-      if (!this.isEdited) {
-        this.name = data.name;
-        this.image_url = data.image_url;
-        this.price = data.price;
-        this.stock = data.stock;
-        this.isEdited = !this.isEdited;
-      } else {
-        const edited = {
-          id: data.id,
-          name: this.name,
-          image_url: this.image_url,
-          price: this.price,
-          stock: this.stock,
-        };
-        await this.editProduct(edited);
-        this.isEdited = !this.isEdited;
-      }
-    },
   },
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+  a {
+    text-decoration: none;
+    color: #555555;
+  }
+
   .label.hide {
     display: none;
   }

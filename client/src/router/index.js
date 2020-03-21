@@ -4,6 +4,7 @@ import Landing from '../views/Landing.vue';
 import Register from '../views/Register.vue';
 import Home from '../views/Home.vue';
 import AddProducts from '../views/AddProducts.vue';
+import EditProduct from '../views/EditProduct.vue';
 import store from '../store';
 
 Vue.use(VueRouter);
@@ -27,6 +28,12 @@ const routes = [
     path: '/products/add',
     component: AddProducts,
     meta: { requiresAuth: true },
+  },
+  {
+    path: '/products/edit/:id',
+    name: 'Edit',
+    component: EditProduct,
+    props: true,
   },
 ];
 

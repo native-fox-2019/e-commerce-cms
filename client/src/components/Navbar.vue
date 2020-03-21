@@ -3,9 +3,6 @@
     <h1>LOGO</h1>
     <nav>
       <ul class="nav_links">
-        <router-link to="/">
-          <li><a>Home</a></li>
-        </router-link>
         <router-link to="/register">
           <li><a>Register</a></li>
         </router-link>
