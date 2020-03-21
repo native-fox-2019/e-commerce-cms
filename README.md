@@ -19,6 +19,7 @@
 }
 ```
 All req.body is **required**
+Role is between **Admin** and **User**
 
 ## Response
 Status 201
