@@ -13,6 +13,7 @@ const routes = [
   {
     path: '/',
     component: Landing,
+    meta: { isLogin: true },
   },
   {
     path: '/register',
@@ -58,6 +59,14 @@ router.beforeEach(async (to, from, next) => {
       next({
         path: '/',
       });
+    }
+  } else if (to.matched.some((record) => record.meta.isLogin)) {
+    if (localStorage.getItem('access_token')) {
+      next({
+        path: '/products',
+      });
+    } else {
+      next();
     }
   } else {
     next();
