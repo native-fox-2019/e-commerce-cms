@@ -21,6 +21,7 @@ export default {
         },
         logout() {
             delete localStorage.access_token
+            this.$store.state.productList = []
             this.$router.push({
                 path: '/login'
             })

@@ -7,7 +7,7 @@
         :items="productListDesc"
     >
         <template v-slot:cell(image_url)="data">
-            <b-img fluid :src="'https://via.placeholder.com/200x200'" :alt="data.value" class="img-thumbnail"></b-img>
+            <img :src="data.value" class="img-thumbnail">
             <b-form-textarea
                 class="form-control mt-2 ml-2 mx-auto"
                 style="width:240px; height:60px; resize:none; overflow-y:scroll;"

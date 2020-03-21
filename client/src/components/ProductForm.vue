@@ -31,7 +31,7 @@
             <div class="form-group row">
 				<label for="image_preview" class="col-sm-3 col-form-label">Image View</label>
                 <div class="col-sm-9 d-flex flex-row justify-content-center">
-                    <img id="image_preview" :src="'https://via.placeholder.com/200x200'" class="img-thumbnail">
+                    <img id="image_preview" :src="image_url" class="img-thumbnail">
                 </div>
 			</div>
             <div class="form-group row">
