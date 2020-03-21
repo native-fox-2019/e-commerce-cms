@@ -6,7 +6,8 @@
   "scripts": {
     "test": "clear && jest --detectOpenHandles --runInBand --forceExit",
     "dev": "NODE_ENV=development nodemon app.js",
-    "initdb": "sequelize db:create --env=test && sequelize db:migrate --env=test"
+    "initdb": "sequelize db:create --env=test && sequelize db:migrate --env=test",
+    "start": "node app.js"
   },
   "author": "",
   "license": "ISC",
