@@ -146,6 +146,29 @@ describe('CRUD for products using admin account', () => {
                         done(err);
                     });
             });
+            it('Should return 400 and msg', (done) => {
+                let input = {
+                    name: 'Baju',
+                    image_url: 'feafea.img',
+                    price: 'bukan angka',
+                    stock: 'sama bukan angka'
+                }
+                let output = ['Price must be a number', 'Stock must be a number'];
+                response(app)
+                    .post('/product')
+                    .set('token', token)
+                    .send(input)
+                    .then(response => {
+                        const { body, status } = response;
+                        expect(status).toBe(400);
+                        expect(body).toHaveProperty('msg');
+                        expect(Array.isArray(['body'])).toBe(true);
+                        expect(body.msg).toEqual(expect.arrayContaining(output));
+                        done();
+                    }).catch(err => {
+                        done(err);
+                    });
+            });
             it('Should return 403 and msg', (done) => {
                 let input = {
                     name: 'Baju',
