@@ -8,14 +8,11 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     SERVER:'https://aqueous-badlands-12134.herokuapp.com',
+    // SERVER:'http://localhost:3000',
     isLogin:false,
     products:[],
     token:'',
     headers:{
-      'Content-Type':'application/json',
-      token:localStorage.token
-    },
-    headers2:{
       'Content-Type': 'multipart/form-data',
       token:localStorage.token
     }
@@ -66,7 +63,7 @@ export default new Vuex.Store({
     addProduct({state,commit},product){
       var formProduct=form.add(product);
       return axios.post(state.SERVER+'/product',formProduct,{
-        headers:state.headers2
+        headers:state.headers
       })
       .then((res)=>{
         var data=res.data.product;
@@ -82,7 +79,7 @@ export default new Vuex.Store({
       var id=payload.id;
       var product=form.add(payload.product);
       return axios.put(state.SERVER+'/product/'+id,product,{
-        headers:state.headers2
+        headers:state.headers
       })
       .then(()=>{
         commit('updateProduct',payload);

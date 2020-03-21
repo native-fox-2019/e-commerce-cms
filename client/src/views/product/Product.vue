@@ -30,7 +30,7 @@
                                 </b-row>
                             </b-col>
                             <b-col sm="6">
-                                <img :src="'/img/'+row.item.image_url " class="product-img" alt="">
+                                <img :src="$store.state.SERVER+'/img/'+row.item.image_url " class="product-img" alt="">
                             </b-col>
 
                         </b-row>
