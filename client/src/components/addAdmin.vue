@@ -1,5 +1,5 @@
 <template>
-  <b-modal id="add" hide-footer title="New Product" @hidden="resetModalData">
+  <b-modal id="addAdmin" hide-footer title="New Admin" @hidden="resetModalData">
     <form @submit.prevent="add" ref="form" enctype="multipart/form-data">
       <v-row>
         <v-col cols="12" sm="6" md="6">
@@ -17,21 +17,21 @@
           <v-text-field v-model="input.name" label="Name"></v-text-field>
         </v-col>
       </v-row>
-
       <v-row>
         <v-col class="d-flex" cols="12" sm="6">
-          <v-text-field v-model="input.price" label="Price" type="number"></v-text-field>
+          <v-text-field v-model="input.email" label="Email"></v-text-field>
         </v-col>
         <v-col class="d-flex" cols="12" sm="6">
-          <v-text-field v-model="input.stock" type="number" label="Stock"></v-text-field>
+          <v-text-field v-model="input.password" type="password" label="Password"></v-text-field>
+        </v-col>
+        <v-col class="d-flex" cols="12" sm="12">
+          <v-select v-model="input.role" :items="items" label="Position" dense solo></v-select>
         </v-col>
       </v-row>
-
-      <v-select v-model="input.category" :items="items" label="Category" dense solo></v-select>
       <v-btn
         class="mr-4"
         type="submit"
-        @click="$bvModal.hide('add')"
+        @click="$bvModal.hide('addAdmin')"
         style="background-color:#39387a;color:white;"
       >submit</v-btn>
     </form>
@@ -55,30 +55,15 @@ export default {
   data() {
     return {
       items: [
-        "Buku",
-        "Dapur",
-        "Elektronik",
-        "Fashion",
-        "Gaming",
-        "Handphone & Tablet",
-        "Kamera",
-        "Kecantikan",
-        "Kesehatan",
-        "Komputer & Laptop",
-        "Mainan & Hobi",
-        "Makanan & Minuman",
-        "Olahraga",
-        "Otomotif",
-        "Perlengkapan Rumah Tangga",
-        "Product Lainnya"
+        { text: "Supervisor", value: "superadmin" },
+        { text: "Admin", value: "admin" }
       ],
       input: {
         file: null,
         name: "",
-        image_url: "",
-        category: "",
-        price: "",
-        stock: ""
+        email: "",
+        password: "",
+        role: ""
       },
       rules: [
         value =>
@@ -94,12 +79,12 @@ export default {
         let formData = new FormData();
         formData.append("name", this.input.name);
         formData.append("file", this.input.file);
-        formData.append("category", this.input.category);
-        formData.append("price", Number(this.input.price));
-        formData.append("stock", Number(this.input.stock));
+        formData.append("email", this.input.email);
+        formData.append("password", this.input.password);
+        formData.append("role", this.input.role);
         let { data } = await axios({
           method: "post",
-          url: "/products",
+          url: "/user/register",
           data: formData,
           headers: {
             access_token: localStorage.access_token
@@ -107,10 +92,10 @@ export default {
         });
         if (data) {
           this.resetModalData();
-          this.$store.dispatch("get");
+          this.$store.dispatch("getAdmin");
           Toast.fire({
             icon: "success",
-            title: "Product created successfully"
+            title: "Admin registered successfully"
           });
         }
       } catch (error) {

@@ -7,7 +7,11 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     products: [],
-    oneProduct: ""
+    campaigns: [],
+    admins: [],
+    oneProduct: "",
+    oneCampaign: "",
+    oneAdmin: ""
   },
   mutations: {
     get(state, data) {
@@ -15,6 +19,18 @@ export default new Vuex.Store({
     },
     one(state, data) {
       state.oneProduct = data;
+    },
+    getCampaign(state, data) {
+      state.campaigns = data;
+    },
+    oneCampaign(state, data) {
+      state.oneCampaign = data;
+    },
+    getAdmin(state, data) {
+      state.admins = data;
+    },
+    oneAdmin(state, data) {
+      state.oneAdmin = data;
     }
   },
   actions: {
@@ -26,6 +42,30 @@ export default new Vuex.Store({
           }
         });
         commit("get", data);
+      } catch (error) {
+        errorHandler(error);
+      }
+    },
+    async getCampaign({ commit }) {
+      try {
+        let { data } = await axios.get("/campaign", {
+          headers: {
+            access_token: localStorage.access_token
+          }
+        });
+        commit("getCampaign", data);
+      } catch (error) {
+        errorHandler(error);
+      }
+    },
+    async getAdmin({ commit }) {
+      try {
+        let { data } = await axios.get("/user", {
+          headers: {
+            access_token: localStorage.access_token
+          }
+        });
+        commit("getAdmin", data);
       } catch (error) {
         errorHandler(error);
       }

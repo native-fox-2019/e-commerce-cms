@@ -3,7 +3,7 @@
     <v-app id="inspire">
       <v-card style="color:#39387a;" class="mt-5">
         <v-card-title>
-          Products
+          Admins
           <v-spacer></v-spacer>
           <v-text-field
             v-model="search"
@@ -15,7 +15,7 @@
         </v-card-title>
         <v-data-table
           :headers="headers"
-          :items="products"
+          :items="admins"
           :search="search"
           :items-per-page="5"
           :footer-props="{
@@ -24,23 +24,33 @@
         }"
           style="color:#39387a;"
         >
-          <template #item.updatedAt="{item}">{{new Date(item.updatedAt).toLocaleString()}}</template>
-          <template #item.createdAt="{item}">{{new Date(item.createdAt).toLocaleString()}}</template>
-          <template #item.image_url="{item}">
-            <v-avatar class="m-2" size="54" v-if="item.image_url !== 'null'">
-              <img :src="item.image_url" alt />
+          <template #item.role="{item}">
+            <div v-if="item.role === 'superadmin'">Supervisor</div>
+            <div v-else>Admin</div>
+          </template>
+          <template
+            #item.createdAt="{item}"
+          >{{new Date(item.createdAt).toLocaleString().substring(0,9)}}</template>
+          <template #item.image="{item}">
+            <v-avatar class="m-2" size="54" v-if="item.image !== 'null'">
+              <img :src="item.image" alt />
             </v-avatar>
-            <v-avatar class="m-2" size="54" color="#39387a" v-else-if="item.image_url === 'null'">
+            <v-avatar class="m-2" size="54" color="#39387a" v-else>
               <img src="../images/image.png" width="5px" alt />
             </v-avatar>
           </template>
           <template #item.action="{item}">
-            <v-icon small v-b-modal.edit @click="edit(item)" class="mr-2">mdi-pencil</v-icon>
+            <v-icon
+              small
+              v-b-modal.editAdmin
+              @click="edit(item)"
+              class="mr-2"
+            >mdi-account-edit-outline</v-icon>
             <v-icon small @click="deleteItem(item.id)">mdi-delete</v-icon>
           </template>
         </v-data-table>
-        <v-btn absolute dark fab bottom left color="#39387a" v-b-modal.add>
-          <v-icon class="add">mdi-folder-plus-outline</v-icon>
+        <v-btn absolute dark fab bottom left color="#39387a" v-b-modal.addAdmin>
+          <v-icon class="add">mdi-account-plus</v-icon>
         </v-btn>
       </v-card>
     </v-app>
@@ -68,28 +78,24 @@ export default {
       search: "",
       headers: [
         {
-          text: "Image",
+          text: "Profile Picture",
           align: "center",
           sortable: false,
-          value: "image_url"
+          value: "image"
         },
         { text: "Name", value: "name" },
-        { text: "Category", value: "category" },
-        { text: "Price", value: "price" },
-        { text: "Stock", value: "stock" },
-        { text: "Uploaded By", value: "User.name" },
-        { text: "Updated At", value: "updatedAt" },
-        { text: "Uploaded At", value: "createdAt" },
+        { text: "Email", value: "email" },
+        { text: "Position", value: "role" },
+        { text: "Joined At", value: "createdAt" },
         { text: "Actions", value: "action", sortable: false }
-      ],
-      desserts: []
+      ]
     };
   },
   created() {
-    this.$store.dispatch("get");
+    this.$store.dispatch("getAdmin");
   },
   computed: {
-    ...mapState(["products"])
+    ...mapState(["admins"])
   },
   methods: {
     async deleteItem(id) {
@@ -107,16 +113,16 @@ export default {
           confirmButtonText: "Yes, delete it!"
         });
         if (value) {
-          let { data } = await axios.delete(`products/${id}`, {
+          let { data } = await axios.delete(`user/${id}`, {
             headers: {
               access_token: localStorage.access_token
             }
           });
           if (data) {
-            this.$store.dispatch("get");
+            this.$store.dispatch("getAdmin");
             Toast.fire({
               icon: "success",
-              title: "Product has been deleted."
+              title: "Admin has been deleted."
             });
           }
         }
@@ -125,7 +131,7 @@ export default {
       }
     },
     edit(data) {
-      this.$store.commit("one", data);
+      this.$store.commit("oneAdmin", data);
     }
   }
 };

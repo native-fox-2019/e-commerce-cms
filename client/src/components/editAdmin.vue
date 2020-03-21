@@ -1,10 +1,10 @@
 <template>
-  <b-modal id="edit" hide-footer title="Edit Product" @hidden="resetImage">
+  <b-modal id="editAdmin" hide-footer title="Edit Profile" @hidden="resetImage">
     <form @submit.prevent="edit" ref="form">
       <v-row>
         <v-col cols="12" sm="6" md="4">
           <v-avatar class="m-2" size="65" :tile="true" color="#39387a">
-            <img :src="image_url" width="5px" alt />
+            <img :src="image" width="5px" alt />
           </v-avatar>
         </v-col>
         <v-col cols="12" sm="6" md="8">
@@ -18,14 +18,18 @@
           ></v-file-input>
         </v-col>
       </v-row>
-
       <v-text-field v-model="name" label="Name"></v-text-field>
-      <v-text-field v-model="category" label="Category"></v-text-field>
-      <v-text-field v-model="price" label="Price" type="number"></v-text-field>
-      <v-text-field v-model="stock" type="number" label="Stock"></v-text-field>
+      <v-row>
+        <v-col class="d-flex" cols="12" sm="6">
+          <v-text-field v-model="email" label="Email"></v-text-field>
+        </v-col>
+        <v-col class="d-flex" cols="12" sm="6">
+          <v-text-field v-model="password" type="password" label="New Password"></v-text-field>
+        </v-col>
+      </v-row>
       <v-btn
         class="mr-4"
-        @click="$bvModal.hide('edit')"
+        @click="$bvModal.hide('editAdmin')"
         type="submit"
         style="background-color:#39387a;color:white;"
       >Edit</v-btn>
@@ -51,11 +55,10 @@ export default {
     return {
       name: "",
       file: null,
-      image_url: "",
-      category: "",
-      price: "",
-      stock: "",
-      id: "",
+      image: "",
+      email: "",
+      oldPassword: "",
+      password: "",
       rules: [
         value =>
           !value ||
@@ -66,16 +69,15 @@ export default {
   },
   computed: {
     one() {
-      return this.$store.state.oneProduct;
+      return this.$store.state.oneAdmin;
     }
   },
   watch: {
     one() {
       this.name = this.one.name;
-      this.image_url = this.one.image_url;
-      this.category = this.one.category;
-      this.price = this.one.price;
-      this.stock = this.one.stock;
+      this.image = this.one.image;
+      this.email = this.one.email;
+      this.oldPassword = this.one.password;
       this.id = this.one.id;
     }
   },
@@ -85,23 +87,24 @@ export default {
         let formData = new FormData();
         formData.append("name", this.name);
         formData.append("file", this.file);
-        formData.append("category", this.category);
-        formData.append("price", Number(this.price));
-        formData.append("stock", Number(this.stock));
+        formData.append("image", this.image);
+        formData.append("email", this.email);
+        formData.append("password", this.password);
+        formData.append("olPassword", this.oldPassword);
         let { data } = await axios({
           method: "put",
-          url: `/products/${this.id}`,
+          url: `/user/${this.id}`,
           data: formData,
           headers: {
             access_token: localStorage.access_token
           }
         });
         if (data) {
-          this.$store.dispatch("get");
+          this.$store.dispatch("getAdmin");
           this.resetImage();
           Toast.fire({
             icon: "success",
-            title: "Product has been edited."
+            title: "User has been edited."
           });
         }
       } catch (error) {
@@ -110,7 +113,9 @@ export default {
     },
     resetImage() {
       let resetImage = null;
+      let reset = "";
       this.file = resetImage;
+      this.password = reset;
     }
   }
 };

@@ -43,12 +43,13 @@ module.exports = (sequelize, DataTypes) => {
           notNull: true,
           min: 0
         }
-      }
+      },
+      UserId: DataTypes.INTEGER
     },
     { sequelize }
   );
   Product.associate = function(models) {
-    // associations can be defined here
+    Product.belongsTo(models.User);
   };
   return Product;
 };

@@ -1,4 +1,4 @@
-const { Product, User } = require("../models");
+const { Campaign, User } = require("../models");
 const createError = require("http-errors");
 
 class Controller {
@@ -7,24 +7,25 @@ class Controller {
       let condition = {
         include: User
       };
-      let show = await Product.findAll(condition);
-      res.status(200).json(show);
+      let data = await Campaign.findAll(condition);
+      res.status(200).json(data);
     } catch (error) {
       next(error);
     }
   }
-  static async findOne(req, res, next) {
+  static async getOne(req, res, next) {
     try {
       let condition = {
         where: {
           id: req.params.id
-        }
+        },
+        include: User
       };
-      let found = await Product.findOne(condition);
+      let found = await Campaign.findOne(condition);
       if (found) {
         res.status(200).json(found);
       } else {
-        throw createError(404, "Product not found !");
+        throw createError(404, "Campaign not found !");
       }
     } catch (error) {
       next(error);
@@ -33,17 +34,16 @@ class Controller {
   static async create(req, res, next) {
     try {
       let input = {
+        image: req.body.file || null,
         name: req.body.name,
-        category: req.body.category,
-        image_url: req.body.file || null,
-        price: req.body.price,
-        stock: req.body.stock,
+        status: req.body.status,
+        placement: req.body.placement,
         UserId: req.user.id
       };
-      let created = await Product.create(input);
+      let created = await Campaign.create(input);
       res
         .status(200)
-        .json({ Message: "Product created succesfully.", Data: created });
+        .json({ Message: "Campaign created succesfully.", Data: created });
     } catch (error) {
       next(error);
     }
@@ -55,13 +55,13 @@ class Controller {
           id: req.params.id
         }
       };
-      let deleted = await Product.destroy(condition);
-      res.status(200).json({ Message: "Successfully deleted product." });
+      let deleted = await Campaign.destroy(condition);
+      res.status(200).json({ Message: "Campaign deleted succesfully" });
     } catch (error) {
       next(error);
     }
   }
-  static async put(req, res, next) {
+  static async update(req, res, next) {
     try {
       let condition = {
         where: {
@@ -69,19 +69,15 @@ class Controller {
         }
       };
       let input = {
+        image: req.body.file !== "null" ? req.body.file : req.body.image,
         name: req.body.name,
-        category: req.body.category,
-        image_url:
-          req.body.file !== "null" ? req.body.file : req.body.image_url,
-        price: req.body.price,
-        stock: req.body.stock
+        status: req.body.status,
+        placement: req.body.placement
       };
-      let findOne = await Product.findOne(condition);
+      let findOne = await Campaign.findOne(condition);
       if (findOne) {
-        let updated = await Product.update(input, condition);
-        res
-          .status(200)
-          .json({ Message: "Successfully updated product", Data: req.body });
+        let updated = await Campaign.update(input, condition);
+        res.status(200).json({ Message: "Campaign updated succesfully" });
       } else {
         throw createError(404);
       }

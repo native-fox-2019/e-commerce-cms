@@ -1,10 +1,10 @@
 <template>
-  <b-modal id="edit" hide-footer title="Edit Product" @hidden="resetImage">
+  <b-modal id="editCampaign" hide-footer title="Edit Product" @hidden="resetImage">
     <form @submit.prevent="edit" ref="form">
       <v-row>
         <v-col cols="12" sm="6" md="4">
           <v-avatar class="m-2" size="65" :tile="true" color="#39387a">
-            <img :src="image_url" width="5px" alt />
+            <img :src="image" width="5px" alt />
           </v-avatar>
         </v-col>
         <v-col cols="12" sm="6" md="8">
@@ -20,12 +20,17 @@
       </v-row>
 
       <v-text-field v-model="name" label="Name"></v-text-field>
-      <v-text-field v-model="category" label="Category"></v-text-field>
-      <v-text-field v-model="price" label="Price" type="number"></v-text-field>
-      <v-text-field v-model="stock" type="number" label="Stock"></v-text-field>
+      <v-row>
+        <v-col class="d-flex" cols="12" sm="6">
+          <v-select v-model="status" :items="items" label="Status" dense solo></v-select>
+        </v-col>
+        <v-col class="d-flex" cols="12" sm="6">
+          <v-select v-model="placement" :items="placements" label="Placement" dense solo></v-select>
+        </v-col>
+      </v-row>
       <v-btn
         class="mr-4"
-        @click="$bvModal.hide('edit')"
+        @click="$bvModal.hide('editCampaign')"
         type="submit"
         style="background-color:#39387a;color:white;"
       >Edit</v-btn>
@@ -49,12 +54,19 @@ const Toast = Swal.mixin({
 export default {
   data() {
     return {
+      items: ["Pending", "Upcoming", "On Going", "Ended", "Cancelled"],
+      placements: [
+        "Home - Cover",
+        "Home - Carousel",
+        "Home - Pop up",
+        "Product - Pop up",
+        "Product - check out"
+      ],
       name: "",
       file: null,
-      image_url: "",
-      category: "",
-      price: "",
-      stock: "",
+      image: "",
+      status: "",
+      placement: "",
       id: "",
       rules: [
         value =>
@@ -66,16 +78,15 @@ export default {
   },
   computed: {
     one() {
-      return this.$store.state.oneProduct;
+      return this.$store.state.oneCampaign;
     }
   },
   watch: {
     one() {
       this.name = this.one.name;
-      this.image_url = this.one.image_url;
-      this.category = this.one.category;
-      this.price = this.one.price;
-      this.stock = this.one.stock;
+      this.image = this.one.image;
+      this.status = this.one.status;
+      this.placement = this.one.placement;
       this.id = this.one.id;
     }
   },
@@ -85,23 +96,22 @@ export default {
         let formData = new FormData();
         formData.append("name", this.name);
         formData.append("file", this.file);
-        formData.append("category", this.category);
-        formData.append("price", Number(this.price));
-        formData.append("stock", Number(this.stock));
+        formData.append("status", this.status);
+        formData.append("placement", this.placement);
         let { data } = await axios({
           method: "put",
-          url: `/products/${this.id}`,
+          url: `/campaign/${this.id}`,
           data: formData,
           headers: {
             access_token: localStorage.access_token
           }
         });
         if (data) {
-          this.$store.dispatch("get");
+          this.$store.dispatch("getCampaign");
           this.resetImage();
           Toast.fire({
             icon: "success",
-            title: "Product has been edited."
+            title: "Campaign has been edited."
           });
         }
       } catch (error) {

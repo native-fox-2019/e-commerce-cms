@@ -6,6 +6,7 @@ module.exports = (sequelize, DataTypes) => {
 
   User.init(
     {
+      image: DataTypes.STRING,
       name: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -42,7 +43,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       hooks: {
-        beforeCreate(instance, options) {
+        beforeSave(instance, options) {
           instance.password = hashed(instance.password);
         }
       },
@@ -50,7 +51,8 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
   User.associate = function(models) {
-    // associations can be defined here
+    User.hasMany(models.Campaign);
+    User.hasMany(models.Product);
   };
   return User;
 };

@@ -14,7 +14,7 @@
 
           <v-divider></v-divider>
 
-          <v-list-item v-for="item in items" :key="item.title" link>
+          <v-list-item v-for="item in items" :key="item.title" link @click="item.route">
             <v-list-item-icon>
               <v-icon class="mr-2">{{ item.icon }}</v-icon>
             </v-list-item-icon>
@@ -40,9 +40,17 @@ export default {
   data() {
     return {
       items: [
-        { title: "Products", icon: "mdi-folder-open-outline" },
-        { title: "Campaign", icon: "mdi-view-dashboard" },
-        { title: "Register", icon: "mdi-account-multiple-plus" }
+        {
+          title: "Products",
+          icon: "mdi-package-variant",
+          route: this.product
+        },
+        {
+          title: "Campaigns",
+          icon: "mdi-view-dashboard",
+          route: this.campaign
+        },
+        { title: "Admins", icon: "mdi-account-multiple", route: this.admin }
       ]
     };
   },
@@ -51,6 +59,21 @@ export default {
       localStorage.clear();
       this.$router.push({
         path: "/login"
+      });
+    },
+    product() {
+      this.$router.push({
+        path: "/"
+      });
+    },
+    campaign() {
+      this.$router.push({
+        path: "/campaign"
+      });
+    },
+    admin() {
+      this.$router.push({
+        path: "/admin"
       });
     }
   }

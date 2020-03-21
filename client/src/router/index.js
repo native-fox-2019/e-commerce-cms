@@ -2,6 +2,8 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Login from "../views/Login.vue";
 import Home from "../views/Home.vue";
+import Campaign from "../views/Campaign.vue";
+import Admin from "../views/Admin.vue";
 
 Vue.use(VueRouter);
 
@@ -14,6 +16,16 @@ const routes = [
   {
     path: "/",
     component: Home,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: "/Campaign",
+    component: Campaign,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: "/admin",
+    component: Admin,
     meta: { requiresAuth: true }
   }
 ];
