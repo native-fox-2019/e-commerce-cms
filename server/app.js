@@ -20,7 +20,7 @@ app.use(express.urlencoded({extended:true}))
 app.use('/',router)
 
 // app.listen(PORT, () => console.log(`Example app listening on port ${PORT}!`))
-http.listen(PORT, function() {
-    console.log(`listening on ${PORT}`);
-  });
-// module.exports = app
+// http.listen(PORT, function() {
+//     console.log(`listening on ${PORT}`);
+//   });
+module.exports = app
