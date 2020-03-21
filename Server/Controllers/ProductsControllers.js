@@ -4,6 +4,7 @@ class ProductController {
     static getAllProducts(req, res, next){
         Product.findAll()
         .then(products => {
+            products.sort((a, b) => a.id - b.id);
             res.status(200).json({products})
         })
         .catch(err => {
