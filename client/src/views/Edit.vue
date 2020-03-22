@@ -56,7 +56,6 @@ export default {
                 this.edit = produk
             })
             .catch(err=>{
-                console.log('err')
                 console.log(err)
                 this.error=err.response.data
             })
