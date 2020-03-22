@@ -17,8 +17,8 @@
         </template>
 
         <template v-slot:cell(options)="data">
-            <b-button variant="outline-warning" class="mx-1" @click.prevent="triggerEditForm(data.item.id)" v-b-modal.ProductFormModal>🖉</b-button>
-            <b-button variant="outline-danger" class="mx-1" @click.prevent="triggerDelete(data.item.id)">✘</b-button>
+            <b-button variant="outline-warning" class="m-1" @click.prevent="triggerEditForm(data.item.id)" v-b-modal.ProductFormModal>🖉</b-button>
+            <b-button variant="outline-danger" class="m-1" @click.prevent="triggerDelete(data.item.id)">✘</b-button>
         </template>
 
     </b-table>
@@ -33,11 +33,16 @@ export default {
     data() {
         return {
             fields: [
-                'name',
-                // 'image_url',
+                {
+                    key: 'name',
+                    label: 'Name',
+                    thStyle: { 'min-width': '120px'}
+
+                },
                 {
                     key: 'image_url',
-                    label: 'Image'
+                    label: 'Image',
+                    thStyle: { 'width': '240px'}
                 },
                 {
                     key: 'price',
@@ -59,20 +64,14 @@ export default {
         },
         triggerDelete(id) {
             Swal.fire({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
+                title: 'Delete this?',
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, delete it!'
-                }).then((result) => {
+                })
+                .then((result) => {
                 if (result.value) {
-                    Swal.fire(
-                    'Deleted!',
-                    'Your file has been deleted.',
-                    'success'
-                    )
                     this.productDelete(id)
                 }
             })

@@ -11,7 +11,7 @@ function errorHandler(err, req, res, next) {
         });
     } else if (err.name === 'BadRequestError') {
         errMsg.status = 400
-        errMsg.message = 'Invalid input!'
+        errMsg.message = 'Wrong input! Please try again.'
     } else if (err.name === 'NotFoundError') {
         errMsg.status = 404
         errMsg.message = 'Record not Found!'

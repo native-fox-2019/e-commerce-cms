@@ -22,6 +22,17 @@
 // @ is an alias to /src
 import Axios from 'axios'
 import Swal from 'sweetalert2'
+const Toast = Swal.mixin({
+  toast: true,
+  position: 'top',
+  showConfirmButton: false,
+  timer: 2000,
+  timerProgressBar: true,
+  onOpen: (toast) => {
+    toast.addEventListener('mouseenter', Swal.stopTimer)
+    toast.addEventListener('mouseleave', Swal.resumeTimer)
+  }
+})
 
 export default {
   name: 'AuthPage',
@@ -45,6 +56,10 @@ export default {
         localStorage.access_token = data.access_token
         this.$router.push({
           path: '/'
+        })
+        Toast.fire({
+          icon: 'success',
+          title: 'Login Success!'
         })
       })
       .catch(err => {

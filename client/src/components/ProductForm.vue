@@ -141,32 +141,37 @@ export default {
             this.hideModal()
         },
         triggerEdit() {
-            let productId = this.id
-            let updateProduct = {
-                name: this.name,
-                image_url: this.image_url,
-                price: this.price,
-                stock: this.stock
-            }
-            this.productEdit({ updateProduct, productId })
-            this.hideModal()
-        },
-        triggerDelete() {
             Swal.fire({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
+                title: 'Edit this?',
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, delete it!'
-                }).then((result) => {
+                })
+                .then((result) => {
                 if (result.value) {
-                    Swal.fire(
-                    'Deleted!',
-                    'Your file has been deleted.',
-                    'success'
-                    )
+                    let productId = this.id
+                    let updateProduct = {
+                        name: this.name,
+                        image_url: this.image_url,
+                        price: this.price,
+                        stock: this.stock
+                    }
+                    this.productEdit({ updateProduct, productId })
+                    this.hideModal()
+                }
+            })
+        },
+        triggerDelete() {
+            Swal.fire({
+                title: 'Delete this?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                })
+                .then((result) => {
+                if (result.value) {
                     this.productDelete(this.id)
                     this.hideModal()
                 }

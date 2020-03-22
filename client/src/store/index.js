@@ -3,6 +3,17 @@ import Vuex from 'vuex'
 import router from '../router/index.js'
 import Axios from 'axios'
 import Swal from 'sweetalert2'
+const Toast = Swal.mixin({
+  toast: true,
+  position: 'top',
+  showConfirmButton: false,
+  timer: 2000,
+  timerProgressBar: true,
+  onOpen: (toast) => {
+    toast.addEventListener('mouseenter', Swal.stopTimer)
+    toast.addEventListener('mouseleave', Swal.resumeTimer)
+  }
+})
 
 Vue.use(Vuex)
 
@@ -15,9 +26,9 @@ export default new Vuex.Store({
     productList(state, data) {
       state.productList = data
     },
-    logout(state) {
-      state.productList = []
-    },
+    // logout(state) {
+    //   state.productList = []
+    // },
     productAdd(state, newProduct) {
       state.productList.push(newProduct)
     },
@@ -67,9 +78,9 @@ export default new Vuex.Store({
           })
       })
     },
-    logout(context) {
-      context.commit('logout');
-    },
+    // logout(context) {
+    //   context.commit('logout');
+    // },
     productAdd(context, newProduct) {
         Axios({
         method: 'POST',
@@ -81,6 +92,10 @@ export default new Vuex.Store({
       })
       .then(({ data }) => {
         context.commit('productAdd', data)
+        Toast.fire({
+          icon: 'success',
+          title: 'Add Success!'
+        })
       })
       .catch(err => {
         let msg = null;
@@ -144,6 +159,10 @@ export default new Vuex.Store({
       })
       .then(() => {
         dispatch('productList')
+        Toast.fire({
+          icon: 'success',
+          title: 'Edit Success!'
+        })
       })
       .catch(err => {
         let msg = null;
@@ -175,6 +194,10 @@ export default new Vuex.Store({
       })
       .then(() => {
         context.commit('productDelete', id)
+        Toast.fire({
+          icon: 'success',
+          title: 'Delete Success!'
+        })
       })
       .catch(err => {
         let msg = null;
