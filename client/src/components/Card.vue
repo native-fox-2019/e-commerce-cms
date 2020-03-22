@@ -25,18 +25,20 @@ import axios from 'axios';
 export default {
   data() {
     return {
-      base_url: 'http://localhost:3000',
+      base_url: 'https://guarded-thicket-66622.herokuapp.com',
     };
   },
   name: 'Card',
   methods: {
     deleteProduct(id) {
-      axios.delete(this.base_url.concat(`/product/${id}`))
+      const url = `https://guarded-thicket-66622.herokuapp.com/product/${id}`;
+      alert(url);
+      axios.delete(url)
         .then(() => {
-          console.log('Berhasil menghapus data');
+          this.$store.dispatch('getProducts');
         })
         .catch((err) => {
-          console.log(err);
+          alert(err.message);
         });
     },
     update() {},

@@ -28,7 +28,6 @@
 import Navbar from '@/components/Navbar.vue';
 import Card from '@/components/Card.vue';
 import AddProduct from '@/components/AddProduct.vue';
-import axios from 'axios';
 
 export default {
   name: 'Home',
@@ -38,15 +37,7 @@ export default {
     AddProduct,
   },
   created() {
-    axios.get('http://localhost:3000/product')
-      .then((data) => {
-        data.data.forEach((product) => {
-          this.$store.state.products.push(product);
-        });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    this.$store.dispatch('getProducts');
   },
 };
 </script>

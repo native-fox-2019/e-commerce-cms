@@ -42,7 +42,7 @@ export default {
       price: null,
       stock: null,
       category: null,
-      base_url: 'http://localhost:3000',
+      base_url: 'https://guarded-thicket-66622.herokuapp.com',
     };
   },
   methods: {
@@ -55,12 +55,12 @@ export default {
         category: this.category,
       })
         .then((data) => {
-          console.log('Berhasil menambahkan product');
+          // console.log('Berhasil menambahkan product');
           this.$store.state.products.push(data.data);
           this.reset();
         })
-        .catch((err) => {
-          console.log(err);
+        .catch(() => {
+          // console.log(err);
         });
     },
     reset() {

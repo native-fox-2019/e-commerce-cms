@@ -28,15 +28,15 @@ export default {
   },
   methods: {
     login() {
-      axios.post('http://localhost:3000/user/login', {
+      axios.post('https://guarded-thicket-66622.herokuapp.com/user/login', {
         email: this.email,
         password: this.password,
       })
-        .then((data) => {
-          console.log(data.data);
+        .then(() => {
+          // console.log(data.data);
         })
-        .catch((err) => {
-          console.log(err);
+        .catch(() => {
+          // console.log(err);
         });
     },
   },
