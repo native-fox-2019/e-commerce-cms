@@ -5,6 +5,8 @@ import Products from '../views/Products.vue'
 import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
 import MyProduct from '../views/MyProduct.vue'
+import Add from '../views/Add.vue'
+import Edit from '../views/Edit.vue'
 
 Vue.use(VueRouter)
 
@@ -22,6 +24,7 @@ const routes = [
     path: '/login',
     name: 'Login',
     component: Login
+    
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
@@ -35,7 +38,24 @@ const routes = [
   {
     path: '/myproduct',
     name: 'MyProduct',
-    component: MyProduct
+    component: MyProduct,
+    // children: [
+    //   {
+    //     path: '/edit/:id',
+    //     name: 'Edit',
+    //     component: Edit,
+    //   }
+    // ]
+  },
+  {
+    path: '/add',
+    name: 'Add',
+    component: Add
+  },
+  {
+    path: '/edit/:id',
+    name: 'Edit',
+    component: Edit,
   }
 ]
 

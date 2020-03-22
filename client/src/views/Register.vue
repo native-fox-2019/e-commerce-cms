@@ -2,13 +2,22 @@
   <div class="about">
     <h1>Register Page</h1>
     <form>
-        <label>Username: </label>
-        <input v-model="register.username" type="text" id="usernameRegister" name="usernameRegister"><br>
-        <label>Email: </label>
-        <input v-model="register.email" type="email" id="emailRegister" name="emailRegister"><br>
-        <label>Password: </label>
-        <input v-model="register.password" type="password" id="passwordRegister" name="passwordRegister"><br>
-        <input type="submit" @click="submitRegister">
+        <div class="form-group">
+          <label>Username: </label><br>
+          <input  v-model="register.username" type="email" style="width: 50%" placeholder="input username">
+        </div>
+        <div class="form-group">
+          <label>Email address: </label><br>
+          <input  v-model="register.email" type="email" style="width: 50%" placeholder="input e-mail">
+        </div>
+        <div class="form-group">
+          <label>Password: </label><br>
+          <input  v-model="register.password" type="email" style="width: 50%" placeholder="input password">
+        </div>
+        <div class="button">
+          <button @click="submitRegister" type="submit" class="btn btn-primary">Submit</button>
+          <button @click="cancelRegister" type="button" class="btn btn-warning">Cancel</button>
+        </div>
     </form>
    
   </div>
@@ -42,9 +51,22 @@ export default {
             console.log(err)
             this.error = err.response
         })
+    },
+    cancelRegister(){
+        window.location.replace('/login')
     }
   }
   
 
 }
 </script>
+
+<style>
+
+.button{
+  text-align: center;
+  display: flex;
+  justify-content: space-around;
+  margin: 20px 80px
+}
+</style>

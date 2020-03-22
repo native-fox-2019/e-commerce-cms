@@ -1,16 +1,22 @@
 <template>
+<div>
+  <h1>Available Products:</h1>
   <div class="products">
-    Products yang tersedia:
     <div class="produk" v-for="produk in products" :key="produk.id">
-      <span>{{produk.name}}</span>
+        <div class="produkname">{{produk.name}}</div>
+        <img :src="produk.image_url">
+        <div>Rp{{produk.price}},00</div>
+        <div>Stock: {{produk.stock}}</div>
     </div>
 
   </div>
+</div>
 </template>
 
 <script>
 // @ is an alias to /src
 import axios from 'axios'
+let local = "http://localhost:3000"
 export default {
   data(){
         return {
@@ -23,7 +29,7 @@ export default {
   },
   methods:{
     getProducts(){
-      axios.get('http://localhost:3000/products/show')
+      axios.get(`${local}/products/show`)
       .then(result=>{
         console.log(result.data)
         this.products = result.data
@@ -35,8 +41,32 @@ export default {
   }
 
 
-
-
-
 }
 </script>
+
+<style>
+.products {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center
+}
+
+.produk {
+  margin: 10px;
+  padding: 10px;
+  border: 5px solid blue;
+  background-color: lightblue;
+}
+
+.produkname {
+  color: blue;
+  font-weight: bold
+}
+
+img {
+  width: 100px;
+  height: 100px
+}
+
+</style>

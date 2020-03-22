@@ -1,13 +1,27 @@
 <template>
   <div id="myproducts">
     <div>
-    <button @click="logout" type="button">Logout</button>
+       <h2>This is admin page</h2>
+       <button @click="logout" type="button" class="btn btn-danger">Logout</button>
     </div>
-    Products yang telah saya input:
+    <h1>My Product:</h1>
+    <p> To add more product, please click add </p>
+        <router-link :to="{name:'Add'}"><button type="button" class="btn btn-primary">Add</button></router-link>
    
-   <div> 
-   <div v-for="item in myproducts" :key="item.id" >{{item.name}}</div>
+   <div class="products"> 
+   <div v-for="item in myproducts" :key="item.id" class="produk">
+        <div class="produkname">{{item.name}}</div>
+        <img :src="item.image_url">
+        <div>Rp{{item.price}},00</div>
+        <div>Stock: {{item.stock}}</div>
+        <div>
+            <router-link :to="{name:'Edit', params:{id: item.id} }"><button>Edit</button></router-link>
+            <button @click="delproduct(item.id)" type="button">Delete</button>
+        </div>
+        </div>
    </div>
+   <hr>
+   <router-view/>
        
   </div>
 </template>
@@ -15,6 +29,7 @@
 <script>
 // import {mapState} from 'vuex'
 import axios from 'axios'
+let local = "http://localhost:3000"
 export default {
     name: 'myproducts',
     data() {
@@ -32,8 +47,8 @@ export default {
             let token = localStorage.getItem('token')
             console.log(token)
             axios({
-                methods: "get",
-                url: 'http://localhost:3000/products/myshow',
+                method: "get",
+                url: `${local}/products/myshow`,
                 headers: {token: token}
             })
             .then(result=>{
@@ -51,33 +66,60 @@ export default {
         logout(){
             localStorage.removeItem('token')
             window.location.replace('/login')
+        },
+        delproduct(id){
+            let token = localStorage.getItem('token')
+            let searchId = id
+            console.log(searchId)
+            console.log(token)
+            axios({
+                method: "delete",
+                url: `${local}/products/delete/${searchId}`,
+                headers: {token: token}
+            })
+            .then(result=>{
+                console.log('sukses')
+                console.log(result)
+                 window.location.replace('/myproduct')
+            })
+            .catch(err=>{
+                console.log('error')
+                console.log(err)
+            })
         }
     }
 }
-    // created:function(){
-    //     this.token = localStorage.getItem('token')
-    //     if (this.token){
-    //         this.getData()
-    //     } else {
-    //         window.location.replace('/login')
-    //     }
-    //     this.getData()
-    // },
-    // methods: {
-    //     getData(){
-    //         console.log("masuk getData method")
-    //         let data = this.$store.dispatch('getProducts')
-    //         console.log(data+"<<<data")
-    //     }
-    // }
-//     mounted(){
-//         this.$store.dispatch('getProducts')
-//         let a = this.$store.dispatch('getProducts')
-//         console.log(a)
-//         //console.log('mounted')
-//     },
-//     computed: mapState(['posts'])
-    
-// }
 
 </script>
+
+<style>
+h1 {
+    margin-top: 40px;
+    padding-top: 40px
+}
+
+.products {
+  display: flex;
+  flex-direction: row;
+  justify-content: center
+}
+
+.produk {
+  margin: 10px;
+  padding: 10px;
+  border: 5px solid blue;
+  background-color: lightblue;
+}
+
+.produkname {
+  color: blue;
+  font-weight: bold
+}
+
+button {
+    color: blue;
+    font-size: 20px;
+    text-align: center;
+    font-family: "Times New Roman", Times, serif;  
+}
+</style>

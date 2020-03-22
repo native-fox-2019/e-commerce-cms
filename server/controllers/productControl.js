@@ -15,6 +15,14 @@ class ProductControl{
         .catch(err=>res.status)
     }
 
+    static myshowone(req, res, next){
+        Product.findOne({
+            where: {id: req.params.id}
+        })
+        .then(data=> res.status(200).json(data))
+        .catch(err=>res.status)
+    }
+
     static create(req, res, next){
         let newData = {
             name: req.body.name,

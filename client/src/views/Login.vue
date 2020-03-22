@@ -2,20 +2,25 @@
   <div class="about">
     <h1>This is admin login page</h1>
     <form>
-        <label>Email: </label>
-        <input v-model="login.email" type="email" id="emailLogin" name="emailLogin"><br>
-        <label>Password: </label>
-        <input v-model="login.password" type="password" id="passwordLogin" name="passwordLogin"><br>
-        <input type="submit" @click="submitLogin">
+        <div class="form-group">
+          <label>Email address: </label><br>
+          <input  v-model="login.email" type="email" style="width: 50%" placeholder="input e-mail">
+        </div>
+        <div class="form-group">
+          <label>Password: </label><br>
+          <input  v-model="login.password" type="password" style="width: 50%" placeholder="input password">
+        </div>
+        <button @click="submitLogin" type="submit" class="btn btn-primary">Login</button>
     </form>
-    <div>
+    <div style="margin-top:20px">
         Please register if you don't have an account
-        <button><router-link to="/register">Register</router-link></button>
+        <router-link to="/register"><button type="button" class="btn btn-primary">Register</button></router-link>
     </div>
   </div>
 </template>
 <script>
 import axios from 'axios'
+let local = "http://localhost:3000"
 export default {
   data(){
         return {
@@ -26,11 +31,17 @@ export default {
             }
         }
   },
+  created(){
+      let token=localStorage.getItem('token')
+      if(token){
+           window.location.replace('/myproduct')
+      }
+  },
   methods:{
     submitLogin(event){
         event.preventDefault();
         console.log(this.login)
-        axios.post('http://localhost:3000/user/login', this.login)
+        axios.post(`${local}/user/login`, this.login)
         .then(result=>{
             let token = result.data.token
             console.log(token)
@@ -44,6 +55,11 @@ export default {
     }
   }
   
-
 }
 </script>
+
+<style>
+label {
+  font-weight: bold
+}
+</style>
