@@ -35,7 +35,6 @@ export default {
     data() {
         return {
             error: '',
-            //posts: [],
             myproducts: [],
             }
     },
@@ -52,13 +51,11 @@ export default {
                 headers: {token: token}
             })
             .then(result=>{
-                console.log('data')
                 let produk = result.data
                 console.log(produk)
                 this.myproducts = produk
             })
             .catch(err=>{
-                console.log('err')
                 console.log(err)
                 this.error=err
             })

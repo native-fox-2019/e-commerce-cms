@@ -1,12 +1,9 @@
 const { User } = require('../models/index')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
-const {OAuth2Client} = require('google-auth-library');
-//const client = new OAuth2Client(process.env.CLIENT_ID);
 
 class UserControl {
     static register(req, res, next){
-        console.log(req.body)
         User.findOne({
             where: {email:req.body.email}
         })
@@ -41,42 +38,6 @@ class UserControl {
         })
         .catch(err => next(err))
     }
-
-    static googleLogin(req, res, next){
-        client.verifyIdToken({
-            idToken: req.body.id_token,
-            audience: process.env.CLIENT_ID, // Specify the CLIENT_ID of the app that accesses the backend
-                // Or, if multiple clients access the backend:
-                //[CLIENT_ID_1, CLIENT_ID_2, CLIENT_ID_3]
-            })
-            .then(ticket => {
-                const payload = ticket.getPayload();
-                User.findOne({
-                    where: {
-                        email: payload.email
-                    }
-                })
-                    .then(data => {
-                        if (data) {
-                            return data
-                        }
-                        else {
-                            let obj = {
-                                email: payload.email,
-                                password: process.env.PASS_PAYLOAD
-                            }
-                            return User.create(obj)
-                        }
-                    })
-                    .then(data => {
-                        if (data) {
-                            var token = jwt.sign({id: data.id, email: data.email}, process.env.JWT_SECRET)
-                        }
-                        res.status(200).json({ token: token })
-                    })
-                    .catch(err => next(err))
-            })
-        }
 
 }
     

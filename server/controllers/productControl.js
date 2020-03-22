@@ -1,10 +1,11 @@
 const {Product} = require('../models')
 
+
 class ProductControl{
     static show(req, res, next){
         Product.findAll()
         .then(data=> res.status(200).json(data))
-        .catch(err=>res.status)
+        .catch(err=>next(err))
     }
 
     static myshow(req, res, next){
@@ -12,7 +13,7 @@ class ProductControl{
             where: {userId: req.userdata.id}
         })
         .then(data=> res.status(200).json(data))
-        .catch(err=>res.status)
+        .catch(err=>next(err))
     }
 
     static myshowone(req, res, next){
@@ -20,32 +21,43 @@ class ProductControl{
             where: {id: req.params.id}
         })
         .then(data=> res.status(200).json(data))
-        .catch(err=>res.status)
+        .catch(err=>next(err))
     }
 
     static create(req, res, next){
-        let newData = {
-            name: req.body.name,
-            image_url: req.body.image_url,
-            price: req.body.price,
-            stock: req.body.stock,
-            userId: req.userdata.id
+        if(req.body.price<=0){
+            res.status(400).json(`price must be bigger than 0`)
+        } else if (req.body.stock<=0){
+            res.status(400).json(`stock must be bigger than 0`)
+        } else {
+            let newData = {
+                name: req.body.name,
+                image_url: req.body.image_url,
+                price: req.body.price,
+                stock: req.body.stock,
+                userId: req.userdata.id
+            }
+            Product.create(newData)
+            .then(data=>res.status(201).json(`new data has been saved`))
+            .catch(err=>next(err))
         }
-        Product.create(newData)
-        .then(data=>res.status(201).json(`new data has been saved`))
-        .catch(err=>next(err))
     }
 
     static edit(req, res, next){
         let searchId = req.params.id
-        Product.update(req.body, {
-            where: {id: searchId}
-        })
-        .then(data=>{
-            res.status(200).json(`data with id : ${searchId} has been updated`)
-            
-        })  
-        .catch(err=>next(err))
+        if(req.body.price<=0){
+            res.status(400).json(`price must be bigger than 0`)
+        } else if (req.body.stock<=0){
+            res.status(400).json(`stock must be bigger than 0`)
+        } else {
+            Product.update(req.body, {
+                where: {id: searchId}
+            })
+            .then(data=>{
+                res.status(200).json(`data with id : ${searchId} has been updated`)
+            })  
+            .catch(err=>next(err))
+        }
     }
 
     static delete(req, res, next){

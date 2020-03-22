@@ -1,5 +1,6 @@
 <template>
     <div id="Edit">
+        <div style="color:red">{{error}}</div>
         <h2> Edit your product as necessary </h2>
         <form>
             <div class="form-group">
@@ -57,7 +58,7 @@ export default {
             .catch(err=>{
                 console.log('err')
                 console.log(err)
-                this.error=err.response
+                this.error=err.response.data
             })
         },
         submitEdit(event){
@@ -76,7 +77,7 @@ export default {
             })
             .catch(err=>{
                 console.log(err)
-                this.error = err.response
+                this.error = err.response.data
             })
         }
     }

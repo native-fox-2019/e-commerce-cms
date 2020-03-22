@@ -1,5 +1,6 @@
 <template>
     <div id="Add">
+    <div style="color:red">{{error}}</div>
     <h2> Add your product </h2>
 
         <form>
@@ -70,14 +71,9 @@ export default {
             })
             .catch(err=>{
                 console.log(err.response)
-                this.error = err.response
+                this.error = err.response.data
             })
-        },
-        // cancelAdd() {
-        //     localStorage.getItem("token")
-        //     console.log('canelll')
-        //     window.location.replace('/myproducts')
-        // }
+        }
     }
 }
 

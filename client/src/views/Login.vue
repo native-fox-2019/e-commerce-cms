@@ -1,5 +1,6 @@
 <template>
   <div class="about">
+    <div style="color:red">{{error}}</div>
     <h1>This is admin login page</h1>
     <form>
         <div class="form-group">
@@ -50,7 +51,7 @@ export default {
         })
         .catch(err=>{
           console.log(err.response)
-            this.error = err.response
+            this.error = err.response.data
         })
     }
   }

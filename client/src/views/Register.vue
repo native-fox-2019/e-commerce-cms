@@ -1,5 +1,6 @@
 <template>
   <div class="about">
+    <div style="color:red">{{error}}</div>
     <h1>Register Page</h1>
     <form>
         <div class="form-group">
@@ -49,7 +50,7 @@ export default {
         })
         .catch(err=>{
             console.log(err)
-            this.error = err.response
+            this.error = err.response.data
         })
     },
     cancelRegister(){
@@ -57,7 +58,6 @@ export default {
     }
   }
   
-
 }
 </script>
 
