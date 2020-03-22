@@ -6,7 +6,7 @@
   "scripts": {
     "initdb": "sequelize db:create --env=test && sequelize db:migrate --env=test",
     "test": "clear && jest --detectOpenHandles --runInBand --forceExit",
-    "test-register": "clear && jest user-register --detectOpenHandles --runInBand --forceExit",
+    "test-register": "clear && sequelize db:seed:undo:all --env=test && sequelize db:seed --seed 20200317161534-add-users --env=test && jest user-register --detectOpenHandles --runInBand --forceExit",
     "test-login": "clear && jest user-login --detectOpenHandles --runInBand --forceExit",
     "test-create": "clear && jest product-create --detectOpenHandles --runInBand --forceExit",
     "test-readAll": "clear && jest product-readAll --detectOpenHandles --runInBand --forceExit",
