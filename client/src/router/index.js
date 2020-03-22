@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import AuthPage from '../views/AuthPage.vue'
 import MainPage from '../views/MainPage.vue'
+import RegPage from '../views/RegPage.vue'
 
 Vue.use(VueRouter)
 
@@ -11,6 +12,12 @@ const routes = [
     name: 'MainPage',
     meta: { requiresAuth: true },
     component: MainPage
+  },
+  {
+    path: '/register',
+    name: 'RegPage',
+    meta: { requiresAuth: true },
+    component: RegPage
   },
   {
     path: '/login',

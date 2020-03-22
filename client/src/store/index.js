@@ -44,6 +44,10 @@ export default new Vuex.Store({
         context.commit('productList', data)
       })
       .catch(err => {
+        if (localStorage.access_token) {
+          delete localStorage.access_token
+          router.push({ path: '/login' })
+        }
         let msg = null;
           if (err.response) {
             if (Array.isArray(err.response.data.message)) {
@@ -59,11 +63,7 @@ export default new Vuex.Store({
           Swal.fire({
             icon: 'error',
             title: 'Error',
-            html: `${msg}`,
-            onClose: () => {
-              delete localStorage.access_token
-              router.push({ path: '/login' })
-            }
+            html: `${msg}`
           })
       })
     },

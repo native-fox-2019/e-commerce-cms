@@ -41,8 +41,8 @@ export default {
           password: this.password
         }
       })
-      .then(result => {
-        localStorage.access_token = result.data.access_token
+      .then(({ data }) => {
+        localStorage.access_token = data.access_token
         this.$router.push({
           path: '/'
         })
