@@ -22,6 +22,16 @@ export default new Vuex.Store({
           console.log(err);
         });
     },
+    deleteProduct(state, id) {
+      const url = `https://guarded-thicket-66622.herokuapp.com/product/${id}`;
+      axios.delete(url)
+        .then(() => {
+          this.dispatch('getProducts');
+        })
+        .catch((err) => {
+          console.log(err.message);
+        });
+    },
   },
   actions: {
     getProducts() {
