@@ -1,48 +1,37 @@
 <template>
-  <div class="card mb-3" style="max-width: 540px;">
-    <div class="row no-gutters">
-      <div class="col-md-4">
-        <img v-bind:src="image_url" class="card-img">
-      </div>
-      <div class="col-md-8">
-        <div class="card-body">
-          <h5 class="card-title">{{ name }}</h5>
-          <p class="card-text">Category: {{ category }}</p>
-          <p class="card-text">Price: {{ price }}</p>
-          <p class="card-text">Stock: {{ stock }}</p>
-          <p class="card-text"><small class="text-muted">Last updated {{ updatedAt }}</small></p>
-          <button class="btn btn-primary mr-2">Edit</button>
-          <button class="btn btn-danger" @click="deleteProduct(id)" type="button">Delete</button>
-        </div>
-      </div>
-    </div>
+  <div>
+    <v-card class="mx-auto" max-width="344" outlined>
+      <v-list-item three-line>
+        <v-list-item-content>
+          <div class="overline mb-4">Category: {{ category }}</div>
+          <v-list-item-title class="headline mb-1">{{ name }}</v-list-item-title>
+          <v-list-item-subtitle>Price: {{ price }}</v-list-item-subtitle>
+          <v-list-item-subtitle>Stock: {{ stock }}</v-list-item-subtitle>
+          <v-list-item-subtitle>last update: {{ updatedAt }}</v-list-item-subtitle>
+        </v-list-item-content>
+
+        <v-list-item-avatar tile size="80" color="grey">
+          <v-img v-bind:src="image_url" />
+        </v-list-item-avatar>
+      </v-list-item>
+
+      <v-card-actions>
+        <v-btn text>Edit</v-btn>
+        <v-btn text @click="deleteProduct(id)">Delete</v-btn>
+      </v-card-actions>
+    </v-card>
   </div>
 </template>
 
 <script>
-import axios from 'axios';
-
 export default {
-  data() {
-    return {
-      base_url: 'https://guarded-thicket-66622.herokuapp.com',
-    };
-  },
   name: 'Card',
+  props: ['id', 'image_url', 'name', 'category', 'price', 'stock', 'updatedAt'],
   methods: {
     deleteProduct(id) {
-      const url = `https://guarded-thicket-66622.herokuapp.com/product/${id}`;
-      alert(url);
-      axios.delete(url)
-        .then(() => {
-          this.$store.dispatch('getProducts');
-        })
-        .catch((err) => {
-          alert(err.message);
-        });
+      this.$store.commit('deleteProduct', id);
     },
     update() {},
   },
-  props: ['id', 'image_url', 'name', 'category', 'price', 'stock', 'updatedAt'],
 };
 </script>
