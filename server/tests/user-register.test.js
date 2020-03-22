@@ -111,10 +111,10 @@ describe('Register New User:', () => {
             request(app)
             .post('/user/register')
             .send({
-                username: 'admin',
-                email: 'admin@mail.com',
-                password: 'admin',
-                role: 'admin'
+                username: 'user',
+                email: 'user@mail.com',
+                password: 'user',
+                role: 'user'
             })
             .set('access_token', access_token_admin)
             .then(response => {
