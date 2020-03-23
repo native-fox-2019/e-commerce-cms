@@ -1,6 +1,7 @@
 <template>
 <div>
   <Navbar />
+  <Loading v-if="loading" id="loading"/>
   <table class="table">
   <thead class="thead-dark">
     <tr>
@@ -11,11 +12,11 @@
       <th scope="col">Action</th>
     </tr>
   </thead>
-  <Loading v-if="loading" />
   <tbody v-if="!loading">
     <tr v-for="data in productData" :key="data.id">
       <td>{{ data.name }}</td>
-      <td><img :src="data.image_url" :alt="data.name" style="width: 250px; height: 250px;"></td>
+      <td><img :src="data.image_url" :alt="data.name"
+      class="img-fluid" style="width: 250px;"></td>
       <td>Rp. {{ data.price.toLocaleString() }}</td>
       <td>{{ data.stock }}</td>
       <td>
@@ -108,3 +109,18 @@ export default {
   },
 };
 </script>
+
+<style>
+  #loading {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    z-index: 1000;
+    top: 200px;
+    left: 40%;
+    position: fixed;
+  }
+</style>

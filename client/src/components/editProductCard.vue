@@ -3,7 +3,10 @@
   <div class="text-center">
     <h1>Edit Your Product</h1>
   </div>
-  <div class="container">
+  <div class="text-center">
+    <Loading v-if="loading" />
+  </div>
+  <div class="container" v-if="!loading">
     <form @submit.prevent="editProduct">
       <div class="form-group">
         <label>Name</label>
@@ -30,9 +33,13 @@
 
 <script>
 import { mapState } from 'vuex';
+import Loading from './loading.vue';
 
 export default {
-  computed: mapState(['editData']),
+  computed: mapState(['editData', 'loading']),
+  components: {
+    Loading,
+  },
   data() {
     return {
       id: null,

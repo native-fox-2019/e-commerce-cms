@@ -39,7 +39,7 @@ export default new Vuex.Store({
       })
         .then(({ data }) => {
           state.loading = false;
-          data.sort((a, b) => a.id - b.id);
+          data.sort((a, b) => b.id - a.id);
           commit('getData', data);
         }).catch((err) => {
           state.loading = false;

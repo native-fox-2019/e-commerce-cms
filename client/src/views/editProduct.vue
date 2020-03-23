@@ -19,6 +19,7 @@ export default {
   },
   methods: {
     editProduct(payload) {
+      this.$store.commit('loading', true);
       const obj = {
         name: payload.name,
         image_url: payload.image_url,
@@ -34,6 +35,7 @@ export default {
         },
       })
         .then(() => {
+          this.$store.commit('loading', false);
           const Toast = Swal.mixin({
             toast: true,
             position: 'top-end',
@@ -53,6 +55,7 @@ export default {
             path: '/',
           });
         }).catch((err) => {
+          this.$store.commit('loading', false);
           let msg = null;
           if (err.response) {
             if (Array.isArray(err.response.data.msg)) {

@@ -26,6 +26,7 @@ export default {
   },
   methods: {
     addProduct(payload) {
+      this.$store.commit('loading', true);
       axios({
         method: 'POST',
         url: `${baseUrl}/product`,
@@ -50,10 +51,12 @@ export default {
             icon: 'success',
             title: 'Your product have been added',
           });
+          this.$store.commit('loading', false);
           this.$router.push({
             path: '/',
           });
         }).catch((err) => {
+          this.$store.commit('loading', false);
           let msg = null;
           if (err.response) {
             if (Array.isArray(err.response.data.msg)) {

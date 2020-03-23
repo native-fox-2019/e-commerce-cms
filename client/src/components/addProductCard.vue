@@ -1,5 +1,9 @@
 <template>
-  <form @submit.prevent="addProduct">
+<div>
+  <div class="text-center">
+    <Loading v-if="loading" />
+  </div>
+  <form @submit.prevent="addProduct" v-if="!loading">
     <div class="form-group">
       <label>Name</label>
       <input type="text" class="form-control" v-model="name">
@@ -19,10 +23,18 @@
     <button type="submit" class="btn btn-primary">Submit</button>
     <button class="btn btn-danger m-2" @click.prevent="backHome">Cancel</button>
   </form>
+</div>
 </template>
 
 <script>
+import { mapState } from 'vuex';
+import Loading from './loading.vue';
+
 export default {
+  components: {
+    Loading,
+  },
+  computed: mapState(['loading']),
   data() {
     return {
       name: '',
