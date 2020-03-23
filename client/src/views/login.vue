@@ -1,27 +1,36 @@
 <template>
-<div class="container" style="max-width: 50%;">
+<div class="container text-center" style="max-width: 50%;">
   <h1>Login Your Account</h1>
+  <loading v-if="loading"/>
   <LoginCard @login="login" />
 </div>
 </template>
 
 <script>
 
+import { mapState } from 'vuex';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import LoginCard from '../components/loginCard.vue';
+import Loading from '../components/loading.vue';
 
 const baseUrl = 'https://cryptic-oasis-44923.herokuapp.com';
 export default {
   components: {
     LoginCard,
+    Loading,
   },
+  created() {
+    this.$store.commit('loading', false);
+  },
+  computed: mapState(['loading']),
   methods: {
     login(payload) {
       const obj = {
         email: payload.email,
         password: payload.password,
       };
+      this.$store.commit('loading', true);
       axios({
         method: 'POST',
         url: `${baseUrl}/users/login`,
@@ -42,9 +51,11 @@ export default {
           icon: 'success',
           title: 'Signed in successfully',
         });
+        this.$store.commit('loading', false);
         localStorage.setItem('token', data.token);
         this.$router.push({ path: '/' });
       }).catch((err) => {
+        this.$store.commit('loading', false);
         let msg = null;
         if (err.response) {
           if (Array.isArray(err.response.data.msg)) {

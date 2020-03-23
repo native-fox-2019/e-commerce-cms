@@ -11,6 +11,7 @@ export default new Vuex.Store({
   state: {
     productData: [],
     editData: null,
+    loading: false,
   },
   mutations: {
     getData(state, data) {
@@ -22,9 +23,13 @@ export default new Vuex.Store({
     editData(state, data) {
       state.editData = data;
     },
+    loading(state, data) {
+      state.loading = data;
+    },
   },
   actions: {
-    getData(context) {
+    getData({ commit, state }) {
+      state.loading = true;
       axios({
         method: 'GET',
         url: `${baseUrl}/product`,
@@ -33,9 +38,11 @@ export default new Vuex.Store({
         },
       })
         .then(({ data }) => {
+          state.loading = false;
           data.sort((a, b) => a.id - b.id);
-          context.commit('getData', data);
+          commit('getData', data);
         }).catch((err) => {
+          state.loading = false;
           let msg = null;
           if (err.response) {
             if (Array.isArray(err.response.data.msg)) {

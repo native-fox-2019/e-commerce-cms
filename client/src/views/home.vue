@@ -11,7 +11,8 @@
       <th scope="col">Action</th>
     </tr>
   </thead>
-  <tbody>
+  <Loading v-if="loading" />
+  <tbody v-if="!loading">
     <tr v-for="data in productData" :key="data.id">
       <td>{{ data.name }}</td>
       <td><img :src="data.image_url" :alt="data.name" style="width: 250px; height: 250px;"></td>
@@ -37,13 +38,15 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 import { mapState } from 'vuex';
 import Navbar from '../components/navbar.vue';
+import Loading from '../components/loading.vue';
 
 const baseUrl = 'https://cryptic-oasis-44923.herokuapp.com';
 export default {
   components: {
     Navbar,
+    Loading,
   },
-  computed: mapState(['productData']),
+  computed: mapState(['productData', 'loading']),
   created() {
     this.$store.dispatch('getData');
   },
