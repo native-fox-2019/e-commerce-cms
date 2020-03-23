@@ -7,4 +7,4 @@ Deploy Link:
 ---
 
 API Docs Link:
-- Postman: WIP
+- Postman: https://documenter.getpostman.com/view/10571856/SzS8u5y5
