@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
 import Admin from '../views/Admin.vue'
+import Customer from '../views/Customer.vue'
 
 Vue.use(VueRouter)
 
@@ -27,7 +28,12 @@ const routes = [
     name: 'Admin',
     component: Admin,
     meta: { requiresAuth: true }
-  }
+  },
+  {
+    path: '/customer',
+    name: 'Customer',
+    component: Customer
+  },
 ]
 
 const router = new VueRouter({
@@ -42,12 +48,12 @@ router.beforeEach((to, from, next) => {
       next({
         name: "Login"
       })
-    } else if (localStorage.role === 'admin') {
-      next()
-    } else {
+    } else if (localStorage.role != 'admin') {
       next({
-        name: 'Product'
+        name: 'Customer'
       })
+    } else {
+      next()
     }
   } else {
     next() // make sure to always call next()!

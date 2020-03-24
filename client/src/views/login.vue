@@ -70,7 +70,8 @@ export default {
             showConfirmButton: false,
             timer: 1500
           });
-          this.$router.push({ name: "Product" });
+          localStorage.role === 'admin' ? this.$router.push({ name: "Admin" }) : this.$router.push({ name: 'Customer' })
+          
         })
         .catch(response => {
           const error = response.response.data.msg;
