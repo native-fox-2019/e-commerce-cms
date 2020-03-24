@@ -3,7 +3,6 @@ import VueRouter from 'vue-router'
 import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
 import Admin from '../views/Admin.vue'
-import Customer from '../views/Customer.vue'
 
 Vue.use(VueRouter)
 
@@ -11,11 +10,6 @@ const routes = [
   {
     path: '/',
     name: 'Front',
-    component: Login
-  },
-  {
-    path: '/login',
-    name: 'Login',
     component: Login
   },
   {
@@ -28,12 +22,7 @@ const routes = [
     name: 'Admin',
     component: Admin,
     meta: { requiresAuth: true }
-  },
-  {
-    path: '/customer',
-    name: 'Customer',
-    component: Customer
-  },
+  }
 ]
 
 const router = new VueRouter({
@@ -46,11 +35,7 @@ router.beforeEach((to, from, next) => {
     // if not, redirect to login page.
     if (!localStorage.getItem("access_token")) {
       next({
-        name: "Login"
-      })
-    } else if (localStorage.role != 'admin') {
-      next({
-        name: 'Customer'
+        name: "Front"
       })
     } else {
       next()

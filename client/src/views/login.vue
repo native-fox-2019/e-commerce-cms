@@ -4,7 +4,7 @@
       <div class="col-6">
         <div class="container login-form" style="margin-top:300px;">
           <form @submit.prevent="doLogin">
-            <h2 class="text-center">Welcome</h2>
+            <h2 class="text-center">Admin CMS Login</h2>
             <div class="form-group">
               <input
                 type="text"
@@ -33,7 +33,7 @@
         </div>
       </div>
       <div class="col-6">
-        <img src="https://cdn.logojoy.com/wp-content/uploads/2018/05/30143358/128.png" alt="your logo" style="margin-top:150px;">
+        <img src="https://previews.123rf.com/images/dizanna/dizanna1606/dizanna160600339/57527727-cms-content-management-system-word-cloud-business-concept-background.jpg" alt="your logo" style="margin-top:150px; width:100%;">
       </div>
     </div>
   </div>
@@ -52,7 +52,9 @@ export default {
       password: ``
     };
   },
-  created() {},
+  created() {
+    this.empty()
+  },
   methods: {
     doLogin() {
       axios
@@ -61,6 +63,13 @@ export default {
           password: this.password
         })
         .then(data => {
+          if(data.data.role != 'admin') {
+            Swal.fire({
+              icon:'warning',
+              title:'You are not authorized'
+            })
+            throw new Error
+          }
           localStorage.setItem("access_token", data.data.access_token);
           localStorage.setItem("role", data.data.role);
           Swal.fire({
@@ -70,16 +79,20 @@ export default {
             showConfirmButton: false,
             timer: 1500
           });
-          localStorage.role === 'admin' ? this.$router.push({ name: "Admin" }) : this.$router.push({ name: 'Customer' })
-          
+          this.$router.push({ name: "Admin" })
         })
         .catch(response => {
+          console.log(response)
           const error = response.response.data.msg;
           Swal.fire({
             icon: "error",
             text: error
           });
         });
+    },
+    empty() {
+      this.email = ``,
+      this.password = ``
     }
   }
 };

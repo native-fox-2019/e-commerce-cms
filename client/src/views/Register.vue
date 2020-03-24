@@ -2,16 +2,12 @@
   <div>
     <div class="row">
       <div class="col-6">
-        <img
-          src="https://cdn.logojoy.com/wp-content/uploads/2018/05/30143358/128.png"
-          alt="your logo"
-          style="margin-top:150px;"
-        />
+        <img src="https://previews.123rf.com/images/dizanna/dizanna1606/dizanna160600339/57527727-cms-content-management-system-word-cloud-business-concept-background.jpg" alt="your logo" style="margin-top:150px; width:100%;">
       </div>
       <div class="col-6">
         <div class="container login-form" style="margin-top:300px;">
           <form @submit.prevent="doRegister">
-            <h2 class="text-center">Register</h2>
+            <h2 class="text-center">Create admin page</h2>
             <div class="form-group">
               <input
                 type="text"
@@ -37,12 +33,20 @@
               />
             </div>
             <div class="form-group">
+              <input
+                type="password"
+                class="form-control"
+                placeholder="Secret password"
+                v-model="password_super"
+              />
+            </div>
+            <div class="form-group">
               <button type="submit" class="btn btn-primary btn-block">
-                Create your free account
+                Create admin
               </button>
             </div>
           </form>
-          <router-link class="text-black" to="/login"
+          <router-link class="text-black" to="/"
             >Have an account? Login here</router-link
           >
         </div>
@@ -60,17 +64,28 @@ export default {
     return {
       name: ``,
       email: ``,
-      password: ``
+      password: ``,
+      password_super: ''
     };
   },
-  created() {},
+  created() {
+    this.epmty()
+  },
   methods: {
     doRegister() {
+      if (this.password_super !== 'jadiadmindong') {
+        Swal.fire({
+          icon:'warning',
+          title:'Invalid secret password'
+        })
+        throw new Error
+      }
       axios
         .post("https://peaceful-thicket-02203.herokuapp.com/users/register", {
           name: this.name,
           email: this.email,
-          password: this.password
+          password: this.password,
+          role: 'admin'
         })
         .then(data => {
           localStorage.setItem("access_token", data.data.access_token);
@@ -78,11 +93,11 @@ export default {
           Swal.fire({
             position: "center",
             icon: "success",
-            title: "Thank you for registering",
+            title: `Hello admin ${this.name}`,
             showConfirmButton: false,
             timer: 2000
           });
-          this.$router.push({ name: "Product" });
+          this.$router.push({ name: "Admin" });
         })
         .catch(response => {
           if (response.response.data.msg) {
@@ -97,6 +112,12 @@ export default {
             });
           }
         });
+    },
+    epmty() {
+      this.name = ``,
+      this.email = ``,
+      this.password = ``,
+      this.password_super = ''
     }
   }
 };

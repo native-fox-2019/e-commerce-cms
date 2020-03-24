@@ -79,7 +79,10 @@ export default new Vuex.Store({
           context.dispatch('getItems')
         })
         .catch(response => {
-          console.log(response);
+          Swal.fire({
+            icon:'warning',
+            title: response.response.data.msg
+          })
         });
     },
     editProduct(context, payload) {
@@ -103,10 +106,10 @@ export default new Vuex.Store({
         context.dispatch('getItems')
       })
       .catch(response => {
-        console.log(response)
+        console.log(response.response.data.msg)
         Swal.fire({
-          icon: 'error',
-          title: 'Failed to update'
+          icon: 'warning',
+          title: response.response.data.msg
         })
       })
     }

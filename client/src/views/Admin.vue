@@ -116,7 +116,7 @@ export default {
     doLogOut() {
       localStorage.removeItem("access_token");
       localStorage.removeItem("role");
-      this.$router.push({ name: "Login" });
+      this.$router.push({ name: "Front" });
     },
     getItems() {
       this.$store.dispatch("getItems");

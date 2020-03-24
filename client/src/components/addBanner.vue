@@ -38,41 +38,45 @@
   </div>
 </template>
 <script>
-import axios from 'axios'
-import Swal from 'sweetalert2';
+import axios from "axios";
+import Swal from "sweetalert2";
 export default {
-    data() {
-        return {
-            name: null,
-            url: null
+  data() {
+    return {
+      name: null,
+      url: null
+    };
+  },
+  methods: {
+    addNewBanner() {
+      axios({
+        method: "POST",
+        url: "https://peaceful-thicket-02203.herokuapp.com/products/banner",
+        headers: { access_token: localStorage.access_token },
+        data: {
+          name: this.name,
+          url: this.url
         }
+      })
+        .then(data => {
+          console.log(data);
+          this.$emit("doneAddBanner");
+          Swal.fire({
+            icon: "success",
+            title: "Added new banner"
+          });
+        })
+        .catch(response => {
+          console.log(response);
+          Swal.fire({
+            icon: "error",
+            title: response.response.data.msg
+          });
+        });
     },
-    methods: {
-        addNewBanner() {
-            axios({
-                method: 'POST',
-                url: 'https://peaceful-thicket-02203.herokuapp.com/products/banner',
-                headers: {access_token:localStorage.access_token},
-                data: {
-                    name: this.name,
-                    url: this.url
-                }
-            })
-            .then(data => {
-                console.log(data)
-                this.$emit('doneAddBanner')
-                Swal.fire({
-                    icon:'success',
-                    title: 'Added new banner'
-                })
-            })
-            .catch(response => {
-                console.log(response)
-            })
-        },
-        changeAddBanFalse() {
-            this.$emit('cancelAddBan')
-        }
+    changeAddBanFalse() {
+      this.$emit("cancelAddBan");
     }
+  }
 };
 </script>

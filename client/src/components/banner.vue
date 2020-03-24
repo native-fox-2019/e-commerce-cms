@@ -50,7 +50,10 @@ export default {
           this.getBanner()
         })
         .catch(response => {
-          console.log(response.data);
+          Swal.fire({
+          icon: 'warning',
+          title: response.response.data.msg
+        })
         });
     }
   }
