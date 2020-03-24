@@ -40,7 +40,6 @@ class ProductController{
      *    
      */
     static getProducts(req, res, next){
-        const user = req.user;
         Product.findAll()
             .then(products => res.status(200).json(products))
             .catch(err => next(err));
@@ -77,7 +76,13 @@ class ProductController{
         const id = req.params.id;
         Product.findByPk(id)
             .then(product=>{
-                res.status(200).json(product);
+                if (product) {
+                    res.status(200).json(product);
+                } else {
+                    res.status(404).json({
+                        message: "Product not found"
+                    });
+                }
             })
             .catch(err => next(err));
     }
@@ -167,7 +172,6 @@ class ProductController{
                         .catch(err => next(err));
                 } else {
                     res.status(404).json({
-                        status: 404,
                         message: "Product not found"
                     });
                 }
@@ -228,17 +232,18 @@ class ProductController{
             .then(product => {
                 if (product) {
                     product.destroy()
-                        .then(product=>{
-                            res.status(202).json(product);
+                        .then(() =>{
+                            res.status(202).json({
+                                message: "Product deleted"
+                            });
                         })
                         .catch(err => {
                             next(err);
                         });
                 } else {
-                    next({
-                        status: 404,
+                    res.status(404).json({
                         message: "Product not found"
-                    })
+                    });
                 }
             })
             .catch(err => {

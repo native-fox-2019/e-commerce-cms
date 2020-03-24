@@ -1,5 +1,5 @@
 <template>
-  <div class="row">
+  <div class="row" v-if="isLoggedIn === true">
     <!-- Profile Info and Notifications -->
     <div class="col-md-6 col-sm-8 clearfix">
     </div>
@@ -8,7 +8,7 @@
     <div class="col-md-6 col-sm-4 clearfix hidden-xs">
       <ul class="list-inline links-list pull-right">
         <li>
-          <a href="extra-login.html">
+          <a v-on:click="logout">
             Log Out
             <i class="entypo-logout right"></i>
           </a>
@@ -21,5 +21,16 @@
 <script>
 export default {
   name: 'AccountBar',
+  computed: {
+    isLoggedIn() {
+      return !!this.$store.state.jwt;
+    },
+  },
+  methods: {
+    logout() {
+      this.$store.commit('deleteJwt');
+      this.$router.push('/login');
+    }
+  }
 };
 </script>

@@ -5,17 +5,30 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    count: 0,
+    jwt: localStorage.jwt,
+    products: null
   },
   mutations: {
-    increment(state) {
-      state.count += 1;
+    setJwt(state, jwt) {
+      state.jwt = jwt;
+      localStorage.jwt = jwt;
+    },
+    deleteJwt(state) {
+      state.jwt = null;
+      delete localStorage.jwt;
+    },
+    setProducts(state, products) {
+      state.products = products;
+    },
+    updateProduct(state, product) {
+      const id = product.id;
+      const index = state.products.findIndex(p => p.id === id);
+      if (index !== -1) {
+        state.products[index] = product;
+      }
     },
   },
   actions: {
-    doIncrement(context) {
-      context.commit('increment');
-    },
   },
   modules: {
   },

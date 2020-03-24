@@ -2,7 +2,6 @@
 
 const express = require('express')
 const app = express()
-const port = process.env.PORT || 3000
 const morganChalk = require('./morganChalk');
 const router = require('./routers');
 const ErrorHandler = require('./middleware/ErrorHandler');
@@ -25,7 +24,5 @@ router.use("/docs", swaggerUi.serve);
 router.get("/docs", swaggerUi.setup(specs, {
     explorer: true
 }));
-
-//app.listen(port, () => console.log(`Example app listening on port ${port}! process id: ${process.pid}`))
 
 module.exports = app

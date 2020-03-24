@@ -46,7 +46,7 @@
               </div>
               <div class="form-group">
                 <div class="col-sm-offset-3 col-sm-5">
-                  <button v-on:click="login" type="button" class="btn btn-primary">Login</button>
+                  <button v-on:click="submit" type="button" class="btn btn-primary">Login</button>
                 </div>
               </div>
             </form>
@@ -58,10 +58,37 @@
 </template>
 
 <script>
+import axios from 'axios';
+import base64url from 'base64url';
+
 export default {
   name: 'Login',
+  data() {
+    return {
+      email: '',
+      password: '',
+    };
+  },
+  computed: {
+    jwt() {
+      return this.$store.state.jwt;
+    },
+  },
   methods: {
-
+    submit() {
+      axios.post('http://localhost:3000/users/login', { email: this.email, password: this.password })
+        .then((response) => {
+          const [,encodedPayload,] = response.data.token.split('.');
+          const { isAdmin } = JSON.parse(base64url.decode(encodedPayload));
+          this.$store.commit('setJwt', response.data.token);
+          if (isAdmin) {
+            this.$router.push('/products');
+          } else {
+            this.$router.push('/forbidden');
+          }
+        })
+        .catch((err) => console.log(err, err.response.message));
+    },
   },
 };
 </script>

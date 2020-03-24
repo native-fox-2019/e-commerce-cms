@@ -119,15 +119,13 @@ class UserController{
                     let token = jwt.sign({email: data.email, isAdmin: data.isAdmin});
                     res.status(200).json({token})
                 }else{
-                    next({
-                        status: 400,
+                    res.status(400).json({
                         message: "Wrong Password/Username"
                     });
                 }
             }
-            else{
-                next({
-                    status: 400,
+            else {
+                res.status(400).json({
                     message: "Wrong Password/Username"
                 });
             }

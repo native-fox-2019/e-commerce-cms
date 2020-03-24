@@ -7,8 +7,7 @@ module.exports = (req, res, next) => {
     if (user.isAdmin) {
         next();
     } else {
-        next({
-            status: 403,
+        res.status(403).json({
             message: "Forbidden"
         });
     }

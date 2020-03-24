@@ -1,16 +1,10 @@
 <template>
   <div class="page-container">
-    <SidebarMenu isLoggedIn="!!localStorage.jwt" />
+    <SidebarMenu />
     <div class="main-content">
       <AccountBar />
       <hr />
       <router-view />
-      <!-- Footer -->
-      <footer class="main">
-        &copy; 2015
-        <strong>Neon</strong> Admin Theme by
-        <a href="http://laborator.co" target="_blank">Laborator</a>
-      </footer>
     </div>
   </div>
 </template>

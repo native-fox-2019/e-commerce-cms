@@ -1,19 +1,19 @@
 <template>
-  <div class="add-product">
+  <div class="delete-product">
     <ol class="breadcrumb bc-3">
       <li>
-        <router-link to="">
+        <router-link to="/">
           <i class="fa-home"></i>Home
         </router-link>
       </li>
       <li>
-        <router-link to="products">Products</router-link>
+        <router-link to="/products">Products</router-link>
       </li>
       <li class="active">
-        <strong>Add Product</strong>
+        <strong>Delete Product</strong>
       </li>
     </ol>
-    <h2>Add Product</h2>
+    <h2>Delete Product #{{ $route.params.id }}</h2>
     <hr />
     <div class="row">
       <div class="col-md-12">
@@ -32,6 +32,7 @@
                     class="form-control"
                     id="name"
                     placeholder="Name of the product"
+                    readonly
                   />
                 </div>
               </div>
@@ -44,6 +45,7 @@
                     class="form-control"
                     id="category"
                     placeholder="Product category"
+                    readonly
                   />
                 </div>
               </div>
@@ -56,6 +58,7 @@
                     class="form-control"
                     id="image_url"
                     placeholder="https://blablabla/"
+                    readonly
                   />
                 </div>
               </div>
@@ -70,6 +73,7 @@
                       id="price"
                       class="form-control"
                       placeholder="0"
+                      readonly
                     />
                   </div>
                 </div>
@@ -83,12 +87,14 @@
                     class="form-control"
                     id="stock"
                     placeholder="0"
+                    readonly
                   />
                 </div>
               </div>
               <div class="form-group">
                 <div class="col-sm-offset-3 col-sm-5">
-                  <button v-on:click="save" type="button" class="btn btn-primary">Save</button>
+                  <button v-on:click="deleteThis" type="button" class="btn btn-primary">Delete</button>
+                  <router-link to="/products" class="btn btn-light">Cancel</router-link>
                 </div>
               </div>
             </form>
@@ -103,7 +109,7 @@
 import axios from 'axios';
 
 export default {
-  name: 'AddProduct',
+  name: 'DeleteProduct',
   data() {
     return {
       name: '',
@@ -114,15 +120,10 @@ export default {
     };
   },
   methods: {
-    save() {
+    deleteThis() {
+      const id = parseInt(this.$route.params.id);
       axios
-        .post('http://localhost:3000/products', {
-          name: this.name,
-          category: this.category,
-          image_url: this.image_url,
-          price: parseInt(this.price, 10),
-          stock: parseInt(this.stock, 10),
-        }, {
+        .delete(`http://localhost:3000/products/${id}`, {
           headers: {
             Authorization: this.$store.state.jwt,
           },
@@ -133,5 +134,18 @@ export default {
           .catch((err) => console.log(err, err.response.message));
     },
   },
+  mounted() {
+    const id = parseInt(this.$route.params.id);
+    const product = this.$store.state.products.find(p => p.id === id);
+    if (product) {
+      this.name = product.name;
+      this.category = product.category;
+      this.image_url = product.image_url;
+      this.price = product.price.toString();
+      this.stock = product.stock.toString();
+    } else {
+      this.$router.push('/products');
+    }
+  }
 };
 </script>

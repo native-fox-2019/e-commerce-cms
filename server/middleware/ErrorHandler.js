@@ -1,17 +1,20 @@
-module.exports = (err, req, res, next) => {
-    if (res.headersSent) {
-        res.json(err);
-    } else if (err.status === 400) {
-        res.status(400).json(err);
-    } else if(err.status === 401) {
-        res.status(401).json(err);
-    } else if(err.status === 402) {
-        res.status(402).json(err);
-    } else if (err.status === 403) {
-        res.status(403).json(err);
-    } else if (err.status === 404) {
-        res.status(404).json(err);
+module.exports = function(err, req, res, next) {
+    if(err.name === "SequelizeValidationError"){
+        const errors = err.errors.map(el => el.message);
+        res.status(400).json({ message: "Validation Error", errors });
+    } else if(err.name === "SequelizeUniqueConstraintError"){
+        const errors = err.errors.reduce((acc, val) => {
+            acc.push(val.message);
+            return acc;
+        }, []);
+        res.status(400).json({ message: "Validation Error", errors});
+    } else if(err.name === "JsonWebTokenError") {
+        res.status(400).json({
+            message: 'Authentication failed'
+        });
     } else {
-        res.status(500).json(err);
+        res.status(err.status || 500).json({
+            message: err.message || 'Internal Server Error'
+        });
     }
 };

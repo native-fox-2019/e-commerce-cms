@@ -80,6 +80,10 @@
 <script>
 export default {
   name: 'SidebarMenu',
-  props: ['isLoggedIn'],
+  computed: {
+    isLoggedIn() {
+      return !!this.$store.state.jwt;
+    },
+  },
 };
 </script>

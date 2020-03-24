@@ -10,10 +10,6 @@ module.exports = (req, res, next) => {
         req.user = decodedToken;
         next();
     } catch(err) {
-        next ({
-            status: 401,
-            message: "Unauthorized"
-        });
-        return;
+        next(err);
     }
 };
