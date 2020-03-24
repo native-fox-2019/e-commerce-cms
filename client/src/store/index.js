@@ -18,6 +18,8 @@ export default new Vuex.Store({
     allData: null,
     oneProduct: null,
     allAdmins: null,
+    banners: [],
+    editBanner: {}
   },
 
   mutations: {
@@ -35,23 +37,30 @@ export default new Vuex.Store({
     },
     setToken(state) {
       state.isLogin = localStorage.getItem('token')
+    },
+    banners(state, data) {
+      console.log(data, "MASUKKK WOEEEE");
+      state.banners = data
+    },
+    editBanner(state, data) {
+      state.editBanner = data
     }
   },
   actions: {
-    getAllData(state) {
+    getAllData(context) {
       axios({
         method: 'GET',
         url: this.state.baseURL + '/products',
       })
         .then(data => {
           console.log(data);
-          state.commit('allData', data.data)
+          context.commit('allData', data.data)
         })
         .catch(({ response }) => {
           console.log(response);
         })
     },
-    getAdmins(state) {
+    getAdmins(context) {
       axios({
         method: "GET",
         url: this.state.baseURL + '/admins',
@@ -59,25 +68,52 @@ export default new Vuex.Store({
       })
         .then(({ data }) => {
           console.log(data);
-          state.commit('allAdmins', data)
+          context.commit('allAdmins', data)
         })
         .catch(({ response }) => {
           console.log(response);
         })
     },
-    getOneData(state, id) {
+    getOneData(context, id) {
       axios({
         method: 'GET',
         url: this.state.baseURL + `/products/${id}`
       })
         .then(({ data }) => {
           console.log(data, 'cekincekin');
-          state.commit('oneProduct', data)
+          context.commit('oneProduct', data)
         })
         .catch(({ response }) => {
           console.log(response);
         })
     },
+    getBanners(context) {
+      axios({
+        url: this.state.baseURL + '/banners',
+        method: 'GET',
+        headers: ({ token: localStorage.getItem("token") })
+      })
+        .then(({ data }) => {
+          context.commit('banners', data)
+        })
+        .catch(({ response }) => {
+          console.log(response)
+        })
+    },
+    dataEditBanner(context, id) {
+      axios({
+        url: this.state.baseURL + '/banners/' + id,
+        method: 'GET',
+        headers: ({ token: localStorage.getItem('token') })
+      })
+        .then(({ data }) => {
+          context.commit('editBanner', data)
+        })
+        .catch(({ response }) => {
+          console.log(response);
+
+        })
+    }
   },
   modules: {}
 });

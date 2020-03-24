@@ -128,7 +128,6 @@ class TransactionController {
       .findOne({
         where: {
           id: req.params.id,
-          ProductId
         }
       })
       .then(data => {
@@ -159,7 +158,7 @@ class TransactionController {
                   }
                 } else if (data.stock > quantity) {
 
-                  Transaction
+                  Product
                     .update({
                       quantity
                     },

@@ -3,7 +3,7 @@
     <tr class="row">
       <td class="col">Name</td>
       <td class="col">Stock</td>
-      <td class="col">urlImage</td>
+      <td class="col">Image</td>
       <td class="col">Price</td>
       <td class="col">Action</td>
     </tr>

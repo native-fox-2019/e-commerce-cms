@@ -35,10 +35,10 @@ class BannerController {
   static update(req, res, next) {
     let { title, urlImage } = req.body
     Banner
-      .update({ where: { id: req.params.id }, returning: true }, {
+      .update({
         title,
         urlImage
-      })
+      }, { where: { id: req.params.id }, returning: true })
       .then(data => {
         if (!data) {
           throw {

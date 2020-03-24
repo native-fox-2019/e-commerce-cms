@@ -11,6 +11,7 @@ import adminList from "../components/tableAdmins.vue";
 import Register from "../views/Register.vue";
 import bannerList from "../components/bannerList.vue";
 import addBanner from "../components/addBanner.vue";
+import editBanner from "../components/editBanner.vue";
 
 Vue.use(VueRouter);
 
@@ -61,6 +62,7 @@ const routes = [
       { path: '/admins/adminList', component: adminList, requiresAuth: true, },
       { path: "/admins/bannerList", component: bannerList, requiresAuth: true },
       { path: "/admins/addBanner", component: addBanner, requiresAuth: true },
+      { path: "/admins/editBanner/:id", component: editBanner, requiresAuth: true },
     ],
   }
 ];
