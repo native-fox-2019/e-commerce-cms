@@ -15,4 +15,4 @@ app.use(errorHandler)
 
 app.listen(port, console.log(`localhost:`,port))
 
-module.exports = app
+// module.exports = app

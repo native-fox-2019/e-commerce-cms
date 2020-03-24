@@ -19,11 +19,31 @@ module.exports = {
             next(err)
         }
     },
-    authorization: async (req, res, next) => {
+    authorizationUser: async (req, res, next) => {
         try {
             let userId = req.userData.id
             let matchUser = await User.findOne({ where: { id: userId } })
-            if (matchUser.role !== 'admin') throw customError(403)
+            if (matchUser.role !== 'user' && matchUser.role !== 'admin' && matchUser.role !== 'superadmin') throw customError(403)
+            next()
+        } catch (err) {
+            next(err)
+        }
+    },
+    authorizationAdmin: async (req, res, next) => {
+        try {
+            let userId = req.userData.id
+            let matchUser = await User.findOne({ where: { id: userId } })
+            if (matchUser.role !== 'admin' && matchUser.role !== 'superadmin') throw customError(403)
+            next()
+        } catch (err) {
+            next(err)
+        }
+    },
+    authorizationSuperAdmin: async (req, res, next) => {
+        try {
+            let userId = req.userData.id
+            let matchUser = await User.findOne({ where: { id: userId } })
+            if (matchUser.role !== 'superadmin') throw customError(403)
             next()
         } catch (err) {
             next(err)
