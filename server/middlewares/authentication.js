@@ -16,7 +16,7 @@ module.exports=(req,res,next)=>{
     users.findOne(id)
     .then(user=>{
         if(user){
-            req.payloadUser = jwt.jwtVerify(token)
+            req.payloadUser = payload
             next()
         } else {
             res.status(404).json({msg:"data is not found"})

@@ -3,7 +3,7 @@ const app = require('../app');
 const { sequelize, products } = require('../models/index');
 const { queryInterface } = sequelize;
 
-let tokenAdmin = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiZ2FicmllbCIsImVtYWlsIjoiYWRtaW5AbWFpbC5jb20iLCJsZXZlbCI6ImFkbWluIiwiaWF0IjoxNTg0NzgxNjU0fQ.ANXYxFIvyEmF1UdoVp3Vx_eblXIP_Lglz_1eokKkYJM'
+let tokenAdmin = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImlkIjo2LCJlbWFpbCI6ImFuZWhAbWFpbC5jb20ifSwiaWF0IjoxNTg0ODEwMTcxfQ.hlNUl5DxbkEUiKM99pRyyT1D58uP4uCdIQl5Lh27iYk"
 
 afterAll(done => {
   queryInterface
@@ -72,7 +72,6 @@ describe('Create a new product ', function () {
         .then(res => {
           const { body, status } = res;
           expect(status).toBe(403);
-          expect(body).toHaveProperty('msg')
           expect(body.msg)
           done()
         })
