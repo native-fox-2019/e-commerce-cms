@@ -1,0 +1,109 @@
+@font-face{
+    font-family: "gotham";
+    src: url(./font/Gotham-Book.otf);
+    font-weight: normal;
+}
+@font-face{
+    font-family: "gotham";
+    src: url(./font/Gotham-Medium.otf);
+    font-weight: 500;
+}
+@font-face{
+    font-family: "montserrat";
+    src: url(./font/montserrat.regular.ttf);
+    font-weight: 400;
+}
+
+body{
+    margin: 0;
+    font-family: gotham;
+    min-height: 80vh;
+    position: relative;
+}
+
+header{
+    width: 100%; height: 90px; background-color: rgb(0, 0, 0); padding: 10px 0px; display: flex; flex-direction: column; justify-content: center;
+    box-shadow: 0px 0px 20px 10px rgba(0, 0, 0, 0.432); margin-bottom: 80px; position: fixed; top: 0; z-index: 99;
+}
+.title{
+    color: white; display: inline; font-size: 20px; margin-left: 20px; font-family: montserrat;
+}
+.nav{
+    float: right; margin-right: 20px; color: white; text-decoration: none; margin-top: 5px;
+}
+.nav a{
+    color: white; text-decoration: none; margin: 0px 10px; text-transform: uppercase;
+}
+.login, .register, .add-product{
+    width: 400px; height: auto; padding: 50px 10px; margin: 0px auto; text-align: center; border: 2px solid rgba(0, 0, 0, 0.897);
+    display: flex; flex-direction: column; justify-content: center; border-radius: 40px; margin-top: 10em;
+}
+.login h3, .register h3{
+    font-size: 27px; margin-top: 2px;
+}
+.login form input, .register form input, .add-product form input, .edit-product form input{
+    width: 200px; height: 20px; padding: 10px 10px; font-size: 15px; margin-top: 10px; margin-bottom: 10px; border-radius: 10px;
+}
+.login form button, .register form button, .add-product form button, .edit-product form button{
+    width: 225px; height: 45px; padding: 10px 10px; font-size: 15px; margin-top: 10px; margin-bottom: 10px; border-radius: 10px;
+    background-color: rgba(0, 0, 0, 0.897); color: white;
+}
+.login form button:hover, .register form button:hover, .btn-edit:hover, .btn-delete:hover, .add-product form button:hover, .edit-product form button:hover{
+    cursor: pointer;
+}
+.home{
+    width: 85%; height: auto; margin: 5px auto; text-align: center; margin-top: 10em;
+}
+.products{
+    width: 100%; height: auto; display: flex; justify-content: center; margin-top: 20px; flex-wrap: wrap;
+}
+.card{
+    width: 250px; height: 350px; border: 1px solid rgb(194, 191, 191); margin: 20px 10px; padding: 15px 15px; text-align: left;
+    display: flex; flex-direction: column; position: relative;
+}
+.card-name{
+    font-size: 16px; margin: 5px 0px; font-weight: 500; font-family: gotham;
+}
+.card-name:hover{
+    text-decoration: underline;
+}
+.card-price{
+    font-size: 14px; color: grey;
+}
+.card-action{
+    display: flex; justify-content: flex-end; bottom: 15px; position: absolute; right: 15px;
+}
+.btn-edit{
+    margin-right: 25px; font-size: 31px; color: rgba(0, 0, 0, 0.678);
+}
+.btn-delete{
+    font-size: 28px; color: rgb(255, 75, 75);
+}
+a{
+    text-decoration: none; color: black;
+}
+.product{
+    width: 100%; margin-top: 10em;
+}
+.product-content{
+    width: 90%; display: flex; margin: 0px auto;
+}
+.product-image, .product-details{
+    padding: 20px 20px;
+}
+.product-name h2{
+    margin-top: 0; font-size: 23px; margin-bottom: 30px;
+}
+.product-price{
+    margin-bottom: 30px; font-size: 30px; font-family: montserrat; color: goldenrod;
+}
+.product-stock{
+    font-size: 18px
+}
+.edit-product{
+    width: 400px; height: auto; padding: 50px 10px; margin: 10px auto; text-align: center; border: 2px solid rgba(0, 0, 0, 0.897);
+    display: flex; flex-direction: column; justify-content: center; border-radius: 40px; margin-top: 2em;
+}
+.action{
+    margin-top: 20px; display: flex; justify-content: center;
+}
