@@ -46,7 +46,7 @@ module.exports = (sequelize, DataTypes) => {
           msg: 'Product price must be integer!'
         },
         min: {
-          args: 1,
+          args: [0],
           msg: 'Product price cannot be negative value!'
         }
       }
@@ -68,7 +68,7 @@ module.exports = (sequelize, DataTypes) => {
           msg: 'Product stock must be integer!'
         },
         min: {
-          args: 1,
+          args: [0],
           msg: 'Product stock cannot be negative value!'
         }
       }
@@ -76,6 +76,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   Product.associate = function(models) {
     // associations can be defined here
+    Product.belongsToMany(models.User, { through: 'ShoppingCart' });
   };
   return Product;
 };

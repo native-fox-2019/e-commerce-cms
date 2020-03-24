@@ -14,19 +14,26 @@ module.exports = {
       }], {});
     */
     return queryInterface.bulkInsert('Users', [{
-        username: 'admin',
-        email: 'admin@mail.com',
-        password: seedHash('admin'),
-        role: 'admin',
-        createdAt: new Date(),
-        updatedAt: new Date()
+      username: 'superadmin',
+      email: 'superadmin@mail.com',
+      password: seedHash('superadmin'),
+      role: 'superadmin',
+      createdAt: new Date(),
+      updatedAt: new Date()
     },{
-        username: 'user',
-        email: 'user@mail.com',
-        password: seedHash('user'),
-        role: 'user',
-        createdAt: new Date(),
-        updatedAt: new Date()
+      username: 'admin',
+      email: 'admin@mail.com',
+      password: seedHash('admin'),
+      role: 'admin',
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },{
+      username: 'user',
+      email: 'user@mail.com',
+      password: seedHash('user'),
+      role: 'user',
+      createdAt: new Date(),
+      updatedAt: new Date()
     }], {});
   },
 
