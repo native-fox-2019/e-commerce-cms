@@ -7,16 +7,13 @@ Vue.use(Vuex)
 export default new Vuex.Store({
     state: {
         products: [],
-        url : 'https://powerful-meadow-02119.herokuapp.com',
-        // item : []
+        // url : 'https://powerful-meadow-02119.herokuapp.com',
+        url : 'http://localhost:3000',
     },
     mutations: {
         setProduct: (state, data) => {
           state.products = data
-        },
-        // setItem: (state, data) => {
-        //   state.item = data
-        // }
+        }
     },
     actions: {
       getProduct(context) {
@@ -34,9 +31,6 @@ export default new Vuex.Store({
           console.log(err)
         })
       },
-      // getItem(context){
-
-      // }
     },
     modules: {}
 })
