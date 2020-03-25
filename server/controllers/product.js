@@ -12,7 +12,6 @@ class productController {
         try {
             let added = await Product.create(newProduct)
             res.status(201).json(added)
-            next()
         } catch (err) {
             next(err)
         }
@@ -22,7 +21,6 @@ class productController {
         try {
             let listed = await Product.findAll()
             res.status(200).json(listed)
-            next()
         } catch (err) {
             next(err)
         }
@@ -34,7 +32,6 @@ class productController {
             let found = await Product.findOne({ where: { id } })
             if (!found) throw customError(404)
             res.status(200).json(found)
-            next()
         } catch (err) {
             next(err)
         }
@@ -53,7 +50,6 @@ class productController {
             if (!found) throw customError(404)
             let updated = await Product.update(editData, { where: { id } })
             res.status(200).json(updated)
-            next()
         } catch (err) {
             next(err)
         }
@@ -66,7 +62,6 @@ class productController {
             if (!found) throw customError(404)
             let deleted = await Product.destroy({ where: { id } })
             res.status(200).json(deleted)
-            next()
         } catch (err) {
             next(err)
         }

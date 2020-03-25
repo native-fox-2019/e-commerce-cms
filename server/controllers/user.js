@@ -4,22 +4,6 @@ const jwt = require('jsonwebtoken')
 const customError = require('http-errors')
 
 class userController {
-    static async register(req, res, next) {
-        let newUser = {
-            username: req.body.username,
-            email: req.body.email,
-            password: req.body.password,
-            role: req.body.role,
-        }
-        try {
-            let reg = await User.create(newUser)
-            res.status(201).json(reg)
-            next()
-        } catch (err) {
-            next(err)
-        }
-    }
-
     static async login(req, res, next) {
         try {
             let testUser = await User.findOne({ where: { username: req.body.username } })
@@ -32,7 +16,21 @@ class userController {
             if (!access_token) throw customError(500, 'Failed to generate access token!')
 
             res.status(200).json({ access_token })
-            next()
+        } catch (err) {
+            next(err)
+        }
+    }
+
+    static async register(req, res, next) {
+        let newUser = {
+            username: req.body.username,
+            email: req.body.email,
+            password: req.body.password,
+        }
+        newUser.role = req.body.role ? req.body.role : 'user'
+        try {
+            let reg = await User.create(newUser)
+            res.status(201).json(reg)
         } catch (err) {
             next(err)
         }
