@@ -8,7 +8,8 @@
     "initdb": "sequelize db:create --env=test",
     "migratedb": "sequelize db:migrate --env=test",
     "resetdb": "sequelize db:migrate:undo:all --env=test",
-    "serve": "nodemon ./bin/www.js"
+    "serve": "nodemon ./bin/www.js",
+    "start": "node ./bin/www.js"
   },
   "keywords": [],
   "author": "",
