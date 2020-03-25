@@ -57,6 +57,28 @@ class ProductController {
             next(error)
         }
     }
+
+    static async decreaseStock (req, res, next) {
+        const { amount } = req.body
+        try {
+            const findProduct = await Product.findByPk(req.params.id)
+            if(findProduct) {
+                const updateStock = findProduct.stock - amount
+                const stock = {
+                    stock: updateStock
+                }
+                const update = await Product.update(stock, {where:{id:findProduct.id}})
+                res.status(200).json('Successfull')
+            } else {
+                next({
+                    status:404,
+                    msg:'Product cant be found'
+                })
+            }
+        } catch (err) {
+            next(err)
+        }
+    }
 }
 
 
