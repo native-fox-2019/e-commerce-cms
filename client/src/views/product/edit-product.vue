@@ -61,6 +61,18 @@
           drop-placeholder="Drop file here..."
         ></b-form-file>
       </b-form-group>
+             <b-form-group
+        label-cols-sm="3"
+        label="Product Description:"
+        label-align-sm="right"
+        label-for="product-description"
+      >
+          <b-form-textarea
+            id="product-description"
+            v-model="product.description"
+            rows="3"
+            no-resize></b-form-textarea>
+      </b-form-group>
     <b-button variant="success" @click="onSubmit" :disabled="isSubmitting">Submit</b-button>
     </b-form-group>
   </b-card>
@@ -75,7 +87,8 @@ export default {
                 price:0,
                 stock:0,
                 id:-1,
-                category:null
+                category:null,
+                description:''
             },
             isSubmitting:false,
             categories:this.$store.state.categories
@@ -88,6 +101,7 @@ export default {
         this.product.price=product.price;
         this.product.stock=product.stock;
         this.product.category=product.category;
+        this.product.description=product.description;
         this.product.id=id;
         console.log('onCreated',this.product,this.id);
     },

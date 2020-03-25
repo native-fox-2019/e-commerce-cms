@@ -7,15 +7,14 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    SERVER:'https://aqueous-badlands-12134.herokuapp.com',
-    // SERVER:'http://localhost:3000',
+    // SERVER:'https://aqueous-badlands-12134.herokuapp.com',
+    SERVER:'http://localhost:3001',
     isLogin:false,
     products:[],
     token:'',
     headers:{
       'Content-Type': 'multipart/form-data',
       token:localStorage.token,
-      'Sec-Fetch-Mode':'cors'
     },
     categories:[
       { item: 'lifestyle', name: 'lifestyle' },
