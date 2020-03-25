@@ -107,6 +107,7 @@
 
 <script>
 import axios from 'axios';
+import baseUrl from '../baseUrl';
 
 export default {
   name: 'DeleteProduct',
@@ -123,7 +124,7 @@ export default {
     deleteThis() {
       const id = parseInt(this.$route.params.id);
       axios
-        .delete(`http://localhost:3000/cms/products/${id}`, {
+        .delete(`${baseUrl}cms/products/${id}`, {
           headers: {
             Authorization: this.$store.state.jwt,
           },
@@ -131,7 +132,7 @@ export default {
           .then(() => {
             this.$router.push('/products');
           })
-          .catch((err) => console.log(err, err.response.message));
+          .catch(() => {});
     },
   },
   mounted() {

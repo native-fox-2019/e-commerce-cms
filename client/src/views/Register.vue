@@ -62,6 +62,7 @@
 <script>
 import axios from 'axios';
 import base64url from 'base64url';
+import baseUrl from '../baseUrl';
 
 export default {
   name: 'Register',
@@ -78,7 +79,7 @@ export default {
   },
   methods: {
     submit() {
-      axios.post('http://localhost:3000/users/register', { email: this.email, password: this.password })
+      axios.post(`${baseUrl}users/register`, { email: this.email, password: this.password })
         .then((response) => {
           const [,encodedPayload,] = response.data.token.split('.');
           const { isAdmin } = JSON.parse(base64url.decode(encodedPayload));
@@ -89,7 +90,7 @@ export default {
             this.$router.push('/forbidden');
           }
         })
-        .catch((err) => console.log(err, err.response.message));
+        .catch(() => {});
     },
   },
 };

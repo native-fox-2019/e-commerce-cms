@@ -102,6 +102,7 @@
 
 <script>
 import axios from 'axios';
+import baseUrl from '../baseUrl';
 
 export default {
   name: 'EditProduct',
@@ -118,7 +119,7 @@ export default {
     save() {
       const id = parseInt(this.$route.params.id);
       axios
-        .put(`http://localhost:3000/cms/products/${id}`, {
+        .put(`${baseUrl}cms/products/${id}`, {
           name: this.name,
           category: this.category,
           image_url: this.image_url,
@@ -133,7 +134,7 @@ export default {
             this.$store.commit('updateProduct', product);
             this.$router.push('/products');
           })
-          .catch((err) => console.log(err, err.response.message));
+          .catch(() => {});
     },
   },
   mounted() {

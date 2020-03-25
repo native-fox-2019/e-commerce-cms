@@ -58,6 +58,7 @@
 
 <script>
 import axios from 'axios';
+import baseUrl from '../baseUrl';
 
 export default {
   name: 'ProductList',
@@ -68,7 +69,7 @@ export default {
   },
   methods: {
     getAllProduct() {
-      axios.get('http://localhost:3000/cms/products', {
+      axios.get(`${baseUrl}cms/products`, {
         headers: {
           Authorization: this.$store.state.jwt,
         },
@@ -76,7 +77,7 @@ export default {
         .then((response) => {
           this.$store.commit('setProducts', response.data);
         })
-        .catch((err) => console.log(err, err.response.message));
+        .catch(() => {});
     },
   },
   mounted() {

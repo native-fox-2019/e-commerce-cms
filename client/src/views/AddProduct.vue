@@ -101,6 +101,7 @@
 
 <script>
 import axios from 'axios';
+import baseUrl from '../baseUrl';
 
 export default {
   name: 'AddProduct',
@@ -116,7 +117,7 @@ export default {
   methods: {
     save() {
       axios
-        .post('http://localhost:3000/cms/products', {
+        .post(`${baseUrl}cms/products`, {
           name: this.name,
           category: this.category,
           image_url: this.image_url,
@@ -130,7 +131,7 @@ export default {
           .then(() => {
             this.$router.push('/products');
           })
-          .catch((err) => console.log(err, err.response.message));
+          .catch(() => {});
     },
   },
 };
