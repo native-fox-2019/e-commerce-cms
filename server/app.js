@@ -11,7 +11,6 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
 app.use(route)
-    // console.log(err?)
 app.use(errorHandler)
 
 app.listen(port, console.log(`localhost:`,port))

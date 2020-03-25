@@ -1,6 +1,12 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const ShoppingCart = sequelize.define('ShoppingCart', {
+    id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      autoIncrement: true,
+      primaryKey: true
+    },
     UserId: {
       type: DataTypes.INTEGER,
       allowNull: false,

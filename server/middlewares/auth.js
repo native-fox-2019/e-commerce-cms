@@ -4,7 +4,6 @@ const { User } = require('../models')
 
 module.exports = {
     authentication: async (req, res, next) => {
-        console.log('ENTERED AUTHENTICATION')
         try {
             if (!req.headers.access_token) throw customError(401)
 
