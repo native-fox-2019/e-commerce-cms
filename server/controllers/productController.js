@@ -59,14 +59,21 @@ class ProductController {
     }
 
     static async decreaseStock (req, res, next) {
-        const { amount } = req.body
+        const { amount, args } = req.body
+        // console.log(args, '<<<<<<<<<<<<<<<<')
         try {
             const findProduct = await Product.findByPk(req.params.id)
             if(findProduct) {
-                const updateStock = findProduct.stock - amount
+                let updateStock
+                if (args == -1) {
+                    updateStock = findProduct.stock + amount
+                } else {
+                    updateStock = findProduct.stock - amount
+                }
                 const stock = {
                     stock: updateStock
                 }
+                console.log(stock, '<<<<<<<<')
                 const update = await Product.update(stock, {where:{id:findProduct.id}})
                 res.status(200).json('Successfull')
             } else {

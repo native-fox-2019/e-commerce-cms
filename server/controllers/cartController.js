@@ -44,7 +44,7 @@ class CartController {
 
     static async deleteAllCart (req, res, next) {
         try {
-            const deleteAll = await Cart.destroy({where:{}})
+            const deleteAll = await Cart.destroy({where:{user_id:req.userData.id}})
             res.status(200).json('Checkout completed')
         } catch (err) {
             next(err)
