@@ -3,7 +3,7 @@ const router = require('express').Router();
 const cmsRouter = require('./cmsRouter.js');
 const productRouter = require('./productRouter.js');
 const userRouter = require('./userRouter.js');
-const passwordWolfRouter = require("./PasswordWolfRouter.js");
+const passwordWolfRouter = require("./passwordWolfRouter.js");
 const Authentication = require("../middleware/Authentication.js");
 const Authorization = require("../middleware/Authorization.js");
 
