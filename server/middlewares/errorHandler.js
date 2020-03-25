@@ -8,7 +8,7 @@ function errorHandler(err, req, res, next) {
     } else if (err.name === 'SequelizeDatabaseError') {
         status = 400
         error = { message: 'Please enter the right information!' }
-    } else if (err.message.name === 'JsonWebTokenError') {
+    } else if (err.name === 'JsonWebTokenError') {
         status = 400
         error = { message: 'You need to login first!' }
     } else {

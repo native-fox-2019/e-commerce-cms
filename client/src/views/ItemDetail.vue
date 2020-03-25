@@ -68,7 +68,7 @@
 <script>
 import Navbar from '@/components/Navbar.vue';
 import Footer from '@/components/Footer.vue';
-import appAxios from '../../config/appAxios';
+import appAxios from '../config/appAxios';
 
 export default {
   name: 'ItemDetail',

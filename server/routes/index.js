@@ -5,6 +5,8 @@ const userRoutes = require('./userRoutes.js')
 const itemRoutes = require('./itemRoutes.js')
 const cartRoutes = require('./cartRoutes')
 
+const { authentication } = require('../middlewares/auth.js')
+
 router.get('/', function(req,res,next) {
     res.status(200).json({
         message: 'You are connected to the server, refers to API documentation for further information'
@@ -12,6 +14,8 @@ router.get('/', function(req,res,next) {
 })
 
 router.use('/user', userRoutes)
+
+router.use(authentication)
 router.use('/items', itemRoutes)
 router.use('/carts', cartRoutes)
 

@@ -26,7 +26,7 @@
 <script>
 import Navbar from '@/components/Navbar.vue';
 import Footer from '@/components/Footer.vue';
-import appAxios from '../../config/appAxios';
+import appAxios from '../config/appAxios';
 
 export default {
   name: 'Login',
@@ -44,9 +44,10 @@ export default {
   },
   methods: {
     submitForm() {
+      console.log('Log in...');
       appAxios({
         method: 'POST',
-        url: 'user/login',
+        url: '/user/login',
         data: this.form,
       })
         .then((result) => {

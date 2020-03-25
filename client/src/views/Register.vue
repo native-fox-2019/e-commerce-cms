@@ -30,7 +30,7 @@
 <script>
 import Navbar from '@/components/Navbar.vue';
 import Footer from '@/components/Footer.vue';
-import appAxios from '../../config/appAxios';
+import appAxios from '../config/appAxios';
 
 export default {
   name: 'Register',
@@ -49,17 +49,20 @@ export default {
   },
   methods: {
     submitForm() {
+      console.log('Register!');
       appAxios({
         method: 'POST',
-        url: 'user/register',
+        url: '/user/register',
         data: this.form,
       })
-        .then(() => {
+        .then((data) => {
+          console.log('New user:');
+          console.log(data);
           this.$router.push('/login');
           this.resetForm();
         })
         .catch((err) => {
-          console.log('Error:', err.response);
+          console.log('Error:', err);
           this.$swal('Try again!', err.response.data.message, 'error');
         });
     },

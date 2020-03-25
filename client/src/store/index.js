@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import appAxios from '../../config/appAxios';
+import appAxios from '../config/appAxios';
 
 Vue.use(Vuex);
 

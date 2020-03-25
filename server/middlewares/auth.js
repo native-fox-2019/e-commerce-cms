@@ -1,4 +1,4 @@
-const {Cart, Item, User} = require('../models')
+const {Cart, Item} = require('../models')
 const {verifyToken} = require('../helpers/jsonwebtoken.js')
 
 function authentication(req, res, next) {
@@ -12,15 +12,43 @@ function authentication(req, res, next) {
 }
 
 function authorization(req, res, next) {
-    let id = req.params.id
-    let option = { where: { id: id } }
-    Item.findOne(option)
-    .then(item => {
-        if (!task) throw {status: 404, message: 'Data not found!'}
-        if (item.UserId !== req.userData.id) throw {status: 400, message: `You're not authorized!`}
-        next()
-    })
-    .catch(next)
+    Cart.findOne({ where: { id: req.params.id }})
+        .then(cart => {
+            if (!cart) {
+                throw { status: 404, message: 'Cart data not found' }
+            } else if (cart.UserId == req.userData.id) {
+                next()
+            } else {
+                throw { status: 403, message: 'You are not authorized to do that!' }
+            }
+        })
+        .catch(next)
 }
 
-module.exports = {authentication, authorization}
+function adminAuth(req, res, next) {
+    try {
+        if (req.userData.role == 'admin') {
+            next()
+        } else {
+            next({ status: 401, message: 'Only admin is allowed!' })
+        }
+    }
+    catch(err) {
+        next({ status: 401, message: err })
+    }
+}
+
+function customerAuth(req, res, next) {
+    try {
+        if (req.userData.role == 'customer') {
+            next()
+        } else {
+            next({ status: 401, message: 'Only customer is allowed!' })
+        }
+    }
+    catch(err) {
+        next({ status: 401, message: err })
+    }
+}
+
+module.exports = {authentication, authorization, adminAuth, customerAuth}

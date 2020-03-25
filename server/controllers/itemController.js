@@ -3,7 +3,7 @@ const { Item } = require('../models')
 class Controller {
 
     static create(req, res, next) {
-        let obj = {
+        const obj = {
             name: req.body.name,
             description: req.body.description,
             image_url: req.body.image_url,
@@ -23,7 +23,7 @@ class Controller {
     }
 
     static findOne(req, res, next) {
-        let option = { where: { id: req.params.id }}
+        const option = { where: { id: req.params.id }}
         Item.findOne(option)
         .then(data=>{
             if(data){
@@ -36,7 +36,7 @@ class Controller {
     }
 
     static findUserItem(req, res, next) {
-        let option = { where: { UserId: req.params.id }}
+        const option = { where: { UserId: req.params.id }}
         Item.findAll(option)
         .then(result=>{
             if(result){
@@ -49,7 +49,7 @@ class Controller {
     }
 
     static update(req, res, next) {
-        let obj = {
+        const obj = {
             name: req.body.name,
             description: req.body.description,
             image_url: req.body.image_url,
@@ -57,14 +57,14 @@ class Controller {
             stock: req.body.stock,
             UserId: req.userData.id,
         }
-        let option = { where: { id: req.params.id }}
+        const option = { where: { id: req.params.id }}
         Item.update(obj, option)
         .then((data) => res.status(200).json(data))
         .catch(next)
     }
 
     static destroy(req, res, next) {
-        let option = { where: { id: req.params.id }}
+        const option = { where: { id: req.params.id }}
         Item.findOne(option)
         .then(current => {
             if (current) {
