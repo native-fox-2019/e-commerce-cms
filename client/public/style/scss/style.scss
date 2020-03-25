@@ -7,6 +7,13 @@ $color-backrgound: #1d1d1d;
 $font: 'Baloo Chettan 2',
 cursive;
 
+// $color-base: #efebe7;
+// $color-primary: #0088d2;
+// $color-font: rgb(207, 207, 207);
+// $color-backrgound: #797979;
+// $font: 'Baloo Chettan 2',
+// cursive;
+
 * {
   font-family: $font;
   margin: 0px 0px;
@@ -27,3 +34,38 @@ body {
 @import './modal';
 @import './userInfo';
 @import './userPage';
+
+.incoming-order {
+  h4 {
+    text-align: center;
+    margin: 30px 40% 0 40%;
+    font-size: 24px;
+    padding: 15px;
+    background-color: $color-primary;
+    border-radius: 5px;
+    margin-bottom: 10px;
+  }
+
+  .order-table {
+
+    table {
+      margin: 0 auto;
+      margin-top: 20px;
+      margin-bottom: 40px;
+      padding: 15px;
+      background-color: $color-primary;
+      border-radius: 5px;
+      border: 1px $color-font solid;
+      text-align: center;
+
+      .action-col {
+        cursor: pointer;
+        background-color: $color-base;
+        text-align: center;
+        padding: 5px 10px;
+        border-radius: 5px;
+        border: 1px $color-font solid;
+      }
+    }
+  }
+}

@@ -7,9 +7,7 @@
             <ul class="middle-nav">
                 <li>
                     <router-link to="/">
-                        <span v-if="this.$store.state.isLogin"
-                            >See Product</span
-                        >
+                        <span v-if="this.$store.state.isLogin">See Product</span>
                     </router-link>
                 </li>
                 <li>
@@ -19,8 +17,16 @@
                                 this.$store.state.isLogin &&
                                     this.$store.state.user_info.superUser
                             "
-                            >See Users</span
-                        >
+                        >See Users</span>
+                    </router-link>
+                </li>
+                <li>
+                    <router-link to="/incomingOrder">
+                        <span
+                            v-if="
+                                this.$store.state.isLogin 
+                            "
+                        >Incoming Order</span>
                     </router-link>
                 </li>
             </ul>
@@ -28,22 +34,12 @@
                 <ul class="nav_link">
                     <li>
                         <router-link to="/login">
-                            <button
-                                class="btn"
-                                v-if="!this.$store.state.isLogin"
-                            >
-                                Login
-                            </button>
+                            <button class="btn" v-if="!this.$store.state.isLogin">Login</button>
                         </router-link>
                     </li>
                     <li>
                         <router-link to="/register">
-                            <button
-                                class="btn"
-                                v-if="!this.$store.state.isLogin"
-                            >
-                                Register
-                            </button>
+                            <button class="btn" v-if="!this.$store.state.isLogin">Register</button>
                         </router-link>
                     </li>
                     <li>
@@ -51,9 +47,7 @@
                             class="btn"
                             v-if="this.$store.state.isLogin"
                             v-on:click="logout"
-                        >
-                            Logout
-                        </button>
+                        >Logout</button>
                     </li>
                 </ul>
             </nav>
@@ -65,7 +59,7 @@
                 <p>email: rqz.agastya@gmail.com</p>
             </div>
             <div class="footer-bottom">&copy; Toko Gunpla | by Gusti Agung A T</div>
-        </div> -->
+        </div>-->
     </div>
 </template>
 <script>
@@ -75,9 +69,9 @@ export default {
     },
     methods: {
         logout: function() {
-            localStorage.removeItem('access_token');
+            localStorage.removeItem("access_token");
             this.$store.state.isLogin = false;
-            this.$router.push({name: 'Login'});
+            this.$router.push({ name: "Login" });
         }
     }
 };

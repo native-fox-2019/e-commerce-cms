@@ -4,6 +4,7 @@ import Login from "../views/Login.vue";
 import Register from "../views/Register.vue";
 import Product from "../views/MainPage.vue";
 import Users from "../views/Users.vue";
+import IncomingOrder from '../views/IncomingOrder.vue'
 
 Vue.use(VueRouter);
 
@@ -34,6 +35,14 @@ const routes = [{
     path: '/users',
     name: 'Users',
     component: Users
+  },
+  {
+    path: '/incomingOrder',
+    name: 'IncomingOrder',
+    meta: {
+      requireLogin: true
+    },
+    component: IncomingOrder
   }
 ];
 
