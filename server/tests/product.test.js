@@ -2,9 +2,15 @@ const app = require('../app');
 const request = require('supertest');
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
-const {User} = require('../models');
-const {sequelize} = require('../models');
-const {queryInterface} = sequelize;
+const {
+    User
+} = require('../models');
+const {
+    sequelize
+} = require('../models');
+const {
+    queryInterface
+} = sequelize;
 
 // afterAll((done) => {
 //     queryInterface.bulkDelete('Products')
@@ -31,7 +37,10 @@ test('Login Super User', done => {
             password: process.env.SUPER_PASS
         })
         .then(result => {
-            const {body, status} = result;
+            const {
+                body,
+                status
+            } = result;
             token = body.access_token;
             expect(body).toHaveProperty('access_token');
             done();
@@ -47,14 +56,16 @@ describe('POST /product -> Test POST Route Product', () => {
             .post('/product')
             .send({
                 name: 'laptop asus X',
-                image_url:
-                    'https://d2pa5gi5n2e1an.cloudfront.net/webp/global/images/product/laptops/ASUS_A455LN_WX005D/ASUS_A455LN_WX005D_L_1.jpg',
+                image_url: 'https://d2pa5gi5n2e1an.cloudfront.net/webp/global/images/product/laptops/ASUS_A455LN_WX005D/ASUS_A455LN_WX005D_L_1.jpg',
                 price: 7000000,
                 stock: 20
             })
             .set('access_token', token)
             .then(result => {
-                const {body, status} = result;
+                const {
+                    body,
+                    status
+                } = result;
                 expect(status).toBe(201);
                 expect(body).toHaveProperty('data');
                 expect(body).toHaveProperty(
@@ -74,14 +85,16 @@ describe('POST /product -> Test POST Route Product', () => {
             .post('/product')
             .send({
                 name: '',
-                image_url:
-                    'https://d2pa5gi5n2e1an.cloudfront.net/webp/global/images/product/laptops/ASUS_A455LN_WX005D/ASUS_A455LN_WX005D_L_1.jpg',
+                image_url: 'https://d2pa5gi5n2e1an.cloudfront.net/webp/global/images/product/laptops/ASUS_A455LN_WX005D/ASUS_A455LN_WX005D_L_1.jpg',
                 price: 7000000,
                 stock: 20
             })
             .set('access_token', token)
             .then(result => {
-                const {body, status} = result;
+                const {
+                    body,
+                    status
+                } = result;
                 expect(status).toBe(400);
                 expect(body).toHaveProperty('status_code', 400);
                 expect(body).toHaveProperty('message');
@@ -98,14 +111,16 @@ describe('POST /product -> Test POST Route Product', () => {
             .post('/product')
             .send({
                 name: '',
-                image_url:
-                    'https://d2pa5gi5n2e1an.cloudfront.net/webp/global/images/product/laptops/ASUS_A455LN_WX005D/ASUS_A455LN_WX005D_L_1.jpg',
+                image_url: 'https://d2pa5gi5n2e1an.cloudfront.net/webp/global/images/product/laptops/ASUS_A455LN_WX005D/ASUS_A455LN_WX005D_L_1.jpg',
                 price: -7000000,
                 stock: -20
             })
             .set('access_token', token)
             .then(result => {
-                const {body, status} = result;
+                const {
+                    body,
+                    status
+                } = result;
                 expect(status).toBe(400);
                 expect(body).toHaveProperty('status_code', 400);
                 expect(body).toHaveProperty('message');
@@ -126,7 +141,10 @@ describe('GET /product -> Test GET Route Product', () => {
             .get('/product')
             .set('access_token', token)
             .then(result => {
-                const {body, status} = result;
+                const {
+                    body,
+                    status
+                } = result;
                 expect(status).toBe(200);
                 expect(body).toHaveProperty('message', 'Read Successfully');
                 expect(body).toHaveProperty('data');
@@ -142,7 +160,10 @@ describe('GET /product -> Test GET Route Product', () => {
             .get(`/product/${id}`)
             .set('access_token', token)
             .then(result => {
-                const {body, status} = result;
+                const {
+                    body,
+                    status
+                } = result;
                 expect(status).toBe(200);
                 expect(body).toHaveProperty('message', 'Read Successfully');
                 expect(body).toHaveProperty('data');
@@ -158,7 +179,10 @@ describe('GET /product -> Test GET Route Product', () => {
             .get(`/product/${id + 1}`)
             .set('access_token', token)
             .then(result => {
-                const {body, status} = result;
+                const {
+                    body,
+                    status
+                } = result;
                 expect(status).toBe(404);
                 expect(body).toHaveProperty('status_code', 404);
                 expect(body).toHaveProperty('message', 'Data Not Found');
@@ -176,14 +200,16 @@ describe('PUT /product -> Test PUT Route Product', () => {
             .put(`/product/${id}`)
             .send({
                 name: 'laptop Asus Y',
-                image_url:
-                    'https://d2pa5gi5n2e1an.cloudfront.net/webp/global/images/product/laptops/ASUS_A455LN_WX005D/ASUS_A455LN_WX005D_L_1.jpg',
+                image_url: 'https://d2pa5gi5n2e1an.cloudfront.net/webp/global/images/product/laptops/ASUS_A455LN_WX005D/ASUS_A455LN_WX005D_L_1.jpg',
                 price: 7200000,
                 stock: 10
             })
             .set('access_token', token)
             .then(result => {
-                const {body, status} = result;
+                const {
+                    body,
+                    status
+                } = result;
                 expect(status).toBe(200);
                 expect(body).toHaveProperty('message', 'Update Successfully');
                 done();
@@ -198,14 +224,16 @@ describe('PUT /product -> Test PUT Route Product', () => {
             .put(`/product/${id + 1}`)
             .send({
                 name: 'laptop Asus Y',
-                image_url:
-                    'https://d2pa5gi5n2e1an.cloudfront.net/webp/global/images/product/laptops/ASUS_A455LN_WX005D/ASUS_A455LN_WX005D_L_1.jpg',
+                image_url: 'https://d2pa5gi5n2e1an.cloudfront.net/webp/global/images/product/laptops/ASUS_A455LN_WX005D/ASUS_A455LN_WX005D_L_1.jpg',
                 price: 7200000,
                 stock: 10
             })
             .set('access_token', token)
             .then(result => {
-                const {body, status} = result;
+                const {
+                    body,
+                    status
+                } = result;
                 expect(status).toBe(404);
                 expect(body).toHaveProperty('status_code', 404);
                 expect(body).toHaveProperty('message', 'Data Not Found');
@@ -221,14 +249,16 @@ describe('PUT /product -> Test PUT Route Product', () => {
             .put(`/product/${id}`)
             .send({
                 name: '',
-                image_url:
-                    'https://d2pa5gi5n2e1an.cloudfront.net/webp/global/images/product/laptops/ASUS_A455LN_WX005D/ASUS_A455LN_WX005D_L_1.jpg',
+                image_url: 'https://d2pa5gi5n2e1an.cloudfront.net/webp/global/images/product/laptops/ASUS_A455LN_WX005D/ASUS_A455LN_WX005D_L_1.jpg',
                 price: 7200000,
                 stock: 10
             })
             .set('access_token', token)
             .then(result => {
-                const {body, status} = result;
+                const {
+                    body,
+                    status
+                } = result;
                 expect(status).toBe(400);
                 expect(body).toHaveProperty('status_code', 400);
                 expect(body).toHaveProperty('message');
@@ -245,14 +275,16 @@ describe('PUT /product -> Test PUT Route Product', () => {
             .put(`/product/${id}`)
             .send({
                 name: '',
-                image_url:
-                    'https://d2pa5gi5n2e1an.cloudfront.net/webp/global/images/product/laptops/ASUS_A455LN_WX005D/ASUS_A455LN_WX005D_L_1.jpg',
+                image_url: 'https://d2pa5gi5n2e1an.cloudfront.net/webp/global/images/product/laptops/ASUS_A455LN_WX005D/ASUS_A455LN_WX005D_L_1.jpg',
                 price: -7200000,
                 stock: -10
             })
             .set('access_token', token)
             .then(result => {
-                const {body, status} = result;
+                const {
+                    body,
+                    status
+                } = result;
                 expect(status).toBe(400);
                 expect(body).toHaveProperty('status_code', 400);
                 expect(body).toHaveProperty('message');
@@ -273,7 +305,10 @@ describe('DELETE /product -> Test DELETE Route Product', () => {
             .delete(`/product/${id}`)
             .set('access_token', token)
             .then(result => {
-                const {body, status} = result;
+                const {
+                    body,
+                    status
+                } = result;
                 expect(status).toBe(200);
                 expect(body).toHaveProperty('message', 'Delete Successfully');
                 done();
@@ -288,7 +323,10 @@ describe('DELETE /product -> Test DELETE Route Product', () => {
             .delete(`/product/${id}`)
             .set('access_token', token)
             .then(result => {
-                const {body, status} = result;
+                const {
+                    body,
+                    status
+                } = result;
                 expect(status).toBe(404);
                 expect(body).toHaveProperty('status_code', 404);
                 expect(body).toHaveProperty('message', 'Data Not Found');
