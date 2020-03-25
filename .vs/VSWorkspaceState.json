@@ -1,0 +1,16 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\client",
+    "\\client\\public",
+    "\\client\\src",
+    "\\client\\src\\store",
+    "\\client\\src\\views",
+    "\\server",
+    "\\server\\controllers",
+    "\\server\\migrations",
+    "\\server\\routers"
+  ],
+  "SelectedNode": "\\server\\.env",
+  "PreviewInSolutionExplorer": false
+}

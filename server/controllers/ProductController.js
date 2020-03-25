@@ -41,7 +41,12 @@ class ProductController{
      */
     static getProducts(req, res, next){
         Product.findAll()
-            .then(products => res.status(200).json(products))
+            .then(products => {
+                for (const product of products) {
+                    product.price = parseInt(product.price);
+                }
+                return res.status(200).json(products);
+            })
             .catch(err => next(err));
     }
             /**
@@ -77,6 +82,7 @@ class ProductController{
         Product.findByPk(id)
             .then(product=>{
                 if (product) {
+                    product.price = parseInt(product.price);
                     res.status(200).json(product);
                 } else {
                     res.status(404).json({

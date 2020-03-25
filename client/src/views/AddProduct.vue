@@ -116,7 +116,7 @@ export default {
   methods: {
     save() {
       axios
-        .post('http://localhost:3000/products', {
+        .post('http://localhost:3000/cms/products', {
           name: this.name,
           category: this.category,
           image_url: this.image_url,

@@ -68,7 +68,7 @@ export default {
   },
   methods: {
     getAllProduct() {
-      axios.get('http://localhost:3000/products', {
+      axios.get('http://localhost:3000/cms/products', {
         headers: {
           Authorization: this.$store.state.jwt,
         },

@@ -4,7 +4,7 @@
       <header class="logo-env">
         <!-- logo -->
         <div class="logo">
-          <router-link to="">
+          <router-link to="/">
             <img src="https://rofandi.blob.core.windows.net/neon/assets/logo.png" width="30" alt />
           </router-link>
         </div>
@@ -38,12 +38,12 @@
           </a>
           <ul class="visible">
             <li>
-              <router-link to="products">
+              <router-link to="/products">
                 <span class="title">Product List</span>
               </router-link>
             </li>
             <li>
-              <router-link to="add-product">
+              <router-link to="/add-product">
                 <span class="title">Add Product</span>
               </router-link>
             </li>
@@ -61,12 +61,12 @@
           </a>
           <ul class="visible">
             <li>
-              <router-link to="login">
+              <router-link to="/login">
                 <span class="title">Login</span>
               </router-link>
             </li>
             <li>
-              <router-link to="register">
+              <router-link to="/register">
                 <span class="title">Register</span>
               </router-link>
             </li>

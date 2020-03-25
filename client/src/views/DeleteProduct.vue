@@ -123,7 +123,7 @@ export default {
     deleteThis() {
       const id = parseInt(this.$route.params.id);
       axios
-        .delete(`http://localhost:3000/products/${id}`, {
+        .delete(`http://localhost:3000/cms/products/${id}`, {
           headers: {
             Authorization: this.$store.state.jwt,
           },

@@ -118,7 +118,7 @@ export default {
     save() {
       const id = parseInt(this.$route.params.id);
       axios
-        .put(`http://localhost:3000/products/${id}`, {
+        .put(`http://localhost:3000/cms/products/${id}`, {
           name: this.name,
           category: this.category,
           image_url: this.image_url,
