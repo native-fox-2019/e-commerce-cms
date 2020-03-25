@@ -3,8 +3,7 @@
 const {hashPass} = require('../helpers/bcrypt')
 
 module.exports = (sequelize, DataTypes) => {
-  const Sequelize = sequelize.Sequelize
-  const Model = Sequelize.Model
+  const Model = sequelize.Sequelize.Model
   class User extends Model { }
   User.init({
     name: {
@@ -53,6 +52,7 @@ module.exports = (sequelize, DataTypes) => {
   }}, sequelize });
   User.associate = function (models) {
     // associations can be defined here
+    User.hasMany(models.Product)
   };
   return User;
 };

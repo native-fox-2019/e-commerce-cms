@@ -59,6 +59,17 @@ class ControllerUser {
             next(err)
         })
     }
+    static addToCart (req,res,next){
+        Cart.create(payload)
+        .then(data => res.status(201).json({message: `${data.name} has been added to your cart`}))
+        .catch(next)
+    }
+    static cart (req,res,next){
+        Cart.findAll({where:{UserId:req.user.id}})
+        .then(data => res.status(200).json(data))
+        .catch(next)
+    }
+    static editProfile (req,res,next){}
 }
 
 module.exports = ControllerUser

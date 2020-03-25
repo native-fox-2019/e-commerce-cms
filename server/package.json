@@ -4,10 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "initdb":"sequelize db:migrate --env=test",
-    "undodb":"sequelize db:migrate:undo:all --env=test",
+    "initdb": "sequelize db:migrate --env=test",
+    "undodb": "sequelize db:migrate:undo:all --env=test",
     "test": "clear && jest --detectOpenHandles --runInBand --forceExit",
-    "start":"node app.js"
+    "start": "node app.js"
   },
   "repository": {
     "type": "git",

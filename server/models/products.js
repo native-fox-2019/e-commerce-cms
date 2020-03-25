@@ -1,7 +1,9 @@
 'use strict';
 const changeToCurrency = require('../helpers/changeToCurrency')
 module.exports = (sequelize, DataTypes) => {
-  const Products = sequelize.define('Products', {
+  const Model = sequelize.Sequelize.Model
+  class Product extends Model { }
+  Product.init({
     name: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -47,16 +49,11 @@ module.exports = (sequelize, DataTypes) => {
       }
     }
   }, {
-    hooks: {
-      // afterFind: (instances, option) => {
-      //   instances.forEach( el => {
-      //   el.price =`Rp. ${new Intl.NumberFormat(['ban', 'id']).format(el.price)}`
-      //   })
-      // }
-    }, sequelize
+    sequelize
   });
-  Products.associate = function (models) {
+  Product.associate = function (models) {
     // associations can be defined here
+    Product.hasMany(models.Cart)
   };
   return Products;
 };
