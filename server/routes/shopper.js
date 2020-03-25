@@ -8,10 +8,11 @@ route.post('/login', userController.login)
 route.post('/register', userController.register)
 
 route.get('/', productController.showAll)
-route.get('/:id', productController.showOne)
 route.get('/cart', authentication, authorizationUser, shoppingController.showAll)
-route.get('/cart/:id', authentication, authorizationUser, shoppingController.showOne)
 route.post('/cart', authentication, authorizationUser, shoppingController.add)
+route.get('/:id', productController.showOne)
+
+route.get('/cart/:id', authentication, authorizationUser, shoppingController.showOne)
 route.put('/cart/:id', authentication, authorizationUser, shoppingController.edit)
 route.delete('/cart/:id', authentication, authorizationUser, shoppingController.delete)
 route.post('/checkout', authentication, authorizationUser, shoppingController.checkout)

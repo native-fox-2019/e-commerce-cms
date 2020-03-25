@@ -1,6 +1,7 @@
 const route = require('express').Router()
 const userController = require('../controllers/user')
 const productController = require('../controllers/product')
+    // console.log(err?)
 const { authentication, authorizationAdmin, authorizationSuperAdmin } = require('../middlewares/auth')
 
 route.post('/login', userController.login)
