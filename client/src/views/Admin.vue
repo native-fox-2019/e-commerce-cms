@@ -1,12 +1,17 @@
 <template>
   <div>
     <!-- NAV BAR -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item">
             <button
-              v-if="!edit && !addNew && this.$store.getters.getRole == 'admin' &&!addBanner"
+              v-if="
+                !edit &&
+                  !addNew &&
+                  this.$store.getters.getRole == 'admin' &&
+                  !addBanner
+              "
               type="button"
               class="btn btn-success"
               @click.prevent="changeAddTrue"
@@ -14,7 +19,12 @@
               Add new product
             </button>
             <button
-              v-if="!edit && !addNew && this.$store.getters.getRole == 'admin' &&!addBanner"
+              v-if="
+                !edit &&
+                  !addNew &&
+                  this.$store.getters.getRole == 'admin' &&
+                  !addBanner
+              "
               type="button"
               class="btn btn-warning ml-2"
               @click.prevent="changeAddBannerTrue"
@@ -31,21 +41,34 @@
       </div>
     </nav>
 
-    <div class="text-center mt-5" v-if="!addNew && !edit &&!addBanner">
+    <div
+      class="text-center"
+      style="margin-top:100px;"
+      v-if="!addNew && !edit && !addBanner"
+    >
       <h1 style="font-family:monospace;">Admin Dashboard</h1>
     </div>
-    
+
     <!-- BANNER CARD -->
-    <Banner v-if="!addNew && !edit &&!addBanner" @doneDeleting="getItems"></Banner>
-    
+    <Banner
+      v-if="!addNew && !edit && !addBanner"
+      @doneDeleting="getItems"
+    ></Banner>
+
     <!-- PRODUCT CARD -->
-    <div class="row mt-5" v-if="!addNew && !edit &&!addBanner">
+    <hr />
+    <h3 class="mt-5">
+      <strong>
+        Product List
+      </strong>
+    </h3>
+    <div class="row p-5" v-if="!addNew && !edit && !addBanner">
       <div
-        class="col-3 mt-3 ml-5 d-flex flex-column"
+        class="col-3"
         v-for="item in this.$store.state.itemList"
         :key="item.id"
       >
-        <div class="card" style="width: 18rem;">
+        <div class="card mb-3">
           <img
             class="card-img-top"
             :src="item.image_url"
@@ -72,7 +95,7 @@
       </div>
     </div>
     <!-- ADD NEW FORM COMPONENT-->
-    <Add v-if="addNew && !edit &&!addBanner" @doneAdd="changeAddFalse"></Add>
+    <Add v-if="addNew && !edit && !addBanner" @doneAdd="changeAddFalse"></Add>
 
     <!-- EDIT FORM COMPONENT-->
     <Edit
@@ -83,14 +106,18 @@
     ></Edit>
 
     <!-- ADD BANNER COMPONENT -->
-    <addBanner v-if="addBanner && !addNew && !edit" @cancelAddBan="changeAddBanFalse" @doneAddBanner="changeAddBanFalse"></addBanner>
+    <addBanner
+      v-if="addBanner && !addNew && !edit"
+      @cancelAddBan="changeAddBanFalse"
+      @doneAddBanner="changeAddBanFalse"
+    ></addBanner>
   </div>
 </template>
 <script>
 import Add from "../components/add.vue";
 import Edit from "../components/edit.vue";
-import Banner from '../components/banner.vue'
-import addBanner from '../components/addBanner.vue'
+import Banner from "../components/banner.vue";
+import addBanner from "../components/addBanner.vue";
 
 export default {
   components: {
@@ -101,7 +128,7 @@ export default {
   },
   created() {
     this.getItems();
-    this.checkRole()
+    this.checkRole();
   },
   data() {
     return {
@@ -124,13 +151,13 @@ export default {
     changeAddFalse() {
       this.addNew = false;
       this.edit = false;
-      this.addBanner = false
+      this.addBanner = false;
       this.getItems();
     },
     changeAddTrue() {
       this.addNew = true;
       this.edit = false;
-      this.addBanner = false
+      this.addBanner = false;
     },
     deleteProduct(id) {
       this.$store.dispatch("deleteProduct", id);
@@ -146,19 +173,19 @@ export default {
     changeEditFalse() {
       this.edit = false;
       this.addNew = false;
-      this.addBanner = false
+      this.addBanner = false;
       this.getItems();
     },
     checkRole() {
-      this.$store.commit('checkRole')
+      this.$store.commit("checkRole");
     },
     changeAddBannerTrue() {
-      this.addBanner = true
-      this.edit = false
-      this.addNew = false
+      this.addBanner = true;
+      this.edit = false;
+      this.addNew = false;
     },
     changeAddBanFalse() {
-      this.addBanner = false
+      this.addBanner = false;
     }
   }
 };

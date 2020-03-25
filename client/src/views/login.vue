@@ -2,7 +2,7 @@
   <div>
     <div class="row">
       <div class="col-6">
-        <div class="container login-form" style="margin-top:300px;">
+        <div class="container login-form" style="margin-top:230px;">
           <form @submit.prevent="doLogin">
             <h2 class="text-center">Admin CMS Login</h2>
             <div class="form-group">

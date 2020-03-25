@@ -5,9 +5,9 @@
         <img src="https://previews.123rf.com/images/dizanna/dizanna1606/dizanna160600339/57527727-cms-content-management-system-word-cloud-business-concept-background.jpg" alt="your logo" style="margin-top:150px; width:100%;">
       </div>
       <div class="col-6">
-        <div class="container login-form" style="margin-top:300px;">
+        <div class="container login-form" style="margin-top:190px;">
           <form @submit.prevent="doRegister">
-            <h2 class="text-center">Create admin page</h2>
+            <h2 class="text-center">Admin Registration</h2>
             <div class="form-group">
               <input
                 type="text"

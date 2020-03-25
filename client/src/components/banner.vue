@@ -1,17 +1,21 @@
 <template>
-  <div class="row mt-5">
-    <div class="col-3" v-for="item in banner" :key="item.id">
-      <p>{{ item.name }}</p>
-      <img :src="item.url" alt="" style="width:100%; height:150px;" /><br>
-      <button class="btn btn-danger mt-2" @click="deleteBanner(item.id)">
-        delete banner
-      </button>
+  <div class="mt-5">
+    <hr>
+    <h3><strong>Banner List</strong></h3>
+    <div class="row mt-5">
+      <div class="col-3 mb-3" v-for="item in banner" :key="item.id">
+        <p>{{ item.name }}</p>
+        <img :src="item.url" alt="" style="width:100%; height:150px;" /><br />
+        <button class="btn btn-outline-danger mt-2" @click="deleteBanner(item.id)">
+          delete
+        </button>
+      </div>
     </div>
   </div>
 </template>
 <script>
 import axios from "axios";
-import Swal from 'sweetalert2';
+import Swal from "sweetalert2";
 export default {
   created() {
     this.getBanner();
@@ -44,16 +48,16 @@ export default {
       })
         .then(data => {
           Swal.fire({
-              icon: 'success',
-              title: data.data
-          })
-          this.getBanner()
+            icon: "success",
+            title: data.data
+          });
+          this.getBanner();
         })
         .catch(response => {
           Swal.fire({
-          icon: 'warning',
-          title: response.response.data.msg
-        })
+            icon: "warning",
+            title: response.response.data.msg
+          });
         });
     }
   }
