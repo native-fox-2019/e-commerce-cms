@@ -30,7 +30,7 @@ class productController {
         let id = Number(req.params.id)
         try {
             let found = await Product.findOne({ where: { id } })
-            if (!found) throw customError(404)
+            if (!found) throw customError(404, 'Product not found!')
             res.status(200).json(found)
         } catch (err) {
             next(err)
@@ -47,7 +47,7 @@ class productController {
         }
         try {
             let found = await Product.findOne({ where: { id } })
-            if (!found) throw customError(404)
+            if (!found) throw customError(404, 'Product not found!')
             let updated = await Product.update(editData, { where: { id } })
             res.status(200).json(updated)
         } catch (err) {
@@ -59,7 +59,7 @@ class productController {
         let id = Number(req.params.id)
         try {
             let found = await Product.findOne({ where: { id } })
-            if (!found) throw customError(404)
+            if (!found) throw customError(404, 'Product not found!')
             let deleted = await Product.destroy({ where: { id } })
             res.status(200).json(deleted)
         } catch (err) {

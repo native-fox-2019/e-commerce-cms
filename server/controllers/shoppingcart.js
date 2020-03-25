@@ -3,18 +3,16 @@ const customError = require('http-errors')
 
 class shoppingController {
     static async add(req, res, next) {
+        let UserId = req.userData.id
         let ProductId = Number(req.body.id)
         try {
             let inventory = await Product.findOne({ where: { id: ProductId } })
             if (!inventory) throw customError(404, 'Product not found!')
             if (!inventory.stock) throw customError(400, 'Sorry, we\'re out of stock for that for now.')
-            if (Number(inventory.stock) < Number(req.body.quantity)) throw customError(400, 'Sorry, but You can\'t buy more than the available stock.')
 
-            let inCart = await ShoppingCart.findOne({
-                where: { ProductId },
-                // attributes: ['id','UserId','ProductId','quantity','createdAt','updatedAt']
-            })
+            let inCart = await ShoppingCart.findOne({ where: { UserId, ProductId } })
             if (!inCart) {
+                if (Number(inventory.stock) < Number(req.body.quantity)) throw customError(400, 'Sorry, but You can\'t buy more than the available stock.')
                 let newItem = {
                     UserId: req.userData.id,
                     ProductId,
@@ -24,7 +22,8 @@ class shoppingController {
                 res.status(201).json(added)
             } else {
                 let newQuantity = { quantity: Number(inCart.quantity) + Number(req.body.quantity) }
-                let updatedQuantity = await ShoppingCart.update(newQuantity, { where: { id: inCart.id } })
+                if (Number(inventory.stock) < newQuantity.quantity) throw customError(400, 'Sorry, but You can\'t buy more than the available stock.')
+                let updatedQuantity = await ShoppingCart.update(newQuantity, { where: { id: inCart.id, UserId, ProductId } })
                 res.status(200).json({ message: 'Cart item updated!' })
             }
         } catch (err) {
@@ -70,12 +69,12 @@ class shoppingController {
             if (!inventory) throw customError(404, 'Product not found!')
 
             if (newQuantity.quantity < Number(inventory.stock)) {
-                let updatedQuantity = await ShoppingCart.update(newQuantity, { where: { id, UserId } })
+                let updatedQuantity = await ShoppingCart.update(newQuantity, { where: { id, UserId, ProductId: inCart.ProductId } })
                 res.status(200).json({ message: 'Cart item updated!' })
             } else if (newQuantity.quantity > Number(inventory.stock)) {
                 throw customError(400, 'Sorry, but You can\'t buy more than the available stock.')
             } else {
-                res.status(200).json({ message: 'Nothing changed!' })
+                res.status(200).json({ message: 'Cart item updated!' })
             }
         } catch (err) {
             next(err)
@@ -100,16 +99,29 @@ class shoppingController {
                 where: { id: UserId },
                 include: [{ model: Product }]
             })
+            if (!found.Products.length) throw customError(400, `You have nothing in your Shopping cart yet.`)
             found.Products.forEach(product => {
-                console.log('ProductId:', product.id)
-                console.log('Inventory Stock:', product.stock)
-                console.log('Qty in Cart:', product.ShoppingCart.quantity)
+                let newStock = Number(product.stock) - Number(product.ShoppingCart.quantity)
+                if (newStock < 0) {
+                    if (product.stock < 1) {
+                        ShoppingCart.destroy(
+                            { where: {id: product.ShoppingCart.id, UserId, ProductId: product.id } }
+                        )
+                        throw customError(400, `We're sorry, but ${product.name} is now out of stock.`)
+                    } else {
+                        ShoppingCart.update(
+                            { quantity: product.stock },
+                            { where: {id: product.ShoppingCart.id, UserId, ProductId: product.id } }
+                        )
+                        throw customError(400, `We're sorry, but ${product.name} has only ${product.stock} left in stock now.`)
+                    }
+                }
                 Product.update(
-                    { stock: product.stock - product.ShoppingCart.quantity },
+                    { stock: newStock },
                     { where: { id: product.id } }
                 )
+                ShoppingCart.destroy({ where: { id: product.ShoppingCart.id, UserId, ProductId: product.id } })
             });
-            let deleted = await ShoppingCart.destroy({ where: { UserId } })
             res.status(200).json(deleted)
         } catch (err) {
             next(err)
