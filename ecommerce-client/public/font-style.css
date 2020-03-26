@@ -1,0 +1,49 @@
+
+@font-face{
+  font-family: sweet;
+  src: url(./font/sweet.ttf);
+}
+@font-face{
+  font-family: rale-bold;
+  src: url(./font/ralewaybold.ttf);
+}
+@font-face{
+  font-family: rale-reg;
+  src: url(./font/ralewayreg.ttf);
+}
+@font-face{
+  font-family: sen;
+  src: url(./font/sen.ttf);
+}
+@font-face{
+  font-family: roboto-light;
+  src: url(./font/roboto-light.ttf);
+}
+@font-face{
+  font-family: roboto-reg;
+  src: url(./font/roboto.ttf);
+}
+.textForm{
+  font-family: rale-reg;
+  font-size: 30px;
+  color: black;
+}
+.title{
+  font-family: roboto-light;
+  font-size: 30px;
+}
+.itemTitle{
+  font-family: roboto-reg;
+  font-size: 15px;
+  text-align: center;
+  overflow-wrap: break-word;
+}
+
+.inputText{
+  font-family: rale-reg;
+  font-size: 25px;
+}
+.fa:hover{
+  color: black;
+  cursor: pointer;
+}

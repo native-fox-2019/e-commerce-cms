@@ -1,0 +1,9 @@
+post http://localhost:3000/user/register
+content-type: application/json
+
+{
+    "name": "geovrisco",
+    "email":"geovrisco@gmail.com",
+    "password":"test",
+    "level":"admin"
+}
