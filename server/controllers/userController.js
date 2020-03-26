@@ -13,7 +13,7 @@ class Controller {
             username: req.body.username,
             email: req.body.email,
             password: req.body.password,
-            role: req.body.role || 'admin',
+            role: req.body.role || 'customer',
         }
         User.create(obj)
         .then(data => {
