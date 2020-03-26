@@ -6,10 +6,6 @@ This is the first part of 2-parts series in making a mock e-commerce site. Made 
 Client: https://hobby-a56e6.firebaseapp.com/
 Server: https://sleepy-scrubland-83111.herokuapp.com/
 
-I still couldn't figure out why the login is broken. The validation system works fine and it returns error messages properly. Register works just fine but somehow it won't show positive result for login.
-
-Seeding was supposed to solve the admin problem, but it turns out a password from seed data will skip Sequelize hooks, causing it to not be hashed. I'm not even sure what to do now.
-
 Features:
 
 1. CRUD of items for admin.
