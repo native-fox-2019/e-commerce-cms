@@ -4,7 +4,18 @@ module.exports = (sequelize, DataTypes) => {
     name: DataTypes.STRING,
     category: DataTypes.STRING,
     image_url: DataTypes.STRING,
-    price: DataTypes.DECIMAL,
+    price:{ 
+      type: DataTypes.DECIMAL,
+      validate: {
+        isPositive(value){
+          if(value<0){
+            throw new Error("price cant be negative");
+          } else if (value === 0) {
+            throw new Error("price cant be zero");
+          }
+        }
+      }
+    },
     stock: DataTypes.INTEGER
   }, {});
   Product.associate = function(models) {
