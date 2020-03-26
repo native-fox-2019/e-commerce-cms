@@ -7,8 +7,8 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    // SERVER:'https://aqueous-badlands-12134.herokuapp.com',
-    SERVER:'http://localhost:3001',
+    SERVER:'https://aqueous-badlands-12134.herokuapp.com',
+    // SERVER:'http://localhost:3001',
     isLogin:false,
     products:[],
     token:'',
