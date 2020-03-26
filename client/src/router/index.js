@@ -6,19 +6,52 @@ import Register from '@/views/Register.vue';
 import LogIn from '@/views/LogIn.vue';
 import ItemDetail from '@/views/ItemDetail.vue';
 import UserProfile from '@/views/UserProfile.vue';
+import TransactionHistory from '@/views/TransactionHistory.vue';
 import AddItem from '@/views/AddItem.vue';
+import UserCarts from '@/views/UserCarts.vue';
+import AllCarts from '@/views/AllCarts.vue';
+
+import store from '../store';
 
 Vue.use(VueRouter);
 
+// const beforeEnter = async (to, from, next) => {
+//   if (!localStorage.getItem('token')) {
+//     next('/login');
+//   } else {
+//     next();
+//   }
+// };
+
 const routes = [
-  { path: '/', name: 'LandingPage', component: LandingPage },
-  { path: '/register', name: 'Register', component: Register },
-  { path: '/login', name: 'LogIn', component: LogIn },
   {
-    path: '/user/:id',
-    name: 'UserProfile',
-    component: UserProfile,
-    props: true,
+    path: '/',
+    name: 'LandingPage',
+    component: LandingPage,
+  },
+  {
+    path: '/register',
+    name: 'Register',
+    component: Register,
+    beforeEnter: (to, from, next) => {
+      if (localStorage.getItem('token')) {
+        next('/');
+      } else {
+        next();
+      }
+    },
+  },
+  {
+    path: '/login',
+    name: 'LogIn',
+    component: LogIn,
+    beforeEnter: (to, from, next) => {
+      if (localStorage.getItem('token')) {
+        next('/');
+      } else {
+        next();
+      }
+    },
   },
   {
     path: '/item/:id',
@@ -26,14 +59,58 @@ const routes = [
     component: ItemDetail,
     props: true,
   },
-  { path: '/add-item', name: 'AddItem', component: AddItem },
   {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
+    path: '/add-item',
+    name: 'AddItem',
+    component: AddItem,
+    beforeEnter: (to, from, next) => {
+      if (!localStorage.getItem('token') || store.state.specialRole !== 'admin') {
+        next('/');
+      } else {
+        next();
+      }
+    },
+  },
+  {
+    path: '/admin/carts',
+    name: 'AllCarts',
+    component: AllCarts,
+    beforeEnter: (to, from, next) => {
+      if (localStorage.getItem('token') && store.state.specialRole === 'admin') {
+        next();
+      } else {
+        next('/');
+      }
+    },
+  },
+  {
+    path: '/user',
+    name: 'UserProfile',
+    component: UserProfile,
+  },
+  {
+    path: '/user/carts',
+    name: 'UserCarts',
+    component: UserCarts,
+    beforeEnter: (to, from, next) => {
+      if (localStorage.getItem('token') && store.state.specialRole === 'customer') {
+        next();
+      } else {
+        next('/');
+      }
+    },
+  },
+  {
+    path: '/user/carts/history',
+    name: 'TransactionHistory',
+    component: TransactionHistory,
+    beforeEnter: (to, from, next) => {
+      if (localStorage.getItem('token') && store.state.specialRole === 'customer') {
+        next();
+      } else {
+        next('/');
+      }
+    },
   },
 ];
 

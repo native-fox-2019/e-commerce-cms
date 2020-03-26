@@ -2,7 +2,7 @@
     <div>
         <Navbar></Navbar>
             <div class="container p-4">
-                <h5 class="text-center">Add New Card</h5>
+                <h5 class="text-center">Add New Item</h5>
                 <form v-on:submit.prevent="submitForm" class="my-4" enctype="multipart/form-data">
                     <div class="form-group">
                         <label>Item Name:</label>

@@ -23,6 +23,9 @@ export default new Vuex.Store({
     },
     changeIsLogin(state, payload) {
       state.isLogin = payload;
+      // if (!payload) {
+      //   this.$router.push('/login');
+      // }
     },
     changeSpecialRole(state, payload) {
       state.specialRole = payload;

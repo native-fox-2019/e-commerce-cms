@@ -3,63 +3,83 @@
         <Navbar></Navbar>
         <div class="container">
             <div v-if="!editMode">
-              <!-- <h1>{{id}}</h1> -->
               <h4>{{item.name}}</h4>
               <img v-bind:src="item.image_url" id="item-image">
               <p>{{item.description}}</p>
               <p>Price: {{item.price}}</p>
               <p>Stock: {{item.stock}}</p>
               <span
-                v-if="specialRole"
+                v-if="isAdmin"
                 v-on:click="switchEditMode"
                 class="btn btn-warning">
                 Edit Information
               </span>
               <span
-                v-if="specialRole"
+                v-if="isAdmin"
                 v-on:click="confirmDelete"
                 class="btn btn-danger">
                 Delete
               </span>
-          </div>
-          <div v-if="editMode">
-              <h5 class="text-center">Edit Iten Form</h5>
-              <form v-on:submit.prevent="editData" class="my-4">
-                  <div class="form-group">
-                      <label>Item Name:</label>
-                      <input type="text"
-                          class="form-control"
-                          v-model="item.name">
-                      </div>
-                      <div class="form-group">
-                          <label>Description:</label>
-                          <textarea class="form-control"
-                              v-model="item.description">
-                          </textarea>
-                      </div>
-                      <div class="form-group">
-                          <label>Image URL:</label>
-                          <input type="text"
-                              class="form-control"
-                              v-model="item.image_url">
-                      </div>
-                      <div class="form-group">
-                          <label>Price:</label>
-                          <input type="number"
-                              min="1" step="any"
-                              class="form-control"
-                              v-model="item.price">
-                      </div>
-                      <div class="form-group">
-                          <label>Stock:</label>
-                          <input type="number"
-                              step="1" min="1" value="1"
-                              v-model="item.stock"
-                              class="form-control">
-                      </div>
-                  <input class="btn btn-success" type="submit">
-              </form>
+              <span
+                v-if="isCustomer"
+                v-on:click="showCartModal"
+                class="btn btn-success">
+                Add to Cart
+              </span>
             </div>
+            <div v-if="editMode">
+                <h5 class="text-center">Edit Iten Form</h5>
+                <form v-on:submit.prevent="editData" class="my-4">
+                    <div class="form-group">
+                        <label>Item Name:</label>
+                        <input type="text"
+                            class="form-control"
+                            v-model="item.name">
+                        </div>
+                        <div class="form-group">
+                            <label>Description:</label>
+                            <textarea class="form-control"
+                                v-model="item.description">
+                            </textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Image URL:</label>
+                            <input type="text"
+                                class="form-control"
+                                v-model="item.image_url">
+                        </div>
+                        <div class="form-group">
+                            <label>Price:</label>
+                            <input type="number"
+                                min="1" step="any"
+                                class="form-control"
+                                v-model="item.price">
+                        </div>
+                        <div class="form-group">
+                            <label>Stock:</label>
+                            <input type="number"
+                                step="1" min="1" value="1"
+                                v-model="item.stock"
+                                class="form-control">
+                        </div>
+                    <input class="btn btn-success" type="submit">
+                </form>
+            </div>
+            <modal name="cart-modal">
+                <div class="container">
+                    <h5 class="text-center">Add To Cart</h5>
+                    <form v-on:submit.prevent="addToCart" class="my-1">
+                        <div class="form-group">
+                            <label>Number of items:</label>
+                            <input type="number"
+                                class="form-control"
+                                step="1" min="1" value="1"
+                                v-model="cart.quantity">
+                        </div>
+                        <input class="btn btn-success" type="submit">
+                    </form>
+                </div>
+            </modal>
         </div>
         <Footer></Footer>
     </div>
@@ -87,10 +107,23 @@ export default {
         price: '',
         stock: '',
       },
+      cart: {
+        quantity: 1,
+      },
     };
   },
   created() {
     this.getOneItem(this.id);
+  },
+  computed: {
+    isAdmin() {
+      if (this.$store.state.specialRole === 'admin') return true;
+      return false;
+    },
+    isCustomer() {
+      if (this.$store.state.specialRole === 'customer') return true;
+      return false;
+    },
   },
   methods: {
     getOneItem(id) {
@@ -146,6 +179,35 @@ export default {
           });
         });
     },
+    showCartModal() {
+      this.$modal.show('cart-modal');
+    },
+    addToCart() {
+      console.log('Add to cart...', this.id);
+      appAxios({
+        method: 'POST',
+        url: `/carts/${this.id}`,
+        data: this.cart,
+        headers: {
+          token: localStorage.getItem('token'),
+        },
+      })
+        .then((result) => {
+          this.$modal.hide('cart-modal');
+          console.log('Uncaught promise?', result);
+          this.$router.push('/user/carts');
+        })
+        .catch((err) => {
+          console.log('Uncaught promise? HHHHH');
+          // console.log('Error:', err.response);
+          this.$modal.hide('cart-modal');
+          this.$swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: err.response.data.message || 'Something went wrong!',
+          });
+        });
+    },
     confirmDelete() {
       this.$swal.fire({
         icon: 'warning',
@@ -183,11 +245,6 @@ export default {
         })
         .catch(() => {
         });
-    },
-  },
-  computed: {
-    specialRole() {
-      return this.$store.state.specialRole;
     },
   },
 };

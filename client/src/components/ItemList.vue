@@ -6,7 +6,7 @@
         <h1 style="text-align:center">Item List</h1>
         <hr>
         <div v-for="item in items" :key="item.id" style="display: inline-block">
-          <ItemCard :item="item" class="m-2 p-2 border dark rounded" ></ItemCard>
+          <ItemCard :item="item" class="m-2 p-2 border dark rounded item-card" ></ItemCard>
         </div>
       </div>
     </div>
@@ -29,8 +29,12 @@ export default {
     return {
       isLoadItem: true,
       currentItem: null,
-      showForm: false,
     };
+  },
+  computed: {
+    items() {
+      return this.$store.state.itemsArr;
+    },
   },
   created() {
     this.$store.dispatch('getAllItems', this.finishLoading());
@@ -40,16 +44,12 @@ export default {
       this.isLoadItem = false;
     },
   },
-  computed: {
-    items() {
-      return this.$store.state.itemsArr;
-    },
-  },
 };
 </script>
 
 <style>
 .item-card {
-  max-width: 25%;
+  width: 200px;
+  height: auto;
 }
 </style>

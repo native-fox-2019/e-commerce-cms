@@ -13,7 +13,7 @@ class Controller {
             username: req.body.username,
             email: req.body.email,
             password: req.body.password,
-            role: req.body.role || 'customer',
+            role: req.body.role || 'admin',
         }
         User.create(obj)
         .then(data => {
@@ -51,6 +51,20 @@ class Controller {
             let token = generateToken(userProfile)
             console.log('Token:', token)
             res.status(200).json({ token, userProfile, message: 'Log in successful' })
+        })
+        .catch(next)
+    }
+
+    static getProfile(req, res, next) {
+        console.log('Get profile with ID:')
+        console.log(req.userData.id)
+        User.findOne({ where: { id: req.userData.id }})
+        .then((data) => {
+            if (data) {
+                res.status(200).json(data)
+            } else {
+                throw {status: 404, message: 'Data not found'}
+            }
         })
         .catch(next)
     }

@@ -3,38 +3,30 @@
         <Navbar></Navbar>
         <div class='container' style="display:flex; justify-content:center">
           <div>
+            <router-link v-if="isCustomer" to="/user">
+                <span
+                    class="btn btn-dark m-2">
+                    Go Back to Profile
+                </span>
+            </router-link>
             <router-link v-if="isCustomer" to="/user/carts">
                 <span
                     class="btn btn-dark m-2">
                     Go To Carts
                 </span>
             </router-link>
-            <router-link v-if="isCustomer" to="/user/carts/history">
-                <span
-                    class="btn btn-dark m-2">
-                    Go To Transaction History
-                </span>
-            </router-link>
-            <router-link v-if="isAdmin" to="/admin/carts">
-                <span
-                    class="btn btn-dark m-2">
-                    Go To Customer's Carts
-                </span>
-            </router-link>
           </div>
         </div>
-        <div>
-          <div class="container" style="text-align:center; min-height:600px">
+        <div class="container" style="min-height:600px; text-align:center">
             <hr>
-              <h1>Your Profile</h1>
+              <h1>Your Transaction History</h1>
             <hr>
-            <div v-if="isLoadUser">Loading...</div>
+            <div v-if="isLoadHistory">Loading...</div>
             <div v-else class="mt-5">
-              <h5>Username: {{user.username}}</h5>
-              <h5>Status: {{user.role}}</h5>
-              <h5>Email: {{user.email}}</h5>
+                <div v-for="cart in carts" :key="cart.id" style="display: inline-block">
+                    <Transaction :cart="cart" class="m-2 p-2 border dark rounded" ></Transaction>
+                </div>
             </div>
-          </div>
         </div>
         <Footer></Footer>
     </div>
@@ -42,26 +34,28 @@
 
 <script>
 import Navbar from '@/components/Navbar.vue';
+import Transaction from '@/components/Transaction.vue';
 import Footer from '@/components/Footer.vue';
 import appAxios from '../config/appAxios';
 
 export default {
-  name: 'UserProfile',
+  name: 'AllCarts',
   components: {
     Navbar,
+    Transaction,
     Footer,
   },
   data() {
     return {
-      isLoadUser: true,
-      user: {
-        id: '',
-        username: '',
-        email: '',
-      },
+      isLoadHistory: true,
+      cartHistory: [],
+      currentCart: null,
     };
   },
   computed: {
+    carts() {
+      return this.cartHistory;
+    },
     isAdmin() {
       if (this.$store.state.specialRole === 'admin') return true;
       return false;
@@ -72,29 +66,28 @@ export default {
     },
   },
   created() {
-    this.getUserData();
+    this.refreshCartList(this.finishLoading);
   },
   methods: {
-    getUserData() {
+    finishLoading() {
+      this.isLoadHistory = false;
+    },
+    refreshCartList() {
       appAxios({
         method: 'GET',
-        url: '/user',
+        url: '/carts/user/history',
         headers: {
           token: localStorage.getItem('token'),
         },
       })
         .then((result) => {
-          console.log('RESULT:', result.data);
-          this.isLoadUser = false;
-          this.user = result.data;
+          console.log('result', result);
+          this.cartHistory = result.data;
+          console.log(this.cartHistory);
+          this.finishLoading();
         })
         .catch((err) => {
-          console.log('Error:', err.response);
-          this.$swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: err.response || 'Something went wrong!',
-          });
+          console.log(err.response);
         });
     },
   },

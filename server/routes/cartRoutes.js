@@ -10,6 +10,7 @@ router.get('/', adminAuth, CartController.showAllCustomerCarts)
 router.post('/:id', customerAuth, CartController.create)
 
 // ID params refers to CartId
+router.get('/:id', customerAuth, CartController.findOne)
 router.delete('/:id', customerAuth, authorization, CartController.destroy)
 router.put('/:id', customerAuth, authorization, CartController.update)
 

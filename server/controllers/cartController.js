@@ -67,6 +67,15 @@ class Controller {
             .catch(next)
     }
 
+    static findOne(req, res, next) {
+        const option = { where: { id: req.params.id }}
+        Cart.findOne(option)
+            .then(data => {
+                res.status(200).json(data)
+            })
+            .catch(next)
+    }
+
     static showUserCarts(req, res, next) {
         // Only for customer
         const option = { where: { UserId: req.userData.id }}
@@ -132,7 +141,7 @@ class Controller {
                     return Item.findOne({ where: { id: cart.ItemId }})
                 })
                 .then(item => {
-                    if (item.stock - checkOutQty < 0) throw ({message: 'There is not enough stock for this order!'})
+                    if (item.stock - checkOutQty < 0) throw ({status: 400, message: 'There is not enough stock for this order!'})
                     
                     // Data response //
                     data = {
@@ -161,7 +170,9 @@ class Controller {
                     return Item.findOne({ where: { id: cart.ItemId }})
                 })
                 .then(item => {
-                    if (item.stock < Number(update.quantity)) throw ({message: 'There is not enough stock for this order!'})
+                    console.log('Item stock:', item.stock)
+                    console.log('Update quantity:', update.quantity)
+                    if (item.stock < Number(update.quantity)) throw ({status: 400, message: 'There is not enough stock for this order!'})
 
                     // Response data //
                     data = {
@@ -171,10 +182,11 @@ class Controller {
                         quantity: Number(update.quantity),
                         totalPrice: item.price * update.quantity,
                     }
-                    // console.log('Cart is going to update with:', data)
+                    console.log('Cart is going to update with:', data)
                     return Cart.update(data, { where: { id: id }})
                 })
                 .then(() => {
+                    console.log('Edit quantity succeeded!')
                     res.status(200).json(data)
                 })
                 .catch(next) 

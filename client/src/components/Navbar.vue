@@ -25,9 +25,17 @@
                 <li class="nav-item">
                     <router-link
                       to="/add-item"
-                      v-if="specialRole"
+                      v-if="isAdmin"
                       class="nav-link">
                       Add Item
+                    </router-link>
+                </li>
+                <li class="nav-item">
+                    <router-link
+                      to="/user"
+                      v-if="isLogin"
+                      class="nav-link">
+                      Profile
                     </router-link>
                 </li>
                 <li
@@ -56,6 +64,8 @@
 </template>
 
 <script>
+// import router from '../router';
+
 export default {
   name: 'Navbar',
   created() {
@@ -67,6 +77,8 @@ export default {
 
     if (localStorage.getItem('userProfile') === 'admin') {
       this.$store.commit('changeSpecialRole', 'admin');
+    } else if (localStorage.getItem('userProfile') === 'customer') {
+      this.$store.commit('changeSpecialRole', 'customer');
     }
   },
   methods: {
@@ -90,6 +102,8 @@ export default {
             this.$store.commit('changeUserProfile', '');
             this.$store.commit('changeSpecialRole', '');
             this.$store.commit('changeIsLogin', false);
+            console.log('Log out successful!');
+            this.$router.push('/login');
           }
         })
         .catch(() => {
@@ -100,8 +114,13 @@ export default {
     isLogin() {
       return this.$store.state.isLogin;
     },
-    specialRole() {
-      return this.$store.state.specialRole;
+    isAdmin() {
+      if (this.$store.state.specialRole === 'admin') return true;
+      return false;
+    },
+    isCustomer() {
+      if (this.$store.state.specialRole === 'customer') return true;
+      return false;
     },
   },
 };

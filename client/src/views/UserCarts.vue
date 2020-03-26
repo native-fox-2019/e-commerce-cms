@@ -3,10 +3,10 @@
         <Navbar></Navbar>
         <div class='container' style="display:flex; justify-content:center">
           <div>
-            <router-link v-if="isCustomer" to="/user/carts">
+            <router-link v-if="isCustomer" to="/user">
                 <span
                     class="btn btn-dark m-2">
-                    Go To Carts
+                    Go Back to Profile
                 </span>
             </router-link>
             <router-link v-if="isCustomer" to="/user/carts/history">
@@ -15,26 +15,18 @@
                     Go To Transaction History
                 </span>
             </router-link>
-            <router-link v-if="isAdmin" to="/admin/carts">
-                <span
-                    class="btn btn-dark m-2">
-                    Go To Customer's Carts
-                </span>
-            </router-link>
           </div>
         </div>
-        <div>
-          <div class="container" style="text-align:center; min-height:600px">
+        <div class="container" style="min-height:600px; text-align:center">
             <hr>
-              <h1>Your Profile</h1>
+              <h1>Your Cart List</h1>
             <hr>
-            <div v-if="isLoadUser">Loading...</div>
+            <div v-if="isLoadCart">Loading...</div>
             <div v-else class="mt-5">
-              <h5>Username: {{user.username}}</h5>
-              <h5>Status: {{user.role}}</h5>
-              <h5>Email: {{user.email}}</h5>
+                <div v-for="cart in carts" :key="cart.id" style="display: inline-block">
+                    <CartCard :cart="cart" class="m-2 p-2 border dark rounded" ></CartCard>
+                </div>
             </div>
-          </div>
         </div>
         <Footer></Footer>
     </div>
@@ -42,26 +34,28 @@
 
 <script>
 import Navbar from '@/components/Navbar.vue';
+import CartCard from '@/components/CartCard.vue';
 import Footer from '@/components/Footer.vue';
 import appAxios from '../config/appAxios';
 
 export default {
-  name: 'UserProfile',
+  name: 'AllCarts',
   components: {
     Navbar,
+    CartCard,
     Footer,
   },
   data() {
     return {
-      isLoadUser: true,
-      user: {
-        id: '',
-        username: '',
-        email: '',
-      },
+      isLoadCart: true,
+      allPendingCarts: [],
+      currentCart: null,
     };
   },
   computed: {
+    carts() {
+      return this.allPendingCarts;
+    },
     isAdmin() {
       if (this.$store.state.specialRole === 'admin') return true;
       return false;
@@ -72,29 +66,28 @@ export default {
     },
   },
   created() {
-    this.getUserData();
+    this.refreshCartList(this.finishLoading);
   },
   methods: {
-    getUserData() {
+    finishLoading() {
+      this.isLoadCart = false;
+    },
+    refreshCartList() {
       appAxios({
         method: 'GET',
-        url: '/user',
+        url: '/carts/user/pending',
         headers: {
           token: localStorage.getItem('token'),
         },
       })
         .then((result) => {
-          console.log('RESULT:', result.data);
-          this.isLoadUser = false;
-          this.user = result.data;
+          console.log('result', result);
+          this.allPendingCarts = result.data;
+          console.log(this.allPendingCarts);
+          this.finishLoading();
         })
         .catch((err) => {
-          console.log('Error:', err.response);
-          this.$swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: err.response || 'Something went wrong!',
-          });
+          console.log(err.response);
         });
     },
   },

@@ -25,10 +25,10 @@ class Controller {
     static findOne(req, res, next) {
         const option = { where: { id: req.params.id }}
         Item.findOne(option)
-        .then(data=>{
-            if(data){
+        .then((data) => {
+            if (data) {
                 res.status(200).json(data)
-            } else{
+            } else {
                 throw {status: 404, message: 'Data not found'}
             }
         })

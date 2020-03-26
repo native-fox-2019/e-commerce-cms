@@ -1,5 +1,5 @@
 const ItemController = require('../controllers/itemController.js')
-const {adminAuth} = require('../middlewares/auth.js')
+const { authentication, adminAuth } = require('../middlewares/auth.js')
 
 const express = require('express')
 const router = express.Router()
@@ -7,9 +7,9 @@ const router = express.Router()
 router.get('/', ItemController.findAll)
 router.get('/:id', ItemController.findOne)
 
-router.post('/', adminAuth, ItemController.create)
-router.put('/:id', adminAuth, ItemController.update)
-router.delete('/:id', adminAuth, ItemController.destroy)
+router.post('/', authentication, adminAuth, ItemController.create)
+router.put('/:id', authentication, adminAuth, ItemController.update)
+router.delete('/:id', authentication, adminAuth, ItemController.destroy)
 
 // router.post('/', authentication, ItemController.create)
 // router.put('/:id', authentication, ItemController.update)

@@ -1,5 +1,5 @@
 function errorHandler(err, req, res, next) {
-    console.log('Error:', err)
+    console.log('Error:', err.name)
     let status, error = ''
 
     if (err.name === 'SequelizeValidationError') {
