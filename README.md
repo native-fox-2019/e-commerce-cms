@@ -14,6 +14,8 @@ Features:
 
 1. CRUD of items for admin.
 2. Item display.
+3. Order item by cart system for customer.
+4. View all transactions and carts for admin.
 
  And here's the documentation:
 
