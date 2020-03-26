@@ -20,7 +20,7 @@ export default {
   name: 'Navbar',
   methods: {
     logout() {
-      localStorage.removeItem('access_token');
+      localStorage.removeItem('token');
       this.$router.push({ path: '/' });
     },
   },

@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-const server = 'https://limitless-atoll-12110.herokuapp.com';
+const heroku = 'https://frozen-wildwood-55741.herokuapp.com';
+// const local = 'http://localhost:3000';
 
 const state = {
   products: [],
@@ -12,9 +13,9 @@ const getters = {
 
 const actions = {
   async getAllProducts({ commit }) {
-    const { data } = await axios.get(`${server}/products`, {
+    const { data } = await axios.get(`${heroku}/products`, {
       headers: {
-        access_token: localStorage.getItem('access_token'),
+        token: localStorage.getItem('token'),
       },
     });
     data.sort((a, b) => a.id - b.id);
@@ -22,9 +23,9 @@ const actions = {
   },
 
   async addProduct({ commit }, product) {
-    const { data } = await axios.post(`${server}/products`, product, {
+    const { data } = await axios.post(`${heroku}/products`, product, {
       headers: {
-        access_token: localStorage.getItem('access_token'),
+        token: localStorage.getItem('token'),
       },
     });
 
@@ -32,19 +33,18 @@ const actions = {
   },
 
   async editProduct({ commit }, product) {
-    await axios.put(`${server}/products/${product.id}`, product, {
+    await axios.put(`${heroku}/products/${product.id}`, product, {
       headers: {
-        access_token: localStorage.getItem('access_token'),
+        token: localStorage.getItem('token'),
       },
     });
-
     commit('editProduct', product);
   },
 
   async deleteProduct({ commit }, id) {
-    await axios.delete(`${server}/products/${id}`, {
+    await axios.delete(`${heroku}/products/${id}`, {
       headers: {
-        access_token: localStorage.getItem('access_token'),
+        token: localStorage.getItem('token'),
       },
     });
 

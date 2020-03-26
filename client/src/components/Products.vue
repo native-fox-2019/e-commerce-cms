@@ -237,11 +237,15 @@ export default {
   }
 
   .row .cell:nth-child(1) {
-    width: 360px;
+    width: 160px;
+    max-width: 160px;
+    overflow: auto;
   }
 
   .row .cell:nth-child(2) {
-    width: 160px;
+    width: 360px;
+    max-width: 500px;
+    overflow: auto;
   }
 
   .row .cell:nth-child(3) {

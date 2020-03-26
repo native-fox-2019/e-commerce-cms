@@ -44,8 +44,8 @@ export default {
       try {
         document.body.style.cursor = 'wait';
         await this.login({ email: this.email, password: this.password });
-        localStorage.setItem('access_token', this.accessToken);
-        await this.checkSuperAdmin(localStorage.getItem('access_token'));
+        localStorage.setItem('token', this.accessToken);
+        await this.checkSuperAdmin(localStorage.getItem('token'));
         this.$router.push({ path: '/products' });
       } catch (err) {
         this.errors = err.message;

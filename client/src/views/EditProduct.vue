@@ -7,6 +7,8 @@
       <input type="text" v-model="name">
       <label>Image Url</label>
       <input type="text" v-model="url">
+      <label>Category</label>
+      <input type="text" v-model="category">
       <label>Price</label>
       <input type="number" v-model="price">
       <label>Stock</label>
@@ -40,6 +42,7 @@ export default {
         url: '',
         stock: '',
         price: '',
+        category: '',
       };
     }
     return {
@@ -47,6 +50,7 @@ export default {
       url: this.product.image_url,
       price: this.product.price,
       stock: this.product.stock,
+      category: this.product.category,
       isCollapsed: false,
     };
   },
@@ -67,6 +71,7 @@ export default {
         image_url: this.image_url,
         price: this.price,
         stock: this.stock,
+        category: this.category,
       };
       await this.editProduct(edited);
       this.$router.push({ path: '/products' });

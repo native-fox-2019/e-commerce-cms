@@ -1,7 +1,8 @@
 import axios from 'axios';
 import jwt from 'jsonwebtoken';
 
-const server = 'https://limitless-atoll-12110.herokuapp.com';
+const heroku = 'https://frozen-wildwood-55741.herokuapp.com';
+// const local = 'http://localhost:3000';
 
 const state = {
   access_token: '',
@@ -16,8 +17,8 @@ const getters = {
 const actions = {
   async login({ commit }, userData) {
     try {
-      const response = await axios.post(`${server}/login`, userData);
-      commit('setAccessToken', response.data.access_token);
+      const response = await axios.post(`${heroku}/login`, userData);
+      commit('setAccessToken', response.data.token);
     } catch (err) {
       throw err.response.data;
     }
@@ -25,15 +26,15 @@ const actions = {
 
   async register({ commit }, userData) {
     try {
-      const response = await axios.post(`${server}/register`, userData);
-      commit('setAccessToken', response.data.access_token);
+      const response = await axios.post(`${heroku}/register`, userData);
+      commit('setAccessToken', response.data.token);
     } catch (err) {
       throw err.response.data;
     }
   },
 
   async checkSuperAdmin({ commit }) {
-    const accessToken = localStorage.getItem('access_token');
+    const accessToken = localStorage.getItem('token');
     if (accessToken) {
       const userData = jwt.verify(accessToken, 'rahasia');
       if (userData.role === 'superAdmin') {

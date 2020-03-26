@@ -7,6 +7,8 @@
       <input type="text" v-model="name">
       <label>Image Url</label>
       <input type="text" v-model="url">
+      <label>Category</label>
+      <input type="text" v-model="category">
       <label>Price</label>
       <input type="number" v-model="price">
       <label>Stock</label>
@@ -37,6 +39,7 @@ export default {
       url: '',
       price: 0,
       stock: 0,
+      category: '',
       isSuccess: false,
       onSuccess: 'Successfully Add a product',
       isCollapsed: false,
@@ -51,6 +54,7 @@ export default {
         image_url: this.url,
         price: this.price,
         stock: this.stock,
+        category: this.category,
       };
       await this.addProduct(newProduct);
       this.isSuccess = true;

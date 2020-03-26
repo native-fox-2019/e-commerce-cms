@@ -1,8 +1,8 @@
 <template>
     <div class="home" :class="{ collapsed: isCollapsed }">
         <Navbar />
-        <Products >
           <Sidebar @collapsed="onToggleCollapse" />
+        <Products >
         </Products>
     </div>
 </template>
