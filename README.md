@@ -74,7 +74,7 @@ Features:
 | Status: `200` <br> Content: `object of updated data}` | Status: `404` <br> Content: `{"message": "Data not found!"}` |
 
 
-- **/kanban/:id**
+- **/items/:id**
   Delete an item entry. This end point need authorization from verified user.
 
 | Method   | Header  | Params       | Data   |
