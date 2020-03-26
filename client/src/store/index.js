@@ -7,8 +7,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
     state: {
         products: [],
-        // url : 'https://powerful-meadow-02119.herokuapp.com',
-        url : 'http://localhost:3000',
+        url : 'https://powerful-meadow-02119.herokuapp.com',
+        // url : 'http://localhost:3000',
     },
     mutations: {
         setProduct: (state, data) => {
