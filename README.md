@@ -209,7 +209,7 @@ Content-Type : application/x-www-form-urlencoded
 
 <br></br>
 
-### 3.  PUT / transaction /:id
+### 3.  PUT / product /:id
 
 
 _Example Input (Request Body) :_
@@ -271,7 +271,7 @@ _Response ERROR (400, data tidak lengkap):_
 
 ```
 
-### 4.  DELETE / transaction /:id
+### 4.  DELETE / product /:id
 
 
 
