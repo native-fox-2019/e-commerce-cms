@@ -48,6 +48,7 @@ export default {
     },
     methods: {
         listUser: function() {
+            this.$store.state.isLoading = true;
             Axios({
                 method: "get",
                 url: `${this.$store.state.rootUrl}/user/listAll`,
@@ -56,6 +57,7 @@ export default {
                 }
             })
                 .then(result => {
+                    this.$store.state.isLoading = false;
                     this.users = result.data;
                 })
                 .catch(err => {

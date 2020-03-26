@@ -44,6 +44,7 @@ export default {
     },
     methods: {
         getAllIncomingOrder: function() {
+            this.$store.state.isLoading = true;
             axios({
                 method: "get",
                 url: `${this.$store.state.rootUrl}/order/seller/incomingOrder`,
@@ -52,6 +53,7 @@ export default {
                 }
             })
                 .then(result => {
+                    this.$store.state.isLoading = false;
                     this.incomingOrders = result.data;
                 })
                 .catch(err => {
@@ -70,6 +72,7 @@ export default {
                 confirmButtonText: "Yes, delete it!"
             }).then(result => {
                 if (result.value) {
+                    this.$store.state.isLoading = true;
                     axios({
                         method: "patch",
                         url: `${this.$store.state.rootUrl}/order/seller/confirmOrder/${order_id}`,
@@ -78,6 +81,7 @@ export default {
                         }
                     })
                         .then(() => {
+                            this.$store.state.isLoading = false;
                             this.getAllIncomingOrder();
                         })
                         .catch(err => {

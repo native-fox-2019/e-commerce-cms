@@ -52,6 +52,7 @@
                 </ul>
             </nav>
         </header>
+        <img src="../preloader.gif" class="preloader" v-if="this.$store.state.isLoading" />
         <router-view></router-view>
         <!-- <div class="footer">
             <div class="footer-content">

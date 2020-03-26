@@ -59,6 +59,7 @@ export default {
     methods: {
         register: function() {
             if (this.register_password == this.register_password_confirm) {
+                this.$store.state.isLoading = true;
                 Axios({
                     method: "post",
                     url: `${this.$store.state.rootUrl}/user/registration`,
@@ -73,6 +74,7 @@ export default {
                             "access_token",
                             result.data.access_token
                         );
+                        this.$store.state.isLoading = false;
                         this.register_name = "";
                         this.register_email = "";
                         this.register_password = "";

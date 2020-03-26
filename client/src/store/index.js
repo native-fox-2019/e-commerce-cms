@@ -17,7 +17,8 @@ export default new Vuex.Store({
             stock: '',
             price: ''
         },
-        user_info: {}
+        user_info: {},
+        isLoading: false
     },
     mutations: {
         setData: function (state, payload) {
@@ -66,6 +67,7 @@ export default new Vuex.Store({
                 });
         },
         errorHandler: function (context, err_payload) {
+            this.state.isLoading = false
             Swal.fire({
                 icon: 'error',
                 title: 'Error',
