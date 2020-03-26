@@ -12,6 +12,7 @@ class CartController {
             amount : req.body.amount,
             total : req.body.total
         }
+        console.log(obj)
         Cart.findOne({where : {UserId : userId, ProductId : req.body.id}})
         .then(response=>{
             if(response === null){
@@ -48,7 +49,7 @@ class CartController {
         let productId = req.params.id
         Cart.destroy({where : {UserId : userId, ProductId : productId}})
         .then(()=>{
-            res.status(201).json(`Delete Success`)
+            res.status(200).json(`Delete Success`)
         })
         .catch(err=>{
             next(err)
