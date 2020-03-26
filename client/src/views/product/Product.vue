@@ -38,7 +38,7 @@
                                 </b-row>
                             </b-col>
                             <b-col sm="6">
-                                <img :src="$store.state.SERVER+'/img/'+row.item.image_url " class="product-img" alt="">
+                                <img :src="imageURL(row.item)" class="product-img" alt="">
                             </b-col>
 
                         </b-row>
@@ -91,6 +91,12 @@ export default {
             .catch(()=>{
                 this.$bvModal.msgBoxOk('An error occured');
             })
+        },
+        imageURL(product){
+            console.log(product)
+            if(product.isScrapped)
+                return product.image_url
+            return this.$store.state.SERVER+'/img/'+product.image_url
         }
     }
 }
