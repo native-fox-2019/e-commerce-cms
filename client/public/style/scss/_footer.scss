@@ -1,0 +1,29 @@
+.footer {
+    background-color: $color-primary;
+    height: 150px;
+    position: relative;
+    // position: fixed;
+    width: 100%;
+    bottom: 0px;
+    left: 0px;
+
+    .footer-content {
+        font-size: 18px;
+        height: 100px;
+        text-align: center;
+        padding-top: 25px;
+
+        p {
+            color: whitesmoke;
+        }
+    }
+
+    .footer-bottom {
+        background-color: $color-backrgound;
+        color: $color-font;
+        height: 50px;
+        width: 100%;
+        text-align: center;
+        padding-top: 20px;
+    }
+}
