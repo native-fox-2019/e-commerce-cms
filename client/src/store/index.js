@@ -8,9 +8,22 @@ export default new Vuex.Store({
   state() {
     return {
       products: [],
+      loading: false,
     };
   },
   mutations: {
+    addProduct(input) {
+      console.log(input.catogy);
+      console.log(input.name);
+      axios.post('https://guarded-thicket-66622.herokuapp.com/product', input)
+        .then((data) => {
+          this.$store.state.products.push(data.data);
+          this.reset();
+        })
+        .catch(() => {
+          // console.log(err);
+        });
+    },
     getProducts() {
       axios.get('https://guarded-thicket-66622.herokuapp.com/product')
         .then((data) => {

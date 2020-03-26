@@ -5,7 +5,7 @@
         <v-list-item-content>
           <div class="overline mb-4">Category: {{ category }}</div>
           <v-list-item-title class="headline mb-1">{{ name }}</v-list-item-title>
-          <v-list-item-subtitle>Price: {{ price }}</v-list-item-subtitle>
+          <v-list-item-subtitle>Price: Rp. {{ price }}</v-list-item-subtitle>
           <v-list-item-subtitle>Stock: {{ stock }}</v-list-item-subtitle>
           <v-list-item-subtitle>last update: {{ updatedAt }}</v-list-item-subtitle>
         </v-list-item-content>

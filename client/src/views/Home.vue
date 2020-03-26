@@ -15,20 +15,21 @@
         </v-row>
       </v-container>
     </v-content>
+    <AddProduct />
   </div>
 </template>
 
 <script>
 import Navbar from '@/components/Navbar.vue';
 import Card from '@/components/Card.vue';
-// import AddProduct from '@/components/AddProduct.vue';
+import AddProduct from '@/components/AddProduct.vue';
 
 export default {
   name: 'Home',
   components: {
     Card,
     Navbar,
-    // AddProduct,
+    AddProduct,
   },
   created() {
     this.$store.dispatch('getProducts');

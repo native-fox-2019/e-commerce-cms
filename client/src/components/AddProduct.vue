@@ -1,42 +1,68 @@
 <template>
-  <form @submit.prevent="add">
-    <div class="form-group">
-      <label for="">Name</label>
-      <input type="text" class="form-control" v-model="name">
-    </div>
-    <div class="form-group">
-      <label for="">Image URL</label>
-      <input type="text" class="form-control" v-model="image_url">
-    </div>
-    <div class="form-group">
-      <label for="">Price</label>
-      <input type="text" class="form-control" v-model="price">
-    </div>
-    <div class="form-group">
-      <label for="">Stock</label>
-      <input type="text" class="form-control" v-model="stock">
-    </div>
-    <div class="form-group">
-      <label>Category</label>
-      <select class="custom-select" v-model="category">
-        <option selected disabled>Select category</option>
-        <option>T-Shirt</option>
-        <option>Hoodie</option>
-        <option>Shoes</option>
-        <option>Hat</option>
-      </select>
-    </div>
-    <button type="submit" class="btn btn-primary">Add</button>
-  </form>
+  <div>
+    <v-btn
+      bottom
+      color="red"
+      dark
+      fab
+      fixed
+      right
+      @click="dialog = !dialog"
+    >
+      <v-icon>mdi-plus</v-icon>
+    </v-btn>
+    <v-dialog v-model="dialog" width="800px">
+      <v-card>
+        <v-card-title class="blue darken-3">
+          Add Product
+        </v-card-title>
+        <v-container>
+          <v-row class="mx-2">
+            <v-col cols="12">
+              <v-text-field placeholder="Name" v-model="name" />
+            </v-col>
+             <v-col cols="12">
+              <v-text-field placeholder="Image Url" v-model="image_url" />
+            </v-col>
+            <v-col cols="12">
+              <v-select
+                :items="items"
+                :menu-props="{ offsetY: true }"
+                label="Category"
+                v-model="category"
+              ></v-select>
+            </v-col>
+            <v-col cols="12">
+              <v-text-field placeholder="Price" v-model="price" />
+            </v-col>
+            <v-col cols="12">
+              <v-text-field placeholder="Stock" v-model="stock" />
+            </v-col>
+          </v-row>
+        </v-container>
+        <v-card-actions>
+          <v-btn
+            text
+            color="primary"
+            @click="dialog = false"
+          >Cancel</v-btn>
+          <v-btn
+            text
+            @click="addProduct"
+          >Save</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+  </div>
 </template>
 
 <script>
-import axios from 'axios';
-
 export default {
   name: 'AddProduct',
   data() {
     return {
+      dialog: false,
+      items: ['Shirt', 'Hoodie', 'Shoes', 'Pants', 'Dress', 'Accessoris'],
       name: '',
       image_url: '',
       price: null,
@@ -46,22 +72,18 @@ export default {
     };
   },
   methods: {
-    add() {
-      axios.post(this.base_url.concat('/product'), {
+    addProduct() {
+      this.dialog = false;
+      const input = {
         name: this.name,
         image_url: this.image_url,
         price: this.price,
         stock: this.stock,
         category: this.category,
-      })
-        .then((data) => {
-          // console.log('Berhasil menambahkan product');
-          this.$store.state.products.push(data.data);
-          this.reset();
-        })
-        .catch(() => {
-          // console.log(err);
-        });
+      };
+      // console.log(input);
+      this.$store.commit('addProduct', input);
+      // this.reset();
     },
     reset() {
       this.name = '';
