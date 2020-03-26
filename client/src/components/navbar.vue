@@ -1,6 +1,6 @@
 <template>
-  <div class="navbar">
-    <button @click.prevent="signout" class="signout">sign out</button>
+  <div class="navbar-list">
+    <button @click.prevent="signout" class="signOut">sign out</button>
   </div>
 </template>
 
@@ -16,7 +16,7 @@ export default {
 }
 </script>
 <style>
-.navbar {
+.navbar-list {
   width: 97.8vw;
   z-index: 1;
   top: 0;
@@ -29,7 +29,7 @@ export default {
   padding: 7px;
   height: 10vh;
 }
-.signout {
+.signOut {
   margin-right: 1vw;
   background-color: #B1EDE8;
   cursor: pointer;

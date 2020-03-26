@@ -2,6 +2,7 @@
   <div class="home">
     <Navbar/>
     <Alert v-show="isError.status" :isError="isError" @hide="isError.status=!isError.status"/>
+    <Banner/>
     <div class="container">
       <div class="add-container">
       </div>
@@ -9,7 +10,7 @@
         <h1>Products List</h1>
       </div>
       <div class="card-container">
-        <div class="card" v-for="product in products" :key="product.id" >
+       <div class="card" v-for="product in products" :key="product.id" >
           <div>
             <img :src="product.imageURL">
           </div>
@@ -34,6 +35,7 @@
 import Navbar from '../components/navbar'
 import axios from 'axios'
 import Alert from '../components/Alert'
+import Banner from '../components/Banner'
 // const url = 'http://localhost:3000'
 const url = 'https://secure-eyrie-18193.herokuapp.com'
 
@@ -41,6 +43,7 @@ export default {
   name: 'Home',
   components: {
     Navbar,
+    Banner,
     Alert
   },
   data () {
@@ -116,7 +119,7 @@ export default {
   transform: scale(1.08) ;
   box-shadow: 1vh 1vh gray;
 }
-.card {
+.add {
   border-radius: 10px;
   background-color: whitesmoke;
   display: flex;
@@ -128,19 +131,15 @@ export default {
   width: 20vw;
   cursor: pointer;
   height: 55vh;
-}
-.add {
   border: 2px solid ;
   justify-content: center;
   align-items: center;
-  /* opacity: 20%; */
 }
 .home {
   min-height: 100vh;
   color: #6D435A;
 }
 img {
-  /* margin-top: -10vh; */
   width: 20vw;
   height: 30vh;
   border-radius: 10px;
