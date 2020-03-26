@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "stevensetiawan",
+    "password": 123456789,
+    "database": "sukasuka",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "test": {
+    "username": "stevensetiawan",
+    "password": 123456789,
+    "database": "sukasuka_test",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "production": {
+    "username":"mgjizznikfhryd",
+    "password":"330938dd5a63bffdcf274340c15a9ed1c8064b59580eb0328043828033944a9e",
+    "database":"debv1fga3jt6u",
+    "host":"ec2-52-207-93-32.compute-1.amazonaws.com",
+    "dialect":"postgres"
+  }
+}
