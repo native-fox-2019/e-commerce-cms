@@ -442,4 +442,13 @@ header h4 {
   right: 20px;
 }
 
+.non-member-notification {
+  margin: 0 auto;
+  text-align: center;
+  padding: 20px;
+  background-color: #252526;
+  width: 600px;
+  margin-bottom: 30px;
+}
+
 /*# sourceMappingURL=style.css.map */

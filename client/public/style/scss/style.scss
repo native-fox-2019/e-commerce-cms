@@ -41,3 +41,12 @@ body {
   top: 70px;
   right: 20px;
 }
+
+.non-member-notification {
+  margin: 0 auto;
+  text-align: center;
+  padding: 20px;
+  background-color: $color-primary;
+  width: 600px;
+  margin-bottom: 30px;
+}
