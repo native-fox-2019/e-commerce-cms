@@ -208,3 +208,152 @@ Content-Type : application/x-www-form-urlencoded
 ---
 
 <br></br>
+
+### 3.  PUT / transaction /:id
+
+
+_Example Input (Request Body) :_
+
+```javascript
+{
+    "id": 22,
+    "name,":"kopi sidingkalang"
+    "stock,":"10"
+    "urlImage,":"http://aisaosiaod.com"
+    "price,":"11000"
+}
+```
+_Response (200, response sukses):_
+
+```javascript
+{
+  "id": 22,
+  "name,":"kopi sidingkalang"
+  "stock,":"10"
+  "urlImage,":"http://aisaosiaod.com"
+  "price,":"11000"
+  "createdAt": "2020-03-16T09:20:29.722Z",
+  "updatedAt": "2020-03-16T09:20:29.722Z",
+}
+
+```
+
+_If the ID wasn't found the respond will be (404, data not found):_
+
+```javascript
+{
+  status: 404,
+  msg: "data not found"
+}
+```
+
+_Example Input (Request Body) :_
+
+```javascript
+{
+  "id": 22,
+  "name,":""
+  "stock,":"10"
+  "urlImage,":"http://aisaosiaod.com"
+  "price,":"11000"
+  "createdAt": "2020-03-16T09:20:29.722Z",
+  "updatedAt": "2020-03-16T09:20:29.722Z",
+}
+
+```
+_Response ERROR (400, data tidak lengkap):_
+
+```javascript
+{
+  "status": 400,
+  "msg": "Name cannot be empty."
+}
+
+```
+
+### 4.  DELETE / transaction /:id
+
+
+
+_Example Input (Request Params) :_
+
+```javascript
+
+ req.params.id = 2
+
+```
+
+	
+_Response (200, response if success):_
+
+```javascript
+1
+```
+
+
+_Example Error Input (Request Body) :_
+
+```javascript
+req.params.id = 2
+```
+
+
+_Response ERROR (404, data not found):_
+
+```javascript
+{
+  status: 404
+  msg: 'Data not found'
+}
+
+```
+
+### 5.  GET / transaction /:id
+
+
+
+_Example Input (Request Params) :_
+
+```javascript
+
+ req.params.id = 2
+
+```
+
+	
+_Response (200, response if success):_
+
+```javascript
+{
+  {
+    "id": v2,
+    "name,":"kopi sidingkalang"
+    "stock,":"10"
+    "urlImage,":"http://aisaosiaod.com"
+    "price,":"11000"
+    "createdAt": "2020-03-16T09:20:29.722Z",
+    "updatedAt": "2020-03-16T09:20:29.722Z",
+  }
+
+}
+```
+
+
+_Example Error Input (Request Body) :_
+
+```javascript
+req.params.id = 2
+```
+
+
+_Response ERROR (404, data not found):_
+
+```javascript
+{
+  status: 404
+  msg: 'Data not found'
+}
+
+```
+
+
