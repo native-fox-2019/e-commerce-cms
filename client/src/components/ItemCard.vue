@@ -1,9 +1,12 @@
 <template>
-    <div @click="routeItem(item.id)" style="cursor:pointer">
+    <div @click="routeItem(item.id)" style="text-align: center; cursor:pointer">
         <!-- <router-link :to="{name:'Detail', params:{id:item.id}}"></router-link> -->
-        <img id="item-image" v-bind:src="item.image_url" alt="">
-        <h1>{{ item.name }}</h1>
-        <p>{{ item.description }}</p>
+        <img id="item-image" v-bind:src="item.image_url" alt="" class="mb-2">
+        <div class="mb-4">
+          <h1>{{ item.name }}</h1>
+          <p>{{ item.description }}</p>
+          <span>Price: </span><b>{{ totalPriceIDR }}</b>
+        </div>
     </div>
 </template>
 
@@ -13,6 +16,11 @@ export default {
   methods: {
     routeItem(id) {
       this.$router.push(`/item/${id}`);
+    },
+  },
+  computed: {
+    totalPriceIDR() {
+      return this.item.price.toLocaleString('en-US', { style: 'currency', currency: 'IDR' });
     },
   },
 };

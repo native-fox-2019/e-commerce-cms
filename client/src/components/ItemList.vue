@@ -6,7 +6,9 @@
         <h1 style="text-align:center">Item List</h1>
         <hr>
         <div v-for="item in items" :key="item.id" style="display: inline-block">
-          <ItemCard :item="item" class="m-2 p-2 border dark rounded item-card" ></ItemCard>
+          <ItemCard :item="item"
+          class="m-2 p-2 border dark rounded item-card"
+          style="width:200px; height:400px"></ItemCard>
         </div>
       </div>
     </div>
@@ -48,8 +50,4 @@ export default {
 </script>
 
 <style>
-.item-card {
-  width: 200px;
-  height: auto;
-}
 </style>

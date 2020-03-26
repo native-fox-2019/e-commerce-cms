@@ -84,7 +84,7 @@ export default {
         },
       })
         .then((result) => {
-          console.log('RESULT:', result.data);
+          // console.log('RESULT:', result.data);
           this.isLoadUser = false;
           this.user = result.data;
         })

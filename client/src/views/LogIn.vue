@@ -16,7 +16,7 @@
                     <input class="btn btn-success mt-2 mb-5" type="submit" value="Sign Up">
                 </form>
                 <span>Don't have an account?</span>
-                <router-link to="/register" class="btn btn-secondary m-2">Register</router-link>
+                <router-link to="/register" class="btn btn-dark m-2">Register</router-link>
             </div>
         </div>
         <Footer></Footer>

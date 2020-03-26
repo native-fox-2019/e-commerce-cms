@@ -20,7 +20,7 @@
                     <input class="btn btn-success mt-2 mb-5" type="submit" value="Sign Up">
                 </form>
                 <span>Already have an account?</span>
-                <router-link to="/login" class="btn btn-secondary m-2">Go To Login</router-link>
+                <router-link to="/login" class="btn btn-dark m-2">Go To Login</router-link>
             </div>
         </div>
         <Footer></Footer>

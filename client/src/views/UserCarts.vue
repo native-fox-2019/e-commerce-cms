@@ -24,7 +24,9 @@
             <div v-if="isLoadCart">Loading...</div>
             <div v-else class="mt-5">
                 <div v-for="cart in carts" :key="cart.id" style="display: inline-block">
-                    <CartCard :cart="cart" class="m-2 p-2 border dark rounded" ></CartCard>
+                    <CartCard :cart="cart"
+                    class="m-2 p-2 border dark rounded"
+                    style="width:200px"></CartCard>
                 </div>
             </div>
         </div>

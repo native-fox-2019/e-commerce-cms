@@ -29,11 +29,11 @@ export default new Vuex.Store({
     },
     changeSpecialRole(state, payload) {
       state.specialRole = payload;
-      console.log('Role:', state.specialRole);
+      // console.log('Role:', state.specialRole);
     },
     changeItemsArr(state, payload) {
       state.itemsArr = payload;
-      console.log('List of items:', state.itemsArr);
+      // console.log('List of items:', state.itemsArr);
     },
   },
   actions: {

@@ -1,4 +1,4 @@
-const {Item, Cart} = require('../models')
+const {Item, Cart, User} = require('../models')
 const { Op } = require('sequelize')
 
 class Controller {
@@ -68,7 +68,10 @@ class Controller {
     }
 
     static findOne(req, res, next) {
-        const option = { where: { id: req.params.id }}
+        const option = {
+            where: { id: req.params.id },
+            include: [{ model: Item, as: 'Item'}]
+        }
         Cart.findOne(option)
             .then(data => {
                 res.status(200).json(data)
@@ -78,7 +81,10 @@ class Controller {
 
     static showUserCarts(req, res, next) {
         // Only for customer
-        const option = { where: { UserId: req.userData.id }}
+        const option = {
+            where: { UserId: req.userData.id },
+            include: [{ model: Item, as: 'Item'}],
+        }
         Cart.findAll(option)
             .then(carts => {
                 res.status(200).json(carts)
@@ -88,12 +94,13 @@ class Controller {
 
     static showUserCartsHistory(req, res, next) {
         // Only for customer
-        const option = { where: {
-            UserId: req.userData.id,
-            status: {
-                [Op.or]: ['checkout', 'delivered']
+        const option = {
+            where: {
+                UserId: req.userData.id,
+                status: { [Op.or]: ['checkout', 'delivered'] },
             },
-        }}
+            include: [{ model: Item, as: 'Item'}, {model: User, as: 'User'}]
+        }
         Cart.findAll(option)
             .then(data => {
                 res.status(200).json(data)
@@ -103,10 +110,10 @@ class Controller {
 
     static showUserPendingCarts(req, res, next) {
         // Only for customer
-        const option = { where: {
-            UserId: req.userData.id,
-            status: 'pending',
-        }}
+        const option = {
+            where: { UserId: req.userData.id, status: 'pending'},
+            include: [{ model: Item, as: 'Item'}]
+        }
         Cart.findAll(option)
             .then(carts => {
                 res.status(200).json(carts)
@@ -116,7 +123,7 @@ class Controller {
 
     static showAllCustomerCarts(req, res, next) {
         // Only for admins
-        Cart.findAll()
+        Cart.findAll({ include: [{ model: Item, as: 'Item'}, {model: User, as: 'User'}]})
             .then(carts => {
                 res.status(200).json(carts)
             })

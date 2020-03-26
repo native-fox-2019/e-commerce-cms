@@ -3,10 +3,11 @@
         <div>
             <div v-if="!editMode">
                 <h1>Cart ID: {{ cart.id }}</h1>
-                <p>Item ID: {{ cart.UserId }}</p>
-                <p>User ID: {{ cart.UserId }}</p>
+                <p>Item: {{ cart.Item.name }}</p>
                 <p>Quantity: {{ cart.quantity }}</p>
+                <p>Total Price: {{ totalPriceIDR }}</p>
                 <p>Status: {{ cart.status }}</p>
+                <p v-if="isAdmin">Bought by: {{ cart.User.name }} ({{ cart.UserId }})</p>
                 <span
                     v-if="isAdmin"
                     v-on:click="confirmDelete"
@@ -46,6 +47,9 @@ export default {
     isCustomer() {
       if (this.$store.state.specialRole === 'customer') return true;
       return false;
+    },
+    totalPriceIDR() {
+      return this.cart.totalPrice.toLocaleString('en-US', { style: 'currency', currency: 'IDR' });
     },
   },
   methods: {

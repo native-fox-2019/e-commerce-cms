@@ -24,7 +24,9 @@
             <div v-if="isLoadHistory">Loading...</div>
             <div v-else class="mt-5">
                 <div v-for="cart in carts" :key="cart.id" style="display: inline-block">
-                    <Transaction :cart="cart" class="m-2 p-2 border dark rounded" ></Transaction>
+                    <Transaction :cart="cart"
+                    class="m-2 p-2 border dark rounded"
+                    style="width:200px"></Transaction>
                 </div>
             </div>
         </div>

@@ -2,44 +2,57 @@
     <div>
         <div>
             <div v-if="!editMode">
-                <h1>ID: {{ cart.id }}</h1>
+                <h5>{{ cart.Item.name }}</h5>
+                <p>Order ID: {{ cart.id }}</p>
                 <p>Quantity: {{ cart.quantity }}</p>
+                <p>Total Price: {{ totalPriceIDR }}</p>
                 <p>Status: {{ cart.status }}</p>
                 <span
                     v-if="isCustomer"
                     v-on:click="switchEditMode"
-                    class="btn btn-warning">
+                    class="btn btn-warning my-1"
+                    style="width:120px">
                     Edit Cart
                 </span><br>
                 <span
                     v-if="isCustomer"
                     v-on:click="confirmDelete"
-                    class="btn btn-danger">
+                    class="btn btn-danger my-1"
+                    style="width:120px">
                     Remove Cart
                 </span><br>
                 <span
                     v-if="isCustomer"
                     v-on:click="confirmCheckOut"
-                    class="btn btn-success">
+                    class="btn btn-success my-1"
+                    style="width:120px">
                     Check Out
                 </span><br>
             </div>
             <div v-if="editMode">
                 <div>
                     <h5 class="text-center">Edit Existing Cart</h5>
+                    <p>Item Name: {{ cart.Item.name }}</p>
+                    <p>Order ID: {{ cart.id }}</p>
+                    <p>Total Price: {{ countPriceIDR }}</p>
                     <form v-on:submit.prevent="editCartQty" class="my-1">
                         <div class="form-group">
                             <label>Number of items:</label>
                             <input type="number"
-                                class="form-control"
+                                class="form-control text-center"
                                 step="1" min="1"
+                                style="width: 180px"
                                 v-model="each.quantity">
                         </div>
-                        <input class="btn btn-success" type="submit" value="Confirm">
+                        <input
+                            class="btn btn-success"
+                            type="submit" value="Confirm"
+                            style="width:120px">
                     </form>
                     <span
                       v-on:click="switchEditMode"
-                      class="btn btn-dark">
+                      class="btn btn-dark"
+                      style="width:120px">
                       Cancel
                     </span><br>
                 </div>
@@ -76,6 +89,12 @@ export default {
     isCustomer() {
       if (this.$store.state.specialRole === 'customer') return true;
       return false;
+    },
+    countPriceIDR() {
+      return (this.each.quantity * this.cart.totalPrice).toLocaleString('en-US', { style: 'currency', currency: 'IDR' });
+    },
+    totalPriceIDR() {
+      return this.cart.totalPrice.toLocaleString('en-US', { style: 'currency', currency: 'IDR' });
     },
   },
   methods: {

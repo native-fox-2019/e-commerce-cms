@@ -16,20 +16,8 @@
                             v-model="form.description">
                         </textarea>
                     </div>
-                    <v-flex xs12 sm6 offset-sm3>
-                        <img :src="imageFile" height="150">
-                    </v-flex>
                     <div class="form-group">
-                        <label>Image URL (File):</label><br>
-                        <v-btn @click="onSelectFile" raised class="primary">Upload Image</v-btn>
-                        <input type="file"
-                            ref="fileInput"
-                            style="display:none"
-                            @change="onPickedFile"
-                            accept="image/*">
-                    </div>
-                    <div class="form-group">
-                        <label>Item Name (Paste URL):</label>
+                        <label>Image (URL Link):</label>
                         <input type="text"
                             class="form-control"
                             v-model="form.image_url">
@@ -102,6 +90,18 @@ export default {
       // console.log(this.form);
     },
     submitForm() {
+      // <v-flex xs12 sm6 offset-sm3>
+      //                   <img :src="imageFile" height="150">
+      //               </v-flex>
+      //               <div class="form-group">
+      //                   <label>Image URL (File):</label><br>
+      //                   <v-btn @click="onSelectFile" raised class="primary">Upload Image</v-btn>
+      //                   <input type="file"
+      //                       ref="fileInput"
+      //                       style="display:none"
+      //                       @change="onPickedFile"
+      //                       accept="image/*">
+      //               </div>
       // [this.form.image_url] = this.$refs.fileInput.files;
       console.log('Form:', this.form);
       // const formData = new FormData();

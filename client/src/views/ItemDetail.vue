@@ -1,13 +1,14 @@
 <template>
     <div>
         <Navbar></Navbar>
-        <div class="container">
+        <div class="container" style="display:flex; justify-content:center;">
             <div v-if="!editMode">
-              <h4>{{item.name}}</h4>
+              <h4 class="text-center m-4">{{item.name}}</h4>
               <img v-bind:src="item.image_url" id="item-image">
+              <br>
               <p>{{item.description}}</p>
-              <p>Price: {{item.price}}</p>
-              <p>Stock: {{item.stock}}</p>
+              <p>Price: <b>{{totalPriceIDR}}</b></p>
+              <p>Stock: <b>{{item.stock}}</b></p>
               <span
                 v-if="isAdmin"
                 v-on:click="switchEditMode"
@@ -65,18 +66,21 @@
                     <input class="btn btn-success" type="submit">
                 </form>
             </div>
-            <modal name="cart-modal">
+            <modal name="cart-modal" style="display:flex; justify-content:center">
                 <div class="container">
-                    <h5 class="text-center">Add To Cart</h5>
+                    <h5 class="text-center">Add To Cart</h5><br>
+                    <span>Total price: </span>
+                    <b> {{ countPriceIDR }}</b>
+                    <br>
                     <form v-on:submit.prevent="addToCart" class="my-1">
                         <div class="form-group">
-                            <label>Number of items:</label>
+                            <br><label>Number of items:</label>
                             <input type="number"
                                 class="form-control"
                                 step="1" min="1" value="1"
                                 v-model="cart.quantity">
                         </div>
-                        <input class="btn btn-success" type="submit">
+                        <input class="btn btn-success" type="submit" value="Add to Cart">
                     </form>
                 </div>
             </modal>
@@ -123,6 +127,12 @@ export default {
     isCustomer() {
       if (this.$store.state.specialRole === 'customer') return true;
       return false;
+    },
+    countPriceIDR() {
+      return (this.cart.quantity * this.item.price).toLocaleString('en-US', { style: 'currency', currency: 'IDR' });
+    },
+    totalPriceIDR() {
+      return this.item.price.toLocaleString('en-US', { style: 'currency', currency: 'IDR' });
     },
   },
   methods: {

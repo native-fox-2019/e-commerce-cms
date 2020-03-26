@@ -7,12 +7,13 @@
                 <h1 style="text-align:center">All Customer's Cart List</h1>
                 <hr>
                 <div v-for="cart in carts" :key="cart.id" style="display: inline-block">
-                    <div :cart="cart" class="m-2 p-2 border dark rounded" >
-                      <h1>Cart ID: {{ cart.id }}</h1>
-                      <p>Item ID: {{ cart.UserId }}</p>
-                      <p>User ID: {{ cart.UserId }}</p>
+                    <div :cart="cart" class="m-2 p-2 border dark rounded"
+                    style="width:200px; height:200px">
+                      <h5>Cart ID: {{ cart.id }}</h5>
+                      <p>Item: {{ cart.Item.name }}</p>
                       <p>Quantity: {{ cart.quantity }}</p>
                       <p>Status: {{ cart.status }}</p>
+                      <p>User ID: {{ cart.UserId }}</p>
                     </div>
                 </div>
             </div>
