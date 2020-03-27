@@ -71,7 +71,7 @@ export default {
       } else {
         Axios({
           method: 'POST',
-          url: 'https://mighty-stream-85910.herokuapp.com/user/register',
+          url: 'https://mighty-stream-85910.herokuapp.com/manage/register',
           data: {
             username: this.username,
             email: this.email,

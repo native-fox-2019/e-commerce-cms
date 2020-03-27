@@ -46,7 +46,7 @@ export default new Vuex.Store({
     productList(context) {
       Axios({
         method: 'GET',
-        url: 'https://mighty-stream-85910.herokuapp.com/product',
+        url: 'https://mighty-stream-85910.herokuapp.com/manage',
         headers: {
           access_token: localStorage.access_token
         }
@@ -84,7 +84,7 @@ export default new Vuex.Store({
     productAdd(context, newProduct) {
         Axios({
         method: 'POST',
-        url: 'https://mighty-stream-85910.herokuapp.com/product',
+        url: 'https://mighty-stream-85910.herokuapp.com/manage',
         headers: {
           access_token: localStorage.access_token
         },
@@ -120,7 +120,7 @@ export default new Vuex.Store({
     productFind(context, id) {
       Axios({
         method: 'GET',
-        url: 'https://mighty-stream-85910.herokuapp.com/product/' + id,
+        url: 'https://mighty-stream-85910.herokuapp.com/manage/' + id,
         headers: {
           access_token: localStorage.access_token
         }
@@ -151,7 +151,7 @@ export default new Vuex.Store({
     productEdit({ dispatch }, { updateProduct, productId }) {
       Axios({
         method: 'PUT',
-        url: 'https://mighty-stream-85910.herokuapp.com/product/' + productId,
+        url: 'https://mighty-stream-85910.herokuapp.com/manage/' + productId,
         headers: {
           access_token: localStorage.access_token
         },
@@ -187,7 +187,7 @@ export default new Vuex.Store({
     productDelete(context, id) {
       Axios({
         method: 'DELETE',
-        url: 'https://mighty-stream-85910.herokuapp.com/product/' + id,
+        url: 'https://mighty-stream-85910.herokuapp.com/manage/' + id,
         headers: {
           access_token: localStorage.access_token
         }
