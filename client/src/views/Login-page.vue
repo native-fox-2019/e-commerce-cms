@@ -50,7 +50,7 @@ export default {
   methods: {
     login () {
       axios({
-        url: `${url}/user/login`,
+        url: `${url}/login`,
         method: 'post',
         data: {
           email: this.email,
