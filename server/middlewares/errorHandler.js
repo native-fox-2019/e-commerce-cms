@@ -27,6 +27,9 @@ function errorHandler(err, req, res, next) {
     } else if (err.name === 'UnauthorizedError') {
         errMsg.status = 401
         errMsg.message = 'You must log in first!'
+    } else if (err.name === 'JsonWebTokenError') {
+        errMsg.status = 401
+        errMsg.message = 'You must log in first!'
     } else if (err.name === 'SequelizeDatabaseError') {
         errMsg.status = 500
         errMsg.message = 'Internal Server Error'

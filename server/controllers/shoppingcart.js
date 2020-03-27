@@ -122,7 +122,7 @@ class shoppingController {
                 )
                 ShoppingCart.destroy({ where: { id: product.ShoppingCart.id, UserId, ProductId: product.id } })
             });
-            res.status(200).json(deleted)
+            res.status(200).json(1)
         } catch (err) {
             next(err)
         }
