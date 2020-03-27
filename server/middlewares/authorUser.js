@@ -1,10 +1,10 @@
 const {Cart} = require('../models')
 
 module.exports = function authorization (req,res,next) {
-    Cart.findOne({where:{id:req.params.id}})
+    Cart.findOne({where:{id:req.user.id}})
     .then(data => {
         if(data){
-            if(data.UserId === req.user.id) {
+            if(data.UserId === req.params.id) {
                 next()
             } else {
                 next({

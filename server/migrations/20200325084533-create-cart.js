@@ -11,8 +11,8 @@ module.exports = {
       UserId: {
         type: Sequelize.INTEGER
       },
-      ProductsId: {
-        type: Sequelize.STRING
+      ProductId: {
+        type: Sequelize.INTEGER
       },
       amount: {
         type: Sequelize.INTEGER

@@ -1,6 +1,6 @@
 'use strict';
-const changeToCurrency = require('../helpers/changeToCurrency')
 module.exports = (sequelize, DataTypes) => {
+  const Sequelize = sequelize.Sequelize
   const Model = sequelize.Sequelize.Model
   class Product extends Model { }
   Product.init({
@@ -55,5 +55,5 @@ module.exports = (sequelize, DataTypes) => {
     // associations can be defined here
     Product.hasMany(models.Cart)
   };
-  return Products;
+  return Product;
 };

@@ -3,18 +3,10 @@
 const {hashPass} = require('../helpers/bcrypt')
 
 module.exports = (sequelize, DataTypes) => {
+  const Sequelize = sequelize.Sequelize
   const Model = sequelize.Sequelize.Model
   class User extends Model { }
   User.init({
-    name: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notEmpty: {
-          msg: 'name cant be empty'
-        }
-      }
-    },
     email: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -52,7 +44,7 @@ module.exports = (sequelize, DataTypes) => {
   }}, sequelize });
   User.associate = function (models) {
     // associations can be defined here
-    User.hasMany(models.Product)
+    User.hasMany(models.Cart)
   };
   return User;
 };

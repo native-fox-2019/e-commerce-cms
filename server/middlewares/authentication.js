@@ -1,5 +1,4 @@
 require('dotenv').config()
-const token= require('jsonwebtoken')
 const {verify} = require('../helpers/jwt')
 
 module.exports = function authentication(req,res,next){

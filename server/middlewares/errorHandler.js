@@ -7,10 +7,8 @@ module.exports = function errorHandler(err, req, res, next) {
     } else if (err.name === 'SequelizeUniqueConstraintError') {
         res.status(400).json({ msg: err.errors[0].message })
     } else if (err.msg === 'incorrect USERNAME/PASSWORD') {
-        res.status(404).json(err)
-    } else if (err.status === 401) {
-        res.status(401).json(err.msg)
+        res.status(404).json(err.msg)
     } else {
-        res.send(err)
+        res.status(err.status).json({message: err.msg || err.message})
     }
 }

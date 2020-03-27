@@ -1,12 +1,12 @@
 'use strict'
 const router = require('express').Router()
 const Controller = require('../controllers/controllerUser')
-const authentication = require('../middlewares/authentication')
+const authUser = require('../middlewares/authorUser')
 
-
-router.get('/',authentication, Controller.getAll)
-router.post('/addToCart', Controller.addToCart)
+// router.use(authUser)
+// console.log(123)
 router.get('/cart', Controller.cart)
+router.post('/addToCart/:id', Controller.addToCart)
 router.delete('/delete/:id', Controller.removeFromCart)
 router.delete('/checkout', Controller.checkout)
 
