@@ -15,10 +15,7 @@ module.exports = {
     "dialect": "postgres"
   },
   "production": {
-    "username": "livjddmbmzrkyl",
-    "password": "ea870d2d741c55eca14c9d5779304cad7cdcad0e5862a5907411f4bb41359b39",
-    "database": "db5enitrqtr5ta",
-    "host": "ec2-52-201-55-4.compute-1.amazonaws.com",
+    "use_env_variable": "DATABASE_URL",
     "dialect": "postgres"
   }
 }
