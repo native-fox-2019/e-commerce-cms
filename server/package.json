@@ -1,0 +1,38 @@
+{
+  "name": "ecommerce-cms-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "initdb": "sequelize db:create --env=test && sequelize db:migrate --env=test",
+    "test": "clear && jest --detectOpenHandles --runInBand --forceExit",
+    "test-register": "clear && sequelize db:seed:undo:all --env=test && sequelize db:seed --seed 20200317161534-add-users --env=test && jest user-register --detectOpenHandles --runInBand --forceExit",
+    "test-login": "clear && jest user-login --detectOpenHandles --runInBand --forceExit",
+    "test-create": "clear && jest product-create --detectOpenHandles --runInBand --forceExit",
+    "test-readAll": "clear && jest product-readAll --detectOpenHandles --runInBand --forceExit",
+    "test-readOne": "clear && jest product-readOne --detectOpenHandles --runInBand --forceExit",
+    "test-update": "clear && jest product-update --detectOpenHandles --runInBand --forceExit",
+    "test-delete": "clear && jest product-delete --detectOpenHandles --runInBand --forceExit",
+    "initdb_dev": "sequelize db:create --env=development && sequelize db:migrate --env=development && sequelize db:seed:all --env=development",
+    "dev": "nodemon app.js --env=development",
+    "start": "node app.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^4.0.1",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "http-errors": "^1.7.3",
+    "jsonwebtoken": "^8.5.1",
+    "pg": "^7.18.2",
+    "sequelize": "^5.21.5"
+  },
+  "devDependencies": {
+    "jest": "^25.1.0",
+    "jest-cli": "^25.1.0",
+    "supertest": "^4.0.2"
+  }
+}
