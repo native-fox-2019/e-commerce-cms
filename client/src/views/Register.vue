@@ -88,7 +88,6 @@
           }
         })
         .then(({ data }) => {
-          console.log(data);
             this.$router.push({path: "/login" })
         })
         .catch(({response}) =>{

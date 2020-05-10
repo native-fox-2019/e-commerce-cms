@@ -43,7 +43,6 @@ class TransactionController {
 
   static add(req, res, next) {
     const { ProductId, quantity } = req.body
-    console.log(ProductId);
     Product
       .findOne({
         where: {
@@ -65,17 +64,12 @@ class TransactionController {
               }
             })
             .then(data => {
-              // console.log(data, "masuk kah?");
-              // res.send(data)
               if (data.length > 1) {
-                console.log('test');
                 throw {
                   status: 400,
                   msg: 'You added the product already.'
                 }
               } else {
-                console.log('test1');
-
                 Transaction
                   .create({
                     ProductId,
@@ -144,7 +138,6 @@ class TransactionController {
               }
             })
             .then(data => {
-              console.log("masuk sini kah?");
               if (!data) {
                 throw {
                   status: 400,

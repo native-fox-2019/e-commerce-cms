@@ -51,7 +51,6 @@ export default {
         }
       })
       .then(data => {
-        console.log(data);
         this.username = "",
         this.password = "",
         this.email = ""

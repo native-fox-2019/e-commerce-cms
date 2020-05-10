@@ -84,7 +84,6 @@ export default {
         }
       })
       .then(data => {
-        console.log(data);
         this.name = '', 
         this.stock = '', 
         this.urlImage = '', 

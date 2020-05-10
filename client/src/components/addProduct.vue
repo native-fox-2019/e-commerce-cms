@@ -57,7 +57,6 @@ export default {
         },
       })
       .then(data => {
-        console.log(data);
         this.$store.dispatch("getAllData")
         this.$router.push({path: '/admins'})
       })

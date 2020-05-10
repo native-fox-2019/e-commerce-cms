@@ -94,7 +94,6 @@ export default {
           }
         })
         .then(({ data }) => {
-          console.log(data);
           localStorage.setItem('token', data.token)
             this.$router.push({ name: "AdminPage"})
             this.$store.commit('setToken')
@@ -107,26 +106,7 @@ export default {
       } else {
             this.errMsg="Wrong Secret Code!!"
             this.err = true
-            // this.$router.push({name: "Home" })
           }
-      // else if (this.secret === "") {
-      //     this.$axios({
-      //     url: '/users/login',
-      //     method: "POST",
-      //     data: {
-      //       email: this.email,
-      //       password: this.password
-      //     }
-      //   })
-      //   .then(({ data }) => {
-      //     console.log(data);
-      //     localStorage.setItem('token', data.token)
-      //       this.$store.commit('setToken')
-      //       this.$router.push({name: "Home" })
-      //   })
-      //   .catch(({response}) =>{
-      //     console.log(response);
-      //   })
     }
   },
 }

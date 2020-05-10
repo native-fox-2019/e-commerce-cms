@@ -46,7 +46,6 @@ export default {
         }
       })
       .then(data => {
-        console.log(data);
         this.title
         this.urlImage
         this.$router.push({path: '/admins/bannerList'})

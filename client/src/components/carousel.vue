@@ -37,7 +37,6 @@
     },
     computed: {
       banners() {
-        console.log(this.$store.state.banners);
         return this.$store.state.banners
       }
     }

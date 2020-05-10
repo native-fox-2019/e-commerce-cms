@@ -1,7 +1,6 @@
 'use strict'
 
 function showError(err, req, res, next) {
-  // console.log(err);
   let errs = []
   if (err.name === "SequelizeValidationError") {
     err.errors.forEach(error => {
