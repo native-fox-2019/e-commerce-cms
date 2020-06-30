@@ -1,39 +1,41 @@
 <template>
     <div>
-        <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #21d192;">
-            <router-link to="/">
-                <img src="http://getdrawings.com/free-icon/icon-lamp-67.png" width="50" height="50" alt="">
-            </router-link>
-            <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                <ul class="navbar-nav">
-                <li class="nav-item">
+        <nav class="navbar-expand-lg navbar-light"
+        style="background-color: #21B6A8; margin-bottom: 2em;">
+            <div id="logo">
+              <router-link to="/">
+                <img src="http://getdrawings.com/free-icon/icon-lamp-67.png" alt="logo">
+                <a>Kurikula</a>
+              </router-link>
+            </div>
+            <div
+            class="navbar-collapse"
+            style="padding: 1em 2em;">
+              <ul class="navbar-nav">
+                <li class="nav-item" v-if="!isLogin">
                     <router-link
                       to="/register"
-                      v-if="!isLogin"
                       class="nav-link">
                       Register
                     </router-link>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" v-if="!isLogin">
                     <router-link
                       to="/login"
-                      v-if="!isLogin"
                       class="nav-link">
                       Log In
                     </router-link>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" v-if="isAdmin">
                     <router-link
                       to="/add-item"
-                      v-if="isAdmin"
                       class="nav-link">
                       Add Item
                     </router-link>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" v-if="isLogin">
                     <router-link
                       to="/user"
-                      v-if="isLogin"
                       class="nav-link">
                       Profile
                     </router-link>
@@ -41,7 +43,7 @@
                 <li
                   v-if="isLogin"
                   class="nav-item">
-                    <button @click.prevent="logout" class="nav-link">Log Out</button>
+                    <div @click.prevent="logout" class="nav-link">Log Out</div>
                 </li>
                 <!-- <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle"
@@ -127,5 +129,100 @@ export default {
 </script>
 
 <style scoped>
+* {
+  margin: 0;
+  list-style-type: none;
+}
 
+a {
+  text-decoration: none;
+}
+
+#logo {
+  display: block;
+  margin: auto;
+  text-align: center;
+}
+
+#logo img {
+  width: 2em;
+}
+
+.navbar-collapse {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+
+#logo a {
+  color: white;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  padding: 1em;
+}
+
+.nav-item {
+  padding: 0em 0.5em;
+  margin: 0em 1em;
+  border-radius: 0.5em;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  font-size: 1.2rem;
+}
+
+.nav-link {
+  color: white;
+  width:100%;
+}
+
+.nav-item:hover {
+  cursor: pointer;
+  background: #177F75;
+  transition: 0.2s;
+}
+
+@media (min-width: 930px) {
+  nav {
+    display: flex;
+    justify-content: space-around;
+  }
+
+  #logo {
+    display: flex;
+    align-items: center;
+    margin-left: 1em;
+  }
+
+  #logo a {
+    padding: 1em;
+  }
+
+  .nav-item {
+  padding: 0em 0.5em;
+  margin: 0em 1em;
+  border-radius: 0.5em;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  font-size: 1.2rem;
+  }
+
+  .nav-link {
+    color: white;
+  }
+
+  .nav-item:hover {
+    cursor: pointer;
+    background: #177F75;
+    transition: 0.2s;
+  }
+
+  .navbar-collapse {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .nav-link {
+  color: white;
+  margin: auto;
+}
+}
 </style>

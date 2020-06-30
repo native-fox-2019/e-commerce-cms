@@ -1,14 +1,19 @@
 <template>
   <div>
+    <div class="banner">
+        <h2>Get new homeschooling materials for your needs!</h2>
+    </div>
     <div class="container" style="display:flex; justify-content:center;">
-      <div v-if="isLoadItem">Loading...</div>
-      <div v-else class="mt-5">
-        <h1 style="text-align:center">Item List</h1>
+      <div v-if="isLoadItem" style="text-align:center"><em>Loading...</em></div>
+      <div v-else>
+        <h3>On the store</h3>
         <hr>
-        <div v-for="item in items" :key="item.id" style="display: inline-block">
-          <ItemCard :item="item"
-          class="m-2 p-2 border dark rounded item-card"
-          style="width:200px; height:400px"></ItemCard>
+        <div style="display: flex; flex-wrap: wrap;">
+          <div v-for="item in items" :key="item.id" class="list-box">
+            <ItemCard :item="item"
+            class="m-2 border dark rounded item-card"
+            style="height:20em;"></ItemCard>
+          </div>
         </div>
       </div>
     </div>
@@ -50,4 +55,26 @@ export default {
 </script>
 
 <style>
+.banner {
+  color: white;
+  margin: 0em 0em 3em 0em;
+  height: 40vh;
+  background: #41af6b;
+  padding: 2em 3em;
+}
+
+.banner h2 {
+  font-size: 2.5em;
+}
+
+.list-box {
+  width:100%;
+}
+
+@media (min-width: 930px) {
+  .list-box {
+    width:33.3%;
+  }
+}
+
 </style>

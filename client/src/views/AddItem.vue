@@ -1,43 +1,51 @@
 <template>
     <div>
         <Navbar></Navbar>
-            <div class="container p-4">
+            <div class="container"
+            style="display:flex; justify-content:center; align-items: center; min-height: 100vh;">
+              <div id="add-box">
                 <h5 class="text-center">Add New Item</h5>
                 <form v-on:submit.prevent="submitForm" class="my-4" enctype="multipart/form-data">
                     <div class="form-group">
                         <label>Item Name:</label>
                         <input type="text"
                             class="form-control"
+                            placeholder="insert the name here"
                             v-model="form.name">
                     </div>
                     <div class="form-group">
                         <label>Description:</label>
                         <textarea class="form-control"
-                            v-model="form.description">
+                            v-model="form.description"
+                            placeholder="insert item description here">
                         </textarea>
                     </div>
                     <div class="form-group">
                         <label>Image (URL Link):</label>
                         <input type="text"
                             class="form-control"
-                            v-model="form.image_url">
+                            v-model="form.image_url"
+                            placeholder="insert image link here">
                     </div>
                     <div class="form-group">
                         <label>Price:</label>
                         <input type="number"
-                            min="1" step="any"
+                            min="0" step="1000"
                             class="form-control"
-                            v-model="form.price">
+                            v-model="form.price"
+                            placeholder="currency in Rupiah">
                     </div>
                     <div class="form-group">
                         <label>Stock:</label>
                         <input type="number"
                             step="1" min="1" value="1"
                             v-model="form.stock"
+                            placeholder="1"
                             class="form-control">
                     </div>
-                    <input class="btn btn-success" type="submit">
+                    <input class="btn btn-success" type="submit" value="Add Item">
                 </form>
+              </div>
             </div>
         <Footer></Footer>
     </div>
@@ -172,5 +180,18 @@ export default {
 </script>
 
 <style scoped>
+h1 {
+  font-size: 2em;
+  color: white;
+  padding-bottom: 1em;
+}
 
+#add-box {
+  color: white;
+  margin: 4em 0em;
+  width: 30em;
+  background: #41af6b;
+  padding: 2em 3em;
+  border-radius: 0.5em;
+}
 </style>

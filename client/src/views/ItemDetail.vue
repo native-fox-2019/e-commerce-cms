@@ -4,11 +4,13 @@
         <div class="container" style="display:flex; justify-content:center;">
             <div v-if="!editMode">
               <h4 class="text-center m-4">{{item.name}}</h4>
-              <img v-bind:src="item.image_url" id="item-image">
-              <br>
-              <p>{{item.description}}</p>
-              <p>Price: <b>{{totalPriceIDR}}</b></p>
-              <p>Stock: <b>{{item.stock}}</b></p>
+              <div>
+                <img v-bind:src="item.image_url" id="item-image">
+                <br>
+                <p>{{item.description}}</p>
+                <p>Price: <b>{{totalPriceIDR}}</b></p>
+                <p>Stock: <b>{{item.stock}}</b></p>
+              </div>
               <span
                 v-if="isAdmin"
                 v-on:click="switchEditMode"
@@ -29,7 +31,7 @@
               </span>
             </div>
             <div v-if="editMode">
-                <h5 class="text-center">Edit Iten Form</h5>
+                <h5 class="text-center">Edit Item Form</h5>
                 <form v-on:submit.prevent="editData" class="my-4">
                     <div class="form-group">
                         <label>Item Name:</label>
