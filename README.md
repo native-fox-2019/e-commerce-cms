@@ -7,8 +7,8 @@ Server is hosted at here: https://sleepy-scrubland-83111.herokuapp.com/
 
 You can log in as an admin using the account:
 
-- Email: `adamsmith@gmail.com`
-- Password: `adamsmith`
+- Email: `admin@gmail.com`
+- Password: `adminadmin`
 
 Features:
 
