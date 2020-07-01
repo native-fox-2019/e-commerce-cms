@@ -3,7 +3,7 @@
 
 This is the first part of 2-parts series in making a mock e-commerce site. Made using Vue.
 
-Client: https://hobby-a56e6.firebaseapp.com/
+Client: https://e-commerce-8696d.firebaseapp.com/
 Server: https://sleepy-scrubland-83111.herokuapp.com/
 
 Features:
