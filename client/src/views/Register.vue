@@ -10,7 +10,7 @@
                         <input type="text" class="form-control" v-model="form.username">
                     </div>
                     <div class="form-group">
-                        <label>Password:</label>
+                        <label>Email:</label>
                         <input type="email" class="form-control" v-model="form.email">
                     </div>
                     <div class="form-group">

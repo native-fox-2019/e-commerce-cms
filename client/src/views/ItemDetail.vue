@@ -289,6 +289,7 @@ export default {
 <style scoped>
 .wrapper {
   display: flex;
+  height: 110vh;
 }
 
 #left-side{
