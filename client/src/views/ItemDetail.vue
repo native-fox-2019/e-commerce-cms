@@ -3,70 +3,86 @@
         <Navbar></Navbar>
         <div class="container" style="display:flex; justify-content:center;">
             <div v-if="!editMode">
-              <h4 class="text-center m-4">{{item.name}}</h4>
-              <div>
-                <img v-bind:src="item.image_url" id="item-image">
-                <br>
-                <p>{{item.description}}</p>
-                <p>Price: <b>{{totalPriceIDR}}</b></p>
-                <p>Stock: <b>{{item.stock}}</b></p>
+              <div class="wrapper">
+                <div id="left-side">
+                  <img v-bind:src="item.image_url">
+                  <div id="buttons-row">
+                    <span
+                      v-if="isAdmin"
+                      v-on:click="switchEditMode"
+                      class="btn btn-warning">
+                      Edit Information
+                    </span>
+                    <span
+                      v-if="isAdmin"
+                      v-on:click="confirmDelete"
+                      class="btn btn-danger">
+                      Remove Item
+                    </span>
+                    <span
+                      v-if="isCustomer"
+                      v-on:click="showCartModal"
+                      class="btn btn-success">
+                      Add to Cart
+                    </span>
+                  </div>
+                </div>
+                <div id="right-side">
+                  <h4 class="text-center m-4">{{item.name}}</h4>
+                  <p>{{item.description}}</p>
+                  <p>Price: <b>{{totalPriceIDR}}</b></p>
+                  <p>Stock: <b>{{item.stock}}</b></p>
+                </div>
               </div>
-              <span
-                v-if="isAdmin"
-                v-on:click="switchEditMode"
-                class="btn btn-warning">
-                Edit Information
-              </span>
-              <span
-                v-if="isAdmin"
-                v-on:click="confirmDelete"
-                class="btn btn-danger">
-                Delete
-              </span>
-              <span
-                v-if="isCustomer"
-                v-on:click="showCartModal"
-                class="btn btn-success">
-                Add to Cart
-              </span>
             </div>
             <div v-if="editMode">
-                <h5 class="text-center">Edit Item Form</h5>
-                <form v-on:submit.prevent="editData" class="my-4">
+              <div class="wrapper">
+                <div id="left-side">
+                  <img v-bind:src="form.image_url">
+                </div>
+                <div id="right-side">
+                  <h5 class="text-center m-4">Edit Item Form</h5>
+                  <form v-on:submit.prevent="editData">
                     <div class="form-group">
                         <label>Item Name:</label>
                         <input type="text"
                             class="form-control"
-                            v-model="item.name">
+                            v-model="form.name">
                         </div>
                         <div class="form-group">
                             <label>Description:</label>
                             <textarea class="form-control"
-                                v-model="item.description">
+                                v-model="form.description">
                             </textarea>
                         </div>
                         <div class="form-group">
                             <label>Image URL:</label>
                             <input type="text"
                                 class="form-control"
-                                v-model="item.image_url">
+                                v-model="form.image_url">
                         </div>
                         <div class="form-group">
                             <label>Price:</label>
                             <input type="number"
                                 min="1" step="any"
                                 class="form-control"
-                                v-model="item.price">
+                                v-model="form.price">
                         </div>
                         <div class="form-group">
                             <label>Stock:</label>
                             <input type="number"
                                 step="1" min="1" value="1"
-                                v-model="item.stock"
-                                class="form-control">
+                                class="form-control"
+                                v-model="form.stock">
                         </div>
-                    <input class="btn btn-success" type="submit">
-                </form>
+                        <div id="buttons-row">
+                            <button class="btn btn-success" type="submit">Submit Changes</button>
+                            <button class="btn btn-primary"
+                            v-on:click="switchEditMode">Cancel</button>
+                        </div>
+                  </form>
+                </div>
+              </div>
             </div>
             <modal name="cart-modal" style="display:flex; justify-content:center">
                 <div class="container">
@@ -116,6 +132,13 @@ export default {
       cart: {
         quantity: 1,
       },
+      form: {
+        name: '',
+        description: '',
+        image_url: '',
+        price: '',
+        stock: '',
+      },
     };
   },
   created() {
@@ -150,6 +173,7 @@ export default {
         .then((result) => {
           console.log('RESULT:', result.data);
           this.item = result.data;
+          this.form = result.data;
         })
         .catch((err) => {
           console.log('Error:', err.response);
@@ -164,16 +188,16 @@ export default {
       if (!this.editMode) {
         this.editMode = true;
       } else {
+        this.edit = this.item;
         this.editMode = false;
       }
-      console.log(this.editMode);
     },
     editData() {
       console.log('Edit item:', this.id);
       appAxios({
         method: 'PUT',
         url: `/items/${this.id}`,
-        data: this.item,
+        data: this.edit,
         headers: {
           token: localStorage.getItem('token'),
         },
@@ -263,9 +287,42 @@ export default {
 </script>
 
 <style scoped>
-#item-image{
-  width:100%;
-  max-width:400px;
-  max-height:400px;
+.wrapper {
+  display: flex;
 }
+
+#left-side{
+  padding: 0em 1em;
+  width:50%;
+}
+
+#left-side img {
+  width: 100%;
+}
+
+#right-side {
+  padding: 0em 1em;
+  width: 70%;
+}
+
+#edit-side {
+  background: purple;
+  padding: 0em 1em;
+  width: 70%;
+}
+
+#buttons-row {
+  display: flex;
+  justify-content: center;
+  padding: 1.5em;
+}
+
+#buttons-row span {
+  margin: 0.5em;
+}
+
+#buttons-row button {
+  margin: 0.5em;
+}
+
 </style>
