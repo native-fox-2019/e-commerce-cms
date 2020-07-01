@@ -2,6 +2,7 @@
 
 
 Check the website here: https://e-commerce-8696d.firebaseapp.com/
+
 Server is hosted at here: https://sleepy-scrubland-83111.herokuapp.com/
 
 You can log in as an admin using the account:
