@@ -1,10 +1,14 @@
 # e-commerce-cms
 
 
-This is the first part of 2-parts series in making a mock e-commerce site. Made using Vue.
+Check the website here: https://e-commerce-8696d.firebaseapp.com/
 
-Client: https://hobby-a56e6.firebaseapp.com/
-Server: https://sleepy-scrubland-83111.herokuapp.com/
+Server is hosted at here: https://sleepy-scrubland-83111.herokuapp.com/
+
+You can log in as an admin using the account:
+
+- Email: `adamsmith@gmail.com`
+- Password: `adamsmith`
 
 Features:
 
