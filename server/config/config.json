@@ -1,0 +1,16 @@
+{
+  "development": {
+    "username": "postgres",
+    "password": "qwerty",
+    "database": "E-commerce_Return",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "test": {
+    "username": "postgres",
+    "password": "qwerty",
+    "database": "E-commerce_Return_TEST",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  }
+}
