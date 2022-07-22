@@ -12,6 +12,9 @@
                     <b-button variant="secondary" @click="row.toggleDetails" class="mr-2">Detail</b-button>
                     <b-button variant="danger" @click="confirmDelete(row.item.id)">Delete</b-button>
                 </template>
+                <template v-slot:cell(price)="row">
+                    {{convertToCurrency(row.item.price)}}
+                </template>
                 <template v-slot:row-details="row">
                     <b-card>
                         <b-row>
@@ -22,7 +25,7 @@
                                 </b-row>
                                 <b-row>
                                     <b-col sm="6"><span class="bold">Product Price:</span></b-col>
-                                    <b-col class="text-sm-left" sm="6">{{row.item.price}}</b-col>
+                                    <b-col class="text-sm-left" sm="6">{{convertToCurrency(row.item.price)}}</b-col>
                                 </b-row>
                                 <b-row>
                                     <b-col sm="6"><span class="bold">Product Stock:</span></b-col>
@@ -51,13 +54,15 @@
     </div>
 </template>
 <script>
+import numbro from 'numbro';
+
 export default {
     data(){
         return{
             fields:[
                 {
                     key:'id',
-                    sortable:true
+                    sortable:true,
                 },
                 {
                     key:'name',
@@ -65,7 +70,7 @@ export default {
                 },
                 {
                     key:'price',
-                    sortable:true
+                    sortable:true,
                 },
                 'action'
             ]
@@ -92,8 +97,10 @@ export default {
                 this.$bvModal.msgBoxOk('An error occured');
             })
         },
+        convertToCurrency(numStr){
+            return numbro(numStr).format({thousandSeparated: true});
+        },
         imageURL(product){
-            console.log(product)
             if(product.isScrapped)
                 return product.image_url
             return this.$store.state.SERVER+'/img/'+product.image_url

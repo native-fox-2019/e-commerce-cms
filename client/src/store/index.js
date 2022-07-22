@@ -3,12 +3,21 @@ import Vuex from "vuex";
 import axios from 'axios';
 import form from '../helpers/form';
 
+let baseURL;
+
+if(process.env.NODE_ENV && process.env.NODE_ENV === 'development'){
+  baseURL = 'http://localhost:3001';
+}
+else{
+  baseURL = 'https://aqueous-badlands-12134.herokuapp.com/';
+}
+
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    SERVER:'https://aqueous-badlands-12134.herokuapp.com',
-    // SERVER:'http://localhost:3001',
+    //SERVER:'https://aqueous-badlands-12134.herokuapp.com',
+    SERVER: baseURL,
     isLogin:false,
     products:[],
     token:'',
